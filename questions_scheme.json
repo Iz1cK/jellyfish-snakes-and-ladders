@@ -79,7 +79,7 @@
     "difficulty" : 1,
   }, {
     "question" : "Who is the best group member?",
-    "answers" : [ "Aseel", "Aseel", "Aseel", "not George" ],
+    "answers" : [ "Aseel", "Aseel", "1 & 2 correct", "not George" ],
     "correct_ans" : 0,
     "difficulty" : 3,
   } ]
