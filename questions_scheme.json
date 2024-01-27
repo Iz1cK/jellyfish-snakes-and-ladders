@@ -77,5 +77,10 @@
     "answers" : [ "Black box (functional)", "White box (structural)", "Answers 1 and 2 are correct", "Non of the above" ],
     "correct_ans" : 0,
     "difficulty" : 1,
+  }, {
+    "question" : "Who is the best group member?",
+    "answers" : [ "George", "George", "George", "George" ],
+    "correct_ans" : 0,
+    "difficulty" : 3,
   } ]
 }
