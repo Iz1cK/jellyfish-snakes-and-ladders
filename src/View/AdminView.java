@@ -1,4 +1,4 @@
-package controller;
+package View;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class admin extends JFrame implements ActionListener{
+public class AdminView extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 
@@ -21,7 +21,7 @@ public class admin extends JFrame implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					admin frame = new admin();
+					AdminView frame = new AdminView();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,7 +33,7 @@ public class admin extends JFrame implements ActionListener{
 	/**
 	 * Create the frame.
 	 */
-	public admin() {
+	public AdminView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 100, 650, 670);
 		contentPane = new JPanel();
@@ -42,7 +42,7 @@ public class admin extends JFrame implements ActionListener{
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(home.class.getResource("/img/homeBackground.png")));
+		lblNewLabel.setIcon(new ImageIcon(HomeView.class.getResource("/img/homeBackground.png")));
 		lblNewLabel.setBounds(0, 0,650,650);
 		contentPane.add(lblNewLabel);
 		

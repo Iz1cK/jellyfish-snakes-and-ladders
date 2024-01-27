@@ -1,4 +1,4 @@
-package controller;
+package View;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class home extends JFrame {
+public class HomeView extends JFrame {
 
 	private JPanel contentPane;
 
@@ -25,7 +25,7 @@ public class home extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					home frame = new home();
+					HomeView frame = new HomeView();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +52,7 @@ public class home extends JFrame {
 		panel.setBackground(new java.awt.Color(117, 123, 235));
 	}
 	
-	public home() {
+	public HomeView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 100, 650, 670);
 		contentPane = new JPanel();
@@ -73,7 +73,7 @@ public class home extends JFrame {
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				new gameDetails().show();
+				new GameDetailsViews().show();
 				dispose();
 			}
 		});
@@ -88,7 +88,7 @@ public class home extends JFrame {
 		startGamePanel.add(startGameLabel);
 		
 		JLabel startGameIcon = new JLabel("");
-		startGameIcon.setIcon(new ImageIcon(home.class.getResource("/img/startGameIcon.png")));
+		startGameIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/startGameIcon.png")));
 		startGameIcon.setBounds(46, 32, 59, 63);
 		startGamePanel.add(startGameIcon);
 		
@@ -117,7 +117,7 @@ public class home extends JFrame {
 		gameHistoryPanel.add(historyLabel);
 		
 		JLabel historyIcon = new JLabel("");
-		historyIcon.setIcon(new ImageIcon(home.class.getResource("/img/HistoryIcon.png")));
+		historyIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/HistoryIcon.png")));
 		historyIcon.setBounds(48, 33, 59, 63);
 		gameHistoryPanel.add(historyIcon);
 		
@@ -148,7 +148,7 @@ public class home extends JFrame {
 	                if (option == JOptionPane.YES_OPTION) {
 	                    // User is an admin
 	                    // Proceed to admin page
-	                    admin adminPage = new admin();
+	                    AdminView adminPage = new AdminView();
 	                    adminPage.setVisible(true);
 	                    dispose(); // You need to implement this method to close the current frame/dialog
 	                }
@@ -167,7 +167,7 @@ public class home extends JFrame {
 		questionPanel.add(questionLabel);
 		
 		JLabel questionIcon = new JLabel("");
-		questionIcon.setIcon(new ImageIcon(home.class.getResource("/img/QuestionIcon.png")));
+		questionIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/QuestionIcon.png")));
 		questionIcon.setBounds(51, 32, 59, 63);
 		questionPanel.add(questionIcon);
 		
@@ -195,13 +195,13 @@ public class home extends JFrame {
 		exitPanel.add(exitLabel);
 		
 		JLabel exitIcon = new JLabel("");
-		exitIcon.setIcon(new ImageIcon(home.class.getResource("/img/ExitIcon.png")));
+		exitIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/ExitIcon.png")));
 		exitIcon.setBounds(59, 26, 59, 63);
 		exitPanel.add(exitIcon);
 		
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(home.class.getResource("/img/homeBackground.png")));
+		lblNewLabel.setIcon(new ImageIcon(HomeView.class.getResource("/img/homeBackground.png")));
 		lblNewLabel.setBounds(0, 0,650,650);
 		contentPane.add(lblNewLabel);
 		

@@ -1,4 +1,4 @@
-package controller;
+package View;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class gameDetails extends JFrame {
+public class GameDetailsViews extends JFrame {
 
 	private JPanel contentPane;
 
@@ -17,7 +17,7 @@ public class gameDetails extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					gameDetails frame = new gameDetails();
+					GameDetailsViews frame = new GameDetailsViews();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -29,7 +29,7 @@ public class gameDetails extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public gameDetails() {
+	public GameDetailsViews() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
