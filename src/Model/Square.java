@@ -1,33 +1,31 @@
 package Model;
 
 public class Square {
-	private int numberPosition;
+	private int position;
 	private int row, column; //the square in the board
 	private COLORS squareColor;
-	
-	
-	public Square(int numberPosition) {
+	public Square(int position) {
 		super();
-		this.numberPosition = numberPosition;
+		this.position = position;
 	}
-	public Square(int numberPosition, int row, int column) {
+	public Square(int position, int row, int column) {
 		super();
-		this.numberPosition = numberPosition;
+		this.position = position;
 		this.row = row;
 		this.column = column;
 	}
-	public Square(int numberPosition, int row, int column, COLORS squareColor) {
+	public Square(int position, int row, int column, COLORS squareColor) {
 		super();
-		this.numberPosition = numberPosition;
+		this.position = position;
 		this.row = row;
 		this.column = column;
 		this.squareColor = squareColor;
 	}
-	public int getNumberPosition() {
-		return numberPosition;
+	public int getPosition() {
+		return position;
 	}
-	public void setNumberPosition(int numberPosition) {
-		this.numberPosition = numberPosition;
+	public void setPosition(int position) {
+		this.position = position;
 	}
 	public int getRow() {
 		return row;
@@ -48,5 +46,6 @@ public class Square {
 		this.squareColor = squareColor;
 	}
 	
-
+	
+	
 }

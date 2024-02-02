@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Ladder {
@@ -46,32 +48,27 @@ public class Ladder {
 		this.destSquare = destSquare;
 	}
 
-	public void setStartAndDest(DIFFICULTY diffLevel) {
+	
+	public List<Ladder> setStartAndDest( int gridSize, int numberOfLadders) {
 		Random random = new Random();
+		List<Ladder> ladders = new ArrayList<>();
+		
+		// Create List for all board's squares
+        List<Square> allSquares = new ArrayList<>();
+        for (int i = 1; i <= gridSize * gridSize; i++) {
+            allSquares.add(new Square(i));
+        }
 
-		switch (diffLevel) {
-        case EASY:
-        	Square easySR1= new Square(random.nextInt(10 - 1 + 1));
-        	Square easySC1= new Square(random.nextInt(20 - 11 + 1));
-        	Ladder ladderE1= new Ladder ("easy1",easySR1,easySC1);
-        	Square easySR2= new Square(random.nextInt(20 - 1 + 1));
-        	Square easySC2= new Square(random.nextInt(40 - 11 + 1));
-        	Ladder ladderE2= new Ladder ("easy2",easySR2,easySC2);
-        	Square easySR3= new Square(random.nextInt(40 - 1 + 1));
-        	Square easySC3= new Square(random.nextInt(70 - 11 + 1));
-        	Ladder ladderE3= new Ladder ("easy3",easySR3,easySC3);
-        	Square easySR4= new Square(random.nextInt(40 - 1 + 1));
-        	Square easySC4= new Square(random.nextInt(80 - 11 + 1));
-        	Ladder ladderE4= new Ladder ("easy4",easySR4,easySC4);
-            System.out.println("HARD");
-            break;
-        case MEDIUM:
-            System.out.println("MEDIUM");
-            break;
-        case HARD:
-            System.out.println("Received HARD");
-            break;
-	}
-	}
+        for (int i = 1; i <= numberOfLadders; i++) {
+            //initial start square for the ladder
+            Square ladderEnd = allSquares.remove(random.nextInt(allSquares.size()+(i+1)));
+
+            Square ladderStart = allSquares.remove(random.nextInt((ladderEnd.getPosition()%i-i*gridSize)+(gridSize)));
+            //adding the ladder to the ladders array
+            ladders.add(new Ladder(String.valueOf(i),ladderStart, ladderEnd));
+        }
+        return ladders;
+
+    }
 }
 
