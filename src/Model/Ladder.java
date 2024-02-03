@@ -23,6 +23,8 @@ public class Ladder {
 		this.startSquare = startSquare;
 		this.destSquare = destSquare;
 	}
+	public Ladder() {
+	}
 	public String getLadderUD() {
 		return LadderUD;
 	}
