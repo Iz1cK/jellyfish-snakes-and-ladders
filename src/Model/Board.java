@@ -44,7 +44,8 @@ public class Board {
 	public static void main(String[] args) {
 		System.out.println("hello");
 		Board currBoard = new Board();
-		currBoard.generateBoard(DIFFICULTY.EASY);
+		currBoard.setDifficultyBoard(DIFFICULTY.EASY);
+		currBoard.generateBoard();
 	}
 
 	public Board() {
@@ -139,10 +140,10 @@ public class Board {
 		this.surpriseSquarePositions = surpriseSquarePositions;
 	}
 
-	public void generateBoard(DIFFICULTY diff) {
-		System.out.println(diff);
+	public void generateBoard() {
+		
 		int boardSize = 0;
-		switch(diff) {
+		switch(this.difficultyBoard) {
 			case EASY:
 				boardSize = 7;
 			break;
@@ -201,5 +202,18 @@ public class Board {
 	    }
 	}
 
-	
+//	public void rollDice() {
+//		String[] options;
+//		switch(this.difficultyBoard) {
+//			case EASY:
+//				options = ["0","1","2","3","4"];
+//			break;
+//			case MEDIUM:
+//				boardSize = 10;
+//			break;
+//			case HARD:
+//				boardSize = 13;
+//			break;
+//		}
+//	}
 }
