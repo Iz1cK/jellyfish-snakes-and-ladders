@@ -1,6 +1,8 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Board {
 	private int boardId;
@@ -44,8 +46,10 @@ public class Board {
 	public static void main(String[] args) {
 		System.out.println("hello");
 		Board currBoard = new Board();
-		currBoard.setDifficultyBoard(DIFFICULTY.EASY);
+		currBoard.setDifficultyBoard(DIFFICULTY.MEDIUM);
 		currBoard.generateBoard();
+		
+		currBoard.rollDice();
 	}
 
 	public Board() {
@@ -202,18 +206,27 @@ public class Board {
 	    }
 	}
 
-//	public void rollDice() {
-//		String[] options;
-//		switch(this.difficultyBoard) {
-//			case EASY:
-//				options = ["0","1","2","3","4"];
-//			break;
-//			case MEDIUM:
-//				boardSize = 10;
-//			break;
-//			case HARD:
-//				boardSize = 13;
-//			break;
-//		}
-//	}
+	public void rollDice() {
+		ArrayList<String> options = new ArrayList<>();
+		switch(this.difficultyBoard) {
+			case EASY:
+				String[] easyOptions = {"0","1","2","3","4","E","M","H"};
+				List<String> easyList = Arrays.asList(easyOptions);
+				options.addAll(easyList);
+			break;
+			case MEDIUM:
+				String[] mediumOptions = {"0","1","2","3","4","5","6","E","E","M","M","H","H"};
+				List<String> mediumList = Arrays.asList(mediumOptions);
+				options.addAll(mediumList);
+			break;
+			case HARD:
+				String[] hardOptions = {"0","1","2","3","4","5","6","E","E","M","M","H","H","H","H",};
+				List<String> hardList = Arrays.asList(hardOptions);
+				options.addAll(hardList);
+			break;
+		}
+		for(int i=0; i<options.size();i++) {
+			System.out.println(options.get(i));
+		}
+	}
 }
