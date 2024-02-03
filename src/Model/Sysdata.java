@@ -18,10 +18,16 @@ import java.util.Scanner;
 import org.json.simple.DeserializationException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JsonArray;
-import org.json.simple.JsonObject;
+
 import org.json.simple.Jsoner;
 import org.json.simple.parser.JSONParser;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 
 public class Sysdata {
@@ -36,11 +42,11 @@ public class Sysdata {
 		private List<Questions> questionsList;
 		private List <Game> gameHistoryList; 
 		private static int questionID = 0;
-		private JSONArray questionsListJson= new JSONArray();
-		private JSONArray scoresListJson= new JSONArray();
+		private JsonArray questionsListJson;
+		private JsonArray scoresListJson;
 		private List<String> historyList;
-		private JSONArray historyJson;
-		private JSONArray suggestionsJson;
+		private JsonArray historyJson;
+		private JsonArray suggestionsJson;
 		public static int numberss=0;
 		private LinkedList<Game> historyLinkedList=new LinkedList<>();
 
@@ -58,11 +64,11 @@ public class Sysdata {
 		 * @param fileName   name of json file
 		 */
 		@SuppressWarnings("unchecked")
-		public void writeJsonFile(JSONArray objectList, String objectName, String fileName) {
+		public void writeJsonFile(JsonArray objectList, String objectName, String fileName) {
 			try (FileWriter file = new FileWriter(fileName)) {
-				JSONObject obj = new JSONObject();
-				obj.put(objectName, objectList);
-				file.write(obj.toJSONString());
+				JsonObject obj = new JsonObject();
+				obj.addProperty(objectName, objectList.toString());
+				file.write(obj.toString());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -74,17 +80,17 @@ public class Sysdata {
 		 * @param objectName
 		 * @param fileName
 		 */
-		private JSONArray readJsonFile(String objectName, String fileName) throws ParseException {
+		private JsonArray readJsonFile(String objectName, String fileName) throws ParseException {
 			try (FileReader reader = new FileReader(fileName)) {
-				JSONParser parser = new JSONParser();
-				JSONObject jsonObject = null;
+				JsonParser parser = new JsonParser();
+				JsonObject jsonObject = null;
 				try {
-					jsonObject = (JSONObject) parser.parse(reader);
-				} catch (org.json.simple.parser.ParseException e) {
+					jsonObject = (JsonObject) parser.parse(reader);
+				} catch (JsonSyntaxException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				return (JSONArray) jsonObject.get(objectName);
+				return (JsonArray) jsonObject.get(objectName);
 			} catch (FileNotFoundException e) {
 				if (objectName.equals(QUESTIONS_JSONOBJECT)) {
 					writeJsonFile(questionsListJson, objectName, fileName);
@@ -96,7 +102,7 @@ public class Sysdata {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return new JSONArray();
+			return new JsonArray();
 		}
 
 		// --------------------------------------------------- Question Functions
@@ -127,12 +133,12 @@ public class Sysdata {
 				e.printStackTrace();
 			}
 			if (questionsListJson == null) {
-				this.questionsListJson = new JSONArray();
+				this.questionsListJson = new JsonArray();
 				return;
 			}
 			Questions q;
 			for (int i = 0; i < this.questionsListJson.size(); i++) {
-				JSONObject exploreObject = (JSONObject) this.questionsListJson.get(i);
+				JsonObject exploreObject = (JsonObject) this.questionsListJson.get(i);
 				q = new Questions(exploreObject);
 				q.setQuestionId(Sysdata.questionID++);
 				questionsList.add(q);
@@ -183,13 +189,13 @@ public class Sysdata {
 		    int index = getQuestionIndexByID(qID);
 		    if (index != -1) {
 		        // Get the JSON object representing the question
-		        JSONObject jsonQuestion = (JSONObject) questionsListJson.get(index);
+		        JsonObject jsonQuestion = (JsonObject) questionsListJson.get(index);
 
 		        // Update the fields of the JSON object
-		        jsonQuestion.put("question", updatedQuestion.getQuestion());
-		        jsonQuestion.put("answers", updatedQuestion.getAnswers());
-		        jsonQuestion.put("correct_ans", updatedQuestion.getCorrect_ans());
-		        jsonQuestion.put("difficulty", updatedQuestion.getDifficulty());
+		        jsonQuestion.addProperty("question", updatedQuestion.getQuestion());
+		        jsonQuestion.add("answers", (JsonElement) updatedQuestion.getAnswers());
+		        jsonQuestion.addProperty("correct_ans", updatedQuestion.getCorrect_ans());
+		        jsonQuestion.addProperty("difficulty", updatedQuestion.getDifficulty());
 
 		        // Optionally, update the corresponding Questions object in questionsList
 		        questionsList.set(index, updatedQuestion);
@@ -237,7 +243,7 @@ public class Sysdata {
 
 		@SuppressWarnings("unchecked")
 		private void updateQuestionsJsonList() {
-			this.questionsListJson = new JSONArray();
+			this.questionsListJson = new JsonArray();
 			for (Questions q : this.questionsList) {
 				this.questionsListJson.add(q.toJSON());
 			}
@@ -269,12 +275,12 @@ public class Sysdata {
 				e.printStackTrace();
 			}
 			if (scoresListJson == null) {
-				this.scoresListJson = new JSONArray();
+				this.scoresListJson = new JsonArray();
 				return;
 			}
 			Game g;
 			for (int i = 0; i < scoresListJson.size(); i++) {
-				JSONObject exploreObject = (JSONObject) this.scoresListJson.get(i);
+				JsonObject exploreObject = (JsonObject) this.scoresListJson.get(i);
 				g = new Game(exploreObject);
 				gameHistoryList.add(g);
 				historyLinkedList.addFirst(g);

@@ -6,6 +6,12 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+
 public class Questions {
 	private int questionId; //question id which represents an unique identifier for the question
 	private String question; //represents the questions content
@@ -24,7 +30,7 @@ public class Questions {
 	}
 	
 
-	public Questions (JSONObject jsonObject) {
+	public Questions (JsonObject jsonObject) {
 		try {
 			fromJSON(jsonObject);
 		} catch (Exception e) {
@@ -34,15 +40,14 @@ public class Questions {
 	}
 
 
-	public void fromJSON(JSONObject jsonObject) {
-		this.question = (String) jsonObject.get("question");
+	public void fromJSON(JsonObject jsonObject) {
+		 this.question = jsonObject.get("question").getAsString();
 
 		try {
-			JSONArray jsonArray = (JSONArray) jsonObject.get("answers");
+			JsonArray jsonArray = (JsonArray) jsonObject.get("answers");
 			answers.clear();
 			for (int i = 0; i < jsonArray.size(); i++) {
-
-				answers.add((String) jsonArray.get(i));
+			    answers.add(jsonArray.get(i).getAsString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,17 +60,17 @@ public class Questions {
 	}
 
 	@SuppressWarnings("unchecked")
-	public JSONObject toJSON() {
-		JSONObject question = new JSONObject();
-		JSONArray jsonArray = new JSONArray();
+	public JsonObject toJSON() {
+		JsonObject question = new JsonObject();
+		JsonArray jsonArray = new JsonArray();
 
-		question.put("question", this.question);
+		question.addProperty("question", this.question);
 		for (int i = 0; i < answers.size(); i++) {
 			jsonArray.add(answers.get(i));
 		}
-		question.put("answers", jsonArray);
-		question.put("correct_ans", this.correct_ans);
-		question.put("difficulty", this.difficulty);
+		question.add("answers", jsonArray);
+		question.addProperty("correct_ans", this.correct_ans);
+		question.addProperty("difficulty", this.difficulty);
 		return question;
 	}
 
