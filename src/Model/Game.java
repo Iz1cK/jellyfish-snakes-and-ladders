@@ -8,6 +8,14 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+
+
 public class Game {
 	private static int idCounter = 1;
 	private int gameID;
@@ -33,7 +41,7 @@ public class Game {
 		return formattedDateTime;
 	}
 	
-	public Game(JSONObject jsonObject) {
+	public Game(JsonObject jsonObject) {
 		try {
 			fromJSON(jsonObject);
 		} catch (Exception e) {
@@ -41,37 +49,36 @@ public class Game {
 		}
 	}
 
-	public void fromJSON(JSONObject jsonObject) {
+	public void fromJSON(JsonObject jsonObject) {
 		this.gameID = Integer.parseInt(jsonObject.get("gameID").toString());
 		this.difficulty = Integer.parseInt(jsonObject.get("difficulty").toString());
 		try {
-			JSONArray jsonArray = (JSONArray) jsonObject.get("Players");
+			JsonArray jsonArray = (JsonArray) jsonObject.get("Players");
 			Players.clear();
-			for (int i = 0; i < jsonArray.size(); i++) {
-
-				Players.add((String) jsonArray.get(i));
+			for (JsonElement element : jsonArray) {
+			    Players.add(element.getAsString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
-		this.winningPlayer = (String) jsonObject.get("winningPlayer");
-		this.duration = (String) jsonObject.get("duration");
+		this.winningPlayer = jsonObject.get("winningPlayer").getAsString();
+		this.duration = (String) jsonObject.get("duration").getAsString();
 	}
 
 	@SuppressWarnings("unchecked")
-	public JSONObject toJSON() {
-		JSONObject gameHistory = new JSONObject();
-		JSONArray jsonArray = new JSONArray();
+	public JsonObject toJSON() {
+		JsonObject gameHistory = new JsonObject();
+		JsonArray jsonArray = new JsonArray();
 
-		gameHistory.put("gameID", this.gameID);
-		gameHistory.put("difficulty", this.difficulty);
+		gameHistory.addProperty("gameID", this.gameID);
+		gameHistory.addProperty("difficulty", this.difficulty);
 		for (int i = 0; i < Players.size(); i++) {
 			jsonArray.add(Players.get(i));
 		}
-		gameHistory.put("Players", jsonArray);
-		gameHistory.put("winningPlayer", this.winningPlayer);
-		gameHistory.put("duration", this.duration);
+		gameHistory.add("Players", jsonArray);
+		gameHistory.addProperty("winningPlayer", this.winningPlayer);
+		gameHistory.addProperty("duration", this.duration);
 		return gameHistory;
 	}
 
