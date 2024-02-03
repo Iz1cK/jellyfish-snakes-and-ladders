@@ -314,7 +314,6 @@ public class Sysdata {
 			LocalDateTime timer = LocalDateTime.of(2024, 2, 7, 15, 30, 0);
 			sysdata.readGameHistory();
 			Game game= new Game(numberss,3, winningPlayer, players, timer);
-			sysdata.addGameHistory(game);
 			sysdata.readQuestions();
 			
 			System.out.println(numberss);
