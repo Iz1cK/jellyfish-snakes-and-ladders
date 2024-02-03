@@ -67,6 +67,21 @@ public class Questions {
 		return question;
 	}
 	
+	 /**
+	 * A function to check if a players answer to a questions is correct or not, 
+	 * as an input it takes the answer number of the players choice
+	 * compares it to the defined correct answer stored in memory
+	 * and returns true or false accordingly 
+	 */
+	private boolean checkAnswer(int inputAnswer)
+	{
+		 if (inputAnswer==this.correct_ans)
+			 return true;
+		 else 
+			 return false;
+	}
+
+	
 	public int getQuestionId() {
 		return questionId;
 	}
