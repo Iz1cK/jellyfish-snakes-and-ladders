@@ -6,16 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/Tirgul9_xml_json/lib/json-simple-2.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/aseel/.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/aseel/.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1-javadoc.jar!/"/>
-			<attribute name="maven.groupId" value="com.googlecode.json-simple"/>
-			<attribute name="maven.artifactId" value="json-simple"/>
-			<attribute name="maven.version" value="1.1.1"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="lib/json-simple-2.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
