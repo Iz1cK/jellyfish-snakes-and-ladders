@@ -1,10 +1,14 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Board {
 	private int boardId;
 	private Square[][] squares;
+	private ArrayList<Integer> surpriseSquarePositions;
+	private ArrayList<Integer> questionSquarePositions;
 	private Ladder[] ladders;
-	private Player[] Players;
+	private Player[] players;
 	private Snake[] snakes;
 	private int[] playersPositions;
 	private DIFFICULTY difficultyBoard;
@@ -12,13 +16,15 @@ public class Board {
 	private int columns;
 	private int currentPlayerTurn;
 	
-	public Board(int boardId, Square[][] squares, Ladder[] ladders, Player[] players, Snake[] snakes,
+	public Board(int boardId, Square[][] squares, ArrayList<Integer> surpriseSquarePositions, ArrayList<Integer> questionSquarePositions,Ladder[] ladders, Player[] players, Snake[] snakes,
 			int[] playersPositions, DIFFICULTY difficultyBoard, int rows, int columns, int currentPlayerTurn) {
 		super();
 		this.boardId = boardId;
 		this.squares = squares;
+		this.surpriseSquarePositions = surpriseSquarePositions;
+		this.questionSquarePositions = questionSquarePositions;
 		this.ladders = ladders;
-		Players = players;
+		this.players = players;
 		this.snakes = snakes;
 		this.playersPositions = playersPositions;
 		this.difficultyBoard = difficultyBoard;
@@ -27,6 +33,14 @@ public class Board {
 		this.currentPlayerTurn = currentPlayerTurn;
 	}
 	
+	public ArrayList<Integer> getQuestionSquarePositions() {
+		return questionSquarePositions;
+	}
+
+	public void setQuestionSquarePositions(ArrayList<Integer> questionSquarePositions) {
+		this.questionSquarePositions = questionSquarePositions;
+	}
+
 	public static void main(String[] args) {
 		System.out.println("hello");
 		Board currBoard = new Board();
@@ -62,11 +76,11 @@ public class Board {
 	}
 
 	public Player[] getPlayers() {
-		return Players;
+		return this.players;
 	}
 
 	public void setPlayers(Player[] players) {
-		Players = players;
+		this.players = players;
 	}
 
 	public Snake[] getSnakes() {
@@ -117,6 +131,14 @@ public class Board {
 		this.currentPlayerTurn = currentPlayerTurn;
 	}
 	
+	public ArrayList<Integer> getSurpriseSquarePositions() {
+		return surpriseSquarePositions;
+	}
+
+	public void setSurpriseSquarePositions(ArrayList<Integer> surpriseSquarePositions) {
+		this.surpriseSquarePositions = surpriseSquarePositions;
+	}
+
 	public void generateBoard(DIFFICULTY diff) {
 		System.out.println(diff);
 		int boardSize = 0;
@@ -132,6 +154,8 @@ public class Board {
 			break;
 		}
 		this.squares = new Square[boardSize][boardSize];
+		this.surpriseSquarePositions = new ArrayList<>();
+		this.questionSquarePositions = new ArrayList<>();
 		for(int i=0; i<boardSize; i++) {
 			for(int j=0; j<boardSize; j++) {
 				double squareChance = Math.random();
@@ -139,9 +163,11 @@ public class Board {
 				if(squareChance < 0.1) {
 					this.squares[i][j] = new QuesSquare(i,j);
 					squareType = "Question Square";
+					surpriseSquarePositions.add(j + boardSize*i);
 				} else if(squareChance >= 0.1 && squareChance < 0.2) {
 					this.squares[i][j] = new SurpriseSquare(i,j);	
 					squareType = "Surprise Square";
+					questionSquarePositions.add(j + boardSize*i);
 				} else {
 					this.squares[i][j] = new Square(i,j);
 					squareType = "Normal Square";
@@ -150,9 +176,12 @@ public class Board {
 			}
 		}
 		printBoard();
+//		for(int i=0;i<surpriseSquarePositions.size();i++) {
+//			System.out.println(surpriseSquarePositions.get(i));
+//		}
 	}
 	
-	public void printBoard() {
+	private void printBoard() {
 	    if (this.squares == null) {
 	        System.out.println("The board has not been generated yet.");
 	        return;
@@ -171,7 +200,6 @@ public class Board {
 	        System.out.print("\n");
 	    }
 	}
-	
-	
 
+	
 }
