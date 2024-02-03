@@ -1,6 +1,5 @@
 package Model;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -8,39 +7,30 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.Scanner;
-
-import org.json.simple.DeserializationException;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import org.json.simple.Jsoner;
-import org.json.simple.parser.JSONParser;
-
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import Model.Player;
 
 
 public class Sysdata {
-
 		static final String QUESTIONS_FILENAME = "questions_scheme.json";
 		static final String QUESTIONS_JSONOBJECT = "questions";
 		static final String GAME_HISTORY_FILENAME = "game_history.json";
 		static final String GAME_HISTORY_JSONOBJECT = "gamesHistory";
+		static final String ADMINS_FILENAME = "admins.json";
+		static final String ADMINS_JSONOBJECT = "admins";
 		static final int MAX_CAPACITY_SCORES = 50;
 
 		private static Sysdata instance;
 		private List<Questions> questionsList;
-		private List <Game> gameHistoryList; 
+		private List <Game> gameHistoryList;
+		private List <Admin> adminList; 
 		private static int questionID = 0;
 		private JsonArray questionsListJson;
 		private JsonArray scoresListJson;
@@ -147,6 +137,49 @@ public class Sysdata {
 		System.out.println(questionsList);
 		System.out.println(questionsList.toString());
 		}
+		public void checkAnswer(int questionId, int answerNumber) {
+		    // Find the question with the given questionId
+		    Questions question = null;
+		    for (Questions q : questionsList) {
+		        if (q.getQuestionId() == questionId) {
+		            question = q;
+		            break;
+		        }
+		    }
+
+		    if (question == null) {
+		        System.out.println("Question not found.");
+		        return;
+		    }
+
+		    // Get the correct answer number
+		    int correctAnswer = question.getCorrect_ans();
+
+		    // Check if the answer is correct
+		    if (answerNumber == correctAnswer) {
+		    	
+		        
+		    } else {
+		        System.out.println("Incorrect answer.");
+		    }
+
+		    // Check the difficulty of the question and print a message accordingly
+		    int difficulty = question.getDifficulty();
+		    switch (difficulty) {
+		        case 1:
+		            System.out.println("This is an easy question.");
+		            break;
+		        case 2:
+		            System.out.println("This is a medium question.");
+		            break;
+		        case 3:
+		            System.out.println("This is a difficult question.");
+		            break;
+		        default:
+		            System.out.println("Invalid difficulty.");
+		    }
+		}
+
 
 		/**
 		 * Gets a question and adds it to questionsList, and then writes it to questions
@@ -306,12 +339,35 @@ public class Sysdata {
 			this.gameHistoryList.add(gameHistory);
 			writeJsonFile(this.scoresListJson, GAME_HISTORY_JSONOBJECT, GAME_HISTORY_FILENAME);
 		}
-
+		
+		public void readAdmins() {
+			adminList = new ArrayList<Admin>();
+			try {
+				this.scoresListJson = readJsonFile(ADMINS_JSONOBJECT, ADMINS_FILENAME);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (scoresListJson == null) {
+				this.scoresListJson = new JsonArray();
+				return;
+			}
+			Admin a;
+			for (int i = 0; i < scoresListJson.size(); i++) {
+				JsonObject exploreObject = (JsonObject) this.scoresListJson.get(i);
+				a = new Admin(exploreObject);
+				adminList.add(a);
+			}
+			numberss=gameHistoryList.size();
+			System.out.println("Admins List ");
+			System.out.println(adminList.toString());
+		}
+		
 		public static void main(String[] args) {
 			Scanner scanner = new Scanner(System.in);
 			Sysdata sysdata = new Sysdata();
 			List<Player> players= new ArrayList<Player>();
-		//	sysdata.readQuestions();
+		sysdata.readQuestions();
 			Player winningPlayer= new Player (3, "Ahmad");
 			Player player1= new Player(4, "Ayman");
 			players.add(player1);
@@ -322,9 +378,7 @@ public class Sysdata {
 			Game game= new Game(numberss,3, winningPlayer, players, timer);
 			sysdata.readQuestions();
 			
+			sysdata.readAdmins();
 			System.out.println(numberss);
-			
 		}
 	}
-
-

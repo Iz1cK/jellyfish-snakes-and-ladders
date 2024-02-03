@@ -3,14 +3,8 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 
 public class Questions {
 	private int questionId; //question id which represents an unique identifier for the question
@@ -28,17 +22,14 @@ public class Questions {
 		this.correct_ans = correct_ans;
 		this.difficulty = difficulty;
 	}
-	
 
 	public Questions (JsonObject jsonObject) {
 		try {
 			fromJSON(jsonObject);
 		} catch (Exception e) {
-
+			
 		}
-
 	}
-
 
 	public void fromJSON(JsonObject jsonObject) {
 		 this.question = jsonObject.get("question").getAsString();
@@ -58,6 +49,8 @@ public class Questions {
 		this.difficulty = Integer.parseInt(jsonObject.get("difficulty").toString());
 //		System.out.println(correctAnswer+" "+level");
 	}
+	
+	
 
 	@SuppressWarnings("unchecked")
 	public JsonObject toJSON() {
@@ -73,7 +66,6 @@ public class Questions {
 		question.addProperty("difficulty", this.difficulty);
 		return question;
 	}
-
 	
 	public int getQuestionId() {
 		return questionId;
@@ -106,20 +98,14 @@ public class Questions {
 		return difficulty;
 	}
 
-
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
 	}
-
 
 	@Override
 	public String toString() {
 		return "Questions [questionId=" + questionId + ", question=" + question + ", answers=" + answers
 				+ ", correct_ans=" + correct_ans + ", difficulty=" + difficulty + "]";
 	}
-
-
-	
-	
 	
 }

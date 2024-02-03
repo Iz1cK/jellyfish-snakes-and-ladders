@@ -8,6 +8,7 @@ public class Square {
 		super();
 		this.position = position;
 	}
+	
 	public Square(int position, int row, int column) {
 		super();
 		this.position = position;

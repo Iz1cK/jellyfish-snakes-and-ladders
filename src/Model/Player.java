@@ -31,8 +31,5 @@ public class Player {
 		return "player [playerID=" + playerID + ", playername=" + playername + "]";
 	}
 	
-	
-	
-	
 }
 

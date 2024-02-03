@@ -1,0 +1,15 @@
+{
+  "admins" : [ {
+    "adminName" : "aseel",
+    "password" : "1234"
+  }, {
+    "adminName" : "lna",
+    "password" : "5678"
+  }, {
+    "adminName" : "george",
+    "password" : "2345"
+  }, {
+    "adminName" : "adeeb",
+    "password" : "6789"
+  } ]
+}
