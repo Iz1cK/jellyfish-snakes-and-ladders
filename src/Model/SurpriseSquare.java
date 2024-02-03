@@ -5,6 +5,11 @@ public class SurpriseSquare extends Square{
 		super(numberPosition);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public SurpriseSquare(int row,int column) {
+		super(row,column);
+		// TODO Auto-generated constructor stub
+	}
 
 	private int moveCount;
 

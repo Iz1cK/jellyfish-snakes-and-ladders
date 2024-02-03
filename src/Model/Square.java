@@ -14,6 +14,11 @@ public class Square {
 		this.row = row;
 		this.column = column;
 	}
+	public Square(int row, int column) {
+		super();
+		this.row = row;
+		this.column = column;
+	}
 	public Square(int position, int row, int column, COLORS squareColor) {
 		super();
 		this.position = position;

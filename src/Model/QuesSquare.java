@@ -1,11 +1,27 @@
 package Model;
 
 public class QuesSquare extends Square{
+	private Questions quesSeq;
+	
 	public QuesSquare(int numberPosition) {
 		super(numberPosition);
-		// TODO Auto-generated constructor stub
 	}
 
-	private Questions quesSeq;
+	public QuesSquare(int row,int column) {
+		super(row,column);
+	}
 
+	public Questions getQuesSeq() {
+		return quesSeq;
+	}
+
+	public void setQuesSeq(Questions quesSeq) {
+		this.quesSeq = quesSeq;
+	}
+
+	@Override
+	public String toString() {
+		return "QuesSquare [quesSeq=" + quesSeq + "]";
+	}
+	
 }
