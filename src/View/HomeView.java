@@ -71,11 +71,6 @@ public class HomeView extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				resetColor(startGamePanel);
 			}
-			@Override
-			public void mousePressed(MouseEvent e) {
-				new GameDetailsViews().show();
-				dispose();
-			}
 		});
 		startGamePanel.setBounds(144, 255, 150, 150);
 		contentPane.add(startGamePanel);
