@@ -4,13 +4,17 @@ public class Player {
 	private int playerID; //player id which represents an unique identifier for the player 
 	private String playername; //player name which represents the players chosen username
 	
-	//constructor
+	//constructors
 	public Player(int playerID, String playername) {
 		super();
 		this.playerID = playerID;
 		this.playername = playername;
 	}
 	
+	public Player() {
+		super();
+	}
+
 	//getter & setter
 	public int getPlayerID() {
 		return playerID;

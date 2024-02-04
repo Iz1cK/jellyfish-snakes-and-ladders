@@ -52,6 +52,22 @@ public class Square {
 		this.squareColor = squareColor;
 	}
 	
+	public void calculateRowAndColumn(int boardSize) {
+		this.row = (this.position - 1) / boardSize;
+        // Determine if row is even or odd and calculate column accordingly
+        if (this.row % 2 == 0) {
+            this.column = (this.position - 1) % boardSize;
+        } else {
+            this.column = boardSize - 1 - (this.position - 1) % boardSize;
+        }
+	}
 	
+	public void calculatePosition(int boardSize) {
+        if (this.row % 2 == 0) { // Even row, numbers increase from left to right
+            this.position = this.row * boardSize + this.column + 1;
+        } else { // Odd row, numbers increase from right to left
+            this.position = this.row * boardSize + (boardSize - this.column - 1) + 1;
+        }
+    }
 	
 }
