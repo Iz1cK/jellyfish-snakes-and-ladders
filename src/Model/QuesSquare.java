@@ -23,5 +23,8 @@ public class QuesSquare extends Square{
 	public String toString() {
 		return "QuesSquare [quesSeq=" + quesSeq + "]";
 	}
+	public void print() {
+		System.out.print("check");
+	}
 	
 }
