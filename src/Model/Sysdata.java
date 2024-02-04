@@ -204,7 +204,6 @@ public class Sysdata {
 		        jsonQuestion.add("answers",  updatedAnswersArray);
 		        jsonQuestion.addProperty("correct_ans", updatedQuestion.getCorrect_ans());
 		        jsonQuestion.addProperty("difficulty", updatedQuestion.getDifficulty());
-		        System.out.println(jsonQuestion);
 
 		        // Optionally, update the corresponding Questions object in questionsList
 		        questionsList.set(index, updatedQuestion);
@@ -388,14 +387,15 @@ public class Sysdata {
 				        		isAuthenticated = authenticateUser(username, password);
 				        		if (isAuthenticated) {
 				        			// Show menu options if authentication is successful
-				        			System.out.println("Menu:");
-				        			System.out.println("1. Show all questions");
-				        	        System.out.println("2. Add question");
-				        	        System.out.println("3. Update question");
-				        	        System.out.println("4. Delete question");
-				        	        System.out.println("5. Exit");
+				        			
 				        	        int choose;
 				        	        do {
+				        	        	System.out.println("Menu:");
+					        			System.out.println("1. Show all questions");
+					        	        System.out.println("2. Add question");
+					        	        System.out.println("3. Update question");
+					        	        System.out.println("4. Delete question");
+					        	        System.out.println("5. Exit");
 				        	        	System.out.print("Enter your choice: ");
 				        	        	choose = scanner.nextInt();
 				        	        	scanner.nextLine(); // Consume newline character
@@ -406,24 +406,18 @@ public class Sysdata {
 				        	        		System.out.println(sysdata.questionsList.toString());
 				        	        		break;
 				        	        	case 2:
-				        	        		System.out.print("Enter your question: ");
+				        	        		System.out.print("Enter your question: \n");
 				        	        		String question = scanner.nextLine();
 				        	        		List<String> answers=new ArrayList<String>();
-				        	        		System.out.print("Enter your first answer: ");
-				        	        		String answer1 = scanner.nextLine();
-				        	        		answers.add(answer1);
-				        	        		System.out.print("Enter your second answer: ");
-			        	                	String answer2 = scanner.nextLine();
-			        	                	answers.add(answer2);
-			        	                	System.out.print("Enter your third answer: ");
-			        	                	String answer3 = scanner.nextLine();
-			        	                	answers.add(answer3);
-			        	                	System.out.print("Enter your forth asnwer: ");
-			        	                	String answer4 = scanner.nextLine();
-			        	                	answers.add(answer4);
-			        	                	System.out.print("Enter the correct number answer: ");
+				        	        		for(int i=0; i<4; i++) {
+				        	        			System.out.print("Enter your"+ i +" answer: \n");
+					        	        		String answer1 = scanner.nextLine();
+					        	        		answers.add(answer1);
+				        	        			
+				        	        		}
+			        	                	System.out.print("Enter the correct number answer: \n");
 			        	                	int correctAns = scanner.nextInt();
-			        	                	System.out.print("choose diffculty: 1-easy, 2-medium, 3-hard ");
+			        	                	System.out.print("choose diffculty: 1-easy, 2-medium, 3-hard \n");
 			        	                	int diffculty = scanner.nextInt();
 			        	                	Questions newQuestion= new Questions(questionID, question, answers, correctAns, diffculty);
 			        	                	sysdata.addQuestion(newQuestion);
@@ -435,47 +429,31 @@ public class Sysdata {
 			        	                    scanner.nextLine();
 			        	                    
 			        	                    System.out.println("if you dont want to update all question and answers where you dont want to update enter 1");
-			        	                    System.out.print("the question is: \n"+ sysdata.questionsList.get(questionId).getQuestion());
-			        	                    System.out.print("choose what :");
+			        	                    System.out.print("the question is: "+ sysdata.questionsList.get(questionId).getQuestion());
+			        	                    System.out.print("\n update :");
 			        	                	String questionUpdate = scanner.nextLine();
 			        	                	if("1".equals(questionUpdate)) {
 			        	                		questionUpdate=sysdata.questionsList.get(questionId).getQuestion();
 			        	                	}
 			        	                	List<String> answersU=new ArrayList<String>();
-			        	                	System.out.print("Answer 1: "+ sysdata.questionsList.get(questionId).getAnswers().get(0));
-			        	                    System.out.print("update:");
-			        	                	String answer1U = scanner.nextLine();
-			        	                	if("1".equals(answer1U)) {
-			        	                		answer1U=sysdata.questionsList.get(questionId).getAnswers().get(0);
+			        	                	for(int i=0; i<4; i++) {
+			        	                		System.out.print("Answer"+i+": "+ sysdata.questionsList.get(questionId).getAnswers().get(i));
+				        	                    System.out.print("\n update: \n");
+				        	                	String answer1U = scanner.nextLine();
+				        	                	if("1".equals(answer1U)) {
+				        	                		answer1U=sysdata.questionsList.get(questionId).getAnswers().get(i);
+				        	                	}
+				        	                	answersU.add(answer1U);
+			        	                		
 			        	                	}
-			        	                	answersU.add(answer1U);
-			        	                	System.out.print("Answer 2: "+ sysdata.questionsList.get(questionId).getAnswers().get(1));
-			        	                    System.out.print("update:");
-			        	                	String answer2U = scanner.nextLine();
-			        	                	if("1".equals(answer2U)) {
-			        	                		answer2U=sysdata.questionsList.get(questionId).getAnswers().get(1);
-			        	                	}
-			        	                	answersU.add(answer2U);
-			        	                	System.out.print("Answer 3: "+ sysdata.questionsList.get(questionId).getAnswers().get(2));
-			        	                    System.out.print("update:");
-			        	                	String answer3U = scanner.nextLine();
-			        	                	if("1".equals(answer3U)) {
-			        	                		answer3U=sysdata.questionsList.get(questionId).getAnswers().get(2);
-			        	                	}
-			        	                	answersU.add(answer3U);
-			        	                	System.out.print("Answer 4: "+ sysdata.questionsList.get(questionId).getAnswers().get(3));
-			        	                    System.out.print("\n update:");
-			        	                	String answer4U = scanner.nextLine();
-			        	                	if("1".equals(answer4U)) {
-			        	                		answer4U=sysdata.questionsList.get(questionId).getAnswers().get(3);
-			        	                	}
-			        	                	answersU.add(answer4U);
 			        	                	System.out.print("the correct Answer is: "+ sysdata.questionsList.get(questionId).getCorrect_ans());
+			        	                	System.out.print("\n update: \n");
 			        	                	int correctAnsU = scanner.nextInt();
 			        	                	if(correctAnsU==1) {
 			        	                		correctAnsU=sysdata.questionsList.get(questionId).getCorrect_ans();
 			        	                	}
 			        	                	System.out.print("the diffculty is: "+ sysdata.questionsList.get(questionId).getDifficulty());
+			        	                	System.out.print("\n update: \n");
 			        	                	int diffcultyU = scanner.nextInt();
 			        	                	if(diffcultyU==1) {
 			        	                		diffcultyU=sysdata.questionsList.get(questionId).getDifficulty();
@@ -485,8 +463,9 @@ public class Sysdata {
 			        	                    
 			        	                    break;
 			        	                case 4:
-			        	                	 System.out.println("Choose Question id to delete:");
-				        	                    System.out.println(sysdata.questionsList.toString());
+			        	                	System.out.println("All Question: ");
+				        	                System.out.println(sysdata.questionsList.toString());
+				        	                System.out.println("Choose Question id to delete: ");
 				        	                    int questionId2 = scanner.nextInt();
 				        	                    scanner.nextLine();
 				        	                    sysdata.deleteQuestion(questionId2);
@@ -499,7 +478,7 @@ public class Sysdata {
 				        	        	}
 				        	        } while (choose != 5);
 				        		} else {
-				        			System.out.println("The password is ICORRECT! Please try again.");
+				        			System.out.println("The password is INCORRECT! Please try again.");
 				        		}
 				        		}
 				        }

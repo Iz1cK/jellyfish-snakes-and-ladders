@@ -121,7 +121,7 @@ public class Questions {
 	@Override
 	public String toString() {
 		return "Questions [questionId=" + questionId + ", question=" + question + ", answers=" + answers
-				+ ", correct_ans=" + correct_ans + ", difficulty=" + difficulty + "]";
+				+ ", correct_ans=" + correct_ans + ", difficulty=" + difficulty + "]" +'\n';
 	}
 	
 }
