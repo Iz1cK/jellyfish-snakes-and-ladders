@@ -66,6 +66,7 @@ public class Questions {
 		question.addProperty("difficulty", this.difficulty);
 		return question;
 	}
+
 	
 	 /**
 	 * A function to check if a players answer to a questions is correct or not, 
