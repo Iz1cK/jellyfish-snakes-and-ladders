@@ -73,7 +73,7 @@ public class Questions {
 	 * compares it to the defined correct answer stored in memory
 	 * and returns true or false accordingly 
 	 */
-	private boolean checkAnswer(int inputAnswer)
+	public boolean checkAnswer(int inputAnswer)
 	{
 		 if (inputAnswer==this.correct_ans)
 			 return true;

@@ -30,6 +30,7 @@ public class Board {
 		super();
 		this.boardId = ++lastBoardId;
 		this.difficultyBoard = difficultyBoard;
+		this.diceOptions = new ArrayList<>();
 		switch(difficultyBoard) {
 			case EASY:
 				this.rows = 7;

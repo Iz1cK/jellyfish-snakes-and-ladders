@@ -1,5 +1,4 @@
 package View;
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -17,6 +16,10 @@ import javax.swing.table.DefaultTableModel;
 
 public class GameDetailsViews extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 123757353823760872L;
 	private JPanel contentPane;
 
 	/**
@@ -46,9 +49,6 @@ public class GameDetailsViews extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		
-		
-		
 		JButton backButton = new JButton();
 		backButton.setBounds(0,0,53,45);
 		backButton.setOpaque(false);
@@ -75,16 +75,7 @@ public class GameDetailsViews extends JFrame {
 		backPanel.setLayout(null);
 		backPanel.add(backIcon);
 		backPanel.add(backButton);	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		String[] colName= new String[] {"#", "Game Difficulty", "Players" , "Winner", "Duration"};
 		Object[][]rows = new Object[][] {};
 		DefaultTableModel model= new DefaultTableModel(rows, colName);
@@ -99,8 +90,6 @@ public class GameDetailsViews extends JFrame {
 		
         JScrollPane tablePanel = new JScrollPane(table);
         tablePanel.setBounds(180,85,450,470);
-        
-     
 		
 		/* setting background */
 		JLabel lblNewLabel = new JLabel("");

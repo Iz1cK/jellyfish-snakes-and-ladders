@@ -1,6 +1,5 @@
 package View;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Label;
@@ -16,6 +15,10 @@ import javax.swing.border.EmptyBorder;
 
 public class AdminView extends JFrame implements ActionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5389683577053397511L;
 	private JPanel contentPane;
 
 	/**

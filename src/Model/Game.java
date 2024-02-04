@@ -27,7 +27,7 @@ public class Game {
 		this.duration = convertLocalDatetimeToString(timer);
 	}
 	public Game() {
-		this.gameID=++gameID;
+		this.gameID=++idCounter;
 	}
 	
 	private String convertLocalDatetimeToString(LocalDateTime dateTime) {

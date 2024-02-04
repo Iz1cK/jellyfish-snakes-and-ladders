@@ -1,5 +1,5 @@
 package View;
-import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -16,6 +16,10 @@ import javax.swing.border.EmptyBorder;
 
 public class HomeView extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3514602183732985694L;
 	private JPanel contentPane;
 
 	/**
@@ -181,6 +185,10 @@ public class HomeView extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				resetColor(exitPanel);
+			}
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				System.exit(0);
 			}
 		});
 		exitPanel.setBackground(new Color(117, 123, 235));
