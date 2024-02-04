@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -32,9 +31,6 @@ public class Sysdata {
 		private static int questionID = 0;
 		private JsonArray questionsListJson;
 		private JsonArray gameHistoryListJson;
-		private List<String> historyList;
-		private JsonArray historyJson;
-		private JsonArray suggestionsJson;
 		public static int numberss=0;
 		private LinkedList<Game> historyLinkedList=new LinkedList<>();
 
@@ -48,7 +44,6 @@ public class Sysdata {
 		 * function to write data to json file, objectList the objects in json array, 
 		 * objectName, array of question in json, fileName name of json file 
 		 ****************************************************************************/
-		@SuppressWarnings("unchecked")
 		public void writeJsonFile(JsonArray objectList, String objectName, String fileName) {
 			try (FileWriter file = new FileWriter(fileName)) {
 				JsonObject obj = new JsonObject();
@@ -127,54 +122,10 @@ public class Sysdata {
 			}
 		}
 		
-		public void checkAnswer(int questionId, int answerNumber) {
-		    // Find the question with the given questionId
-		    Questions question = null;
-		    for (Questions q : questionsList) {
-		        if (q.getQuestionId() == questionId) {
-		            question = q;
-		            break;
-		        }
-		    }
-
-		    if (question == null) {
-		        System.out.println("Question not found.");
-		        return;
-		    }
-
-		    // Get the correct answer number
-		    int correctAnswer = question.getCorrect_ans();
-
-		    // Check if the answer is correct
-		    if (answerNumber == correctAnswer) {
-		    	
-		        
-		    } else {
-		        System.out.println("Incorrect answer.");
-		    }
-
-		    // Check the difficulty of the question and print a message accordingly
-		    int difficulty = question.getDifficulty();
-		    switch (difficulty) {
-		        case 1:
-		            System.out.println("This is an easy question.");
-		            break;
-		        case 2:
-		            System.out.println("This is a medium question.");
-		            break;
-		        case 3:
-		            System.out.println("This is a difficult question.");
-		            break;
-		        default:
-		            System.out.println("Invalid difficulty.");
-		    }
-		}
-		
 		/*********************************************************************************
 		 * Gets a question and adds it to questionsList, and then writes it to questions
 		 * json file
 		 *********************************************************************************/
-		@SuppressWarnings("unchecked")
 		public void addQuestion(Questions question) {
 			question.setQuestionId(Sysdata.questionID++);
 			JsonObject questionJsonObject = question.toJSON();
@@ -249,7 +200,6 @@ public class Sysdata {
 			return -1;
 		}
 
-		@SuppressWarnings("unchecked")
 		private void updateQuestionsJsonList() {
 			this.questionsListJson = new JsonArray();
 			for (Questions q : this.questionsList) {
@@ -300,7 +250,6 @@ public class Sysdata {
 		 * Gets a score and adds it to scoresList, and then writes it to scores json
 		 * file
 		 *****************************************************************************/
-		@SuppressWarnings("unchecked")
 		public void addGameHistory(Game gameHistory) {
 			if (this.gameHistoryList.size() >= MAX_CAPACITY_GAME_HISTORY)
 				this.gameHistoryList.remove(0);

@@ -61,7 +61,6 @@ public class Game {
 		this.duration = (String) jsonObject.get("duration").getAsString();
 	}
 
-	@SuppressWarnings("unchecked")
 	public JsonObject toJSON() {
 		JsonObject gameHistory = new JsonObject();
 		JsonArray jsonArray = new JsonArray();

@@ -52,7 +52,6 @@ public class Questions {
 	
 	
 
-	@SuppressWarnings("unchecked")
 	public JsonObject toJSON() {
 		JsonObject question = new JsonObject();
 		JsonArray jsonArray = new JsonArray();
