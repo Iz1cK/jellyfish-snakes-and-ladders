@@ -23,9 +23,6 @@ public class Snake {
 	}
 	
 	public void setStartAndDest( ArrayList<Integer> questions, ArrayList<Integer> surprise, int numberOfSnakes, int boardSize) {
-		Random random = new Random();
-		ArrayList<Snake> snakes = new ArrayList<>();
-		
 		int snakeStart;
 		for(int i=1;i <= numberOfSnakes; i++) {
 		snakeStart = getRandom(boardSize + 1 + (i-1), boardSize*boardSize + 1);
