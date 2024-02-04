@@ -362,7 +362,6 @@ public class Sysdata {
 				            scanner.nextLine();
 				            if (yesOrNo == 2) {
 				            	System.out.println("Thats Page is only for admins!");
-				            	return;
 				            	} else if (yesOrNo == 1) {
 				            		System.out.println("Welcome Admin!");
 				            		} else {
