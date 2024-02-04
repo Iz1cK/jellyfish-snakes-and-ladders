@@ -26,6 +26,9 @@ public class Game {
 	        }
 		this.duration = convertLocalDatetimeToString(timer);
 	}
+	public Game() {
+		this.gameID=++gameID;
+	}
 	
 	private String convertLocalDatetimeToString(LocalDateTime dateTime) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");

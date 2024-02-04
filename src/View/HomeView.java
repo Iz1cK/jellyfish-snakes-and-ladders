@@ -104,6 +104,11 @@ public class HomeView extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				resetColor(gameHistoryPanel);
 			}
+			public void mousePressed(MouseEvent e) {
+				 	GameDetailsViews gameDetails = new GameDetailsViews();
+				 	gameDetails.setVisible(true);
+				 	dispose();
+	                }
 		});
 		gameHistoryPanel.setBackground(new Color(117, 123, 235));
 		gameHistoryPanel.setLayout(null);
