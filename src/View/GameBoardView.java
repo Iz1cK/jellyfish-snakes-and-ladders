@@ -70,7 +70,7 @@ public class GameBoardView extends JFrame {
                     playersPositions.put(player2, 29);
                     playersPositions.put(player3, 2);
                     
-                    Board board = new Board(DIFFICULTY.HARD);
+                    Board board = new Board(DIFFICULTY.EASY);
                     
                     board.generateBoard();
                     
@@ -177,13 +177,13 @@ public class GameBoardView extends JFrame {
  
         switch(diff) {
         case EASY:
-            boardPanel.setPreferredSize(new Dimension(739, 436));
+            boardPanel.setPreferredSize(new Dimension(450, 300));
             break;
         case MEDIUM: 
-            boardPanel.setPreferredSize(new Dimension(950, 600));
+            boardPanel.setPreferredSize(new Dimension(750, 450));
             break;
         case HARD:
-            boardPanel.setPreferredSize(new Dimension(1150, 750));
+            boardPanel.setPreferredSize(new Dimension(900, 650));
             break;
         }
         
@@ -343,17 +343,17 @@ public class GameBoardView extends JFrame {
                 System.out.println(x + " " + y);
 
                 ImageIcon playerIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + player.getColor().toString().toLowerCase() + "player.png"));
-                JLabel playerMarker = new JLabel(new ImageIcon(playerIcon.getImage().getScaledInstance(25, 40, Image.SCALE_SMOOTH)));
+                JLabel playerMarker = new JLabel(new ImageIcon(playerIcon.getImage().getScaledInstance(15, 25, Image.SCALE_SMOOTH)));
 
                 switch(diff) {
 	                case EASY:
-	                	playerMarker.setBounds(x - cellWidth/2 + 45, y - cellHeight/2 + 5, 25, 45);
+	                	playerMarker.setBounds(x - cellWidth/2 + 20, y - cellHeight/2 + 10, 15, 35);
 	                	break;
 	                case MEDIUM: 
-	                	playerMarker.setBounds(x - cellWidth/2 + 45/2, y - cellHeight/2 - 5, 35, 63);
+	                	playerMarker.setBounds(x - cellWidth/2 + 30, y - cellHeight/2, 25, 50);
 	                	break;
 	                case HARD:
-	                	playerMarker.setBounds(x - cellWidth/2 + 45/2, y - cellHeight/2 - 5, 45, 81);
+	                	playerMarker.setBounds(x - cellWidth/2 + 15/2, y - cellHeight/2, 35, 75);
 	                	break;
                 }
               
