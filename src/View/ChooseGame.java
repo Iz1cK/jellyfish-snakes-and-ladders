@@ -138,7 +138,7 @@ public class ChooseGame extends JFrame {
         		isEasy=true;
         		isMedium=false;
         		isHard=false;
-                selectedLevel.setBounds(37, 130, 101, 87);
+                selectedLevel.setBounds(55, 120, 101, 87);
         		selectedLevel.setVisible(true);
         		maxNumberOfPlayers=3;
         		numbers.setText(Integer.toString(2)); // Update the text field with the new value
@@ -153,7 +153,7 @@ public class ChooseGame extends JFrame {
         		isEasy=false;
         		isMedium=true;
         		isHard=false;
-                selectedLevel.setBounds(122, 130, 101, 87);
+                selectedLevel.setBounds(135, 120, 101, 87);
         		selectedLevel.setVisible(true);
         		maxNumberOfPlayers=6;
         		numbers.setText(Integer.toString(2)); // Update the text field with the new value
@@ -168,7 +168,7 @@ public class ChooseGame extends JFrame {
         		isEasy=false;
         		isMedium=false;
         		isHard=true;
-                selectedLevel.setBounds(197, 130, 101, 87);
+                selectedLevel.setBounds(215, 120, 101, 87);
         		selectedLevel.setVisible(true);
         		maxNumberOfPlayers=8;
         		numbers.setText(Integer.toString(2)); // Update the text field with the new value
