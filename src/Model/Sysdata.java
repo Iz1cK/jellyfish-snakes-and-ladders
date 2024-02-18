@@ -25,8 +25,8 @@ public class Sysdata {
 		static final int MAX_CAPACITY_GAME_HISTORY = 50; //the maximum game history we want
 
 		private static Sysdata instance;
-		private List<Questions> questionsList;
-		private List <Game> gameHistoryList;
+		public List<Questions> questionsList;
+		public List <Game> gameHistoryList;
 		private List <Admin> adminList; 
 		private static int questionID = 0;
 		private JsonArray questionsListJson;
@@ -59,7 +59,7 @@ public class Sysdata {
 		 *  objectName
 		 *  fileName
 		 ************************************************************************/
-		private JsonArray readJsonFile(String objectName, String fileName) throws ParseException {
+		public JsonArray readJsonFile(String objectName, String fileName) throws ParseException {
 			try (FileReader reader = new FileReader(fileName)) {
 				JsonParser parser = new JsonParser();
 				JsonObject jsonObject = null;
@@ -131,8 +131,7 @@ public class Sysdata {
 			JsonObject questionJsonObject = question.toJSON();
 			this.questionsListJson.add(questionJsonObject);
 			this.questionsList.add(question);
-			writeJsonFile(this.questionsListJson, QUESTIONS_JSONOBJECT, QUESTIONS_FILENAME);
-			
+			writeJsonFile(this.questionsListJson, QUESTIONS_JSONOBJECT, QUESTIONS_FILENAME);	
 		}
 
 		/******************************************************************************
@@ -158,11 +157,8 @@ public class Sysdata {
 
 		        // Optionally, update the corresponding Questions object in questionsList
 		        questionsList.set(index, updatedQuestion);
-
 		        // Write the updated JSON object to the file or wherever it's stored
 		        writeJsonFile(questionsListJson, QUESTIONS_JSONOBJECT, QUESTIONS_FILENAME);
-		        
-		      
 		        
 		    }
 		}

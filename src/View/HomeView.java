@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Model.Sysdata;
+
 public class HomeView extends JFrame {
 
 	/**
@@ -104,7 +106,7 @@ public class HomeView extends JFrame {
 				resetColor(gameHistoryPanel);
 			}
 			public void mousePressed(MouseEvent e) {
-				 	GameDetailsViews gameDetails = new GameDetailsViews();
+				 	GameHistoryViews gameDetails = new GameHistoryViews();
 				 	gameDetails.setVisible(true);
 				 	dispose();
 	                }
@@ -206,17 +208,14 @@ public class HomeView extends JFrame {
 		exitIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/ExitIcon.png")));
 		exitIcon.setBounds(59, 26, 59, 63);
 		exitPanel.add(exitIcon);
-		
+		Sysdata sysdata= Sysdata.getInstance();
+		sysdata.readQuestions();
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(HomeView.class.getResource("/img/homeBackground.png")));
 		lblNewLabel.setBounds(0, 0,650,650);
 		contentPane.add(lblNewLabel);
 		
-	}
-	
-	
-	
-	
+	}	
 
 }
