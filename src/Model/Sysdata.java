@@ -22,7 +22,7 @@ public class Sysdata {
 		static final String GAME_HISTORY_JSONOBJECT = "gamesHistory"; //the name of the game history in the file
 		static final String ADMINS_FILENAME = "admins.json"; //json file name for admins
 		static final String ADMINS_JSONOBJECT = "admins"; //the name of the game history in the file
-		static final int MAX_CAPACITY_GAME_HISTORY = 50; //the maximum game history we want
+		public static final int MAX_CAPACITY_GAME_HISTORY = 50; //the maximum game history we want
 
 		private static Sysdata instance;
 		public List<Questions> questionsList;
@@ -247,13 +247,32 @@ public class Sysdata {
 		 * file
 		 *****************************************************************************/
 		public void addGameHistory(Game gameHistory) {
-			if (this.gameHistoryList.size() >= MAX_CAPACITY_GAME_HISTORY)
-				this.gameHistoryList.remove(0);
-			this.gameHistoryListJson.add(gameHistory.toJSON());
-			this.gameHistoryList.add(gameHistory);
-			writeJsonFile(this.gameHistoryListJson, GAME_HISTORY_JSONOBJECT, GAME_HISTORY_FILENAME);
-			System.out.println("Added Successfully");
+		    // Check if the gameHistoryList already contains a game with the same ID
+		    boolean isDuplicate = false;
+		    for (Game existingGame : gameHistoryList) {
+		        if (existingGame.getGameID() == gameHistory.getGameID()) {
+		            isDuplicate = true;
+		            break;
+		        }
+		    }
+
+		    if (!isDuplicate) {
+		        if (this.gameHistoryList.size() >= MAX_CAPACITY_GAME_HISTORY) {
+		            this.gameHistoryList.remove(0); // Remove the oldest game history to maintain max capacity
+		        }
+		        
+		        // Add the new game history to both the JSON array and the list
+		        this.gameHistoryListJson.add(gameHistory.toJSON());
+		        this.gameHistoryList.add(gameHistory);
+
+		        // Write the updated game history list to the JSON file
+		        writeJsonFile(this.gameHistoryListJson, GAME_HISTORY_JSONOBJECT, GAME_HISTORY_FILENAME);
+		        System.out.println("Added Successfully");
+		    } else {
+		        System.out.println("Duplicate Game ID: " + gameHistory.getGameID() + ". Game not added.");
+		    }
 		}
+
 		
 		/*********************************Admins*******************************************/
 		
@@ -284,228 +303,4 @@ public class Sysdata {
 				adminList.add(a);
 			}
 		}
-		
-		
-		
-		public static void main(String[] args) throws IOException, ParseException {
-			Scanner scanner = new Scanner(System.in);
-			Sysdata sysdata = new Sysdata();
-			sysdata.readAdmins();
-			sysdata.readGameHistory();
-			sysdata.readQuestions();
-			int choice;
-			do {
-			    System.out.println("Menu:");
-			    System.out.println("1. Question");
-			    System.out.println("2. Game History");
-			    System.out.println("3. Exit");
-			    System.out.print("Enter your choice: ");
-			    choice = scanner.nextInt();
-			    scanner.nextLine(); // Consume newline character
-			    
-			    switch (choice) {
-                    case 1:
-                    	System.out.println("Are you admin?");
-			            System.out.println("1. Yes");
-			            System.out.println("2. No");
-			            int yesOrNo;
-				        do {
-				            yesOrNo = scanner.nextInt();
-				            scanner.nextLine();
-				            if (yesOrNo == 2) {
-				            	System.out.println("Thats Page is only for admins!");
-				            	} else if (yesOrNo == 1) {
-				            		System.out.println("Welcome Admin!");
-				            		} else {
-				            			System.out.println("Please choose 1 or 2.");
-				            			}
-				            } while (yesOrNo != 1 && yesOrNo != 2);
-				        if(yesOrNo == 1) {
-				        	System.out.println("Admins List:");
-				        	System.out.println(sysdata.adminList.toString());
-				        	boolean isAuthenticated = false;
-				        	String username;
-				        	boolean userExists = false;
-				        	do {
-				        		System.out.print("Enter your username: ");
-				        		username = scanner.nextLine();
-				        		userExists = checkIfUserExists(username);
-				        		if (!userExists) {
-				        			System.out.println("Username does not exist. Please try again.");
-				        			}
-				        		} while (!userExists);
-				        		while (!isAuthenticated) {
-				        		System.out.print("Enter your password: ");
-				        		String password = scanner.nextLine();
-				        		isAuthenticated = authenticateUser(username, password);
-				        		if (isAuthenticated) {
-				        			// Show menu options if authentication is successful
-				        			
-				        	        int choose;
-				        	        do {
-				        	        	System.out.println("Menu:");
-					        			System.out.println("1. Show all questions");
-					        	        System.out.println("2. Add question");
-					        	        System.out.println("3. Update question");
-					        	        System.out.println("4. Delete question");
-					        	        System.out.println("5. Exit");
-				        	        	System.out.print("Enter your choice: ");
-				        	        	choose = scanner.nextInt();
-				        	        	scanner.nextLine(); // Consume newline character
-
-				        	        	switch (choose) {
-				        	        	case 1:
-				        	        		System.out.println("All Questions in the system:");
-				        	        		System.out.println(sysdata.questionsList.toString());
-				        	        		break;
-				        	        	case 2:
-				        	        		System.out.print("Enter your question: \n");
-				        	        		String question = scanner.nextLine();
-				        	        		List<String> answers=new ArrayList<String>();
-				        	        		for(int i=0; i<4; i++) {
-				        	        			System.out.print("Enter your"+ i +" answer: \n");
-					        	        		String answer1 = scanner.nextLine();
-					        	        		answers.add(answer1);
-				        	        			
-				        	        		}
-			        	                	System.out.print("Enter the correct number answer: \n");
-			        	                	int correctAns = scanner.nextInt();
-			        	                	System.out.print("choose diffculty: 1-easy, 2-medium, 3-hard \n");
-			        	                	int diffculty = scanner.nextInt();
-			        	                	Questions newQuestion= new Questions(questionID, question, answers, correctAns, diffculty);
-			        	                	sysdata.addQuestion(newQuestion);
-			        	                    break;
-			        	                case 3:
-			        	                    System.out.println("Choose Question id to update:");
-			        	                    System.out.println(sysdata.questionsList.toString());
-			        	                    int questionId = scanner.nextInt();
-			        	                    scanner.nextLine();
-			        	                    
-			        	                    System.out.println("if you dont want to update all question and answers where you dont want to update enter 1");
-			        	                    System.out.print("the question is: "+ sysdata.questionsList.get(questionId).getQuestion());
-			        	                    System.out.print("\n update :");
-			        	                	String questionUpdate = scanner.nextLine();
-			        	                	if("1".equals(questionUpdate)) {
-			        	                		questionUpdate=sysdata.questionsList.get(questionId).getQuestion();
-			        	                	}
-			        	                	List<String> answersU=new ArrayList<String>();
-			        	                	for(int i=0; i<4; i++) {
-			        	                		System.out.print("Answer"+i+": "+ sysdata.questionsList.get(questionId).getAnswers().get(i));
-				        	                    System.out.print("\n update: \n");
-				        	                	String answer1U = scanner.nextLine();
-				        	                	if("1".equals(answer1U)) {
-				        	                		answer1U=sysdata.questionsList.get(questionId).getAnswers().get(i);
-				        	                	}
-				        	                	answersU.add(answer1U);
-			        	                		
-			        	                	}
-			        	                	System.out.print("the correct Answer is: "+ sysdata.questionsList.get(questionId).getCorrect_ans());
-			        	                	System.out.print("\n update: \n");
-			        	                	int correctAnsU = scanner.nextInt();
-			        	                	if(correctAnsU==1) {
-			        	                		correctAnsU=sysdata.questionsList.get(questionId).getCorrect_ans();
-			        	                	}
-			        	                	System.out.print("the diffculty is: "+ sysdata.questionsList.get(questionId).getDifficulty());
-			        	                	System.out.print("\n update: \n");
-			        	                	int diffcultyU = scanner.nextInt();
-			        	                	if(diffcultyU==1) {
-			        	                		diffcultyU=sysdata.questionsList.get(questionId).getDifficulty();
-			        	                	}
-			        	                	Questions questionU= new Questions(questionId, questionUpdate, answersU, correctAnsU, diffcultyU);
-			        	                	sysdata.updateQuestion(questionId, questionU);
-			        	                    
-			        	                    break;
-			        	                case 4:
-			        	                	System.out.println("All Question: ");
-				        	                System.out.println(sysdata.questionsList.toString());
-				        	                System.out.println("Choose Question id to delete: ");
-				        	                    int questionId2 = scanner.nextInt();
-				        	                    scanner.nextLine();
-				        	                    sysdata.deleteQuestion(questionId2);
-			        	                    break;
-			        	                case 5:
-			        	                    System.out.println("Exiting...");
-			        	                    break;
-			        	                default:
-			        	                	System.out.println("Invalid choice. Please choose a number between 1 and 5.");
-				        	        	}
-				        	        } while (choose != 5);
-				        		} else {
-				        			System.out.println("The password is INCORRECT! Please try again.");
-				        		}
-				        		}
-				        }
-				        break;
-                    case 2:
-                    	System.out.println("Menu:");
-	        			System.out.println("1. Show all game history");
-	        	        System.out.println("2. Add game history");
-	        	        System.out.println("3. Exit");
-	        	        int choose;
-	        	        do {
-	        	        	System.out.print("Enter your choice: ");
-	        	        	choose = scanner.nextInt();
-	        	        	scanner.nextLine();
-	        	        	
-	        	        	switch (choose) {
-	        	        	case 1:
-	        	        		System.out.println("All Game History:");
-	        	        		System.out.println(sysdata.gameHistoryList.toString());
-	        	        		break;
-	        	        	case 2:
-	        	        		System.out.println("Add Game History:");
-	        	        		List<Player> playerss = new ArrayList<Player>();
-	        	        		
-	        	        		LocalDateTime time =LocalDateTime.of(2023, 2, 9, 23, 58);
-	        	        		Player newpl= new Player(1, "aseel",PLAYERCOLORS.PINK);
-	        	        		Player newp2= new Player(1, "lna", PLAYERCOLORS.PURPLE);
-	        	        		playerss.add(newpl);
-	        	        		playerss.add(newp2);
-	        	        		Game newGame= new Game(numberss, 2, newpl, playerss, time);
-	        	        		System.out.println("Added this Game:" + newGame.toString());
-	        	        		sysdata.addGameHistory(newGame);
-				        	break;
-				        	
-				        	case 3:
-				        		System.out.println("Exiting...");
-        	                    break; 
-				        	default:
-	        	                	System.out.println("Invalid choice. Please choose a number between 1 and 3.");
-		        }
-                }while (choose != 3);
-	        	        
-                    case 3:
-		        		System.out.println("Exiting...");
-	                    break; 
-		        	default:
-    	                	System.out.println("Invalid choice. Please choose a number between 1 and 3.");
-		    scanner.close();
-		}
-		}while (choice != 3);
-		}
-		 private static boolean checkIfUserExists(String username) {
-			 Sysdata sysdata = new Sysdata();
-		        sysdata.readAdmins();
-				for (Admin obj: sysdata.adminList ) {
-				    String storedUsername = obj.getAdminName();
-				    if (storedUsername.equals(username)) {
-				        return true; // User authentication successful
-				    }
-				}
-				return false;
-				}
-				
-	    private static boolean authenticateUser(String username, String password) throws IOException, ParseException {
-	        Sysdata sysdata = new Sysdata();
-	        sysdata.readAdmins();
-			for (Admin obj: sysdata.adminList ) {
-			    String storedUsername = obj.getAdminName();
-			    String storedPassword = obj.getPassword();
-
-			    if (storedUsername.equals(username) && storedPassword.equals(password)) {
-			        return true; // User authentication successful
-			    }
-			}
-	        return false; // User authentication failed
-	    }
 	}
