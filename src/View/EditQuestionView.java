@@ -201,7 +201,7 @@ public class EditQuestionView extends JFrame implements ActionListener{
 		contentPane.add(back);
 
         JLabel backgrounde = new JLabel("");
-		backgrounde.setIcon(new ImageIcon(QuestionsView.class.getResource("/img/addQuestionBackground.jpeg")));
+		backgrounde.setIcon(new ImageIcon(QuestionsView.class.getResource("/img/editQuestionBackground.jpeg")));
 		backgrounde.setBounds(0, -38,848,605);
 		contentPane.add(backgrounde);	
 		
