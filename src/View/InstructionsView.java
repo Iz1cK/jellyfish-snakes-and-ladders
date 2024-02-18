@@ -128,7 +128,7 @@ public class InstructionsView extends JFrame {
 				("1 when you press start game, the screen on left will appear, then you choose "
 				+ "the follwing items in order: game difficulty: easy/medium/hard which will \n"
 				+ "determine the board size 7*7/10*10/13*13, and upper limit on number of players \n"
-				+ "4/6/8 both respectively, then each player has to choose a color for their character \n"
+				+ "3/6/8 both respectively, then each player has to choose a color for their character \n"
 				+ "and a username, once the last player does this and only then a start game option will appear"
 		));
 		lblNewLabel_1.setBounds(356, 134, 210, 210);
