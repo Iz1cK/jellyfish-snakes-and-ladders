@@ -72,6 +72,13 @@ public class ChooseGame extends JFrame {
 		selectedLevel.setLayout(null);
 		selectedLevel.setVisible(false);
 		
+//		JLabel colorIsTaken = new JLabel();
+//		colorIsTaken.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/taken.png")));		
+//		colorIsTaken.setBounds(0, 0, 50, 67);
+//		contentPane.add(colorIsTaken);
+//		colorIsTaken.setLayout(null);
+//		colorIsTaken.setVisible(true);
+		
 			
 		JLabel easy = new JLabel("easy");
 		easy.setForeground(Color.WHITE); // Set the foreground color to white
@@ -252,59 +259,65 @@ public class ChooseGame extends JFrame {
 		
 		JLabel player1 = new JLabel();
 		ImageIcon img1=new ImageIcon(ChooseGame.class.getResource("/img/whitePlayer.png"));
-		player1.setIcon(new ImageIcon(img1.getImage().getScaledInstance(51, 98, Image.SCALE_SMOOTH)));
-		player1.setBounds(122, 257, 51, 98);	
+		player1.setIcon(new ImageIcon(img1.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));
+		player1.setBounds(32, 257, 41, 78);	
 		contentPane.add(player1);
 		player1.setLayout(null);
 		
 		JLabel player2 = new JLabel();
 		ImageIcon img2=new ImageIcon(ChooseGame.class.getResource("/img/orangePlayer.png"));
-		player2.setIcon(new ImageIcon(img2.getImage().getScaledInstance(51, 98, Image.SCALE_SMOOTH)));
-		player2.setBounds(176, 257, 51, 98);
+		player2.setIcon(new ImageIcon(img2.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));
+		player2.setBounds(78, 257, 41, 78);
 		contentPane.add(player2);
 		player2.setLayout(null);
 
 		JLabel player3 = new JLabel();
 		ImageIcon img3=new ImageIcon(ChooseGame.class.getResource("/img/purplePlayer.png"));
-		player3.setIcon(new ImageIcon(img3.getImage().getScaledInstance(51, 98, Image.SCALE_SMOOTH)));	
-		player3.setBounds(230, 257, 55,95);
+		player3.setIcon(new ImageIcon(img3.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));	
+		player3.setBounds(124, 257, 41, 78);
 		contentPane.add(player3);
 		player3.setLayout(null);
 
 		JLabel player4 = new JLabel();
 		ImageIcon img4=new ImageIcon(ChooseGame.class.getResource("/img/pinkPlayer.png"));
-		player4.setIcon(new ImageIcon(img4.getImage().getScaledInstance(55, 95, Image.SCALE_SMOOTH)));	
-		player4.setBounds(280, 258, 55, 95);
+		player4.setIcon(new ImageIcon(img4.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));	
+		player4.setBounds(170, 258, 41, 78);
 		contentPane.add(player4);
 		player4.setLayout(null);
+		
+		JLabel player5 = new JLabel();
+		ImageIcon img5=new ImageIcon(ChooseGame.class.getResource("/img/greenPlayer.png"));
+		player5.setIcon(new ImageIcon(img5.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));	
+		player5.setBounds(216, 258, 41, 78);
+		contentPane.add(player5);
+		player5.setLayout(null);
+		
+		JLabel player6 = new JLabel();
+		ImageIcon img6=new ImageIcon(ChooseGame.class.getResource("/img/bluePlayer.png"));
+		player6.setIcon(new ImageIcon(img6.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));	
+		player6.setBounds(262, 258, 41, 78);
+		contentPane.add(player6);
+		player6.setLayout(null);
+		
+		
+		JLabel player7 = new JLabel();
+		ImageIcon img7=new ImageIcon(ChooseGame.class.getResource("/img/redPlayer.png"));
+		player7.setIcon(new ImageIcon(img7.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));	
+		player7.setBounds(308, 258, 41, 78);
+		contentPane.add(player7);
+		player7.setLayout(null);
+		
+		JLabel player8 = new JLabel();
+		ImageIcon img8=new ImageIcon(ChooseGame.class.getResource("/img/yellowPlayer.png"));
+		player8.setIcon(new ImageIcon(img8.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));	
+		player8.setBounds(354, 258, 41, 78);
+		contentPane.add(player8);
+		player8.setLayout(null);
+		
+		
+		
 
-//		player1.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//               
-//                selectedLevel.setVisible(true);
-//                selectedLevel.setBounds(100, 272, 70, 70);
-//            }
-//        });
-//		
-//        player2.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//               
-//                selectedLevel.setVisible(false);
-//                selectedLevel.setBounds(120, 272, 70, 70);
-//                selectedLevel.setVisible(true);
-//            }
-//        });
-//        player3.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//               
-//                selectedLevel.setVisible(false);
-//                selectedLevel.setBounds(120, 272, 70, 70);
-//                selectedLevel.setVisible(true);
-//            }
-//        });
+
         
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setBounds(400, 281, 212, 41);
@@ -386,25 +399,16 @@ public class ChooseGame extends JFrame {
 		            difficltyLeve_1.setText("play");
 		        }
 		        
+		        if(difficltyLeve_1.getText().equals("play")) {
+//		        	GameBoardView startGame= new GameBoardView(selectedDifficulty);
+//		        	startGame.setVisible(true);
+//		        	dispose();
+		        }
 		        // Display selectedLevel on each player
 		        if (selectedLevel.isVisible()) {
 		            selectedLevel.setVisible(false); // Hide selectedLevel if it's currently visible
 		        }
-		        // Set bounds of selectedLevel to match the bounds of the clicked player label
-		        switch (counter) {
-		            case 1:
-		                selectedLevel.setBounds(player1.getBounds());
-		                break;
-		            case 2:
-		                selectedLevel.setBounds(player2.getBounds());
-		                break;
-		            case 3:
-		                selectedLevel.setBounds(player3.getBounds());
-		                break;
-		            // Add more cases for additional players if needed
-		            default:
-		                break;
-		        }
+		      
 		        selectedLevel.setVisible(true); // Show selectedLevel
 		    }
 		});
@@ -413,7 +417,7 @@ public class ChooseGame extends JFrame {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
 		        selectedLevel.setVisible(true);
-		       // selectedLevel.setBounds(player1.getBounds());
+		        selectedLevel.setBounds(player1.getBounds());
 		    }
 		});
 
@@ -433,15 +437,43 @@ public class ChooseGame extends JFrame {
 		    }
 		});
 
+		player4.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        selectedLevel.setVisible(true);
+		        selectedLevel.setBounds(player4.getBounds());
+		    }
+		});
+		player5.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        selectedLevel.setVisible(true);
+		        selectedLevel.setBounds(player5.getBounds());
+		    }
+		});
+		player6.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        selectedLevel.setVisible(true);
+		        selectedLevel.setBounds(player6.getBounds());
+		    }
+		});
+		player7.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        selectedLevel.setVisible(true);
+		        selectedLevel.setBounds(player7.getBounds());
+		    }
+		});
+		player8.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        selectedLevel.setVisible(true);
+		        selectedLevel.setBounds(player8.getBounds());
+		    }
+		});
 		
-//		addComponentListener(new ComponentAdapter() {
-//            public void componentResized(ComponentEvent componentEvent) {
-//		        selectedLevel.setBounds(player1.getBounds());
-//		        selectedLevel.setBounds(player2.getBounds());
-//		        selectedLevel.setBounds(player3.getBounds());
-//
-//            }
-//        });
+
 		
 		JLabel lblNewLabel_1=new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/rectangle.png")));
