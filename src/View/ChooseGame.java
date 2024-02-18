@@ -24,7 +24,6 @@ public class ChooseGame extends JFrame {
 	 */
 	private static final long serialVersionUID = -7958152447515121679L;
 	private JPanel contentPane;
-	private JTextField textField;
 	int numCurrentPlayer=1;
 	int counter=1;
 	private int maxNumberOfPlayers=2;
@@ -58,6 +57,14 @@ public class ChooseGame extends JFrame {
 		difficltyLeve.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
         difficltyLeve.setHorizontalAlignment(SwingConstants.CENTER);
 		difficltyLeve.setBounds(97, 78, 155, 41);
+		
+		JLabel selectedLevel = new JLabel();
+		selectedLevel.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/selected.png")));		
+		selectedLevel.setBounds(37, 119, 101, 87);
+		contentPane.add(selectedLevel);
+		selectedLevel.setLayout(null);
+		selectedLevel.setVisible(false);
+		
 			
 		JLabel easy = new JLabel("easy");
 		easy.setForeground(Color.WHITE); // Set the foreground color to white
@@ -102,13 +109,13 @@ public class ChooseGame extends JFrame {
 		hardLevel.setLayout(null);
 		
         
-		JLabel selectedLevel = new JLabel();
-		selectedLevel.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/selected.png")));		
-		selectedLevel.setBounds(37, 119, 101, 87);
-		contentPane.add(selectedLevel);
-		selectedLevel.setLayout(null);
-		selectedLevel.setVisible(false);
-		
+//		JLabel selectedLevel = new JLabel();
+//		selectedLevel.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/selected.png")));		
+//		selectedLevel.setBounds(37, 119, 101, 87);
+//		contentPane.add(selectedLevel);
+//		selectedLevel.setLayout(null);
+//		selectedLevel.setVisible(false);
+//		
 		JLabel colorTaken = new JLabel();
 		colorTaken.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/taken.png")));		
 		//colorTaken.setBounds(37, 130, 101, 87);
@@ -117,7 +124,12 @@ public class ChooseGame extends JFrame {
 		colorTaken.setVisible(false);
 		
 		
-
+		JLabel numbers = new JLabel("2");
+		numbers.setForeground(Color.WHITE); // Set the foreground color to white
+		numbers.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
+		numbers.setHorizontalAlignment(SwingConstants.CENTER);
+		numbers.setBounds(450, 140, 69, 28);
+		contentPane.add(numbers); 
 		
 		easy.addMouseListener(new MouseAdapter() {
             @Override
@@ -126,10 +138,10 @@ public class ChooseGame extends JFrame {
         		isEasy=true;
         		isMedium=false;
         		isHard=false;
-                selectedLevel.setBounds(37, 130, 101, 87);
+                selectedLevel.setBounds(55, 120, 101, 87);
         		selectedLevel.setVisible(true);
         		maxNumberOfPlayers=3;
-                textField.setText(Integer.toString(2)); // Update the text field with the new value
+        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
 
             }
         });
@@ -141,10 +153,10 @@ public class ChooseGame extends JFrame {
         		isEasy=false;
         		isMedium=true;
         		isHard=false;
-                selectedLevel.setBounds(122, 130, 101, 87);
+                selectedLevel.setBounds(135, 120, 101, 87);
         		selectedLevel.setVisible(true);
         		maxNumberOfPlayers=6;
-                textField.setText(Integer.toString(2)); // Update the text field with the new value
+        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
 
             }
         });
@@ -156,10 +168,10 @@ public class ChooseGame extends JFrame {
         		isEasy=false;
         		isMedium=false;
         		isHard=true;
-                selectedLevel.setBounds(197, 130, 101, 87);
+                selectedLevel.setBounds(215, 120, 101, 87);
         		selectedLevel.setVisible(true);
         		maxNumberOfPlayers=8;
-                textField.setText(Integer.toString(2)); // Update the text field with the new value
+        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
 
 
             }
@@ -181,42 +193,44 @@ public class ChooseGame extends JFrame {
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setBounds(376, 84, 190, 28);
 		
+//		JLabel numbers = new JLabel("2");
+//		numbers.setForeground(Color.WHITE); // Set the foreground color to white
+//		numbers.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
+//		numbers.setHorizontalAlignment(SwingConstants.CENTER);
+//		numbers.setBounds(450, 140, 69, 28);
+//		contentPane.add(numbers); 
+		
 		 JLabel plus = new JLabel();
 	        plus.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/plus.png")));
-	        plus.setBounds(547, 107, 61, 87);
+	        plus.setBounds(530, 107, 61, 87);
 	        plus.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
-	                int currentNumberOfPlayers = Integer.parseInt(textField.getText());
+	                int currentNumberOfPlayers = Integer.parseInt(numbers.getText());
 	                if (isEasy && currentNumberOfPlayers < 3) {
 	                    currentNumberOfPlayers++;
-	                    textField.setText(Integer.toString(currentNumberOfPlayers));
+	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
 	                } else if (isMedium && currentNumberOfPlayers < 6) {
 	                    currentNumberOfPlayers++;
-	                    textField.setText(Integer.toString(currentNumberOfPlayers));
+	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
 	                } else if (isHard && currentNumberOfPlayers < 8) {
 	                    currentNumberOfPlayers++;
-	                    textField.setText(Integer.toString(currentNumberOfPlayers));
+	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
 	                }
 	            }
 	        });
 	        contentPane.add(plus);
-
-	        textField = new JTextField("2");
-	        textField.setBounds(451, 145, 86, 20);
-	        contentPane.add(textField);
-	        textField.setColumns(10);
     
 	        JLabel minus = new JLabel();
 	        minus.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/menus.png")));
-	        minus.setBounds(368, 107, 61, 87);
+	        minus.setBounds(386, 107, 61, 87);
 	        minus.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
-	                int currentNumberOfPlayers = Integer.parseInt(textField.getText());
+	                int currentNumberOfPlayers = Integer.parseInt(numbers.getText());
 	                if (currentNumberOfPlayers > 2) {
 	                    currentNumberOfPlayers--;
-	                    textField.setText(Integer.toString(currentNumberOfPlayers));
+	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
 	                }
 	            }
 	        });
@@ -252,7 +266,7 @@ public class ChooseGame extends JFrame {
 		player2.setBounds(232, 252, 122, 100);
 		contentPane.add(player2);
 		player2.setLayout(null);
-		
+
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setBounds(400, 281, 212, 41);
 		contentPane.add(layeredPane);
@@ -284,40 +298,28 @@ public class ChooseGame extends JFrame {
         });
 
 
-		
-        player1.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // Set selectedLevel to player1's position
-                selectedLevel.setVisible(false);
-                selectedLevel.setBounds(295, 281, 55, 55);
-                selectedLevel.setVisible(true);
-                
-                // Display colorTaken for other players
-                colorTaken.setBounds(230, 281, 55, 55); // Player 2 position
-                colorTaken.setVisible(true);
-                colorTaken.setBounds(165, 281, 55, 55); // Player 3 position
-                colorTaken.setVisible(true);
-            }
-        });
-
         player2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // Set selectedLevel to player2's position
                 selectedLevel.setVisible(false);
                 selectedLevel.setBounds(230, 281, 55, 55);
-                selectedLevel.setVisible(true);
+             //   selectedLevel.setVisible(true);
                 
                 // Display colorTaken for other players
-                colorTaken.setBounds(295, 281, 55, 55); // Player 1 position
-                colorTaken.setVisible(true);
-                colorTaken.setBounds(165, 281, 55, 55); // Player 3 position
-                colorTaken.setVisible(true);
+            //    colorTaken.setBounds(295, 281, 55, 55); // Player 1 position
+            //    colorTaken.setVisible(true);
+            //    colorTaken.setBounds(165, 281, 55, 55); // Player 3 position
+            //    colorTaken.setVisible(true);
             }
         });
 
-			
+        JLabel currentPlayer = new JLabel("player "+numCurrentPlayer);
+		currentPlayer.setForeground(Color.WHITE); // Set the foreground color to white
+		currentPlayer.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
+		currentPlayer.setHorizontalAlignment(SwingConstants.CENTER);
+		currentPlayer.setBounds(285, 230, 69, 28);
+		contentPane.add(currentPlayer); 	
 
 		JLabel next_1 = new JLabel();
 		next_1.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/rectangle.png")));
@@ -327,13 +329,8 @@ public class ChooseGame extends JFrame {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 		
 		/* next */
-		JLabel currentPlayer = new JLabel("player "+numCurrentPlayer);
-		currentPlayer.setForeground(Color.WHITE); // Set the foreground color to white
-		currentPlayer.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
-		currentPlayer.setHorizontalAlignment(SwingConstants.CENTER);
-		currentPlayer.setBounds(285, 230, 69, 28);
-		contentPane.add(currentPlayer); 
-		
+
+
 		JLabel difficltyLeve_1 = new JLabel("next");
 		difficltyLeve_1.setHorizontalAlignment(SwingConstants.CENTER);
 		difficltyLeve_1.setForeground(Color.WHITE);
@@ -351,7 +348,7 @@ public class ChooseGame extends JFrame {
 		next.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
-		    	int playersNumber = Integer.parseInt(textField.getText());
+		    	int playersNumber = Integer.parseInt(numbers.getText());
                 if (isEasy && counter < playersNumber) {
 		    	  counter++; // Increment numCurrentPlayer
 		        currentPlayer.setText("player " + counter); // Update currentPlayer label text
@@ -391,6 +388,9 @@ public class ChooseGame extends JFrame {
 		lblNewLabel.setBounds(0, 0,671,442);
 		contentPane.add(lblNewLabel);
 		
+		
+		
+
 		
 		
 		
