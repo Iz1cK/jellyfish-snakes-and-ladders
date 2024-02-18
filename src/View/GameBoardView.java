@@ -40,13 +40,11 @@ public class GameBoardView extends JFrame {
     private Timer timer;
     private long startTime;
     private ImageIcon originalIcon;
-//    private JLabel diceLabel;
     
-    //Temp data for testing frontend without controller
-    private static HashMap<Player,Integer> playersPositions;
-    private static ArrayList<Player> players;
-    private static Player currentPlayer;
+    private static ArrayList<Player> playersList;
     private static Square[][] squares;
+    private static HashMap<Player,Integer> playersPositions;
+    private static Player currentPlayer;
     /**
      * Launch the application.
      */
@@ -54,32 +52,33 @@ public class GameBoardView extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+                    //Temp data for testing frontend without controller
                     
                     Player player1 = new Player(0,"Kuala",PLAYERCOLORS.ORANGE);
                     Player player2 = new Player(1,"Mori",PLAYERCOLORS.WHITE);
                     Player player3 = new Player(2,"Mario",PLAYERCOLORS.PINK);
                     
-                    players = new ArrayList<>();
-                    players.add(player1);
-                    players.add(player2);
-                    players.add(player3);
+                    playersList = new ArrayList<>();
+                    playersList.add(player1);
+                    playersList.add(player2);
+                    playersList.add(player3);
                     
-                    currentPlayer = player2;
+                    currentPlayer = player1;
                     
                     playersPositions = new HashMap<>();
                     playersPositions.put(player1, 35);
                     playersPositions.put(player2, 29);
                     playersPositions.put(player3, 2);
                     
-                    Board board = new Board(DIFFICULTY.MEDIUM);
+                    Board board = new Board(DIFFICULTY.HARD);
                     
                     board.generateBoard();
                     
+                    DIFFICULTY difficulty = board.getDifficultyBoard();
+                    
                     squares = board.getSquares();
                     
-                    System.out.println(squares.length);
-                    
-                    GameBoardView frame = new GameBoardView(board.getDifficultyBoard());
+                    GameBoardView frame = new GameBoardView(playersList, difficulty, true);
                   frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                     frame.setVisible(true);
                 } catch (Exception e) {
@@ -92,7 +91,23 @@ public class GameBoardView extends JFrame {
     /**
      * Create the frame.
      */
-    public GameBoardView(DIFFICULTY diff) {
+    public GameBoardView(ArrayList<Player> players, DIFFICULTY diff, boolean isMain) {
+    	
+    	
+    	//Initializing the board and playersPositions
+    	if(!isMain) {
+    		Board board = new Board(DIFFICULTY.HARD);
+    		board.generateBoard();
+    		squares = board.getSquares();
+    		playersPositions = new HashMap<>();
+    		
+    		for(Player player : players) {
+    			playersPositions.put(player, 1);
+    		}
+    		
+    		currentPlayer = players.get(0);
+    	}
+    	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1280, 720);
         contentPane = new JPanel();
@@ -151,6 +166,7 @@ public class GameBoardView extends JFrame {
         JPanel timerPanel = new JPanel();
         timerPanel.setBounds((int) (getWidth() + 100), (int) (getHeight() - 100), 400, 50);
         
+
         // Timer setup
         timerLabel = new JLabel("00:00.00", SwingConstants.CENTER);
         timerLabel.setFont(labelFont);
@@ -266,7 +282,7 @@ public class GameBoardView extends JFrame {
                 timerPanel.revalidate();
                 timerPanel.repaint();
                 playersPanel.setBounds(getWidth() - 560, y, 300, 381);
-                updatePlayerPositionsOnBoard(diff, overlayPanel, squares.length, squares[0].length);
+                updatePlayerPositionsOnBoard(diff, players, playersPositions, overlayPanel, squares.length, squares[0].length);
                 diceLabel.setBounds(getWidth() - 560 + 100, getHeight() - 250, 100, 100);//getWidth() - 560 + playerPanelWidth/2
                 contentPane.revalidate();
                 contentPane.repaint();
@@ -296,7 +312,7 @@ public class GameBoardView extends JFrame {
      * Update the players positions on the board
      * !! still need to handle multiple players on the same square in Iteration 3
      */
-    private void updatePlayerPositionsOnBoard(DIFFICULTY diff, JPanel boardPanel, int rows, int cols) {
+    private void updatePlayerPositionsOnBoard(DIFFICULTY diff, ArrayList<Player> players,HashMap<Player,Integer> playersPositions ,JPanel boardPanel, int rows, int cols) {
         int boardWidth = boardPanel.getWidth();
         int boardHeight = boardPanel.getHeight();
         
