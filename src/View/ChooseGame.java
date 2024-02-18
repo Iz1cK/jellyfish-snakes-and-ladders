@@ -72,6 +72,13 @@ public class ChooseGame extends JFrame {
 		selectedLevel.setLayout(null);
 		selectedLevel.setVisible(false);
 		
+//		JLabel colorIsTaken = new JLabel();
+//		colorIsTaken.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/taken.png")));		
+//		colorIsTaken.setBounds(0, 0, 50, 67);
+//		contentPane.add(colorIsTaken);
+//		colorIsTaken.setLayout(null);
+//		colorIsTaken.setVisible(true);
+		
 			
 		JLabel easy = new JLabel("easy");
 		easy.setForeground(Color.WHITE); // Set the foreground color to white
@@ -392,25 +399,16 @@ public class ChooseGame extends JFrame {
 		            difficltyLeve_1.setText("play");
 		        }
 		        
+		        if(difficltyLeve_1.getText().equals("play")) {
+//		        	GameBoardView startGame= new GameBoardView(selectedDifficulty);
+//		        	startGame.setVisible(true);
+//		        	dispose();
+		        }
 		        // Display selectedLevel on each player
 		        if (selectedLevel.isVisible()) {
 		            selectedLevel.setVisible(false); // Hide selectedLevel if it's currently visible
 		        }
-		        // Set bounds of selectedLevel to match the bounds of the clicked player label
-//		        switch (counter) {
-//		            case 1:
-//		                selectedLevel.setBounds(player1.getBounds());
-//		                break;
-//		            case 2:
-//		                selectedLevel.setBounds(player2.getBounds());
-//		                break;
-//		            case 3:
-//		                selectedLevel.setBounds(player3.getBounds());
-//		                break;
-//		            // Add more cases for additional players if needed
-//		            default:
-//		                break;
-//		        }
+		      
 		        selectedLevel.setVisible(true); // Show selectedLevel
 		    }
 		});
@@ -475,14 +473,7 @@ public class ChooseGame extends JFrame {
 		    }
 		});
 		
-//		addComponentListener(new ComponentAdapter() {
-//            public void componentResized(ComponentEvent componentEvent) {
-//		        selectedLevel.setBounds(player1.getBounds());
-//		        selectedLevel.setBounds(player2.getBounds());
-//		        selectedLevel.setBounds(player3.getBounds());
-//
-//            }
-//        });
+
 		
 		JLabel lblNewLabel_1=new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/rectangle.png")));
