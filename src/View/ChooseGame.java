@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Model.DIFFICULTY;
+import Model.Player;
 
 import javax.swing.SwingConstants;
 
@@ -22,6 +23,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.JTextField;
 
 public class ChooseGame extends JFrame {
@@ -370,16 +373,15 @@ public class ChooseGame extends JFrame {
 		difficltyLeve_1.setHorizontalAlignment(SwingConstants.CENTER);
 		difficltyLeve_1.setForeground(Color.WHITE);
 		difficltyLeve_1.setFont(new Font("Dialog", Font.BOLD, 15));
-		difficltyLeve_1.setBounds(252, 380, 155, 41);
+		difficltyLeve_1.setBounds(337, 373, 155, 41);
 		contentPane.add(difficltyLeve_1);
 		
 		JLabel next = new JLabel();
 		next.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/rectangle.png")));		
-		next.setBounds(261, 380, 129, 41);
+		next.setBounds(337, 373, 129, 41);
 		contentPane.add(next);
 		next.setLayout(null);
 		
-		 
 
 		next.addMouseListener(new MouseAdapter() {
 		    @Override
@@ -399,12 +401,12 @@ public class ChooseGame extends JFrame {
 		            difficltyLeve_1.setText("play");
 		        }
 		        
-		        if(difficltyLeve_1.getText().equals("play")) {
-//		        	GameBoardView startGame= new GameBoardView(selectedDifficulty);
+//		        if(difficltyLeve_1.getText().equals("play")) {
+//	        	GameBoardView startGame= new GameBoardView(new ArrayList<Player>(),selectedDifficulty,false);
 //		        	startGame.setVisible(true);
 //		        	dispose();
-		        }
-		        // Display selectedLevel on each player
+//		        }
+		      //   Display selectedLevel on each player
 		        if (selectedLevel.isVisible()) {
 		            selectedLevel.setVisible(false); // Hide selectedLevel if it's currently visible
 		        }
