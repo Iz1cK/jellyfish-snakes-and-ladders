@@ -453,8 +453,8 @@ public class Sysdata {
 	        	        		List<Player> playerss = new ArrayList<Player>();
 	        	        		
 	        	        		LocalDateTime time =LocalDateTime.of(2023, 2, 9, 23, 58);
-	        	        		Player newpl= new Player(1, "aseel");
-	        	        		Player newp2= new Player(1, "lna");
+	        	        		Player newpl= new Player(1, "aseel",PLAYERCOLORS.PINK);
+	        	        		Player newp2= new Player(1, "lna", PLAYERCOLORS.PURPLE);
 	        	        		playerss.add(newpl);
 	        	        		playerss.add(newp2);
 	        	        		Game newGame= new Game(numberss, 2, newpl, playerss, time);

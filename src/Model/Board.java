@@ -263,21 +263,24 @@ public class Board {
 		    for (int j = 0; j < this.columns; j++) {
 		        int columnIndex = leftToRight ? j : this.columns - 1 - j;
 		        double squareChance = Math.random();
-		        String squareType = "";
+//		        String squareType = "";
 		        if(squareChance < 0.1) {
 		            this.squares[i][columnIndex] = new QuesSquare(i,columnIndex);
-		            squareType = "Question Square";
+		            this.squares[i][columnIndex].calculatePosition(this.rows);
+//		            squareType = "Question Square";
 		            surpriseSquarePositions.add(count);
 		        } else if(squareChance >= 0.1 && squareChance < 0.2) {
 		            this.squares[i][columnIndex] = new SurpriseSquare(i,columnIndex);
-		            squareType = "Surprise Square";
+		            this.squares[i][columnIndex].calculatePosition(this.rows);
+//		            squareType = "Surprise Square";
 		            questionSquarePositions.add(count);
 		        } else {
 		            this.squares[i][columnIndex] = new Square(i,columnIndex);
-		            squareType = "Normal Square";
+		            this.squares[i][columnIndex].calculatePosition(this.rows);
+//		            squareType = "Normal Square";
 		        }
 		        count++;
-		        System.out.println("Square at " + count + " is: " + squareType);
+//		        System.out.println("Square at " + count + " is: " + squareType);
 		    }
 		}
 	}
