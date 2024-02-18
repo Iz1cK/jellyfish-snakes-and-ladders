@@ -3,6 +3,7 @@ package View;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -109,13 +110,7 @@ public class ChooseGame extends JFrame {
 		hardLevel.setLayout(null);
 		
         
-//		JLabel selectedLevel = new JLabel();
-//		selectedLevel.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/selected.png")));		
-//		selectedLevel.setBounds(37, 119, 101, 87);
-//		contentPane.add(selectedLevel);
-//		selectedLevel.setLayout(null);
-//		selectedLevel.setVisible(false);
-//		
+
 		JLabel colorTaken = new JLabel();
 		colorTaken.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/taken.png")));		
 		//colorTaken.setBounds(37, 130, 101, 87);
@@ -128,7 +123,7 @@ public class ChooseGame extends JFrame {
 		numbers.setForeground(Color.WHITE); // Set the foreground color to white
 		numbers.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
 		numbers.setHorizontalAlignment(SwingConstants.CENTER);
-		numbers.setBounds(450, 140, 69, 28);
+		numbers.setBounds(455, 107, 61, 87);
 		contentPane.add(numbers); 
 		
 		easy.addMouseListener(new MouseAdapter() {
@@ -193,12 +188,7 @@ public class ChooseGame extends JFrame {
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setBounds(376, 84, 190, 28);
 		
-//		JLabel numbers = new JLabel("2");
-//		numbers.setForeground(Color.WHITE); // Set the foreground color to white
-//		numbers.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
-//		numbers.setHorizontalAlignment(SwingConstants.CENTER);
-//		numbers.setBounds(450, 140, 69, 28);
-//		contentPane.add(numbers); 
+ 
 		
 		 JLabel plus = new JLabel();
 	        plus.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/plus.png")));
@@ -250,22 +240,36 @@ public class ChooseGame extends JFrame {
 
 		JLabel selectedColor = new JLabel();
 		selectedColor.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/selected.png")));		
-		selectedColor.setBounds(274, 269, 116, 71);
+		selectedColor.setBounds(27, 269, 116, 71);
 		contentPane.add(selectedColor);
 		selectedColor.setLayout(null);
 		selectedColor.setVisible(false); 
 		
 		JLabel player1 = new JLabel();
 		player1.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/player1.png")));		
-		player1.setBounds(43, 252, 252, 100);
+		player1.setBounds(-17, 252, 252, 100);
 		contentPane.add(player1);
 		player1.setLayout(null);
 		
 		JLabel player2 = new JLabel();
 		player2.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/player2.png")));	
-		player2.setBounds(232, 252, 122, 100);
+		player2.setBounds(49, 252, 122, 100);
 		contentPane.add(player2);
 		player2.setLayout(null);
+
+		JLabel player3 = new JLabel();
+		ImageIcon img1=new ImageIcon(ChooseGame.class.getResource("/img/purplePlayer.png"));
+		player3.setIcon(new ImageIcon(img1.getImage().getScaledInstance(51, 98, Image.SCALE_SMOOTH)));	
+		player3.setBounds(230, 256, 55,95);
+		contentPane.add(player3);
+		player3.setLayout(null);
+
+		JLabel player4 = new JLabel();
+		ImageIcon img2=new ImageIcon(ChooseGame.class.getResource("/img/pinkPlayer.png"));
+		player4.setIcon(new ImageIcon(img2.getImage().getScaledInstance(55, 95, Image.SCALE_SMOOTH)));	
+		player4.setBounds(280, 258, 55, 95);
+		contentPane.add(player4);
+		player4.setLayout(null);
 
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setBounds(400, 281, 212, 41);
@@ -297,6 +301,22 @@ public class ChooseGame extends JFrame {
             }
         });
 
+
+        player1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Set selectedLevel to player2's position
+                selectedLevel.setVisible(false);
+                selectedLevel.setBounds(230, 281, 55, 55);
+             //   selectedLevel.setVisible(true);
+                
+                // Display colorTaken for other players
+            //    colorTaken.setBounds(295, 281, 55, 55); // Player 1 position
+            //    colorTaken.setVisible(true);
+            //    colorTaken.setBounds(165, 281, 55, 55); // Player 3 position
+            //    colorTaken.setVisible(true);
+            }
+        });
 
         player2.addMouseListener(new MouseAdapter() {
             @Override
