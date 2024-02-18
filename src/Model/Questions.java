@@ -9,7 +9,7 @@ import com.google.gson.JsonObject;
 public class Questions {
 	private int questionId; //question id which represents an unique identifier for the question
 	private String question; //represents the questions content
-	private List<String> answers = new ArrayList<String>(); //holds the questionâ€™s answers.
+	private List<String> answers = new ArrayList<String>(); //holds the question’s answers.
 	private int correct_ans; //represents the index of the correct answer. in the answers data structure.
 	private int difficulty; //the questions difficulty, values could be one of {EASY,MEDIUM,HARD}.
 	//private int correctMove; //represents how many squares to move forward if answered correctly
@@ -22,6 +22,19 @@ public class Questions {
 		this.correct_ans = correct_ans;
 		this.difficulty = difficulty;
 	}
+	
+	/*public Questions( String question, List<String> answers, int correct_ans, int difficulty) {
+		super();
+		this.question = question;
+		this.answers = answers;
+		this.correct_ans = correct_ans;
+		this.difficulty = difficulty;
+	}*/
+
+	public Questions() {
+		super();
+	}
+
 
 	public Questions (JsonObject jsonObject) {
 		try {
