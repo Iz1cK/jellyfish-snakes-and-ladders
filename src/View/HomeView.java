@@ -77,6 +77,12 @@ public class HomeView extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				resetColor(startGamePanel);
 			}
+			public void mousePressed(MouseEvent e) {
+			 	ChooseGame chooseGame = new ChooseGame();
+			 	chooseGame.setVisible(true);
+			 	dispose();
+                }
+			
 		});
 		startGamePanel.setBounds(144, 255, 150, 150);
 		contentPane.add(startGamePanel);
@@ -179,6 +185,7 @@ public class HomeView extends JFrame {
 		
 		//exit
 		JPanel exitPanel = new JPanel();
+		
 		exitPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -210,11 +217,30 @@ public class HomeView extends JFrame {
 		exitPanel.add(exitIcon);
 		Sysdata sysdata= Sysdata.getInstance();
 		sysdata.readQuestions();
+
+		JLabel lblInstructionsIcon = new JLabel("");
+		lblInstructionsIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/circle_crop.png")));
+		lblInstructionsIcon.setBounds(10, 100,100,100);
+		contentPane.add(lblInstructionsIcon);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(HomeView.class.getResource("/img/homeBackground.png")));
-		lblNewLabel.setBounds(0, 0,650,650);
-		contentPane.add(lblNewLabel);
+		lblInstructionsIcon.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				InstructionsView instructions = new InstructionsView();
+				instructions.setVisible(true);
+				dispose();
+			}
+		});
+		
+		
+		/*
+		 * background icon	
+		 */
+		
+		JLabel lblBackground = new JLabel("");
+		lblBackground.setIcon(new ImageIcon(HomeView.class.getResource("/img/homeBackground.png")));
+		lblBackground.setBounds(0, 0,650,650);
+		contentPane.add(lblBackground);
 		
 	}	
 
