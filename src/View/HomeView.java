@@ -177,6 +177,7 @@ public class HomeView extends JFrame {
 		
 		//exit
 		JPanel exitPanel = new JPanel();
+		
 		exitPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -207,11 +208,35 @@ public class HomeView extends JFrame {
 		exitIcon.setBounds(59, 26, 59, 63);
 		exitPanel.add(exitIcon);
 		
+
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(HomeView.class.getResource("/img/homeBackground.png")));
-		lblNewLabel.setBounds(0, 0,650,650);
-		contentPane.add(lblNewLabel);
+		
+		
+		
+		
+		JLabel lblInstructionsIcon = new JLabel("");
+		lblInstructionsIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/circle_crop.png")));
+		lblInstructionsIcon.setBounds(10, 100,100,100);
+		contentPane.add(lblInstructionsIcon);
+		
+		lblInstructionsIcon.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				InstructionsView instructions = new InstructionsView();
+				instructions.setVisible(true);
+				dispose();
+			}
+		});
+		
+		
+		/*
+		 * background icon	
+		 */
+		
+		JLabel lblBackground = new JLabel("");
+		lblBackground.setIcon(new ImageIcon(HomeView.class.getResource("/img/homeBackground.png")));
+		lblBackground.setBounds(0, 0,650,650);
+		contentPane.add(lblBackground);
 		
 	}
 	
