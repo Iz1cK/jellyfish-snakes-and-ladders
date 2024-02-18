@@ -10,8 +10,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Controller.AdminAuthentication;
+import Model.Admin;
+import Model.Sysdata;
 
 public class AdminView extends JFrame implements ActionListener{
 
@@ -92,14 +97,19 @@ public class AdminView extends JFrame implements ActionListener{
 		JButton login = new JButton("Login");
 		login.setBounds(265,500,80,30);
 		login.addActionListener(new ActionListener() {
-			//TODO change later to save inputs from textfields and validate inputs
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				QuestionsView qv = new QuestionsView();
-				qv.setVisible(true);
-				dispose();
-				
-				
+			if(AdminAuthentication.authenticateAdmin(txtUsername.getText(), txtPassword.getText()))
+			{
+			QuestionsView qv = new QuestionsView();
+			qv.setVisible(true);
+			dispose();
+			}
+			else 
+			{
+				JOptionPane.showMessageDialog(contentPane, "at least one field is incorrect");
+			}
 			}
 		});
 		

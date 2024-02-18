@@ -261,6 +261,14 @@ public class Sysdata {
 		
 		/*********************************Admins*******************************************/
 		
+		
+		public List<Admin> getAdmins()
+		{
+			return adminList;
+		}
+		
+		
+		/*********************************************************************************/
 		public void readAdmins() {
 			adminList = new ArrayList<Admin>();
 			try {
