@@ -11,6 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Model.DIFFICULTY;
+
 import javax.swing.SwingConstants;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -29,7 +32,7 @@ public class ChooseGame extends JFrame {
 	int counter=1;
 	private int maxNumberOfPlayers=2;
 	private boolean isEasy=false, isMedium=false, isHard=false;
-
+	DIFFICULTY selectedDifficulty;
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -129,6 +132,7 @@ public class ChooseGame extends JFrame {
 		easy.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+            	selectedDifficulty=DIFFICULTY.EASY;
         		selectedLevel.setVisible(false);
         		isEasy=true;
         		isMedium=false;
@@ -144,6 +148,7 @@ public class ChooseGame extends JFrame {
         medium.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+            	selectedDifficulty=DIFFICULTY.MEDIUM;
         		selectedLevel.setVisible(false);
         		isEasy=false;
         		isMedium=true;
@@ -159,6 +164,7 @@ public class ChooseGame extends JFrame {
         hard.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+            	selectedDifficulty=DIFFICULTY.HARD;
         		selectedLevel.setVisible(false);
         		isEasy=false;
         		isMedium=false;
@@ -384,9 +390,16 @@ public class ChooseGame extends JFrame {
                   }
                 if (counter==playersNumber)
                      difficltyLeve_1.setText("play");
+             
+              if (difficltyLeve_1.getText().equals("play")) {
+            	//  GameBoardView startGame= new GameBoardView(selectedDifficulty);
+                //         startGame.setVisible(true);
+                //         dispose();
+              }
 		    }
 		});
 
+		
 		
 		JLabel lblNewLabel_1=new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/rectangle.png")));
