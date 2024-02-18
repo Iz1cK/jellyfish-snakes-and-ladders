@@ -9,6 +9,8 @@ public class AdminAuthentication {
 	public static boolean authenticateAdmin(String username, String password) {
 		Sysdata.getInstance().readAdmins();
 		List<Admin> admins = Sysdata.getInstance().getAdmins();
+		if(username==null || password== null)
+			return false;
 		if(admins==null)
 			return false;
 		for(Admin a: admins)

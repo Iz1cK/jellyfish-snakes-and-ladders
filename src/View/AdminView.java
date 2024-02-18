@@ -110,13 +110,7 @@ public class AdminView extends JFrame implements ActionListener{
 			{
 				JOptionPane.showMessageDialog(contentPane, "at least one field is incorrect");
 			}
-
-				QuestionsView qv = new QuestionsView();
-				qv.setVisible(true);
-				dispose();
-				
-				
-
+			
 			}
 		});
 		
