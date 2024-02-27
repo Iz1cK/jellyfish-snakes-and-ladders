@@ -1,7 +1,6 @@
 package Model;
 
 public class QuesSquare extends Square{
-	private Questions quesSeq;
 	
 	public QuesSquare(int numberPosition) {
 		super(numberPosition);
@@ -11,17 +10,15 @@ public class QuesSquare extends Square{
 		super(row,column);
 	}
 
-	public Questions getQuesSeq() {
-		return quesSeq;
+	public QuesSquare() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setQuesSeq(Questions quesSeq) {
-		this.quesSeq = quesSeq;
-	}
+	
 
 	@Override
 	public String toString() {
-		return "QuesSquare [quesSeq=" + quesSeq + "]";
+		return "QuesSquare ";
 	}
 	public void print() {
 		System.out.print("check");

@@ -2,8 +2,7 @@ package Model;
 
 import java.util.Random;
 
-public class SurpriseSquare extends Square{
-	private int moveCount;
+public class SurpriseSquare extends Square {
 	public SurpriseSquare(int numberPosition) {
 		super(numberPosition);
 	}
@@ -12,17 +11,15 @@ public class SurpriseSquare extends Square{
 		super(row,column);
 	}
 	
-	 public int getMoveCount() {
-		return moveCount;
+	 public SurpriseSquare() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setMoveCount(int moveCount) {
-		this.moveCount = moveCount;
-	}
+
 
 	@Override
 	public String toString() {
-		return "SurpriseSquare [moveCount=" + moveCount + "]";
+		return "SurpriseSquare [moveCount=]";
 	}
 
 	/**
