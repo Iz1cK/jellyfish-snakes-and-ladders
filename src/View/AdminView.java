@@ -15,8 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Controller.AdminAuthentication;
-import Model.Admin;
-import Model.Sysdata;
 
 public class AdminView extends JFrame implements ActionListener{
 

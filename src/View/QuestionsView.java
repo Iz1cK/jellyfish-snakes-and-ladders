@@ -40,7 +40,6 @@ public class QuestionsView extends JFrame {
 	private JPanel contentPane;
 	private JTextField searchField;
 	private JButton searchButton;
-	private QuestionViewController controller;
 	private JScrollPane jScrollPane1;
 	private JTable table;
 	private static final long serialVersionUID = -2878161185923702132L;
@@ -91,6 +90,7 @@ public class QuestionsView extends JFrame {
 		newQuestionButton.setPreferredSize(new Dimension(0,0));
 		newQuestionButton.addActionListener(new ActionListener() {
 			
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
@@ -139,7 +139,7 @@ public class QuestionsView extends JFrame {
         TableActionEvent event = new TableActionEvent() {
             @Override
             public void onEdit(int row) {
-            	controller.onEdit(row);
+            	QuestionViewController.onEdit(row);
                 dispose();
             }
 
@@ -154,14 +154,19 @@ public class QuestionsView extends JFrame {
 
             @Override
             public void onView(int row) {
-            	controller.onView(row);
+            	QuestionViewController.onView(row);
             	dispose();
             	}
             };
             table.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRender());
             table.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditor(event));
             table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
-            	@Override
+            	/**
+				 * 
+				 */
+				private static final long serialVersionUID = -1511493321397500091L;
+
+				@Override
             	public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
             		setHorizontalAlignment(SwingConstants.RIGHT);
             		return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
@@ -237,7 +242,11 @@ public class QuestionsView extends JFrame {
    
     // End of variables declaration//GEN-END:variables
     class ActionButton extends JButton {
-        private boolean mousePress;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -7507840410275025890L;
+		private boolean mousePress;
 
         public ActionButton() {
             setContentAreaFilled(false);
@@ -277,7 +286,11 @@ public class QuestionsView extends JFrame {
 
     // Inner class for the panel containing action buttons
     class PanelAction extends JPanel {
-        private ActionButton cmdDelete;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -459439724159862840L;
+		private ActionButton cmdDelete;
         private ActionButton cmdEdit;
         private ActionButton cmdView;
 
@@ -358,7 +371,11 @@ public class QuestionsView extends JFrame {
 
     // Inner class for cell editor
     class TableActionCellEditor extends DefaultCellEditor {
-        private TableActionEvent event;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -297107065217334152L;
+		private TableActionEvent event;
 
         public TableActionCellEditor(TableActionEvent event) {
             super(new JCheckBox());
@@ -374,7 +391,12 @@ public class QuestionsView extends JFrame {
 
     // Inner class for cell renderer
     class TableActionCellRender extends DefaultTableCellRenderer {
-        @Override
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 4723955739566072681L;
+
+		@Override
         public Component getTableCellRendererComponent(JTable jtable, Object o, boolean isSeleted, boolean bln1, int row, int column) {
             Component com = super.getTableCellRendererComponent(jtable, o, isSeleted, bln1, row, column);
             PanelAction action = new PanelAction(null, row);

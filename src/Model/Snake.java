@@ -21,23 +21,7 @@ public class Snake {
 		super();
 	}
 	
-	public void setStartAndDest( ArrayList<Integer> questions, ArrayList<Integer> surprise, int numberOfSnakes, int boardSize) {
-		int snakeStart;
-		for(int i=1;i <= numberOfSnakes; i++) {
-		snakeStart = getRandom(boardSize + 1 + (i-1), boardSize*boardSize + 1);
-		while(questions.contains(snakeStart) || surprise.contains(snakeStart))
-			snakeStart = getRandom(boardSize + 1 + (i-1)*boardSize, boardSize*boardSize + 1);
-			// SNAKE HEAD
-			System.out.println("Snake Start: " + snakeStart);
-			headSquare = new Square(snakeStart);
-			// SNAKE TAIL
-			int row = (int) Math.floor(snakeStart/boardSize);
-			int snakeEnd = getRandom(boardSize*(row-i) + 1, boardSize*row + (i-1));
-			System.out.println("Snake End: "  + snakeEnd);
-			tailSquare = new Square(snakeEnd);
-		}
-            
-    }
+
 	
 	public String getSnakeID() {
 		return snakeID;
@@ -90,15 +74,7 @@ public class Snake {
 	        return from + new Random().nextInt(Math.abs(to - from));
 	    return from - new Random().nextInt(Math.abs(to - from));
 	}
-	// for testing the methods
-	public static void main(String[] args) {
-		Snake snake = new Snake();
-		ArrayList<Integer> questions = new ArrayList<>();
-		questions.add(10);
-		ArrayList<Integer> surprise = new ArrayList<>();
-		surprise.add(16);
-		snake.setStartAndDest(questions,surprise,4,10);
-	}
+
 	
 
 }

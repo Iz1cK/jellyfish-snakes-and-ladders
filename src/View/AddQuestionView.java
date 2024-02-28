@@ -27,6 +27,10 @@ import javax.swing.JRadioButton;
 
 public class AddQuestionView extends JFrame implements ActionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField obtion1TeksField;
 
@@ -40,7 +44,8 @@ public class AddQuestionView extends JFrame implements ActionListener{
 	private JTextField obtion2TextField;
 	private JTextField obtion4textField;
 	private JButton addQuestion;
-	private JComboBox comboBox;
+	@SuppressWarnings("rawtypes")
+	private JComboBox<Comparable> comboBox;
 	private JRadioButton easy;
 	private JRadioButton medium;
 	private JRadioButton hard;
@@ -71,6 +76,7 @@ public class AddQuestionView extends JFrame implements ActionListener{
 		initComponents();
 		//fetchAndRefresh();
 }
+	@SuppressWarnings("rawtypes")
 	private void initComponents() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 100, 822, 532);
@@ -183,7 +189,7 @@ public class AddQuestionView extends JFrame implements ActionListener{
 		correctAns.setBounds(28, 15, 162, 25);
 		correctDiffPanel.add(correctAns);
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<Comparable>();
 		comboBox.setBounds(158, 17, 84, 22);
 		comboBox.addItem("...");
 		comboBox.addItem(1);

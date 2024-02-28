@@ -69,5 +69,13 @@ public class Square {
             this.position = this.row * boardSize + (boardSize - this.column - 1) + 1;
         }
     }
+
+	@Override
+	public String toString() {
+		return "Square [position=" + position + ", row=" + row + ", column=" + column + ", squareColor=" + squareColor
+				+ "]";
+	}
+	
+	
 	
 }

@@ -12,13 +12,14 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Controller.GameBoardController;
+import Model.Board;
 import Model.DIFFICULTY;
+import Model.PLAYERCOLORS;
 import Model.Player;
 
 import javax.swing.SwingConstants;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
@@ -36,7 +37,6 @@ public class ChooseGame extends JFrame {
 	private JPanel contentPane;
 	int numCurrentPlayer=1;
 	int counter=1;
-	private int maxNumberOfPlayers=2;
 	private boolean isEasy=false, isMedium=false, isHard=false;
 	DIFFICULTY selectedDifficulty;
     public static void main(String[] args) {
@@ -150,7 +150,6 @@ public class ChooseGame extends JFrame {
         		isHard=false;
                 selectedLevel.setBounds(55, 120, 101, 87);
         		selectedLevel.setVisible(true);
-        		maxNumberOfPlayers=3;
         		numbers.setText(Integer.toString(2)); // Update the text field with the new value
 
             }
@@ -166,7 +165,6 @@ public class ChooseGame extends JFrame {
         		isHard=false;
                 selectedLevel.setBounds(135, 120, 101, 87);
         		selectedLevel.setVisible(true);
-        		maxNumberOfPlayers=6;
         		numbers.setText(Integer.toString(2)); // Update the text field with the new value
 
             }
@@ -182,7 +180,6 @@ public class ChooseGame extends JFrame {
         		isHard=true;
                 selectedLevel.setBounds(215, 120, 101, 87);
         		selectedLevel.setVisible(true);
-        		maxNumberOfPlayers=8;
         		numbers.setText(Integer.toString(2)); // Update the text field with the new value
             }
         });
@@ -401,11 +398,21 @@ public class ChooseGame extends JFrame {
 		            difficltyLeve_1.setText("play");
 		        }
 		        
-//		        if(difficltyLeve_1.getText().equals("play")) {
-//	        	GameBoardView startGame= new GameBoardView(new ArrayList<Player>(),selectedDifficulty,false);
-//		        	startGame.setVisible(true);
-//		        	dispose();
-//		        }
+		        if(difficltyLeve_1.getText().equals("play")) {
+		        GameBoardController GBC = GameBoardController.getInstance();
+		        ArrayList<Player> players = new ArrayList<>();
+		        players.add(new Player(0,"george",PLAYERCOLORS.BLUE));
+		        players.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
+		        players.add(new Player(2,"lana",PLAYERCOLORS.RED));
+		        players.add(new Player(3,"aseel",PLAYERCOLORS.PURPLE));
+		        Board board = new Board(selectedDifficulty,players);
+		        board.generateBoard();
+		        GBC.setGameBoard(board);
+	        	GameBoardView startGame= new GameBoardView();
+		        	startGame.setVisible(true);
+		        	startGame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		        	dispose();
+		        }
 		      //   Display selectedLevel on each player
 		        if (selectedLevel.isVisible()) {
 		            selectedLevel.setVisible(false); // Hide selectedLevel if it's currently visible

@@ -26,7 +26,7 @@ public class Board {
 	private ArrayList<String> diceOptions;
 	
 	// Main Board constructor, creates all basic board elements from the difficulty, like rows and columns , and then initializes all other data structures
-	public Board(DIFFICULTY difficultyBoard) {
+	public Board(DIFFICULTY difficultyBoard, ArrayList<Player> players) {
 		super();
 		this.boardId = ++lastBoardId;
 		this.difficultyBoard = difficultyBoard;
@@ -57,14 +57,18 @@ public class Board {
 		this.squares = new Square[this.rows][this.columns];
 		this.surpriseSquarePositions = new ArrayList<>();
 		this.questionSquarePositions = new ArrayList<>();
-		this.ladders = new ArrayList<>();
-		this.players = new ArrayList<>();
-		this.snakes = new ArrayList<>();
 		this.playersPositions = new HashMap<>();
-		this.currentPlayerTurn = new Player();
+		this.ladders = new ArrayList<>();
+		if(players == null) {
+			this.players = new ArrayList<>();
+		} else this.players = players; 
+		for(Player p : players) {
+			this.playersPositions.put(p, 1);
+		}
+		this.snakes = new ArrayList<>();
+		this.currentPlayerTurn = players.get(0);
 	}
-	
-	
+
 	public ArrayList<Integer> getQuestionSquarePositions() {
 		return questionSquarePositions;
 	}
@@ -114,7 +118,7 @@ public class Board {
                                 break;
                         }
                     }
-                    board = new Board(difficulty); // initializes the board
+                    board = new Board(difficulty, null); // initializes the board
                     board.generateBoard(); // generates the squares for the board
                     System.out.println("Board created with difficulty: " + difficulty);
                     break;

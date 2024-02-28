@@ -1,6 +1,5 @@
 package View;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -20,6 +19,10 @@ import javax.swing.border.EmptyBorder;
 
 public class InstructionsView2 extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7108532504413472904L;
 	private JPanel contentPane;
 
 	/**
