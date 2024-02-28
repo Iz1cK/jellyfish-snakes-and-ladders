@@ -358,9 +358,28 @@ public class Board {
 	
 	public void moveFromSurpriseSquare(SurpriseSquareController c) {
 		c.movePlayerToDestination(playersPositions, currentPlayerTurn);
-		// TODO checkLandingSquare(playersPositions.get(currentPlayerTurn));
-		
+		checkLandingSquare(getSquareByPosition(playersPositions.get(currentPlayerTurn)));
 	}
+	
+	
+	
+	private Square getSquareByPosition(int position) {
+		Square square = null;
+		for(int i = 0; i < this.squares.length; i++) {
+			for(int j = 0; j< this.squares[0].length; i++) {
+				this.squares[i][j].calculatePosition(this.rows);
+				if(this.squares[i][j].getPosition() == position) {
+					
+					square = this.squares[i][j];
+				}
+			}
+		}
+		return square;
+	}
+	
+	
+	
+	
 	
 	/*
 	 * checkWinner()
