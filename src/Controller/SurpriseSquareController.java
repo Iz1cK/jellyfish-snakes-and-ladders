@@ -48,7 +48,7 @@ public class SurpriseSquareController {
 	
 	
 
-
+	
 	/*
 	 * method that updates position of a player that landed
 	 * on a surprise square, 10 squares backward/ forward 
