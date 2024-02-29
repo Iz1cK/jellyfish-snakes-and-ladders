@@ -41,6 +41,7 @@ public class ChooseGame extends JFrame {
 	int playersCounter=0;
 	int colorsCounter=0;
 	int playersNumber=0;
+	int currentNumberOfPlayers=0;
 	private boolean isEasy=false, isMedium=false, isHard=false;
 	DIFFICULTY selectedDifficulty;
 	Boolean playerN1=false, playerN2=false,playerN3=false, playerN4=false, playerN5=false, playerN6=false, playerN7=false,playerN8=false;
@@ -232,7 +233,7 @@ public class ChooseGame extends JFrame {
 	        plus.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
-	               int currentNumberOfPlayers = Integer.parseInt(numbers.getText());
+	                currentNumberOfPlayers = Integer.parseInt(numbers.getText());
 	                
 	                if (isEasy && currentNumberOfPlayers < 3) {
 	                    currentNumberOfPlayers++;
@@ -244,11 +245,16 @@ public class ChooseGame extends JFrame {
 	                    currentNumberOfPlayers++;
 	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
 	                }
-	                playersNumber=currentNumberOfPlayers;
+	               playersNumber=currentNumberOfPlayers;
+	              // System.out.print(currentNumberOfPlayers);
 	            }
 	        });
 	        contentPane.add(plus);
     
+	        
+	        System.out.println(currentNumberOfPlayers);
+	        
+	        
 	        JLabel minus = new JLabel();
 	        minus.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/menus.png")));
 	        minus.setBounds(386, 107, 61, 87);
@@ -259,13 +265,14 @@ public class ChooseGame extends JFrame {
 	                if (currentNumberOfPlayers > 2) {
 	                    currentNumberOfPlayers--;
 	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
-	                    playersNumber=currentNumberOfPlayers;
+	                  //  playersNumber=currentNumberOfPlayers;
 	                }
 	            }
 	        });
 	        contentPane.add(minus);
-
-	  
+	        
+	        playersNumber=Integer.valueOf(numbers.getText());
+	     //   System.out.print(playersNumber);
 		JLabel difficulyLabel = new JLabel();
 		difficulyLabel.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/rectangle.png")));		
 		difficulyLabel.setBounds(344, 47, 280, 151);
@@ -470,7 +477,7 @@ public class ChooseGame extends JFrame {
 //		    		System.out.println(colorsCounter);
 //		    		System.out.println(players);
 		    		//System.out.println(playersNumber);
-		    		if(colorsCounter<=players) {
+		    		if(colorsCounter<=currentNumberOfPlayers) {
 		    			selectedPlayer.setVisible(true);
 			    	    selectedPlayer.setBounds(player1.getBounds());
 			            playerN1=true;
@@ -487,7 +494,7 @@ public class ChooseGame extends JFrame {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
 		    	colorsCounter++;
-		    	if(colorsCounter<=players) {
+		    	if(colorsCounter<=currentNumberOfPlayers) {
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player2.getBounds());
 			        playerN2=true;
@@ -499,7 +506,10 @@ public class ChooseGame extends JFrame {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
 		    	colorsCounter++;
-		    	if(colorsCounter<=players) {
+		    	System.out.println(colorsCounter);
+		    	System.out.println(players);
+		    	if(colorsCounter<=currentNumberOfPlayers) {
+		    	//	System.out.println("test");
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player3.getBounds());
 			        playerN3=true;
@@ -511,7 +521,7 @@ public class ChooseGame extends JFrame {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
 		    	colorsCounter++;
-		    	if(colorsCounter<=players) {
+		    	if(colorsCounter<=currentNumberOfPlayers) {
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player4.getBounds());
 			        playerN4=true;
@@ -522,7 +532,7 @@ public class ChooseGame extends JFrame {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
 		    	colorsCounter++;
-		    	if(colorsCounter<=players) {
+		    	if(colorsCounter<=currentNumberOfPlayers) {
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player5.getBounds());
 			        playerN5=true;
@@ -533,7 +543,7 @@ public class ChooseGame extends JFrame {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
 		    	colorsCounter++;
-		    	if(colorsCounter<=players) {
+		    	if(colorsCounter<=currentNumberOfPlayers) {
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player6.getBounds());
 			        playerN6=true;
@@ -544,7 +554,7 @@ public class ChooseGame extends JFrame {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
 		    	colorsCounter++;
-		    	if(colorsCounter<=players) {
+		    	if(colorsCounter<=currentNumberOfPlayers) {
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player7.getBounds());
 		    	}   playerN7=true;
@@ -555,7 +565,7 @@ public class ChooseGame extends JFrame {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
 		    	colorsCounter++;
-		    	if(colorsCounter<=players) {
+		    	if(colorsCounter<=currentNumberOfPlayers) {
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player8.getBounds());
 			        playerN8=true;
@@ -651,7 +661,6 @@ public class ChooseGame extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		
-		
 		// ** LOGIC **//
 		next.addMouseListener(new MouseAdapter() {
 		    @Override
@@ -679,6 +688,9 @@ public class ChooseGame extends JFrame {
 		        //    System.out.println("Nickname: " + nickname);
 		            nicknameField.setText("");
 		        if(playerN1) {
+		        	
+		        	System.out.println(nickname);
+		        	System.out.println(nickname);
 		        	player1_1.setVisible(true);
 		     
 		        	selectedPlayer.setVisible(false);
