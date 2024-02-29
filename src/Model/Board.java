@@ -80,75 +80,17 @@ public class Board {
 	}
 
 	public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Board board = null; // Initialize the board as null
-        boolean running = true;
-
-        while (running) {
-            System.out.println("\nSelect an option:");
-            System.out.println("1 - Create and Generate Board");
-            System.out.println("2 - Roll Dice");
-            System.out.println("3 - Display Board");
-            System.out.println("4 - Exit");
-
-            System.out.print("Your choice: ");
-            int choice = scanner.nextInt();
-
-            switch (choice) {
-                case 1: // Handling the create and generate board option
-                    System.out.println("Creating a new board.");
-                    DIFFICULTY difficulty = DIFFICULTY.EASY;
-                    boolean valid = false;
-                    while (!valid) {
-                        System.out.println("Select difficulty (1 - Easy, 2 - Medium, 3 - Hard):");
-                        int difficultyChoice = scanner.nextInt();
-                        switch (difficultyChoice) { // deciding the difficulty of the board
-                            case 1:
-                                difficulty = DIFFICULTY.EASY;
-                                valid = true;
-                                break;
-                            case 2:
-                                difficulty = DIFFICULTY.MEDIUM;
-                                valid = true;
-                                break;
-                            case 3:
-                                difficulty = DIFFICULTY.HARD;
-                                valid = true;
-                                break;
-                            default:
-                                System.out.println("Invalid difficulty selected. Please try again.");
-                                break;
-                        }
-                    }
-                    board = new Board(difficulty, null); // initializes the board
-                    board.generateBoard(); // generates the squares for the board
-                    System.out.println("Board created with difficulty: " + difficulty);
-                    break;
-                case 2: // Rolls the dice and prints the result
-                    if (board == null) {
-                        System.out.println("Please create a board first.");
-                    } else {
-                        String result = board.rollDice(); // rolls the dice
-                        System.out.println("Rolled: " + result);
-                    }
-                    break;
-                case 3: // Prints the squares of the board
-                    if (board == null) {
-                        System.out.println("Please create and generate a board first.");
-                    } else {
-                        board.printBoard();
-                    }
-                    break;
-                case 4:
-                    System.out.println("Exiting...");
-                    running = false;
-                    break;
-                default:
-                    System.out.println("Invalid option, please try again.");
-                    break;
-            }
+		ArrayList<Player> players = new ArrayList<Player>();
+		players.add(new Player(0,"george",PLAYERCOLORS.BLUE));
+		Board board = new Board(DIFFICULTY.EASY, players);
+        board.generateBoard();
+        board.generateSnakesAndLadder();
+        for(int i=0;i<board.getSnakes().size(); i++) {
+        	System.out.println(board.getSnakes().get(i));
         }
-        scanner.close();
+        for(int i=0;i<board.getLadders().size(); i++) {
+        	System.out.println(board.getLadders().get(i));
+        }
     }
 
 	public Board() {
@@ -310,58 +252,102 @@ public class Board {
 		        {
 		        	 square =factory.getSquare("SurpriseSquare", i, columnIndex);
 		        	 this.squares[i][columnIndex] = (SurpriseSquare) square;
-//		            squareType = "Surprise Square";
 		        }
 		        	
 		        else if(questionSquarePositions.contains(getPositionByIdenxes(i,columnIndex)))
 		        {
 		        	 square =factory.getSquare("QuestionSquare", i, columnIndex);
 		        	 this.squares[i][columnIndex] = (QuesSquare) square;
-//		            squareType = "Question Square";
 		        }	
 		        else
 		        {
 		        	square =factory.getSquare("Square", i, columnIndex);
 		        	this.squares[i][columnIndex] = (Square) square;
-//		            squareType = "Normal Square";
 		        }
 		  
 		        this.squares[i][columnIndex].calculatePosition(this.rows);
 		        count++;
 		    }
 		}
-//		        System.out.println("Square at " + count + " is: " + squareType);
 	}
 	
-	/*
-	 * printBoard()
-	 * a function that loops over the squares of the
-	 * board and prints ? for question squares
-	 * ! for surprise squares
-	 * and + for normal squares
-	 */
-	private void printBoard() {
-	    if (this.squares == null) {
-	        System.out.println("The board has not been generated yet.");
-	        return;
-	    }
-
-	    for (int i = 0; i < this.squares.length; i++) {
-	        for (int j = 0; j < this.squares[i].length; j++) {
-	            if (this.squares[i][j] instanceof QuesSquare) {
-	                System.out.print("? ");
-	            } else if (this.squares[i][j] instanceof SurpriseSquare) {
-	                System.out.print("! ");
-	            } else {
-	                System.out.print("+ ");
-	            }
-	        }
-	        System.out.print("\n");
-	    }
+	public void generateSnakesAndLadder() {
+		int numberOfSnakes = 0;
+		int numberOfRedSnakes = 0;
+		int numberOfLadders = 0;
+		switch(this.difficultyBoard) {
+		case EASY:
+			numberOfSnakes = 3;
+			numberOfRedSnakes = 1;
+			numberOfLadders = 4;
+			break;
+		case MEDIUM:
+			numberOfSnakes = 4;
+			numberOfRedSnakes = 2;
+			numberOfLadders = 6;
+			break;
+		case HARD:
+			numberOfSnakes = 6;
+			numberOfRedSnakes = 2;
+			numberOfLadders = 8;
+			break;
+		}
+		int snakeStart;
+		int boardSize = this.rows;
+		int i;
+		for(i=0;i < numberOfSnakes; i++) {
+			snakeStart = getRandom(boardSize + 1 + (i-1), boardSize*boardSize + 1);
+			while(questionSquarePositions.contains(snakeStart) || surpriseSquarePositions.contains(snakeStart))
+				snakeStart = getRandom(boardSize + 1 + (i-1)*boardSize, boardSize*boardSize + 1);
+			// SNAKE HEAD
+			System.out.println("Snake Start: " + snakeStart);
+			Square headSquare = new Square(snakeStart);
+			headSquare.calculateRowAndColumn(this.getRows());
+			// SNAKE TAIL
+			int row = (int) Math.floor(snakeStart/boardSize);
+			int snakeEnd = getRandom(boardSize*(row-i) + 1, boardSize*row + (i-1));
+			while(questionSquarePositions.contains(snakeEnd) || surpriseSquarePositions.contains(snakeEnd))
+				snakeEnd = getRandom(boardSize*(row-i) + 1, boardSize*row + (i-1));
+			System.out.println("Snake End: "  + snakeEnd);
+			Square tailSquare = new Square(snakeEnd);
+			tailSquare.calculateRowAndColumn(this.getRows());
+			Snake snake = null;
+			switch(i%3) {
+			case 0:
+				snake = new Snake("" + i,headSquare,tailSquare,COLORS.YELLOW);
+				break;
+			case 1: 
+				snake = new Snake("" + i,headSquare,tailSquare,COLORS.GREEN);
+				break;
+			case 2: 
+				snake = new Snake("" + i,headSquare,tailSquare,COLORS.BLUE);
+				break;
+			}
+			snakes.add(snake);
+		}
+		snakeStart = getRandom(boardSize + 1 + (i-1), boardSize*boardSize + 1);
+		for(int j=i;j<numberOfRedSnakes+i;j++) {
+			while(questionSquarePositions.contains(snakeStart) || surpriseSquarePositions.contains(snakeStart))
+				snakeStart = getRandom(2, boardSize*boardSize + 1);
+			Square headSquare = new Square(snakeStart);
+			headSquare.calculateRowAndColumn(this.getRows());
+			snakes.add(new Snake("" + j,headSquare, null, COLORS.RED));
+		}
+		for(int k = 0; k < numberOfLadders; k++) {
+			int ladderStart = getRandom(2, boardSize*(boardSize-1));
+			while(questionSquarePositions.contains(ladderStart) || surpriseSquarePositions.contains(ladderStart))
+				ladderStart = getRandom(2, boardSize*boardSize-boardSize*k);
+			Square startSquare = new Square(ladderStart);
+			startSquare.calculateRowAndColumn(this.getRows());
+			int row = (int) Math.floor(ladderStart/boardSize);
+			int ladderEnd = getRandom(boardSize*(row+k) + 1, boardSize*(row+k) + boardSize);
+			while(questionSquarePositions.contains(ladderEnd) || surpriseSquarePositions.contains(ladderEnd))
+				ladderEnd = getRandom(boardSize*(row+k) + 1, boardSize*(row+k) + boardSize);
+			Square endSquare = new Square(ladderEnd);
+			endSquare.calculateRowAndColumn(this.getRows());
+			ladders.add(new Ladder("" + k,startSquare,endSquare));
+		}
 	}
-	
-	
-	
 	
 	/*
 	 * rollDice()
@@ -403,33 +389,13 @@ public class Board {
 		checkLandingSquare(getSquareByPosition(playersPositions.get(currentPlayerTurn)));
 	}
 	
-	
-	
-	private Square getSquareByPosition(int position) {
-		Square square = null;
-		for(int i = 0; i < this.squares.length; i++) {
-			for(int j = 0; j< this.squares[0].length; i++) {
-				this.squares[i][j].calculatePosition(this.rows);
-				if(this.squares[i][j].getPosition() == position) {
-					
-					square = this.squares[i][j];
-				}
-			}
-		}
-		return square;
-	}
-	
 	public int getPositionByIdenxes(int row, int column) {
         if (row % 2 == 0) { // Even row, numbers increase from left to right
             return row * this.rows + column + 1;
         } else { // Odd row, numbers increase from right to left
             return row * this.rows + (this.rows - column - 1) + 1;
         }}
-       
-	
-	
-	
-	
+
 	/*
 	 * checkWinner()
 	 * this function checks if a player has reached 

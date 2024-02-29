@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import Controller.GameBoardController;
 import Model.Board;
+import Model.COLORS;
 import Model.DIFFICULTY;
 import Model.Ladder;
 import Model.PLAYERCOLORS;
@@ -30,6 +32,7 @@ import Model.Square;
 import Model.SurpriseSquare;
 
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -46,11 +49,13 @@ public class GameBoardView extends JFrame {
 	private JPanel contentPane;
     private JLabel backgroundImage;
     private JLabel timerLabel;
+    private JPanel overlayPanel;
     private Timer timer;
     private long startTime;
     private ImageIcon originalIcon;
     
     private static ArrayList<Snake> snakes;
+    private static ArrayList<Ladder> ladders;
     /**
      * Launch the application.
      */
@@ -75,6 +80,16 @@ public class GameBoardView extends JFrame {
     public GameBoardView() {
     	
     	GameBoardController GBC = GameBoardController.getInstance();
+        ArrayList<Player> aplayers = new ArrayList<>();
+        aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
+        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
+        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
+        aplayers.add(new Player(3,"aseel",PLAYERCOLORS.PURPLE));
+        Board aboard = new Board(DIFFICULTY.EASY,aplayers);
+        aboard.generateBoard();
+        aboard.generateSnakesAndLadder();
+        GBC.setGameBoard(aboard);
+
     	Board board = GBC.getGameBoard();
     	ArrayList<Player> players = board.getPlayers();
     	DIFFICULTY diff = board.getDifficultyBoard();
@@ -82,9 +97,24 @@ public class GameBoardView extends JFrame {
         
         Square[][] squares = board.getSquares();
         System.out.println(squares[0][2]);
-        snakes = new ArrayList<>();
-        Snake snake1 = new Snake("0", squares[1][4], squares[0][2]);
-        snakes.add(snake1);
+        snakes = board.getSnakes();
+        ladders = board.getLadders();
+//        snakes = new ArrayList<>();
+//        Snake snake1 = new Snake("0", squares[6][0], squares[0][4], COLORS.BLUE);
+//        Snake snake2 = new Snake("1", squares[4][2], squares[1][1], COLORS.GREEN);
+//        Snake snake3 = new Snake("2", squares[3][5], squares[2][5], COLORS.RED);
+//        Snake snake4 = new Snake("3", squares[4][5], squares[2][2], COLORS.YELLOW);
+//
+//        snakes.add(snake1);
+//        snakes.add(snake2);
+//        snakes.add(snake3);
+//        snakes.add(snake4);
+//        
+//        ladders = new ArrayList<>();
+//        Ladder ladder1 = new Ladder("0", squares[3][6], squares[6][3]);
+//        Ladder ladder2 = new Ladder("1", squares[1][0], squares[4][0]);
+//        ladders.add(ladder1);
+//        ladders.add(ladder2);
     	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1280, 720);
@@ -226,7 +256,18 @@ public class GameBoardView extends JFrame {
         JLabel diceLabel = new JLabel(new ImageIcon(scaledDiceIcon));
         
         
-        JPanel overlayPanel = new JPanel();
+        overlayPanel = new JPanel() {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawSnakesAndLadders(g, board, boardPanel); // Custom method to draw snakes and ladders
+            }
+        };
         overlayPanel.setBounds(boardPanel.getBounds());
         overlayPanel.setOpaque(false);
         overlayPanel.setLayout(null);
@@ -262,7 +303,7 @@ public class GameBoardView extends JFrame {
                 timerPanel.repaint();
                 playersPanel.setBounds(getWidth() - 560, y, 300, 381);
                 updatePlayerPositionsOnBoard(diff, players, playersPositions, overlayPanel, squares.length, squares[0].length);
-                addSnakesAndLadders(overlayPanel, squares.length, squares[0].length, board);
+//                addSnakesAndLadders(overlayPanel, squares.length, squares[0].length, board);
                 diceLabel.setBounds(getWidth() - 560 + 100, getHeight() - 250, 100, 100);//getWidth() - 560 + playerPanelWidth/2
                 contentPane.revalidate();
                 contentPane.repaint();
@@ -270,6 +311,69 @@ public class GameBoardView extends JFrame {
         });
     }
 
+    private void drawSnakesAndLadders(Graphics g, Board board, JPanel boardPanel) {
+        Graphics2D g2d = (Graphics2D) g.create();
+        int rows = board.getRows();
+        int cols = rows;
+        int cellWidth = boardPanel.getWidth() / cols;
+        int cellHeight = boardPanel.getHeight() / rows;
+        for (Snake snake : snakes) {
+        	System.out.println(snake.getColor());
+        	if (snake.getColor() == COLORS.RED) {
+        		ImageIcon snakeIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + snake.getColor() + "snake.png"));
+        		JLabel snakeImageLabel = new JLabel(new ImageIcon(snakeIcon.getImage().getScaledInstance(cellWidth, cellHeight, Image.SCALE_SMOOTH)));
+        		int headX = calculateXPosition(snake.getHeadSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/2;
+        		int headY = calculateYPosition(snake.getHeadSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2;
+        		snakeImageLabel.setBounds(headX,headY,cellHeight,cellWidth);
+        		
+        	} else {
+        		int headX = calculateXPosition(snake.getHeadSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/2;
+        		int headY = calculateYPosition(snake.getHeadSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2;
+        		int tailX = calculateXPosition(snake.getTailSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/2;
+        		int tailY = calculateYPosition(snake.getTailSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2;
+        		
+        		ImageIcon snakeIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + snake.getColor() + "snake.png"));
+        		Image snakeImage = snakeIcon.getImage();
+        		
+        		double distance = Math.sqrt(Math.pow(tailX - headX, 2) + Math.pow(tailY - headY, 2));
+        		double angle = Math.atan2(tailY - headY, tailX - headX);
+        		
+        		double scale = distance / snakeImage.getHeight(null);
+        		
+        		AffineTransform transform = new AffineTransform();
+        		transform.translate(headX, headY);
+        		transform.rotate(angle - Math.PI/2);
+        		transform.scale(0.3, scale);
+        		transform.translate(-snakeImage.getWidth(null)/ 2, 0);
+        		
+        		g2d.drawImage(snakeImage, transform, null);
+        	}
+        }
+        for (Ladder ladder : ladders) {
+            int startX = calculateXPosition(ladder.getStartSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/2;
+            int startY = calculateYPosition(ladder.getStartSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2;
+            int destX = calculateXPosition(ladder.getDestSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/2;
+            int destY = calculateYPosition(ladder.getDestSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2;
+
+            ImageIcon ladderIcon = new ImageIcon(GameBoardView.class.getResource("/img/ladder.png"));
+            Image ladderImage = ladderIcon.getImage();
+
+            double distance = Math.sqrt(Math.pow(destX - startX, 2) + Math.pow(destY - startY, 2));
+            double angle = Math.atan2(destY - startY, destX - startX);
+
+            double scale = distance / ladderImage.getHeight(null);
+
+            AffineTransform transform = new AffineTransform();
+            transform.translate(startX, startY);
+            transform.rotate(angle - Math.PI/2);
+            transform.scale(0.15, scale);
+            transform.translate(-ladderImage.getWidth(null)/ 2, 0);
+
+            g2d.drawImage(ladderImage, transform, null);
+        }
+        g2d.dispose(); // Clean up
+    }
+    
     /**
      * Update the label's icon with a scaled version of the original image.
      * Scales the image to fit the current dimensions of the label.
@@ -288,54 +392,6 @@ public class GameBoardView extends JFrame {
         return String.format("%02d:%02d.%02d", minutes, seconds, hundredth);
     }
     
-    private void addSnakesAndLadders(JPanel boardPanel, int rows, int cols, Board board) {
-        // Assuming you have lists of snakes and ladders in your Board model
-//        ArrayList<Snake> snakes = board.getSnakes();
-//        ArrayList<Ladder> ladders = board.getLadders();
-
-        int cellWidth = boardPanel.getWidth() / cols;
-        int cellHeight = boardPanel.getHeight() / rows;
-        System.out.println("cellWidth: " + cellWidth + "\ncellHeight: " + cellHeight);
-
-        for (Snake snake : snakes) {
-            // Calculate position for snake image based on head and tail squares
-            int headX = calculateXPosition(snake.getHeadSquare().getColumn(), cellWidth, cols);
-            int headY = calculateYPosition(snake.getHeadSquare().getRow(), cellHeight, rows);
-
-            int tailX = calculateXPosition(snake.getTailSquare().getColumn(), cellWidth, cols);
-            int tailY = calculateYPosition(snake.getTailSquare().getRow(), cellHeight, rows);
-            
-            System.out.println("HeadX: " + headX + "\nTailX: " + tailX);
-            System.out.println("HeadY: " + headY + "\nTailY: " + tailY);
-            
-            int deltaX = tailX - headX;
-            int deltaY = tailY - headY;
-
-            double angleInRadians = Math.atan2(deltaY, deltaX);
-            double angleInDegrees = Math.toDegrees(angleInRadians);
-
-            double rotationAngle = 180 - angleInDegrees;
-
-            // Load and add snake image
-            ImageIcon snakeIcon = new ImageIcon(GameBoardView.class.getResource("/img/sSnake.png"));
-            Image snakeImg = snakeIcon.getImage();
-            BufferedImage buffSnakeImg = toBufferedImage(snakeImg);
-            BufferedImage rotatedBuffSnakeImg = rotate(buffSnakeImg, angleInDegrees);
-            Image newSnakeImg = rotatedBuffSnakeImg;
-            JLabel snakeLabel = new JLabel(new ImageIcon(newSnakeImg.getScaledInstance(cellWidth, cellHeight * Math.abs(headY - tailY), Image.SCALE_SMOOTH)));
-
-            snakeLabel.setBounds(Math.min(headX, tailX), Math.min(headY, tailY), cellWidth, cellHeight * Math.abs(headY - tailY));
-            boardPanel.add(snakeLabel);
-        }
-
-//        for (Ladder ladder : ladders) {
-//            // Similar calculation for ladders
-//        }
-
-        boardPanel.revalidate();
-        boardPanel.repaint();
-    }
-
     private int calculateXPosition(int squareX, int cellWidth, int cols) {
         // Implement logic to calculate X position based on the square's X coordinate
         return squareX * cellWidth;
@@ -407,49 +463,4 @@ public class GameBoardView extends JFrame {
         boardPanel.repaint();
     }
     
-    public static BufferedImage rotate(BufferedImage image, double angle) {
-        double radians = Math.toRadians(angle);
-        double sin = Math.abs(Math.sin(radians)), cos = Math.abs(Math.cos(radians));
-        int w = image.getWidth(), h = image.getHeight();
-        int neww = (int)Math.floor(w * cos + h * sin), newh = (int)Math.floor(h * cos + w * sin);
-        GraphicsConfiguration gc = getDefaultConfiguration();
-        BufferedImage result = gc.createCompatibleImage(neww, newh, Transparency.TRANSLUCENT);
-        Graphics2D g = result.createGraphics();
-        g.translate((neww - w) / 2, (newh - h) / 2);
-        g.rotate(radians, w / 2, h / 2);
-        g.drawRenderedImage(image, null);
-        g.dispose();
-        return result;
-    }
-
-    private static GraphicsConfiguration getDefaultConfiguration() {
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice gd = ge.getDefaultScreenDevice();
-        return gd.getDefaultConfiguration();
-    }
-    
-    /**
-     * Converts a given Image into a BufferedImage
-     *
-     * @param img The Image to be converted
-     * @return The converted BufferedImage
-     */
-    public static BufferedImage toBufferedImage(Image img)
-    {
-        if (img instanceof BufferedImage)
-        {
-            return (BufferedImage) img;
-        }
-
-        // Create a buffered image with transparency
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        // Draw the image on to the buffered image
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-
-        // Return the buffered image
-        return bimage;
-    }
 }
