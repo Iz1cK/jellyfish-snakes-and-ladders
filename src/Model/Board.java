@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import Controller.SurpriseSquareController;
+
 public class Board {
 	
     private static int lastBoardId = 0; // Static variable to track the last used board ID
@@ -258,10 +260,16 @@ public class Board {
 	 * from left to right, and the outer loop is descending so 
 	 * that we start from the end since visually the board starts
 	 * at the bottom(rows,columns) not the top(0,0).
+	 * the function uses factory method design pattern,
+	 * the function itself does not know which kind of squares it is
+	 * instantiating, that process is instead done in the SquareFactory class
 	 */
+	// TODO fix probabilites of getting question and surprise squares according to project file
 	public void generateBoard() {
 		boolean leftToRight = false; 
 		int count = 0;
+		 SquareFactory factory = new SquareFactory();
+		 SquareInterface square;
 		for (int i = this.rows - 1; i >= 0; i--) {
 		    leftToRight = !leftToRight;
 		    for (int j = 0; j < this.columns; j++) {
@@ -269,20 +277,21 @@ public class Board {
 		        double squareChance = Math.random();
 //		        String squareType = "";
 		        if(squareChance < 0.1) {
-		            this.squares[i][columnIndex] = new QuesSquare(i,columnIndex);
-		            this.squares[i][columnIndex].calculatePosition(this.rows);
+		        	 square =factory.getSquare("QuestionSquare", i, columnIndex);
+		        	 this.squares[i][columnIndex] = (QuesSquare) square;
 //		            squareType = "Question Square";
 		            surpriseSquarePositions.add(count);
 		        } else if(squareChance >= 0.1 && squareChance < 0.2) {
-		            this.squares[i][columnIndex] = new SurpriseSquare(i,columnIndex);
-		            this.squares[i][columnIndex].calculatePosition(this.rows);
+		        	 square =factory.getSquare("SurpriseSquare", i, columnIndex);
+		        	 this.squares[i][columnIndex] = (SurpriseSquare) square;
 //		            squareType = "Surprise Square";
 		            questionSquarePositions.add(count);
 		        } else {
-		            this.squares[i][columnIndex] = new Square(i,columnIndex);
-		            this.squares[i][columnIndex].calculatePosition(this.rows);
+		        	 square =factory.getSquare("Square", i, columnIndex);
+		        	 this.squares[i][columnIndex] = (Square) square;
 //		            squareType = "Normal Square";
 		        }
+		        this.squares[i][columnIndex].calculatePosition(this.rows);
 		        count++;
 //		        System.out.println("Square at " + count + " is: " + squareType);
 		    }
@@ -350,6 +359,12 @@ public class Board {
         return "NormalSquare";
 	}
 	
+	public void moveFromSurpriseSquare(SurpriseSquareController c) {
+		c.movePlayerToDestination(playersPositions, currentPlayerTurn);
+		// TODO checkLandingSquare(playersPositions.get(currentPlayerTurn));
+		
+	}
+	
 	/*
 	 * checkWinner()
 	 * this function checks if a player has reached 
@@ -376,6 +391,21 @@ public class Board {
 	    if (from < to)
 	        return from + new Random().nextInt(Math.abs(to - from));
 	    return from - new Random().nextInt(Math.abs(to - from));
+	}
+	
+	
+	private Square getSquareByPosition(int position) {
+		Square square = null;
+		for(int i = 0; i < this.squares.length; i++) {
+			for(int j = 0; j< this.squares[0].length; i++) {
+				this.squares[i][j].calculatePosition(this.rows);
+				if(this.squares[i][j].getPosition() == position) {
+					
+					square = this.squares[i][j];
+				}
+			}
+		}
+		return square;
 	}
 	
 	

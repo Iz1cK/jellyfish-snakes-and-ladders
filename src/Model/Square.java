@@ -1,6 +1,6 @@
 package Model;
 
-public class Square {
+public class Square implements SquareInterface {
 	private int position;
 	private int row, column; //the square in the board
 	private COLORS squareColor;
@@ -27,6 +27,10 @@ public class Square {
 		this.column = column;
 		this.squareColor = squareColor;
 	}
+	public Square() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getPosition() {
 		return position;
 	}
@@ -76,6 +80,9 @@ public class Square {
 				+ "]";
 	}
 	
-	
+	public void getSquare() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
