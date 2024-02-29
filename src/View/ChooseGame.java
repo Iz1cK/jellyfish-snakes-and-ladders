@@ -62,7 +62,7 @@ public class ChooseGame extends JFrame {
 
     public ChooseGame() {
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(400, 100, 680, 471);
+		setBounds(400, 100, 680, 530);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -563,14 +563,6 @@ public class ChooseGame extends JFrame {
 		    }
 		});
 		
-
-		
-		JLabel lblNewLabel_1=new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/rectangle.png")));
-		lblNewLabel_1.setForeground(Color.white);
-		lblNewLabel_1.setBounds(299, 453, 46, 14);
-		contentPane.add(lblNewLabel_1);
-		
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		
@@ -650,12 +642,12 @@ public class ChooseGame extends JFrame {
 		
 		JLabel lblNewLabe2 = new JLabel("");
 		lblNewLabe2.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/rectangle.png")));
-		lblNewLabe2.setBounds(0, 0,671,442);
+		lblNewLabe2.setBounds(0, 0,671,491);
 		contentPane.add(lblNewLabe2);
         
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/background.png")));
-		lblNewLabel.setBounds(0, 0,671,442);
+		lblNewLabel.setBounds(0, 0,671,491);
 		contentPane.add(lblNewLabel);
 		
 		
@@ -738,9 +730,5 @@ public class ChooseGame extends JFrame {
 		        }
 		    }
 		});
-		
-		
-		
-		
     }
 }
