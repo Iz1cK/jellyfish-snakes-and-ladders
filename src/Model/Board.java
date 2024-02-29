@@ -260,38 +260,73 @@ public class Board {
 	 * the function itself does not know which kind of squares it is
 	 * instantiating, that process is instead done in the SquareFactory class
 	 */
-	// TODO fix probabilites of getting question and surprise squares according to project file
+	
 	public void generateBoard() {
 		boolean leftToRight = false; 
 		int count = 0;
-		 SquareFactory factory = new SquareFactory();
-		 SquareInterface square;
+		Random random = new Random();
+		SquareFactory factory = new SquareFactory();
+		SquareInterface square;
+
+		while(questionSquarePositions.size()!=3)
+		{
+			int coin=(random.nextInt(this.rows*this.rows-1)+1);
+			if(!questionSquarePositions.contains(coin))
+				questionSquarePositions.add(coin);
+		}
+		
+		switch (this.getDifficultyBoard())
+		{
+		case MEDIUM: 
+			while(surpriseSquarePositions.size()!=1)
+			{
+				int coin=(random.nextInt(this.rows*this.rows-1)+1);
+				if(!questionSquarePositions.contains(coin))
+					surpriseSquarePositions.add(coin);
+			}
+			break;
+		case HARD:
+			while(surpriseSquarePositions.size()!=2)
+			{
+				int coin=(random.nextInt(this.rows*this.rows-1)+1);
+				if(!questionSquarePositions.contains(coin)&&!surpriseSquarePositions.contains(coin))
+					surpriseSquarePositions.add(coin);
+			}
+			break;
+		default:
+			break;
+			
+		}
+		
 		for (int i = this.rows - 1; i >= 0; i--) {
 		    leftToRight = !leftToRight;
 		    for (int j = 0; j < this.columns; j++) {
 		        int columnIndex = leftToRight ? j : this.columns - 1 - j;
-		        double squareChance = Math.random();
-//		        String squareType = "";
-		        if(squareChance < 0.1) {
-		        	 square =factory.getSquare("QuestionSquare", i, columnIndex);
-		        	 this.squares[i][columnIndex] = (QuesSquare) square;
-//		            squareType = "Question Square";
-		            surpriseSquarePositions.add(count);
-		        } else if(squareChance >= 0.1 && squareChance < 0.2) {
+		        if(surpriseSquarePositions.contains(getPositionByIdenxes(i,columnIndex)))
+		        {
 		        	 square =factory.getSquare("SurpriseSquare", i, columnIndex);
 		        	 this.squares[i][columnIndex] = (SurpriseSquare) square;
 //		            squareType = "Surprise Square";
-		            questionSquarePositions.add(count);
-		        } else {
-		        	 square =factory.getSquare("Square", i, columnIndex);
-		        	 this.squares[i][columnIndex] = (Square) square;
+		        }
+		        	
+		        else if(questionSquarePositions.contains(getPositionByIdenxes(i,columnIndex)))
+		        {
+		        	 square =factory.getSquare("QuestionSquare", i, columnIndex);
+		        	 this.squares[i][columnIndex] = (QuesSquare) square;
+//		            squareType = "Question Square";
+		        }	
+		        else
+		        {
+		        	square =factory.getSquare("Square", i, columnIndex);
+		        	this.squares[i][columnIndex] = (Square) square;
 //		            squareType = "Normal Square";
 		        }
+		  
 		        this.squares[i][columnIndex].calculatePosition(this.rows);
 		        count++;
-//		        System.out.println("Square at " + count + " is: " + squareType);
 		    }
 		}
+//		        System.out.println("Square at " + count + " is: " + squareType);
 	}
 	
 	/*
@@ -320,6 +355,10 @@ public class Board {
 	        System.out.print("\n");
 	    }
 	}
+	
+	
+	
+	
 	/*
 	 * rollDice()
 	 * this function randomly picks an option from
@@ -377,6 +416,13 @@ public class Board {
 		return square;
 	}
 	
+	public int getPositionByIdenxes(int row, int column) {
+        if (row % 2 == 0) { // Even row, numbers increase from left to right
+            return row * this.rows + column + 1;
+        } else { // Odd row, numbers increase from right to left
+            return row * this.rows + (this.rows - column - 1) + 1;
+        }}
+       
 	
 	
 	
