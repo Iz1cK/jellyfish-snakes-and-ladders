@@ -175,7 +175,6 @@ public class EditQuestionView extends JFrame implements ActionListener{
 		correctDiffPanel.add(medium);
 			
 		hard = new JRadioButton("Hard");
-		hard.setEnabled(false);
 		hard.setBackground(new Color(0, 0, 0, 140));
 		hard.setForeground(Color.WHITE);
 		hard.setBounds(607, 17, 109, 23);
@@ -192,6 +191,20 @@ public class EditQuestionView extends JFrame implements ActionListener{
         editButton.setBounds(429, 441, 140, 45);
 		
 		contentPane.add(editButton);
+		switch (question1.getDifficulty()) {
+	    case 1:
+	        easy.setSelected(true);
+	        break;
+	    case 2:
+	        medium.setSelected(true);
+	        break;
+	    case 3:
+	        hard.setSelected(true);
+	        break;
+	    default:
+	        // Handle the case where the difficulty level is not 1, 2, or 3 (optional)
+	        break;
+		}
 		back = new JButton("back");
 		back.addActionListener(this);
 		back.setForeground(Color.BLACK);
