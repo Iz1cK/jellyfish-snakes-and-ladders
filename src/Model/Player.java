@@ -4,6 +4,8 @@ public class Player {
 	private int playerID; //player id which represents an unique identifier for the player 
 	private String playername; //player name which represents the players chosen username
 	private PLAYERCOLORS color;
+	
+	
 	//constructors
 	public Player(int playerID, String playername, PLAYERCOLORS color) {
 		super();
@@ -12,6 +14,9 @@ public class Player {
 		this.color = color;
 	}
 	
+
+
+
 	public Player() {
 		super();
 	}

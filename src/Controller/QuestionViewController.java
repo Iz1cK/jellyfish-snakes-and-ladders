@@ -46,26 +46,37 @@ public class QuestionViewController {
 	}
 	
 	public static void onEdit (int id) {
+		System.out.println("we are in onEdit\n");
+		System.out.println(sysdata.questionsList.toString());
 		Questions selectedQuestion = sysdata.questionsList.get(id);
         // Open the edit page passing the selected question
         EditQuestionView editPage = new EditQuestionView(selectedQuestion);
         editPage.setVisible(true);
 	}
 	public static void onView (int id) {
+		System.out.println("we are in onViewt\n");
+
+		System.out.println(sysdata.questionsList.toString());
 		Questions selectedQuestion = sysdata.questionsList.get(id);
         // Open the edit page passing the selected question
         ViewQuestionView editPage = new ViewQuestionView(selectedQuestion);
         editPage.setVisible(true);
 	}
 	
-	public static void onDelete (int id) {
+	public static Boolean onDelete (int id) {
+		System.out.println("we are in onDelete\n");
+
+		System.out.println(sysdata.questionsList.toString());
 		Boolean n= sysdata.deleteQuestion(id);
-		
 		if (n) {
-            JOptionPane.showMessageDialog(null, "Item deleted successfully.");
+			JOptionPane.showMessageDialog(null, "Item deleted successfully.");
+			QuestionsView editPage = new QuestionsView();
+	        editPage.setVisible(true);
+			return n;
             
         } else {
             JOptionPane.showMessageDialog(null, "Failed to delete the item.");
+            return n;
         }
 	}
 	

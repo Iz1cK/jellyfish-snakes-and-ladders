@@ -21,6 +21,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import Controller.AddQuestionController;
+import Model.Sysdata;
 
 import javax.swing.JRadioButton;
 
@@ -50,7 +51,7 @@ public class AddQuestionView extends JFrame implements ActionListener{
 	private JRadioButton medium;
 	private JRadioButton hard;
 	private JButton back;
-	private AddQuestionController controller;
+	private AddQuestionController controller = AddQuestionController.getInstance();
 
 
 	/**
@@ -271,6 +272,7 @@ public class AddQuestionView extends JFrame implements ActionListener{
 				List<String> answers = new ArrayList<String>(); //holds the question’s answers.
 				String questionBody;
 				questionBody= (String)questionTextField.getText();
+				
 				Boolean n=controller.isDulicated(questionBody);
 				if (n==true) {
 	                JOptionPane.showMessageDialog(null, "sameQuestion.", "Error", JOptionPane.ERROR_MESSAGE);

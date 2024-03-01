@@ -6,11 +6,16 @@ import Model.Questions;
 import Model.Sysdata;
 
 public class AddQuestionController {
+	private static AddQuestionController instance;
+	public static AddQuestionController getInstance() {
+		if (instance == null)
+			instance = new AddQuestionController();
+		return instance;
+	}
 	Sysdata sysdata= Sysdata.getInstance();
 	
 	public Boolean isDulicated(String questionBody) {
 		boolean result=sysdata.isDuplicateQuestion(questionBody);
-		
 		return result;
 		
 	}
