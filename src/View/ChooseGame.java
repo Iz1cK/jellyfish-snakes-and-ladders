@@ -496,18 +496,28 @@ public class ChooseGame extends JFrame {
 		
 
 
-		JLabel backButton = new JLabel("Home");
-		backButton.setHorizontalAlignment(SwingConstants.CENTER);
-		backButton.setForeground(Color.WHITE);
-		backButton.setFont(new Font("Dialog", Font.BOLD, 15));
-		backButton.setBounds(427, 373, 94, 41);
-		contentPane.add(backButton);
+		JLabel homeButton = new JLabel("Home");
+		homeButton.setHorizontalAlignment(SwingConstants.CENTER);
+		homeButton.setForeground(Color.WHITE);
+		homeButton.setFont(new Font("Dialog", Font.BOLD, 15));
+		homeButton.setBounds(427, 373, 94, 41);
+		contentPane.add(homeButton);
+		homeButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Open HomeView and close the current view
+                dispose(); // Close the current view
+                HomeView homeView = new HomeView();
+                homeView.setVisible(true);
+                dispose();
+            }
+        });
 		
-		JLabel back = new JLabel();
-		back.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/rectangle.png")));		
-		back.setBounds(438, 373, 75, 41);
-		contentPane.add(back);
-		back.setLayout(null);
+		JLabel homePage = new JLabel();
+		homePage.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/rectangle.png")));		
+		homePage.setBounds(438, 373, 75, 41);
+		contentPane.add(homePage);
+		homePage.setLayout(null);
 		
 		
 		int players = Integer.parseInt(numbers.getText());
