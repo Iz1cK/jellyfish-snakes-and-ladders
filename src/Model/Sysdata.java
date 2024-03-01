@@ -175,6 +175,8 @@ public class Sysdata {
 				this.questionsList.remove(toBeDeleted);
 				updateQuestionsJsonList();
 				writeJsonFile(this.questionsListJson, QUESTIONS_JSONOBJECT, QUESTIONS_FILENAME);
+				//System.out.println("deleteQuestion");
+				//System.out.println(questionsList.toString());
 				return true;
 			}
 		}
@@ -198,9 +200,15 @@ public class Sysdata {
 
 		private void updateQuestionsJsonList() {
 			this.questionsListJson = new JsonArray();
+			int i =0;
 			for (Questions q : this.questionsList) {
+				System.out.println(q.getQuestionId());
+				q.setQuestionId(i);
 				this.questionsListJson.add(q.toJSON());
+				i++;
 			}
+			System.out.println("updateQuestionsJsonList");
+			System.out.println(questionsList.toString());
 		}
 
 		public boolean isDuplicateQuestion(String questionBody) {
