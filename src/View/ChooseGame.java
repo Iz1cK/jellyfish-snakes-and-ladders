@@ -86,8 +86,7 @@ public class ChooseGame extends JFrame {
 		
 		JLabel selectedPlayer = new JLabel();
 		ImageIcon colorSelected=new ImageIcon(ChooseGame.class.getResource("/img/selected.png"));
-		selectedPlayer.setIcon(new ImageIcon(colorSelected.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
-		//selectedPlayer.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/selected.png")));		
+		selectedPlayer.setIcon(new ImageIcon(colorSelected.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));		
 		selectedPlayer.setBounds(37, 119, 101, 87);
 		contentPane.add(selectedPlayer);
 		selectedPlayer.setLayout(null);
@@ -149,7 +148,6 @@ public class ChooseGame extends JFrame {
 
 		JLabel colorTaken = new JLabel();
 		colorTaken.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/taken.png")));		
-		//colorTaken.setBounds(37, 130, 101, 87);
 		contentPane.add(colorTaken);
 		colorTaken.setLayout(null);
 		colorTaken.setVisible(false);
@@ -245,14 +243,14 @@ public class ChooseGame extends JFrame {
 	                    currentNumberOfPlayers++;
 	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
 	                }
-	               playersNumber=currentNumberOfPlayers;
-	              // System.out.print(currentNumberOfPlayers);
+	              
+	              
 	            }
 	        });
 	        contentPane.add(plus);
     
 	        
-	        System.out.println(currentNumberOfPlayers);
+	    
 	        
 	        
 	        JLabel minus = new JLabel();
@@ -265,14 +263,13 @@ public class ChooseGame extends JFrame {
 	                if (currentNumberOfPlayers > 2) {
 	                    currentNumberOfPlayers--;
 	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
-	                  //  playersNumber=currentNumberOfPlayers;
+	                  
 	                }
 	            }
 	        });
 	        contentPane.add(minus);
 	        
-	        playersNumber=Integer.valueOf(numbers.getText());
-	     //   System.out.print(playersNumber);
+	 
 		JLabel difficulyLabel = new JLabel();
 		difficulyLabel.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/rectangle.png")));		
 		difficulyLabel.setBounds(344, 47, 280, 151);
@@ -366,8 +363,6 @@ public class ChooseGame extends JFrame {
 		JTextField nicknameField = new JTextField("insert your nickname");
         nicknameField.setBounds(0, 0, 212, 41);
         layeredPane.add(nicknameField, JLayeredPane.PALETTE_LAYER);
-//        String nickname = nicknameField.getText();
-//        System.out.println("Nickname: " + nickname);
 
         JLabel iconLabel = new JLabel(new ImageIcon(ChooseGame.class.getResource("/img/id.png")));
         iconLabel.setBounds(0, 0, 212, 41);
@@ -422,37 +417,6 @@ public class ChooseGame extends JFrame {
 		next.setLayout(null);
 		
 
-//		next.addMouseListener(new MouseAdapter() {
-//		    @Override
-//		    public void mouseClicked(MouseEvent e) {
-//		        int playersNumber = Integer.parseInt(numbers.getText());
-//		        if (isEasy && counter < playersNumber) {
-//		            counter++; // Increment numCurrentPlayer
-//		            currentPlayer.setText("player " + counter); // Update currentPlayer label text
-//		        } else if (isMedium && counter < playersNumber) {
-//		            counter++; // Increment numCurrentPlayer
-//		            currentPlayer.setText("player " + counter); // Update currentPlayer label text
-//		        } else if (isHard && counter < playersNumber) {
-//		            counter++; // Increment numCurrentPlayer
-//		            currentPlayer.setText("player " + counter); // Update currentPlayer label text
-//		        }
-//		        if (counter == playersNumber) {
-//		            difficltyLeve_1.setText("play");
-//		        }
-//		        
-////		        if(difficltyLeve_1.getText().equals("play")) {
-////	        	GameBoardView startGame= new GameBoardView(new ArrayList<Player>(),selectedDifficulty,false);
-////		        	startGame.setVisible(true);
-////		        	dispose();
-////		        }
-//		      //   Display selectedLevel on each player
-//		        if (selectedLevel.isVisible()) {
-//		            selectedLevel.setVisible(false); // Hide selectedLevel if it's currently visible
-//		        }
-//		      
-//		        selectedLevel.setVisible(true); // Show selectedLevel
-//		    }
-//		});
 
 		JLabel backButton = new JLabel("back");
 		backButton.setHorizontalAlignment(SwingConstants.CENTER);
@@ -474,9 +438,6 @@ public class ChooseGame extends JFrame {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
 		    		colorsCounter++;
-//		    		System.out.println(colorsCounter);
-//		    		System.out.println(players);
-		    		//System.out.println(playersNumber);
 		    		if(colorsCounter<=currentNumberOfPlayers) {
 		    			selectedPlayer.setVisible(true);
 			    	    selectedPlayer.setBounds(player1.getBounds());
@@ -509,7 +470,7 @@ public class ChooseGame extends JFrame {
 		    	System.out.println(colorsCounter);
 		    	System.out.println(players);
 		    	if(colorsCounter<=currentNumberOfPlayers) {
-		    	//	System.out.println("test");
+		    	
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player3.getBounds());
 			        playerN3=true;
