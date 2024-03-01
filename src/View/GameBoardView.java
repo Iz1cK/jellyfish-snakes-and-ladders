@@ -50,12 +50,14 @@ public class GameBoardView extends JFrame {
     private JLabel backgroundImage;
     private JLabel timerLabel;
     private JPanel overlayPanel;
+    private JPanel playerMarkerPanel;
     private Timer timer;
     private long startTime;
     private ImageIcon originalIcon;
     
     private static ArrayList<Snake> snakes;
     private static ArrayList<Ladder> ladders;
+    GameBoardController GBC = GameBoardController.getInstance();
     /**
      * Launch the application.
      */
@@ -79,7 +81,6 @@ public class GameBoardView extends JFrame {
 //    public GameBoardView(ArrayList<Player> playerss, DIFFICULTY diff, boolean isMain) {
     public GameBoardView() {
     	
-    	GameBoardController GBC = GameBoardController.getInstance();
         ArrayList<Player> aplayers = new ArrayList<>();
         aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
         aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
@@ -87,34 +88,38 @@ public class GameBoardView extends JFrame {
         aplayers.add(new Player(3,"aseel",PLAYERCOLORS.PURPLE));
         Board aboard = new Board(DIFFICULTY.EASY,aplayers);
         aboard.generateBoard();
-        aboard.generateSnakesAndLadder();
+//        aboard.generateSnakesAndLadder();
         GBC.setGameBoard(aboard);
 
     	Board board = GBC.getGameBoard();
     	ArrayList<Player> players = board.getPlayers();
     	DIFFICULTY diff = board.getDifficultyBoard();
     	HashMap<Player,Integer> playersPositions = board.getPlayersPositions();
+    	
+//    	playersPositions.put(players.get(0), 10);
         
         Square[][] squares = board.getSquares();
-        System.out.println(squares[0][2]);
-        snakes = board.getSnakes();
-        ladders = board.getLadders();
-//        snakes = new ArrayList<>();
-//        Snake snake1 = new Snake("0", squares[6][0], squares[0][4], COLORS.BLUE);
-//        Snake snake2 = new Snake("1", squares[4][2], squares[1][1], COLORS.GREEN);
-//        Snake snake3 = new Snake("2", squares[3][5], squares[2][5], COLORS.RED);
-//        Snake snake4 = new Snake("3", squares[4][5], squares[2][2], COLORS.YELLOW);
-//
-//        snakes.add(snake1);
-//        snakes.add(snake2);
-//        snakes.add(snake3);
-//        snakes.add(snake4);
-//        
-//        ladders = new ArrayList<>();
-//        Ladder ladder1 = new Ladder("0", squares[3][6], squares[6][3]);
-//        Ladder ladder2 = new Ladder("1", squares[1][0], squares[4][0]);
-//        ladders.add(ladder1);
-//        ladders.add(ladder2);
+        
+        snakes = new ArrayList<>();
+        
+        snakes.add(new Snake("0",squares[4][6], squares[2][4], COLORS.BLUE));
+        snakes.add(new Snake("1",squares[6][3], squares[2][1], COLORS.GREEN));
+        snakes.add(new Snake("2",squares[1][1], squares[0][4], COLORS.YELLOW));
+        snakes.add(new Snake("3",squares[5][5], squares[3][6], COLORS.RED));
+        
+        ladders = new ArrayList<>();
+        
+        ladders.add(new Ladder("0",squares[0][2], squares[1][4]));
+        ladders.add(new Ladder("0",squares[2][3], squares[4][3]));
+        ladders.add(new Ladder("0",squares[3][5], squares[6][5]));
+        ladders.add(new Ladder("0",squares[1][5], squares[5][1]));
+        
+        board.setSnakes(snakes);
+        board.setLadders(ladders);
+        
+        
+//        snakes = board.getSnakes();
+//        ladders = board.getLadders();
     	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1280, 720);
@@ -138,39 +143,7 @@ public class GameBoardView extends JFrame {
         
         Font labelFont = new Font("Poppins", Font.BOLD, 36);
 
-        for (Player player : players) {
-            JPanel playerPanel = new JPanel();
-            playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.X_AXIS));
-            playerPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-            ImageIcon playerColorIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + player.getColor().toString().toLowerCase() + "player.png"));
-            Image scaledPlayerIcon = playerColorIcon.getImage().getScaledInstance(25, 50, Image.SCALE_SMOOTH);
-            JLabel playerColor = new JLabel(new ImageIcon(scaledPlayerIcon));
-
-            JLabel playerLabel = new JLabel(player.getPlayername());
-            playerLabel.setFont(labelFont);
-            String playerPosition = playersPositions.get(player).toString();
-            
-            JLabel playerPositionLabel = new JLabel(playerPosition);
-            playerPositionLabel.setFont(labelFont);
-            playerLabel.setFont(labelFont);
-            
-            ImageIcon yourTurn = new ImageIcon(GameBoardView.class.getResource("/img/yourturn.png"));
-            Image scaledYourTurn = yourTurn.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-            JLabel playerTurn = new JLabel(new ImageIcon(scaledYourTurn));
-
-            playerPanel.add(playerColor);
-            playerPanel.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between icon and name
-            playerPanel.add(playerLabel);
-            playerPanel.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between name and position
-            playerPanel.add(playerPositionLabel);
-            playerPanel.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between position and player turn
-            if(player == board.getCurrentPlayerTurn()) {
-            	playerPanel.add(playerTurn);
-            }
-            playersPanel.add(playerPanel);
-            playersPanel.add(Box.createRigidArea(new Dimension(0, 5))); // Add space between player entries   
-        }
+        updatePlayersList(players, playersPositions, board, playersPanel, labelFont);
         
         JPanel timerPanel = new JPanel();
         timerPanel.setBounds((int) (getWidth() + 100), (int) (getHeight() - 100), 400, 50);
@@ -253,13 +226,20 @@ public class GameBoardView extends JFrame {
         
         ImageIcon diceIcon = new ImageIcon(GameBoardView.class.getResource("/img/dice.png"));
         Image scaledDiceIcon = diceIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-        JLabel diceLabel = new JLabel(new ImageIcon(scaledDiceIcon));
+        JButton diceButton = new JButton(new ImageIcon(scaledDiceIcon));
+        
+        diceButton.addActionListener(new ActionListener() {
+        	 @Override
+             public void actionPerformed(ActionEvent e) {
+                 System.out.println("clicked");
+                 GBC.playTurn();
+                 updatePlayersList(players, playersPositions, board, playersPanel, labelFont);
+                 updatePlayerPositionsOnBoard(board.getDifficultyBoard(), players, playersPositions, overlayPanel, squares.length, squares[0].length);
+             }
+        });
         
         
         overlayPanel = new JPanel() {
-            /**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -271,9 +251,16 @@ public class GameBoardView extends JFrame {
         overlayPanel.setBounds(boardPanel.getBounds());
         overlayPanel.setOpaque(false);
         overlayPanel.setLayout(null);
+        
+        playerMarkerPanel = new JPanel();
+        playerMarkerPanel.setBounds(boardPanel.getBounds());
+        playerMarkerPanel.setOpaque(false);
+        playerMarkerPanel.setLayout(null);
+        
 
         contentPane.add(overlayPanel);
-        contentPane.add(diceLabel);
+        contentPane.add(playerMarkerPanel);
+        contentPane.add(diceButton);
         contentPane.add(boardPanel);
         contentPane.add(backgroundImage);
         
@@ -303,8 +290,7 @@ public class GameBoardView extends JFrame {
                 timerPanel.repaint();
                 playersPanel.setBounds(getWidth() - 560, y, 300, 381);
                 updatePlayerPositionsOnBoard(diff, players, playersPositions, overlayPanel, squares.length, squares[0].length);
-//                addSnakesAndLadders(overlayPanel, squares.length, squares[0].length, board);
-                diceLabel.setBounds(getWidth() - 560 + 100, getHeight() - 250, 100, 100);//getWidth() - 560 + playerPanelWidth/2
+                diceButton.setBounds(getWidth() - 560 + 100, getHeight() - 250, 100, 100);//getWidth() - 560 + playerPanelWidth/2
                 contentPane.revalidate();
                 contentPane.repaint();
             }
@@ -318,15 +304,14 @@ public class GameBoardView extends JFrame {
         int cellWidth = boardPanel.getWidth() / cols;
         int cellHeight = boardPanel.getHeight() / rows;
         for (Snake snake : snakes) {
-        	System.out.println(snake.getColor());
-        	if (snake.getColor() == COLORS.RED) {
-        		ImageIcon snakeIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + snake.getColor() + "snake.png"));
-        		JLabel snakeImageLabel = new JLabel(new ImageIcon(snakeIcon.getImage().getScaledInstance(cellWidth, cellHeight, Image.SCALE_SMOOTH)));
-        		int headX = calculateXPosition(snake.getHeadSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/2;
-        		int headY = calculateYPosition(snake.getHeadSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2;
-        		snakeImageLabel.setBounds(headX,headY,cellHeight,cellWidth);
-        		
-        	} else {
+//        	if (snake.getColor() == COLORS.RED) {
+//        		ImageIcon snakeIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + snake.getColor() + "snake.png"));
+//        		JLabel snakeImageLabel = new JLabel(new ImageIcon(snakeIcon.getImage().getScaledInstance(cellWidth, cellHeight, Image.SCALE_SMOOTH)));
+//        		int headX = calculateXPosition(snake.getHeadSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/2;
+//        		int headY = calculateYPosition(snake.getHeadSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2;
+//        		snakeImageLabel.setBounds(headX,headY,cellHeight,cellWidth);
+//        		
+//        	} else {
         		int headX = calculateXPosition(snake.getHeadSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/2;
         		int headY = calculateYPosition(snake.getHeadSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2;
         		int tailX = calculateXPosition(snake.getTailSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/2;
@@ -348,7 +333,7 @@ public class GameBoardView extends JFrame {
         		
         		g2d.drawImage(snakeImage, transform, null);
         	}
-        }
+//        }
         for (Ladder ladder : ladders) {
             int startX = calculateXPosition(ladder.getStartSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/2;
             int startY = calculateYPosition(ladder.getStartSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2;
@@ -385,6 +370,45 @@ public class GameBoardView extends JFrame {
         }
     }
     
+    private void updatePlayersList(ArrayList<Player> players, HashMap<Player,Integer> playersPositions, Board board, JPanel playersPanel, Font labelFont) {
+    	playersPanel.removeAll();
+    	for (Player player : players) {
+            JPanel playerPanel = new JPanel();
+            playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.X_AXIS));
+            playerPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+            ImageIcon playerColorIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + player.getColor().toString().toLowerCase() + "player.png"));
+            Image scaledPlayerIcon = playerColorIcon.getImage().getScaledInstance(25, 50, Image.SCALE_SMOOTH);
+            JLabel playerColor = new JLabel(new ImageIcon(scaledPlayerIcon));
+
+            JLabel playerLabel = new JLabel(player.getPlayername());
+            playerLabel.setFont(labelFont);
+            String playerPosition = playersPositions.get(player).toString();
+            
+            JLabel playerPositionLabel = new JLabel(playerPosition);
+            playerPositionLabel.setFont(labelFont);
+            playerLabel.setFont(labelFont);
+            
+            ImageIcon yourTurn = new ImageIcon(GameBoardView.class.getResource("/img/yourturn.png"));
+            Image scaledYourTurn = yourTurn.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+            JLabel playerTurn = new JLabel(new ImageIcon(scaledYourTurn));
+
+            playerPanel.add(playerColor);
+            playerPanel.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between icon and name
+            playerPanel.add(playerLabel);
+            playerPanel.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between name and position
+            playerPanel.add(playerPositionLabel);
+            playerPanel.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between position and player turn
+            if(player == board.getCurrentPlayerTurn()) {
+            	playerPanel.add(playerTurn);
+            }
+            playersPanel.add(playerPanel);
+            playersPanel.add(Box.createRigidArea(new Dimension(0, 5))); // Add space between player entries   
+            playersPanel.revalidate();
+            playersPanel.repaint();
+        }
+    }
+
     private String formatTime(long millis) {
         long minutes = (millis / 60000) % 60;
         long seconds = (millis / 1000) % 60;
@@ -406,9 +430,18 @@ public class GameBoardView extends JFrame {
      * Update the players positions on the board
      * !! still need to handle multiple players on the same square in Iteration 3
      */
-    private void updatePlayerPositionsOnBoard(DIFFICULTY diff, ArrayList<Player> players, HashMap<Player,Integer> playersPositions, JPanel boardPanel, int rows, int cols) {
-        int boardWidth = boardPanel.getWidth();
-        int boardHeight = boardPanel.getHeight();
+    private void updatePlayerPositionsOnBoard(DIFFICULTY diff, ArrayList<Player> players, HashMap<Player,Integer> playersPositions, JPanel overlayPanel, int rows, int cols) {
+    	
+    	for (Component comp : overlayPanel.getComponents()) {
+    	    if (Boolean.TRUE.equals(((JComponent) comp).getClientProperty("playerMarker"))) {
+    	    	overlayPanel.remove(comp);
+    	    }
+    	}
+    	
+//    	overlayPanel.removeAll();
+    	
+    	int boardWidth = overlayPanel.getWidth();
+        int boardHeight = overlayPanel.getHeight();
 
         int cellWidth = boardWidth / cols;
         int cellHeight = boardHeight / rows;
@@ -435,12 +468,13 @@ public class GameBoardView extends JFrame {
 
             for (int i = 0; i < playersInSquare.size(); i++) {
                 Player player = playersInSquare.get(i);
-                int x = actualCol * cellWidth + (i * cellWidth / playersInSquare.size()) + cellWidth / playersInSquare.size() / 2;
+//                int x = actualCol * cellWidth + (i * cellWidth / playersInSquare.size()) + cellWidth / playersInSquare.size() / 2;
+                int x = actualCol * cellWidth + cellWidth / 2;
                 int y = displayRow * cellHeight + cellHeight / 2;
 
                 ImageIcon playerIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + player.getColor().toString().toLowerCase() + "player.png"));
                 JLabel playerMarker = new JLabel(new ImageIcon(playerIcon.getImage().getScaledInstance(15, 25, Image.SCALE_SMOOTH)));
-
+                playerMarker.putClientProperty("playerMarker", true);
                 // Adjust positioning based on difficulty
                 switch(diff) {
                     case EASY:
@@ -454,13 +488,13 @@ public class GameBoardView extends JFrame {
                         break;
                 }
 
-                boardPanel.add(playerMarker);
-                boardPanel.setComponentZOrder(playerMarker, 0);
+                overlayPanel.add(playerMarker);
+                overlayPanel.setComponentZOrder(playerMarker, 0);
             }
         });
 
-        boardPanel.revalidate();
-        boardPanel.repaint();
+        overlayPanel.revalidate();
+        overlayPanel.repaint();
     }
     
 }

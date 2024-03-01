@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import Model.Questions;
 import Model.Sysdata;
 import View.EditQuestionView;
+import View.QuestionsView;
 import View.ViewQuestionView;
 
 public class QuestionViewController {

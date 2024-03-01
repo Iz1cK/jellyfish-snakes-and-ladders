@@ -146,7 +146,7 @@ public class QuestionsView extends JFrame {
             @Override
             public void onDelete(int row) {
             	System.out.println("this is my row"+ row);
-            	boolean n= controller.onDelete(row);
+            	boolean n= QuestionViewController.onDelete(row);
             	dispose();
             }
 

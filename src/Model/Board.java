@@ -425,10 +425,10 @@ public class Board {
 	}
 	
 	
-	private Square getSquareByPosition(int position) {
+	public Square getSquareByPosition(int position) {
 		Square square = null;
 		for(int i = 0; i < this.squares.length; i++) {
-			for(int j = 0; j< this.squares[0].length; i++) {
+			for(int j = 0; j< this.squares[0].length; j++) {
 				this.squares[i][j].calculatePosition(this.rows);
 				if(this.squares[i][j].getPosition() == position) {
 					
