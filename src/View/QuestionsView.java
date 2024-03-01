@@ -145,11 +145,9 @@ public class QuestionsView extends JFrame {
 
             @Override
             public void onDelete(int row) {
-            	/*System.out.println(row);
-            	Sysdata sysdata= Sysdata.getInstance();
-            	sysdata.deleteQuestion(row);
-            	DefaultTableModel model = (DefaultTableModel) table.getModel();
-                model.removeRow(row);*/
+            	System.out.println("this is my row"+ row);
+            	boolean n= controller.onDelete(row);
+            	dispose();
             }
 
             @Override
@@ -297,10 +295,7 @@ public class QuestionsView extends JFrame {
             cmdDelete.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
-                	/*int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this question?", "Confirmation", JOptionPane.YES_NO_OPTION);
-                    if (option == JOptionPane.YES_OPTION) {
-                        event.onDelete(row);
-                    }*/
+                	event.onDelete(row);
                 }
             });
             cmdView.addActionListener(new ActionListener() {
@@ -398,14 +393,14 @@ public class QuestionsView extends JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+  /*  public static void main(String args[]) {
     	
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
+     /*   try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -424,10 +419,10 @@ public class QuestionsView extends JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+      /*  java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new QuestionsView().setVisible(true);
             }
         });
-    }
+    }*/
 }
