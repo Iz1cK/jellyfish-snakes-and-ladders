@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -47,7 +48,7 @@ public class ChooseGame extends JFrame {
 	int level=0;
 	String nickname;
 	int icon=0;
-	
+	int isReady=0;
 	GameCreationController gameCreationController = new GameCreationController();
 	private boolean isEasy=false, isMedium=false, isHard=false;
 	DIFFICULTY selectedDifficulty;
@@ -167,67 +168,65 @@ public class ChooseGame extends JFrame {
 		numbers.setBounds(455, 107, 61, 87);
 		contentPane.add(numbers); 
 		
-		isEasy=false;
-		isMedium=false;
-		isHard=false;
-		easy.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            	level++;
-            	if(level==1) {
-            	selectedDifficulty=DIFFICULTY.EASY;
-            	gameCreationController.setDifficultyLevel(selectedDifficulty);
-        		selectedLevel.setVisible(false);
-        		isEasy=true;
-        		isMedium=false;
-        		isHard=false;
-                selectedLevel.setBounds(55, 120, 101, 87);
-        		selectedLevel.setVisible(true);
-        		maxNumberOfPlayers=3;
-        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
-
-            }
-            }
-        });
-
-        medium.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            	level++;
-            	if(level==1) {
-            	selectedDifficulty=DIFFICULTY.MEDIUM;
-            	gameCreationController.setDifficultyLevel(selectedDifficulty);
-        		selectedLevel.setVisible(false);
-        		isEasy=false;
-        		isMedium=true;
-        		isHard=false;
-                selectedLevel.setBounds(135, 120, 101, 87);
-        		selectedLevel.setVisible(true);
-        		maxNumberOfPlayers=6;
-        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
-            	}
-            }
-        });
-
-        hard.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            	level++;
-            	if(level==1) {
-            	selectedDifficulty=DIFFICULTY.HARD;
-            	gameCreationController.setDifficultyLevel(selectedDifficulty);
-        		selectedLevel.setVisible(false);
-        		isEasy=false;
-        		isMedium=false;
-        		isHard=true;
-                selectedLevel.setBounds(215, 120, 101, 87);
-        		selectedLevel.setVisible(true);
-        		maxNumberOfPlayers=8;
-        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
-            }
-            }
-        });
-        
+		
+//		easy.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//            	level++;
+//            	if(level==1) {
+//            	selectedDifficulty=DIFFICULTY.EASY;
+//            	gameCreationController.setDifficultyLevel(selectedDifficulty);
+//        		selectedLevel.setVisible(false);
+//        		isEasy=true;
+//        		isMedium=false;
+//        		isHard=false;
+//                selectedLevel.setBounds(55, 120, 101, 87);
+//        		selectedLevel.setVisible(true);
+//        		maxNumberOfPlayers=3;
+//        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
+//
+//            }
+//            }
+//        });
+//
+//        medium.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//            	level++;
+//            	if(level==1) {
+//            	selectedDifficulty=DIFFICULTY.MEDIUM;
+//            	gameCreationController.setDifficultyLevel(selectedDifficulty);
+//        		selectedLevel.setVisible(false);
+//        		isEasy=false;
+//        		isMedium=true;
+//        		isHard=false;
+//                selectedLevel.setBounds(135, 120, 101, 87);
+//        		selectedLevel.setVisible(true);
+//        		maxNumberOfPlayers=6;
+//        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
+//            	}
+//            }
+//        });
+//
+//        hard.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//            	level++;
+//            	if(level==1) {
+//            	selectedDifficulty=DIFFICULTY.HARD;
+//            	gameCreationController.setDifficultyLevel(selectedDifficulty);
+//        		selectedLevel.setVisible(false);
+//        		isEasy=false;
+//        		isMedium=false;
+//        		isHard=true;
+//                selectedLevel.setBounds(215, 120, 101, 87);
+//        		selectedLevel.setVisible(true);
+//        		maxNumberOfPlayers=8;
+//        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
+//            }
+//            }
+//        });
+//        
         
         
         JLabel players_1 = new JLabel();
@@ -291,7 +290,64 @@ public class ChooseGame extends JFrame {
 	        });
 	        contentPane.add(minus);
 	        
-	 
+	        easy.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	            //	level++;
+	            	if(isReady==0) {
+	            	selectedDifficulty=DIFFICULTY.EASY;
+	            	gameCreationController.setDifficultyLevel(selectedDifficulty);
+	        		selectedLevel.setVisible(false);
+	        		isEasy=true;
+	        		isMedium=false;
+	        		isHard=false;
+	                selectedLevel.setBounds(55, 120, 101, 87);
+	        		selectedLevel.setVisible(true);
+	        		maxNumberOfPlayers=3;
+	        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
+
+	           }
+	            }
+	        });
+
+	        medium.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	            	//level++;
+	            	if(isReady==0) {
+	            	selectedDifficulty=DIFFICULTY.MEDIUM;
+	            	gameCreationController.setDifficultyLevel(selectedDifficulty);
+	        		selectedLevel.setVisible(false);
+	        		isEasy=false;
+	        		isMedium=true;
+	        		isHard=false;
+	                selectedLevel.setBounds(135, 120, 101, 87);
+	        		selectedLevel.setVisible(true);
+	        		maxNumberOfPlayers=6;
+	        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
+	            	}
+	            }
+	        });
+
+	        hard.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	            	//level++;
+	            	if(isReady==0) {
+	            	selectedDifficulty=DIFFICULTY.HARD;
+	            	gameCreationController.setDifficultyLevel(selectedDifficulty);
+	        		selectedLevel.setVisible(false);
+	        		isEasy=false;
+	        		isMedium=false;
+	        		isHard=true;
+	                selectedLevel.setBounds(215, 120, 101, 87);
+	        		selectedLevel.setVisible(true);
+	        		maxNumberOfPlayers=8;
+	        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
+	            }
+	            }
+	        });
+	        
 		JLabel difficulyLabel = new JLabel();
 		difficulyLabel.setIcon(new ImageIcon(ChooseGame.class.getResource("/img/rectangle.png")));		
 		difficulyLabel.setBounds(344, 47, 280, 151);
@@ -648,12 +704,15 @@ public class ChooseGame extends JFrame {
 		lblNewLabel.setBounds(0, 0,671,491);
 		contentPane.add(lblNewLabel);
 		
-		
+//		JFrame frame = new JFrame("Dialog Example");
+//        frame.setSize(400, 300);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
 		// ** LOGIC **//
 		next.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
-		    	
+		    	isReady=1;
 		        int playersNumber = Integer.parseInt(numbers.getText());
 		        playersCounter++;
 		        if (isEasy && counter < playersNumber) {
@@ -673,7 +732,9 @@ public class ChooseGame extends JFrame {
 
 		        if(playersCounter<=playersNumber) {
 		        	String nickname = nicknameField.getText();
-		        
+//		        	if(nickname.equals("")) {
+//		        		JOptionPane.showMessageDialog(frame, "Hello, this is a dialog!");
+//		        	}
 		            nicknameField.setText("");
 		        if(playerN1) {
 		       
