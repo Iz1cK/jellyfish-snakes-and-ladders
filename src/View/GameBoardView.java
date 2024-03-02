@@ -83,7 +83,6 @@ public class GameBoardView extends JFrame {
     /**
      * Create the frame.
      */
-//    public GameBoardView(ArrayList<Player> playerss, DIFFICULTY diff, boolean isMain) {
     public GameBoardView() {
     	
         ArrayList<Player> aplayers = new ArrayList<>();
@@ -110,7 +109,7 @@ public class GameBoardView extends JFrame {
         snakes.add(new Snake("0",squares[4][6], squares[2][4], COLORS.BLUE));
         snakes.add(new Snake("1",squares[6][3], squares[2][1], COLORS.GREEN));
         snakes.add(new Snake("2",squares[1][1], squares[0][4], COLORS.YELLOW));
-        snakes.add(new Snake("3",squares[5][5], squares[3][6], COLORS.RED));
+        snakes.add(new Snake("3",squares[5][5], null, COLORS.RED));
         
         ladders = new ArrayList<>();
         
@@ -240,7 +239,7 @@ public class GameBoardView extends JFrame {
                         // This will be executed after the dice rolling animation completes
                         System.out.println("clicked");
                         GBC.playTurn();
-                        String imagePath = "/img/dice" + GBC.diceRoll + ".png";
+                        String imagePath = "/img/dice" + GameBoardController.diceRoll + ".png";
                         ImageIcon icon = new ImageIcon(Main.class.getResource(imagePath));
                         diceLabel.setIcon(icon);
                         updatePlayersList(players, playersPositions, board, playersPanel, labelFont);
@@ -316,14 +315,19 @@ public class GameBoardView extends JFrame {
         int cellWidth = boardPanel.getWidth() / cols;
         int cellHeight = boardPanel.getHeight() / rows;
         for (Snake snake : snakes) {
-//        	if (snake.getColor() == COLORS.RED) {
-//        		ImageIcon snakeIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + snake.getColor() + "snake.png"));
-//        		JLabel snakeImageLabel = new JLabel(new ImageIcon(snakeIcon.getImage().getScaledInstance(cellWidth, cellHeight, Image.SCALE_SMOOTH)));
-//        		int headX = calculateXPosition(snake.getHeadSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/2;
-//        		int headY = calculateYPosition(snake.getHeadSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2;
-//        		snakeImageLabel.setBounds(headX,headY,cellHeight,cellWidth);
-//        		
-//        	} else {
+        	if (snake.getColor() == COLORS.RED) {
+        		ImageIcon snakeIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + snake.getColor() + "snake.png"));
+        		Image snakeImage = new ImageIcon(snakeIcon.getImage().getScaledInstance(cellWidth, cellHeight, Image.SCALE_SMOOTH)).getImage();
+        		int headX = calculateXPosition(snake.getHeadSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/4;
+        		int headY = calculateYPosition(snake.getHeadSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2;
+        		System.out.println("headX: " + headX + " headY:" + headY);
+        		
+        		AffineTransform transform = new AffineTransform();
+        		transform.translate(headX, headY);
+        		transform.scale(0.5, 0.5);
+        		g2d.drawImage(snakeImage, transform, null);
+        		
+        	} else {
         		int headX = calculateXPosition(snake.getHeadSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/2;
         		int headY = calculateYPosition(snake.getHeadSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2;
         		int tailX = calculateXPosition(snake.getTailSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/2;
@@ -345,7 +349,7 @@ public class GameBoardView extends JFrame {
         		
         		g2d.drawImage(snakeImage, transform, null);
         	}
-//        }
+        }
         for (Ladder ladder : ladders) {
             int startX = calculateXPosition(ladder.getStartSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/2;
             int startY = calculateYPosition(ladder.getStartSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2;
