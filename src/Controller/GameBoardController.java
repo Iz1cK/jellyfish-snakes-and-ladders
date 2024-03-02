@@ -19,6 +19,7 @@ public class GameBoardController {
 	private Board gameBoard;
 
 	private static GameBoardController GBCinstance = null;
+	public static String diceRoll;
 	static Sysdata sysdata = Sysdata.getInstance();
 	
 	private GameBoardController() {}
@@ -46,7 +47,7 @@ public class GameBoardController {
 		this.gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
 		
 		HashMap<Player, Integer> playersPositions = this.gameBoard.getPlayersPositions();
-		String diceRoll = this.gameBoard.rollDice();
+		diceRoll = this.gameBoard.rollDice();
 		switch(diceRoll) {
 		case "0":
 			System.out.println("you got 0, you dont move");

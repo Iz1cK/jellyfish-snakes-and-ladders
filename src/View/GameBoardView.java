@@ -12,10 +12,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -57,6 +61,7 @@ public class GameBoardView extends JFrame {
     
     private static ArrayList<Snake> snakes;
     private static ArrayList<Ladder> ladders;
+    private static boolean rolling = false;
     GameBoardController GBC = GameBoardController.getInstance();
     /**
      * Launch the application.
@@ -224,18 +229,25 @@ public class GameBoardView extends JFrame {
         	this.setVisible(true);
         }
         
-        ImageIcon diceIcon = new ImageIcon(GameBoardView.class.getResource("/img/dice.png"));
-        Image scaledDiceIcon = diceIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-        JButton diceButton = new JButton(new ImageIcon(scaledDiceIcon));
+        ImageIcon diceIcon = new ImageIcon(GameBoardView.class.getResource("/img/dice0.png"));
+        JLabel diceLabel = new JLabel(diceIcon);
         
-        diceButton.addActionListener(new ActionListener() {
-        	 @Override
-             public void actionPerformed(ActionEvent e) {
-                 System.out.println("clicked");
-                 GBC.playTurn();
-                 updatePlayersList(players, playersPositions, board, playersPanel, labelFont);
-                 updatePlayerPositionsOnBoard(board.getDifficultyBoard(), players, playersPositions, overlayPanel, squares.length, squares[0].length);
-             }
+        diceLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(!rolling) {
+                    rollDice(diceLabel, board, () -> {
+                        // This will be executed after the dice rolling animation completes
+                        System.out.println("clicked");
+                        GBC.playTurn();
+                        String imagePath = "/img/dice" + GBC.diceRoll + ".png";
+                        ImageIcon icon = new ImageIcon(Main.class.getResource(imagePath));
+                        diceLabel.setIcon(icon);
+                        updatePlayersList(players, playersPositions, board, playersPanel, labelFont);
+                        updatePlayerPositionsOnBoard(board.getDifficultyBoard(), players, playersPositions, overlayPanel, squares.length, squares[0].length);
+                    });
+                }
+            }
         });
         
         
@@ -260,7 +272,7 @@ public class GameBoardView extends JFrame {
 
         contentPane.add(overlayPanel);
         contentPane.add(playerMarkerPanel);
-        contentPane.add(diceButton);
+        contentPane.add(diceLabel);
         contentPane.add(boardPanel);
         contentPane.add(backgroundImage);
         
@@ -290,7 +302,7 @@ public class GameBoardView extends JFrame {
                 timerPanel.repaint();
                 playersPanel.setBounds(getWidth() - 560, y, 300, 381);
                 updatePlayerPositionsOnBoard(diff, players, playersPositions, overlayPanel, squares.length, squares[0].length);
-                diceButton.setBounds(getWidth() - 560 + 100, getHeight() - 250, 100, 100);//getWidth() - 560 + playerPanelWidth/2
+                diceLabel.setBounds(getWidth() - 560 + 100, getHeight() - 250, 200, 200);//getWidth() - 560 + playerPanelWidth/2
                 contentPane.revalidate();
                 contentPane.repaint();
             }
@@ -438,8 +450,6 @@ public class GameBoardView extends JFrame {
     	    }
     	}
     	
-//    	overlayPanel.removeAll();
-    	
     	int boardWidth = overlayPanel.getWidth();
         int boardHeight = overlayPanel.getHeight();
 
@@ -468,8 +478,8 @@ public class GameBoardView extends JFrame {
 
             for (int i = 0; i < playersInSquare.size(); i++) {
                 Player player = playersInSquare.get(i);
-//                int x = actualCol * cellWidth + (i * cellWidth / playersInSquare.size()) + cellWidth / playersInSquare.size() / 2;
-                int x = actualCol * cellWidth + cellWidth / 2;
+                int x = actualCol * cellWidth + (i * cellWidth / playersInSquare.size()) + cellWidth / playersInSquare.size() / 2;
+//                int x = actualCol * cellWidth + cellWidth / 2;
                 int y = displayRow * cellHeight + cellHeight / 2;
 
                 ImageIcon playerIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + player.getColor().toString().toLowerCase() + "player.png"));
@@ -496,5 +506,26 @@ public class GameBoardView extends JFrame {
         overlayPanel.revalidate();
         overlayPanel.repaint();
     }
-    
+
+    private static void rollDice(JLabel diceImage, Board board, Runnable callback) {
+        new Thread(() -> {
+            rolling = true;
+            System.out.println("Thread Running");
+            try {
+                for (int i = 0; i < 15; i++) {
+                	String diceRoll = board.rollDice();
+                    String imagePath = "/img/dice" + diceRoll + ".png";
+                    ImageIcon icon = new ImageIcon(Main.class.getResource(imagePath));
+                    diceImage.setIcon(icon);
+                    Thread.sleep(100);
+                }
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            } finally {
+                rolling = false;
+                // Ensure the callback is executed in the Event Dispatch Thread
+                SwingUtilities.invokeLater(callback);
+            }
+        }).start();
+    }
 }

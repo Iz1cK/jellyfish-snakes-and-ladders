@@ -7,6 +7,8 @@ import java.util.Random;
 
 public class Main {
 
+	private static boolean rolling = false;
+	
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Main::createAndShowGUI);
     }
@@ -18,14 +20,16 @@ public class Main {
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
 
-        JLabel diceImage = new JLabel(new ImageIcon(Main.class.getResource("/img/dice0.jpeg")));
+        JLabel diceImage = new JLabel(new ImageIcon(Main.class.getResource("/img/dice0.png")));
         diceImage.setPreferredSize(new Dimension(200, 200));
         contentPane.add(diceImage, BorderLayout.CENTER);
 
         diceImage.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                rollDice(diceImage);
+            	if(!rolling) {
+            		rollDice(diceImage);
+            	}
             }
         });
 
@@ -39,12 +43,13 @@ public class Main {
         new Thread(new Runnable() {
             @Override
             public void run() {
+            	rolling = true;
                 System.out.println("Thread Running");
                 Random random = new Random();
                 try {
                     for (int i = 0; i < 15; i++) {
-                        int diceNumber = random.nextInt(12) ; // Generate random number from 1 to 6
-                        String imagePath = "/img/dice" + diceNumber + ".jpeg";
+                        int diceNumber = random.nextInt(12);
+                        String imagePath = "/img/dice" + diceNumber + ".png";
                         ImageIcon icon = new ImageIcon(Main.class.getResource(imagePath));
                         diceImage.setIcon(icon);
                         Thread.sleep(100);
@@ -52,6 +57,7 @@ public class Main {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                rolling = false;
             }
         }).start();
     }
