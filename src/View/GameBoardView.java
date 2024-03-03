@@ -59,10 +59,19 @@ public class GameBoardView extends JFrame {
     public static Timer timer;
     private long startTime;
     private ImageIcon originalIcon;
-    
     private static ArrayList<Snake> snakes;
     private static ArrayList<Ladder> ladders;
     private static boolean rolling = false;
+    private static final Color[] COLORSs = {
+            new Color(238, 125, 166),
+            new Color(170, 227, 250),
+            new Color(243, 209, 147),
+            new Color(222, 211, 208),
+            Color.WHITE, 
+           
+    };
+    private int colorIndex = 0;
+    
     GameBoardController GBC = GameBoardController.getInstance();
     Font labelFont = new Font("Poppins", Font.BOLD, 36);
     
@@ -97,7 +106,7 @@ public class GameBoardView extends JFrame {
 //        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
 //        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
 //        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
-        Board aboard = new Board(DIFFICULTY.EASY,aplayers);
+        Board aboard = new Board(DIFFICULTY.HARD,aplayers);
         aboard.generateBoard();
         aboard.initiateQuestionSquares();
         aboard.generateSnakesAndLadder();
@@ -195,8 +204,23 @@ public class GameBoardView extends JFrame {
         	        }
         	        
         	        squarePanel.add(symbolLabel, BorderLayout.CENTER);
+        	        squarePanel.setBackground(COLORSs[colorIndex]);
+        	        if(rows==10) {
+        	        	Random rand = new Random();
+            	        int randomIndex = rand.nextInt(5);
+        	        	 colorIndex = randomIndex;
+             	        System.out.println(colorIndex);	
+        	        }
+        	        else {
+        	        // Increment the color index for the next square
+        	        colorIndex = (colorIndex + 1) % COLORSs.length;
+        	        System.out.println(colorIndex);
+        	        }
+        	        
+        	        
+        	       // squarePanel.setBackground(new Color(204, 153, 255));
         	        JLabel numberLabel = new JLabel(String.valueOf(index + 1), SwingConstants.LEFT);
-        	        numberLabel.setFont(new Font("Poppins", Font.PLAIN, 12));
+        	        numberLabel.setFont(new Font("Poppins", Font.BOLD, 16));
         	        JPanel numberPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         	        numberPanel.add(numberLabel);
         	        numberPanel.setOpaque(false);

@@ -1,20 +1,26 @@
 package View;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Label;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import Controller.AdminAuthentication;
+
 
 public class AdminView extends JFrame implements ActionListener{
 
@@ -23,6 +29,9 @@ public class AdminView extends JFrame implements ActionListener{
 	 */
 	private static final long serialVersionUID = -5389683577053397511L;
 	private JPanel contentPane;
+	private JPasswordField txtPassword;
+	private TextField txtUsername;
+	private JCheckBox showPassword;
 
 	/**
 	 * Launch the application.
@@ -79,21 +88,48 @@ public class AdminView extends JFrame implements ActionListener{
 		backPanel.add(backIcon);
 		backPanel.add(backButton);	
 		
-		Label lblUsername = new Label("Username");
-		lblUsername.setBounds(200,400,100,30);
-		TextField txtUsername = new TextField();
-		txtUsername.setBounds(330,400,100,30);
+		JLabel usernameIcon = new JLabel("New label");
+		usernameIcon.setIcon(new ImageIcon(AdminView.class.getResource("/img/username.png")));
+		usernameIcon.setBounds(189, 372, 52, 50);
+		contentPane.add(usernameIcon);
+		JLabel passwordIcon = new JLabel("New label");
+		passwordIcon.setIcon(new ImageIcon(AdminView.class.getResource("/img/password.png")));
+		passwordIcon.setBounds(189, 422, 52, 57);
+		contentPane.add(passwordIcon);
+		txtUsername = new TextField();
+		txtUsername.setFont(new Font("Kristen ITC", Font.PLAIN, 13));
+		txtUsername.setText("username");
+		txtUsername.setBounds(262, 372, 169, 42);
+		contentPane.add(txtUsername);
+		txtUsername.setColumns(10);
 		
+		/*TextField txtPassword = new TextField();
+		contentPane.add(txtPassword);
+		txtPassword.setBounds(304,378,190,30);*/
 		
-		Label lblPassword = new Label("Password");
-		lblPassword.setBounds(200,450,100,30);
-		TextField txtPassword = new TextField();
-		txtPassword.setBounds(330,450,100,30);
+		txtPassword = new JPasswordField();
+		txtPassword.setEchoChar('*');
+		txtPassword.setText("Password");
+		txtPassword.setBounds(262, 437, 169, 42);
+		contentPane.add(txtPassword);
 		
+		showPassword = new JCheckBox("show password ");
+		showPassword.setForeground(Color.WHITE);
+		showPassword.addActionListener(this);
+		showPassword.setFont(new Font("Kristen ITC", Font.PLAIN, 11));
+		showPassword.setBounds(262, 478, 161, 23);
+		contentPane.add(showPassword);
+		  // Set transparent background
+        showPassword.setOpaque(false);
+        showPassword.setBackground(new Color(0, 0, 0, 0)); // Transparent black
+
+        // Add JCheckBox to contentPane
+        contentPane.add(showPassword);
 		
 		
 		JButton login = new JButton("Login");
-		login.setBounds(265,500,80,30);
+		contentPane.add(login);
+		login.setBounds(294,525,80,30);
 		login.addActionListener(new ActionListener() {
 
 			@Override
@@ -112,24 +148,34 @@ public class AdminView extends JFrame implements ActionListener{
 			}
 		});
 		
+		JLabel loginForm = new JLabel("LOGIN FORM");
+		loginForm.setForeground(Color.WHITE);
+		loginForm.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
+		loginForm.setBounds(232, 254, 235, 100);
+		contentPane.add(loginForm);
+		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(HomeView.class.getResource("/img/homeBackground.png")));
 		lblNewLabel.setBounds(0, 0,650,650);
-		lblNewLabel.add(lblUsername);
-		lblNewLabel.add(txtUsername);
-		lblNewLabel.add(lblPassword);
-		lblNewLabel.add(txtPassword);
-		lblNewLabel.add(login);
 		lblNewLabel.add(backPanel);
 		contentPane.add(lblNewLabel);
-
+		
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getSource()== showPassword) {
+			if(showPassword.isSelected()) {
+				/*i use the method setEchoChar and he transit the echo to char*/
+				txtPassword.setEchoChar((char)0);
+			}
+			else {
+				/*else if he press again the show password the password will transit to the â—�*/
+				txtPassword.setEchoChar('*');
+			}
+		}
 		
 	}
-
 }

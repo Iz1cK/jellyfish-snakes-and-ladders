@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,10 +33,8 @@ import Controller.QuestionViewController;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.DefaultCellEditor;
 import javax.swing.GroupLayout;
-/**
- *
- * @author RAVEN
- */
+import javax.swing.LayoutStyle.ComponentPlacement;
+
 public class QuestionsView extends JFrame {
 	private JPanel contentPane;
 	private JTextField searchField;
@@ -44,9 +43,6 @@ public class QuestionsView extends JFrame {
 	private JTable table;
 	private static final long serialVersionUID = -2878161185923702132L;
 
-    /**
-     * Creates new form Test
-     */
     public QuestionsView() {
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 100, 822, 532);
@@ -56,7 +52,7 @@ public class QuestionsView extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton backButton = new JButton();
-		backButton.setBounds(0,0,53,45);
+		backButton.setBounds(0,0,53,94);
 		backButton.setOpaque(false);
 		backButton.setContentAreaFilled(false);
 		backButton.setBorderPainted(false);
@@ -72,15 +68,17 @@ public class QuestionsView extends JFrame {
 			}
 		});
 		JLabel backIcon = new JLabel("");
-		backIcon.setBounds(0, 0, 53, 45);
+		backIcon.setBounds(0, -25, 53, 100);
 		backIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/backQuestionView1.png")));
-		
+		 //contentPane.add(backIcon);	
+		 
 		JPanel backPanel = new JPanel();
-		backPanel.setBounds(47, 44, 53, 45);
+		backPanel.setBounds(47, 44, 53, 53);
 		backPanel.setOpaque(false);
 		backPanel.setLayout(null);
 		backPanel.add(backIcon);
 		backPanel.add(backButton);	
+		contentPane.add(backPanel);
 		
 		JButton newQuestionButton = new JButton();
 		newQuestionButton.setBounds(0,0,85,63);
@@ -100,37 +98,32 @@ public class QuestionsView extends JFrame {
 				dispose();
 			}
 		});
+		//contentPane.add(newQuestionButton);
+
 		JLabel newQuestionIcon = new JLabel("");
-		newQuestionIcon.setBounds(28, 0, 85, 63);
+		newQuestionIcon.setBounds(0, 0, 85, 63);
 		newQuestionIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/addQuestion.png")));
 		
 		JPanel newQuestionPanel = new JPanel();
-		newQuestionPanel.setBounds(697, 396, 85, 63);
+		newQuestionPanel.setBounds(730, 396, 85, 63);
 		newQuestionPanel.setOpaque(false);
 		newQuestionPanel.setLayout(null);
 		newQuestionPanel.add(newQuestionIcon);
 		newQuestionPanel.add(newQuestionButton);
-		
+		contentPane.add(newQuestionPanel);
+	
 		searchField = new JTextField();
-        searchField.setBounds(200, 115, 200, 25);
+        searchField.setBounds(200, 135, 200, 25);
         contentPane.add(searchField);
 
         searchButton = new JButton("Search");
-        searchButton.setBounds(420, 115, 100, 25);
+        searchButton.setBounds(420, 135, 100, 25);
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String searchText = searchField.getText().toLowerCase().trim();
                 filterTableData(searchText);
-            }
-
-			private void filterTableData(String searchText) {
-				// TODO Auto-generated method stub
-			        DefaultTableModel model = (DefaultTableModel) table.getModel();
-			        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-			        table.setRowSorter(sorter);
-			        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
-			    }			
+            }			
         });
         contentPane.add(searchButton);
         
@@ -156,8 +149,8 @@ public class QuestionsView extends JFrame {
             	dispose();
             	}
             };
-            table.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRender());
-            table.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditor(event));
+            table.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
+            table.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(event));
             table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             	/**
 				 * 
@@ -172,13 +165,30 @@ public class QuestionsView extends JFrame {
             });
         
         /* setting background */
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(QuestionsView.class.getResource("/img/questionsViewBackground.png")));
-		lblNewLabel.setBounds(0, 0,822,532);
-		lblNewLabel.add(backPanel);
-		lblNewLabel.add(newQuestionPanel);
-		contentPane.add(lblNewLabel);	
+            JLabel backgrounde = new JLabel("");
+	        ImageIcon backgroundImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/questionTableBackground.png"));
+
+	        // Resize the background image to fit the frame
+	        Image backgroundImage = backgroundImageIcon.getImage();
+	        Image resizedBackgroundImage = backgroundImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
+	        ImageIcon resizedBackgroundIcon = new ImageIcon(resizedBackgroundImage);
+
+	        backgrounde.setIcon(resizedBackgroundIcon);
+
+	        // Set size to match content pane
+	        backgrounde.setBounds(0, 0, getWidth(), getHeight());
+
+	        contentPane.add(backgrounde);	
+	        
+		
     }
+    public void filterTableData(String searchText) {
+		// TODO Auto-generated method stub
+	        DefaultTableModel model = (DefaultTableModel) table.getModel();
+	        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+	        table.setRowSorter(sorter);
+	        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+	    }
    
     /**
      * This method is called from within the constructor to initialize the form.
@@ -190,7 +200,7 @@ public class QuestionsView extends JFrame {
         Object[][] newData= QuestionViewController.getTableData();
         
         // Column names
-        String[] columnNames = {"Difficulty", "Question", "Option 1", "Option 2", "Option 3", "Option 4", "Correct Answer", "Action"};
+        String[] columnNames = {"Difficulty", "Question", "Correct Answer","Action"};
 
         // Create a new DefaultTableModel with newData and columnNames
         table.setModel(new DefaultTableModel(
@@ -203,35 +213,104 @@ public class QuestionsView extends JFrame {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // Disable auto resizing
         TableColumnModel columnModel = table.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(60); // Set width of column 0 (Difficulty) to 100 pixels
-        columnModel.getColumn(1).setPreferredWidth(200);
-        columnModel.getColumn(2).setPreferredWidth(60);
-        columnModel.getColumn(3).setPreferredWidth(60);
-        columnModel.getColumn(4).setPreferredWidth(60);
-        columnModel.getColumn(5).setPreferredWidth(60);
-        columnModel.getColumn(6).setPreferredWidth(55);
-        columnModel.getColumn(7).setPreferredWidth(110);
+        columnModel.getColumn(1).setPreferredWidth(300);
+        columnModel.getColumn(2).setPreferredWidth(200);
+        columnModel.getColumn(3).setPreferredWidth(110);
+        //columnModel.getColumn(4).setPreferredWidth(60);
+        //columnModel.getColumn(5).setPreferredWidth(60);
+        //columnModel.getColumn(6).setPreferredWidth(55);
+       // columnModel.getColumn(7).setPreferredWidth(110);
        
         jScrollPane1.setViewportView(table);
-        jScrollPane1.setBounds(20, 60, 780, 440);
+        jScrollPane1.setBounds(29, 170, 780, 440);
         contentPane.add(jScrollPane1);
+        
+        JButton newQuestionButton1 = new JButton("EASY");
+        newQuestionButton1.setLocation(726, 200);
+        newQuestionButton1.setForeground(Color.WHITE);
+        newQuestionButton1.setIcon(new ImageIcon(QuestionsView.class.getResource("/img/easyRank.png")));
+        newQuestionButton1.setOpaque(false);
+        newQuestionButton1.setContentAreaFilled(false);
+        newQuestionButton1.setBorderPainted(false);
+        newQuestionButton1.setPreferredSize(new Dimension(0,0));
+        newQuestionButton1.addActionListener(new ActionListener() {
+        	@SuppressWarnings("deprecation")
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		//TODO add functionalitiy when controler for view is finished
+        		String searchText = "easy".toLowerCase().trim();
+                filterTableData(searchText);
+        		}
+        	});
+
+        JButton newQuestionButton2 = new JButton("MEDIUM");
+        newQuestionButton2.setSize(110, 36);
+        newQuestionButton2.setLocation(726, 250);
+        newQuestionButton2.setForeground(Color.WHITE);
+        newQuestionButton2.setIcon(new ImageIcon(QuestionsView.class.getResource("/img/medRank.png")));
+        newQuestionButton2.setOpaque(false);
+        newQuestionButton2.setContentAreaFilled(false);
+        newQuestionButton2.setBorderPainted(false);
+        newQuestionButton2.setPreferredSize(new Dimension(0,0));
+        newQuestionButton2.addActionListener(new ActionListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO add functionality when controler for view is finished
+                // Add your functionality here for medium difficulty
+            	String searchText = "medium".toLowerCase().trim();
+                filterTableData(searchText);
+            }
+        });
+
+        JButton newQuestionButton3 = new JButton("HARD");
+        newQuestionButton3.setLocation(726, 300);
+        newQuestionButton3.setForeground(Color.WHITE);
+        newQuestionButton3.setIcon(new ImageIcon(QuestionsView.class.getResource("/img/hardRank.png")));
+        newQuestionButton3.setOpaque(false);
+        newQuestionButton3.setContentAreaFilled(false);
+        newQuestionButton3.setBorderPainted(false);
+        newQuestionButton3.setPreferredSize(new Dimension(0,0));
+        newQuestionButton3.addActionListener(new ActionListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO add functionality when controler for view is finished
+                // Add your functionality here for hard difficulty
+            	String searchText = "hard".toLowerCase().trim();
+                filterTableData(searchText);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         layout.setHorizontalGroup(
-        	layout.createParallelGroup(Alignment.TRAILING)
+        	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
-        			.addContainerGap(24, Short.MAX_VALUE)
+        			.addContainerGap()
         			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 688, GroupLayout.PREFERRED_SIZE)
-        			.addGap(126))
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(newQuestionButton1, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(newQuestionButton3, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(newQuestionButton2, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-        	layout.createParallelGroup(Alignment.TRAILING)
-        		.addGroup(Alignment.LEADING, layout.createSequentialGroup()
-        			.addGap(150)
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addContainerGap(174, Short.MAX_VALUE)
         			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 341, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(60, Short.MAX_VALUE))
+        			.addGap(36))
+        		.addGroup(layout.createSequentialGroup()
+        			.addGap(200)
+        			.addComponent(newQuestionButton1, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+        			.addGap(20)
+        			.addComponent(newQuestionButton2, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+        			.addGap(20)
+        			.addComponent(newQuestionButton3, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(203, Short.MAX_VALUE))
         );
         getContentPane().setLayout(layout);
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
