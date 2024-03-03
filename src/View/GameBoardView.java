@@ -97,10 +97,10 @@ public class GameBoardView extends JFrame {
 //        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
 //        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
 //        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
-        Board aboard = new Board(DIFFICULTY.MEDIUM,aplayers);
+        Board aboard = new Board(DIFFICULTY.HARD,aplayers);
         aboard.generateBoard();
         aboard.initiateQuestionSquares();
-//        aboard.generateSnakesAndLadder();
+        aboard.generateSnakesAndLadder();
         GBC.setGameBoard(aboard);
 
     	Board board = GBC.getGameBoard();
@@ -108,34 +108,9 @@ public class GameBoardView extends JFrame {
     	DIFFICULTY diff = board.getDifficultyBoard();
     	HashMap<Player,Integer> playersPositions = board.getPlayersPositions();
     	
-//    	playersPositions.put(players.get(0), 99);
-        
+    	snakes=board.getSnakes();
+    	ladders=board.getLadders();
         Square[][] squares = board.getSquares();
-        squares[3][4] = new SurpriseSquare(3,4);
-//        squares[0][3] = new QuesSquare(0,3,1);
-//        squares[0][5] = new QuesSquare(0,5,2);
-//        squares[0][6] = new QuesSquare(0,6,3);
-        
-        snakes = new ArrayList<>();
-        
-        snakes.add(new Snake("0",squares[4][6], squares[2][4], COLORS.BLUE));
-        snakes.add(new Snake("1",squares[6][3], squares[2][1], COLORS.GREEN));
-        snakes.add(new Snake("2",squares[1][1], squares[0][4], COLORS.YELLOW));
-        snakes.add(new Snake("3",squares[5][5], null, COLORS.RED));
-        
-        ladders = new ArrayList<>();
-        
-        ladders.add(new Ladder("0",squares[0][2], squares[1][4]));
-        ladders.add(new Ladder("0",squares[2][3], squares[4][3]));
-        ladders.add(new Ladder("0",squares[3][5], squares[6][5]));
-        ladders.add(new Ladder("0",squares[1][5], squares[5][1]));
-        
-        board.setSnakes(snakes);
-        board.setLadders(ladders);
-        
-        
-//        snakes = board.getSnakes();
-//        ladders = board.getLadders();
     	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1280, 720);
@@ -336,12 +311,11 @@ public class GameBoardView extends JFrame {
         		ImageIcon snakeIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + snake.getColor() + "snake.png"));
         		Image snakeImage = new ImageIcon(snakeIcon.getImage().getScaledInstance(cellWidth, cellHeight, Image.SCALE_SMOOTH)).getImage();
         		int headX = calculateXPosition(snake.getHeadSquare().getColumn(), overlayPanel.getWidth() / cols, cols) + cellWidth/4;
-        		int headY = calculateYPosition(snake.getHeadSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2;
-        		System.out.println("headX: " + headX + " headY:" + headY);
+        		int headY = calculateYPosition(snake.getHeadSquare().getRow(), overlayPanel.getHeight() / rows, rows) + cellHeight/2 - 10;
         		
         		AffineTransform transform = new AffineTransform();
         		transform.translate(headX, headY);
-        		transform.scale(0.5, 0.5);
+        		transform.scale(0.6, 0.6);
         		g2d.drawImage(snakeImage, transform, null);
         		
         	} else {
