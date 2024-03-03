@@ -75,6 +75,11 @@ public class Square implements SquareInterface {
     }
 
 	@Override
+	public String toString() {
+		return "Square [position=" + position + ", row=" + row + ", column=" + column + ", squareColor=" + squareColor
+				+ "]";
+	}
+	
 	public void getSquare() {
 		// TODO Auto-generated method stub
 		

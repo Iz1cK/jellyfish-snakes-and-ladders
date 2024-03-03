@@ -15,6 +15,10 @@ import Model.Questions;
 
 public class EditQuestionView extends JFrame implements ActionListener{
 
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6317513228542388990L;
 		private JPanel contentPane;
 	    private JTextField obtion1TeksField;
 		private JTextField questionTextField;
@@ -22,21 +26,21 @@ public class EditQuestionView extends JFrame implements ActionListener{
 		private JTextField obtion2TextField;
 		private JTextField obtion4textField;
 		private JButton back;
-		private JComboBox comboBox;
+		@SuppressWarnings("rawtypes")
+		private JComboBox<Comparable> comboBox;
 		private JRadioButton easy;
 		private JRadioButton medium;
 		private JRadioButton hard;
 		private JButton editButton;
 		private int questionid;
-		private EditQuestionController controller;
-
-	/**
+		/**
 	 * Launch the application.
 
 
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings("rawtypes")
 	public EditQuestionView(Questions question1) {
 		questionid=question1.getQuestionId();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -141,7 +145,7 @@ public class EditQuestionView extends JFrame implements ActionListener{
 		correctAns.setBounds(28, 15, 162, 25);
 		correctDiffPanel.add(correctAns);
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<Comparable>();
 		comboBox.setEditable(true);
 		comboBox.addItem("...");
 		comboBox.addItem(1);
@@ -223,6 +227,7 @@ public class EditQuestionView extends JFrame implements ActionListener{
         
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

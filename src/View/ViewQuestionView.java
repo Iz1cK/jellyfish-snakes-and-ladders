@@ -21,6 +21,12 @@ import Model.Questions;
 public class ViewQuestionView extends JFrame {
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 441310794830076121L;
+
+
 	private JPanel contentPane;
 
 
@@ -34,7 +40,8 @@ public class ViewQuestionView extends JFrame {
 		private JTextField obtion2TextField;
 		private JTextField obtion4textField;
 		private JButton back;
-		private JComboBox comboBox;
+		@SuppressWarnings("rawtypes")
+		private JComboBox<Comparable> comboBox;
 		JRadioButton easy;
 		JRadioButton medium;
 		JRadioButton hard;
@@ -46,7 +53,8 @@ public class ViewQuestionView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	    public ViewQuestionView(Questions question1) {
+	    @SuppressWarnings("rawtypes")
+		public ViewQuestionView(Questions question1) {
 			
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(400, 100, 822, 532);
@@ -155,7 +163,7 @@ public class ViewQuestionView extends JFrame {
 			correctAns.setBounds(28, 15, 162, 25);
 			correctDiffPanel.add(correctAns);
 			
-			comboBox = new JComboBox();
+			comboBox = new JComboBox<Comparable>();
 			comboBox.setEnabled(false);
 			comboBox.addItem("...");
 			comboBox.addItem(1);

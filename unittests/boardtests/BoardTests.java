@@ -10,20 +10,20 @@ public class BoardTests {
 
     @Test
     public void testBoardInitialization() {
-        Board easyBoard = new Board(DIFFICULTY.EASY);
+        Board easyBoard = new Board(DIFFICULTY.EASY, null);
         assertEquals(7, easyBoard.getRows());
         assertEquals(7, easyBoard.getColumns());
         assertNotNull(easyBoard.getDiceOptions());
         assertFalse(easyBoard.getDiceOptions().isEmpty());
         
-        Board mediumBoard = new Board(DIFFICULTY.MEDIUM);
+        Board mediumBoard = new Board(DIFFICULTY.MEDIUM, null);
         assertEquals(10, mediumBoard.getRows());
         assertEquals(10, mediumBoard.getColumns());
         assertNotNull(mediumBoard.getDiceOptions());
         assertFalse(mediumBoard.getDiceOptions().isEmpty());
         assertTrue(mediumBoard.getDiceOptions().size() > easyBoard.getDiceOptions().size());
         
-        Board hardBoard = new Board(DIFFICULTY.HARD);
+        Board hardBoard = new Board(DIFFICULTY.HARD, null);
         assertEquals(13, hardBoard.getRows());
         assertEquals(13, hardBoard.getColumns());
         assertNotNull(hardBoard.getDiceOptions());
@@ -33,7 +33,7 @@ public class BoardTests {
 
     @Test
     public void testRollDice() {
-        Board board = new Board(DIFFICULTY.MEDIUM);
+        Board board = new Board(DIFFICULTY.MEDIUM, null);
         String diceResult = board.rollDice();
         assertNotNull(diceResult);
         assertTrue(board.getDiceOptions().contains(diceResult));
@@ -41,7 +41,7 @@ public class BoardTests {
 
     @Test
     public void testCheckWinner() {
-        Board board = new Board(DIFFICULTY.EASY);
+        Board board = new Board(DIFFICULTY.EASY, null);
         Player player1 = new Player();
         Player player2 = new Player();
         board.getPlayers().add(player1);

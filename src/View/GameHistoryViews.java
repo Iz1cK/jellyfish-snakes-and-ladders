@@ -139,7 +139,11 @@ public class GameHistoryViews extends JFrame {
    
     // End of variables declaration//GEN-END:variables
     class ActionButton extends JButton {
-        private boolean mousePress;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 443761283009162516L;
+		private boolean mousePress;
 
         public ActionButton() {
             setContentAreaFilled(false);

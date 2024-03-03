@@ -44,7 +44,6 @@ public class SurpriseSquarePopupView extends JFrame {
 			this.setLocationRelativeTo(null);
 			contentPane = new JPanel();
 			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-			contentPane.setLayout(new BorderLayout(0, 0));
 			setContentPane(contentPane);
 			
 			
@@ -86,9 +85,10 @@ public class SurpriseSquarePopupView extends JFrame {
 						popUpIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/backwardsSurpriseSquare"	+ ".png")));
 					
 					JPanel popUp = new JPanel();
-					popUp.setBounds(0,0,650,408);
+					popUp.setBounds(0,-12,634,381);
 					popUp.setOpaque(false);
 					popUp.add(popUpIcon);
+					contentPane.setLayout(null);
 					contentPane.add(panGoButton);
 					contentPane.add(popUp);
 			
