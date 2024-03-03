@@ -22,6 +22,7 @@ import Model.Player;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FinalPage extends JFrame {
 
@@ -47,6 +48,9 @@ public class FinalPage extends JFrame {
                     board.initiateQuestionSquares();
                     board.generateSnakesAndLadder();
                     
+                    HashMap<Player,Integer> playersposs = board.getPlayersPositions();
+                    playersposs.put(aplayers.get(0), 23);
+                    board.setPlayersPositions(playersposs);
                     
                     FinalPage frame = new FinalPage(new Game(DIFFICULTY.EASY, board, aplayers.get(0), aplayers, "19:10.02"));
                     frame.setVisible(true);
@@ -159,8 +163,11 @@ public class FinalPage extends JFrame {
         	public void mouseClicked(MouseEvent e) {
         		GameBoardController gbc = GameBoardController.getInstance();
         		Board board = game.getBoardgame();
-        		System.out.println("finalpage board: " + board);
-        		gbc.setGameBoard(game.getBoardgame());
+        		Board newBoard = new Board(board.getDifficultyBoard(), board.getPlayers());
+        		newBoard.generateBoard();
+        		newBoard.initiateQuestionSquares();
+        		newBoard.generateSnakesAndLadder();
+        		gbc.setGameBoard(newBoard);
         		GameBoardView gbv = new GameBoardView();
         		gbv.setExtendedState(JFrame.MAXIMIZED_BOTH);
         		gbv.setVisible(true);

@@ -37,7 +37,8 @@ public class Board {
 			case EASY:
 				this.rows = 7;
 				this.columns = 7;
-				String[] easyOptions = {"0","1","2","3","4","E","M","H"};
+//				String[] easyOptions = {"0","1","2","3","4","E","M","H"};
+				String[] easyOptions = {"0","1","2","3","4"};
 				List<String> easyList = Arrays.asList(easyOptions);
 				this.diceOptions.addAll(easyList);
 			break;
@@ -316,7 +317,7 @@ public class Board {
 	    ArrayList<Integer> occupiedPositions = new ArrayList<>();
 	    occupiedPositions.addAll(questionSquarePositions);
 	    occupiedPositions.addAll(surpriseSquarePositions);
-	    
+	    occupiedPositions.add(1);
 	    int boardSize = this.rows;
 	    
 	    for (int rank = 1; rank <= numberOfLadders; rank++) {

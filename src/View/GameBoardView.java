@@ -97,20 +97,20 @@ public class GameBoardView extends JFrame {
      */
     public GameBoardView() {
     	GBC.setGameBoardView(this);
-        ArrayList<Player> aplayers = new ArrayList<>();
-        aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
-////        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
-////        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
-        aplayers.add(new Player(3,"aseel",PLAYERCOLORS.GREEN));
-////        aplayers.add(new Player(4,"ahmad",PLAYERCOLORS.WHITE));
-////        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
-////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
-////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
-        Board aboard = new Board(DIFFICULTY.HARD,aplayers);
-        aboard.generateBoard();
-        aboard.initiateQuestionSquares();
-        aboard.generateSnakesAndLadder();
-        GBC.setGameBoard(aboard);
+//        ArrayList<Player> aplayers = new ArrayList<>();
+//        aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
+////////        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
+////////        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
+//        aplayers.add(new Player(3,"aseel",PLAYERCOLORS.GREEN));
+////////        aplayers.add(new Player(4,"ahmad",PLAYERCOLORS.WHITE));
+////////        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
+////////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
+////////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
+//        Board aboard = new Board(DIFFICULTY.HARD,aplayers);
+//        aboard.generateBoard();
+//        aboard.initiateQuestionSquares();
+//        aboard.generateSnakesAndLadder();
+//        GBC.setGameBoard(aboard);
 
     	Board board = GBC.getGameBoard();
     	System.out.println(board);
@@ -246,17 +246,15 @@ public class GameBoardView extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 if(!rolling) {
                     rollDice(diceLabel, board, () -> {
-                        // This will be executed after the dice rolling animation completes
-                        System.out.println("clicked");
-                        GBC.playTurn();
+                    	GBC.rollDice();
                         String imagePath = "/img/dice" + GameBoardController.diceRoll + ".png";
                         ImageIcon icon = new ImageIcon(Main.class.getResource(imagePath));
                         diceLabel.setIcon(icon);
+                        GBC.playTurn();
                         updatePlayersList(players, playersPositions, board);
                         updatePlayerPositionsOnBoard(board.getDifficultyBoard(), players, playersPositions, squares.length, squares[0].length);
                         
                         if(playersPositions.get(board.getCurrentPlayerTurn()) >= board.getRows()*board.getRows()) {
-                        	System.out.println("WINNER WINNER CHGICKEN DINNER");
                         	timer.stop();
                         	setVisible(false);
                         	dispose();

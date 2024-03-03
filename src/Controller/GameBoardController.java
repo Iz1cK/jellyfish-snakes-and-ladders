@@ -32,7 +32,9 @@ public class GameBoardController {
 	static Sysdata sysdata = Sysdata.getInstance();
 	static questionPopUpController QPUC= questionPopUpController.getInstance();
 	private GameBoardView gameBoardView;
-
+	private boolean squareCheckedThisTurn = false;
+	private HashMap<Player, Integer> lastCheckedSquarePosition = new HashMap<>();
+	
 	public void setGameBoardView(GameBoardView gameBoardView) {
 	    this.gameBoardView = gameBoardView;
 	}
@@ -55,81 +57,94 @@ public class GameBoardController {
 		return this.gameBoard;
 	}
 	
+	public String rollDice() {
+		diceRoll = this.gameBoard.rollDice();
+		return diceRoll;
+	}
+	
 	public void playTurn() {
+		squareCheckedThisTurn = false;
 		ArrayList<Player> players = this.gameBoard.getPlayers();
 		Player currentPlayer = this.gameBoard.getCurrentPlayerTurn();
-		Game game = new Game(this.gameBoard.getDifficultyBoard(), currentPlayer, this.gameBoard.getPlayers(), GameBoardView.timerLabel.getText());
+		Game game = new Game(this.gameBoard.getDifficultyBoard(), this.gameBoard ,currentPlayer, this.gameBoard.getPlayers(), GameBoardView.timerLabel.getText());
 		int boardSize = (int) Math.pow(this.gameBoard.getRows(), 2);
 		HashMap<Player, Integer> playersPositions = this.gameBoard.getPlayersPositions();
-
-		diceRoll = this.gameBoard.rollDice();
 		switch(diceRoll) {
-			case "0":
-				System.out.println("you got 0, you dont move");
-				break;
-			case "1":
-				playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 1);
-				break;
-			case "2":
-				playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 2);
-				break;
-			case "3":
-				playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 3);
-				break;
-			case "4":
-				playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 4);
-				break;
-			case "5":
-				playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 5);
-				break;
-			case "6":
-				playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 6);
-				break;
-			case "7":
-				playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 7);
-				break;
-			case "8":
-				playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 8);
-				break;
-			case "E":
-				System.out.println("you rolled an easy question!");
-				showQuestion(1,currentPlayer);
-				break;
-			case "M":
-				System.out.println("you rolled a medium question!");
-				showQuestion(2,currentPlayer);
-				break;
-			case "H":
-				System.out.println("you rolled a hard question!");
-				showQuestion(3,currentPlayer);
-				break;
-		}
-		
+		case "0":
+			System.out.println("you got 0, you dont move");
+			break;
+		case "1":
+			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 1);
+			break;
+		case "2":
+			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 2);
+			break;
+		case "3":
+			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 3);
+			break;
+		case "4":
+			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 4);
+			break;
+		case "5":
+			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 5);
+			break;
+		case "6":
+			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 6);
+			break;
+		case "7":
+			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 7);
+			break;
+		case "8":
+			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 8);
+			break;
+		case "E":
+			System.out.println("you rolled an easy question!");
+			showQuestion(1,currentPlayer);
+			break;
+		case "M":
+			System.out.println("you rolled a medium question!");
+			showQuestion(2,currentPlayer);
+			break;
+		case "H":
+			System.out.println("you rolled a hard question!");
+			showQuestion(3,currentPlayer);
+			break;
+	}
 		if(playersPositions.get(currentPlayer) <= 0) {
 			playersPositions.put(currentPlayer, 1);
 		}
 		
 		if(playersPositions.get(currentPlayer) >= boardSize) {
+			gameBoardView.setVisible(false);
+			gameBoardView.dispose();
 			sysdata.addGameHistory(game);
 			FinalPage FP = new FinalPage(game);
 			FP.setVisible(true);
 			System.out.println("PLAYER " + currentPlayer.getPlayername() + " WON!");
 		} 
-		this.checkSquares(currentPlayer);
+		this.checkSquares(currentPlayer, false);
 		int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
 		this.gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
 	}
 	
-	private void checkSquares(Player currentPlayer) {
+	private void checkSquares(Player currentPlayer, boolean noQuestions) {
 		HashMap<Player, Integer> playersPositions = this.gameBoard.getPlayersPositions();
+		int currentPosition = playersPositions.get(currentPlayer);
+		if (lastCheckedSquarePosition.containsKey(currentPlayer) && lastCheckedSquarePosition.get(currentPlayer) == currentPosition) {
+	        return;
+	    }
+		 
 
 		Square landingSquare = this.gameBoard.getSquareByPosition(playersPositions.get(currentPlayer));
 		String landingSquareType = this.gameBoard.checkLandingSquare(landingSquare);
 		switch(landingSquareType) {
 		case "QuestionSquare":
-			int questionDifficulty = ((QuesSquare) landingSquare).getDifficulty();
-			System.out.println("Landed on a question square with difficulty: " + questionDifficulty);
-			showQuestion(questionDifficulty, currentPlayer);
+			if(!noQuestions) {
+				int questionDifficulty = ((QuesSquare) landingSquare).getDifficulty();
+				System.out.println("Landed on a question square with difficulty: " + questionDifficulty);
+				showQuestion(questionDifficulty, currentPlayer);
+				lastCheckedSquarePosition.put(currentPlayer, currentPosition);
+			}
 			break;
 		case "SurpriseSquare":
 			System.out.println("Landed on a surprise square!");
@@ -181,7 +196,9 @@ public class GameBoardController {
 	            System.out.println("Current player is: " + currentPlayer);
 	            int penaltyOrReward = calculatePenaltyOrReward(difficulty, isCorrect);
 	            updatePlayerPosition(currentPlayer, penaltyOrReward);
-	            checkSquares(currentPlayer);
+
+	            checkSquares(currentPlayer, true);
+
 	            gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
 	            gameBoardView.updatePlayerPositionsOnBoard(gameBoard.getDifficultyBoard(), players, playersPositions, gameBoard.getSquares().length, gameBoard.getSquares()[0].length);
 	        }
@@ -222,7 +239,7 @@ public class GameBoardController {
 			String answer3 = randomQuestion.getAnswers().get(2);
 			String answer4 = randomQuestion.getAnswers().get(3);
 			
-			QuestionPopUp obj = new QuestionPopUp(callback,difficulty);
+			QuestionPopUp obj = new QuestionPopUp(callback,difficulty,gameBoardView);
 	        obj.cmdobt1.setText(answer1);
 	        obj.cmdobt2.setText(answer2);
 	        obj.cmdobt3.setText(answer3);

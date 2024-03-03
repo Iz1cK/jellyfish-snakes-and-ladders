@@ -48,8 +48,8 @@ public class MessageDialog extends JDialog {
 	questionPopUpController controller= questionPopUpController.getInstance();
 
 
-    public MessageDialog() {
-        super();
+    public MessageDialog(JFrame gbv) {
+        super(gbv, true);
         this.fram = new JFrame();
         initComponents();
         init();
@@ -126,7 +126,7 @@ public class MessageDialog extends JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-    	System.out.println("iam in initComponent");
+    	
 
         background1 = new Background();
         cmdOK = new ButtonCustom();
@@ -151,7 +151,6 @@ public class MessageDialog extends JDialog {
         });
 
         lbIcon.setHorizontalAlignment(SwingConstants.CENTER);
-        System.out.println("we are in last popup"+controller.isCorrectAns);
         if(controller.isCorrectAns==false) {
         lbIcon.setIcon(new ImageIcon(getClass().getResource("/img/wrong.png"))); // NOI18N
         lbTitle.setForeground(new Color(245, 71, 71));
@@ -164,7 +163,6 @@ public class MessageDialog extends JDialog {
 
 
         }
-        System.out.println("we are in last popup"+controller.isCorrectAns);
 
 
         lbTitle.setFont(new Font("sansserif", 3, 24)); // NOI18N
@@ -217,7 +215,7 @@ public class MessageDialog extends JDialog {
         );
 
         pack();
-        System.out.println("iam in end initComponent");
+        
     }// </editor-fold>//GEN-END:initComponents
 
    
