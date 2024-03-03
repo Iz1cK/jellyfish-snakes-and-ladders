@@ -6,10 +6,10 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-public class Questions {
+public class Questions extends JSONSerializable {
 	private int questionId; //question id which represents an unique identifier for the question
 	private String question; //represents the questions content
-	private List<String> answers = new ArrayList<String>(); //holds the question’s answers.
+	private List<String> answers = new ArrayList<String>(); //holds the questionï¿½s answers.
 	private int correct_ans; //represents the index of the correct answer. in the answers data structure.
 	private int difficulty; //the questions difficulty, values could be one of {EASY,MEDIUM,HARD}.
 
