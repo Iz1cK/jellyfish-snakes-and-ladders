@@ -761,12 +761,12 @@ int count=0;
 		    		
 		    		if(allNames.contains(nickname)) {
 		    		//	  System.out.println("testttttttttttttttt"); 
-	    			  validName="no";
+	    			//  validName="no";
 	    			  JOptionPane.showMessageDialog(contentPane, "this nickname is unvalid! try another one");
 	        	    }
 		    		else {
 		    			allNames.add(nickname);
-              			validName="yes";
+              			//validName="yes";
 		    		
 			    	playersCounter++;
 			        int playersNumber = Integer.parseInt(numbers.getText());
