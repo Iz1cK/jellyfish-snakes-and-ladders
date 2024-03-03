@@ -44,6 +44,7 @@ public class MessageDialog extends JDialog {
     private Glass glass;
     private boolean show;
     private MessageType messageType = MessageType.CANCEL;
+    public boolean correct;
 	questionPopUpController controller= questionPopUpController.getInstance();
 
 
@@ -154,10 +155,12 @@ public class MessageDialog extends JDialog {
         if(controller.isCorrectAns==false) {
         lbIcon.setIcon(new ImageIcon(getClass().getResource("/img/wrong.png"))); // NOI18N
         lbTitle.setForeground(new Color(245, 71, 71));
+        correct=false;
         }
         else if(controller.isCorrectAns==true) {
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/img/correct.png"))); // NOI18N
             lbTitle.setForeground(new Color(0, 128, 0));
+            correct=true;
 
 
         }

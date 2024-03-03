@@ -8,7 +8,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class Game {
+public class Game extends JSONSerializable{
 	private static int idCounter = 1;
 	private int gameID;
 	private int difficulty;
@@ -51,6 +51,7 @@ public class Game {
 		}
 	}
 
+	
 	public void fromJSON(JsonObject jsonObject) {
 		this.gameID = Integer.parseInt(jsonObject.get("gameID").toString());
 		this.difficulty = Integer.parseInt(jsonObject.get("difficulty").toString());

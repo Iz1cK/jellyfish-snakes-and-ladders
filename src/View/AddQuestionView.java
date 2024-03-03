@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -19,38 +20,26 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-
 import Controller.AddQuestionController;
-import Model.Sysdata;
-
 import javax.swing.JRadioButton;
-
 
 public class AddQuestionView extends JFrame implements ActionListener{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField obtion1TeksField;
-
-	//private ArrayList<casualties> casualtiesArr=new ArrayList<>();
-//	private ArrayList<includeReport> includesReport=new ArrayList<>();
-
-	//private JDateChooser dateChooser;
 	private String k;
 	private JTextField questionTextField;
 	private JTextField obtion3textField;
 	private JTextField obtion2TextField;
 	private JTextField obtion4textField;
-	private JButton addQuestion;
+	private JButton save;
 	@SuppressWarnings("rawtypes")
 	private JComboBox<Comparable> comboBox;
 	private JRadioButton easy;
 	private JRadioButton medium;
 	private JRadioButton hard;
-	private JButton back;
+	private JButton backButton;
 	private AddQuestionController controller = AddQuestionController.getInstance();
 
 
@@ -75,7 +64,6 @@ public class AddQuestionView extends JFrame implements ActionListener{
 	 */
 	public AddQuestionView() {
 		initComponents();
-		//fetchAndRefresh();
 }
 	@SuppressWarnings("rawtypes")
 	private void initComponents() {
@@ -97,10 +85,10 @@ public class AddQuestionView extends JFrame implements ActionListener{
 	     contentPane.add(questionPanel);
 			
 	     JLabel question = new JLabel("Question:");
+	     question.setIcon(new ImageIcon(AddQuestionView.class.getResource("/img/questionIcon1.png")));
 	     question.setForeground(Color.WHITE);
 	     question.setBounds(10, 15, 162, 25);
 	     questionPanel.add(question);
-	     //reportNum.setIcon(new ImageIcon(creatReport.class.getResource("/img/num22.png")));
 	     question.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
 			
 	     questionTextField = new JTextField();
@@ -120,12 +108,14 @@ public class AddQuestionView extends JFrame implements ActionListener{
 		
 		 JLabel choices = new JLabel("Choices:");
 	     choices.setForeground(Color.WHITE);
+	     choices.setIcon(new ImageIcon(AddQuestionView.class.getResource("/img/choices.png")));
 	     choices.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
 	     choices.setBounds(10, 16, 162, 25);
 	     choicesPanel.add(choices);
 		
 		JLabel obtion1 = new JLabel("Obtion 1");
 	    obtion1.setForeground(Color.WHITE);
+	    obtion1.setIcon(new ImageIcon(AddQuestionView.class.getResource("/img/ans1.png")));
 	    obtion1.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
 	    obtion1.setBounds(10, 53, 162, 25);
 	    choicesPanel.add(obtion1);
@@ -133,12 +123,12 @@ public class AddQuestionView extends JFrame implements ActionListener{
 	    obtion1TeksField = new JTextField();
 	    obtion1TeksField.setColumns(10);
 	    obtion1TeksField.setText(k);
-	    obtion1TeksField.setBounds(123, 52, 219, 28);
+	    obtion1TeksField.setBounds(123, 52, 230, 28);
 	    choicesPanel.add(obtion1TeksField);
 		
 		JLabel obtion2 = new JLabel("Obtion 2");
 		obtion2.setForeground(Color.WHITE);
-		//date.setIcon(new ImageIcon(creatReport.class.getResource("/img/daate.png")));
+	    obtion2.setIcon(new ImageIcon(AddQuestionView.class.getResource("/img/ans2.png")));
 		obtion2.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
 		obtion2.setBounds(10, 102, 116, 25);
 		choicesPanel.add(obtion2);
@@ -146,12 +136,12 @@ public class AddQuestionView extends JFrame implements ActionListener{
 		obtion2TextField = new JTextField();
 	    obtion2TextField.setText((String) null);
 	    obtion2TextField.setColumns(10);
-	    obtion2TextField.setBounds(123, 101, 219, 28);
+	    obtion2TextField.setBounds(123, 101, 230, 28);
 	    choicesPanel.add(obtion2TextField);
 		
 		JLabel obtion3 = new JLabel("Obtion 3");
 		obtion3.setForeground(Color.WHITE);
-		//latitude.setIcon(new ImageIcon(creatReport.class.getResource("/img/latitude.png")));
+	    obtion3.setIcon(new ImageIcon(AddQuestionView.class.getResource("/img/ans3.png")));
 		obtion3.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
 		obtion3.setBounds(373, 53, 118, 25);
 		choicesPanel.add(obtion3);
@@ -159,12 +149,12 @@ public class AddQuestionView extends JFrame implements ActionListener{
 		obtion3textField = new JTextField();
 	    obtion3textField.setText((String) null);
 	    obtion3textField.setColumns(10);
-	    obtion3textField.setBounds(444, 50, 219, 28);
+	    obtion3textField.setBounds(479, 52, 230, 28);
 	    choicesPanel.add(obtion3textField);
 		
 		JLabel obtion4 = new JLabel("Obtion 4");
 		obtion4.setForeground(Color.WHITE);
-	//	longitude.setIcon(new ImageIcon(creatReport.class.getResource("/img/longitude.png")));
+	    obtion4.setIcon(new ImageIcon(AddQuestionView.class.getResource("/img/ans4.png")));
 		obtion4.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
 		obtion4.setBounds(373, 102, 118, 25);
 		choicesPanel.add(obtion4);
@@ -172,7 +162,7 @@ public class AddQuestionView extends JFrame implements ActionListener{
 	    obtion4textField = new JTextField();
 	    obtion4textField.setText((String) null);
 	    obtion4textField.setColumns(10);
-	    obtion4textField.setBounds(444, 105, 219, 28);
+	    obtion4textField.setBounds(479, 101, 230, 28);
 	    choicesPanel.add(obtion4textField);
 	     
 	    /*********************Correct Answer & Difficulty*********************************/
@@ -186,12 +176,13 @@ public class AddQuestionView extends JFrame implements ActionListener{
 			
 		JLabel correctAns = new JLabel("Correct Answer:");
 		correctAns.setForeground(Color.WHITE);
+		correctAns.setIcon(new ImageIcon(AddQuestionView.class.getResource("/img/correctAns.png")));
 		correctAns.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
-		correctAns.setBounds(28, 15, 162, 25);
+		correctAns.setBounds(10, 15, 162, 25);
 		correctDiffPanel.add(correctAns);
 		
 		comboBox = new JComboBox<Comparable>();
-		comboBox.setBounds(158, 17, 84, 22);
+		comboBox.setBounds(162, 17, 84, 22);
 		comboBox.addItem("...");
 		comboBox.addItem(1);
 		comboBox.addItem(2);
@@ -201,8 +192,9 @@ public class AddQuestionView extends JFrame implements ActionListener{
 			
 		JLabel difficulty = new JLabel("Difficulty:");
 		difficulty.setForeground(Color.WHITE);
+		difficulty.setIcon(new ImageIcon(AddQuestionView.class.getResource("/img/difficulty.png")));
 		difficulty.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
-		difficulty.setBounds(278, 15, 84, 25);
+		difficulty.setBounds(286, 15, 122, 25);
 		correctDiffPanel.add(difficulty);
 		
 		ButtonGroup buttonGroup = new ButtonGroup();
@@ -210,40 +202,80 @@ public class AddQuestionView extends JFrame implements ActionListener{
 		easy = new JRadioButton("Easy");
 		easy.setForeground(Color.WHITE);
 		easy.setBackground(new Color(0, 0, 0, 140));
-		easy.setBounds(381, 17, 109, 23);
+		easy.setBounds(402, 17, 60, 23);
 		correctDiffPanel.add(easy);
 			
 		medium = new JRadioButton("Medium");
 		medium.setBackground(new Color(0, 0, 0, 140));
 		medium.setForeground(Color.WHITE);
-		medium.setBounds(492, 17, 109, 23);
+		medium.setBounds(504, 17, 77, 23);
 		correctDiffPanel.add(medium);
 			
 		hard = new JRadioButton("Hard");
 		hard.setBackground(new Color(0, 0, 0, 140));
 		hard.setForeground(Color.WHITE);
-		hard.setBounds(607, 17, 109, 23);
+		hard.setBounds(637, 17, 60, 23);
 		correctDiffPanel.add(hard);
 		
 		buttonGroup.add(easy);
 		buttonGroup.add(medium);
 		buttonGroup.add(hard);
-			
-		addQuestion = new JButton("save");
-		addQuestion.addActionListener(this);
-		addQuestion.setForeground(Color.BLACK);
-		addQuestion.setFont(new Font("Kristen ITC", Font.PLAIN, 13));
-		addQuestion.setBackground(new Color(255, 255, 255, 200));
-		addQuestion.setBounds(386, 441, 140, 45);
 		
-		contentPane.add(addQuestion);
-		back = new JButton("back");
-		back.setForeground(Color.BLACK);
-		back.setFont(new Font("Kristen ITC", Font.PLAIN, 13));
-		back.addActionListener(this);
-		back.setBackground(new Color(255, 255, 255, 200));
-		back.setBounds(209, 441, 140, 45);
-		contentPane.add(back);
+		JLabel easyIcon = new JLabel("");
+		easyIcon.setForeground(Color.WHITE);
+		easyIcon.setIcon(new ImageIcon(AddQuestionView.class.getResource("/img/easy2.png")));
+
+		easyIcon.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
+		easyIcon.setBounds(462, 15, 36, 25);
+		correctDiffPanel.add(easyIcon);
+		
+		JLabel mediumIcon = new JLabel("");
+		mediumIcon.setForeground(Color.WHITE);
+		mediumIcon.setIcon(new ImageIcon(AddQuestionView.class.getResource("/img/med.png")));
+
+		mediumIcon.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
+		mediumIcon.setBounds(587, 15, 36, 25);
+		correctDiffPanel.add(mediumIcon);
+		
+		JLabel hardIcon = new JLabel("");
+		hardIcon.setForeground(Color.WHITE);
+		hardIcon.setIcon(new ImageIcon(AddQuestionView.class.getResource("/img/hard1.png")));
+
+		hardIcon.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
+		hardIcon.setBounds(703, 15, 30, 25);
+		correctDiffPanel.add(hardIcon);
+		
+			
+		save = new JButton("ADD & SAVE");
+		save.addActionListener(this);
+		save.setIcon(new ImageIcon(AddQuestionView.class.getResource("/img/save.png")));
+		save.setForeground(Color.WHITE);
+		save.setFont(new Font("Kristen ITC", Font.PLAIN, 13));
+		save.setBackground(new Color(204, 153, 255));
+		save.setBounds(361, 439, 166, 45);
+		contentPane.add(save);
+		
+		
+		backButton = new JButton();
+		backButton.setBounds(0,0,53,94);
+		backButton.setOpaque(false);
+		backButton.setContentAreaFilled(false);
+		backButton.setBorderPainted(false);
+		backButton.setPreferredSize(new Dimension(0,0));
+		backButton.addActionListener(this);
+			
+		JLabel backIcon = new JLabel("");
+		backIcon.setBounds(0, -25, 53, 100);
+		backIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/backQuestionView1.png")));
+		 //contentPane.add(backIcon);	
+		 
+		JPanel backPanel = new JPanel();
+		backPanel.setBounds(47, 44, 53, 53);
+		backPanel.setOpaque(false);
+		backPanel.setLayout(null);
+		backPanel.add(backIcon);
+		backPanel.add(backButton);	
+		contentPane.add(backPanel);
 		
 		JLabel backgrounde = new JLabel("");
 		backgrounde.setIcon(new ImageIcon(QuestionsView.class.getResource("/img/addQuestionBackground.jpeg")));
@@ -253,9 +285,8 @@ public class AddQuestionView extends JFrame implements ActionListener{
 		
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==addQuestion) {
+		if(e.getSource()==save) {
 			int q=0;
 			try {
 				/*check if the admin full all the text field and if not nullPointerException will throw*/
@@ -325,10 +356,22 @@ public class AddQuestionView extends JFrame implements ActionListener{
 			}
            
 		}
-		else if(e.getSource()==back) {
-			QuestionsView testPage = new QuestionsView();
-     	    testPage.show();
-     	    dispose(); 
+		else if(e.getSource()==backButton) {
+			if(!(comboBox.getSelectedItem().equals("..."))||!(questionTextField.getText().isEmpty())|| !(obtion1TeksField.getText().isEmpty())|| !(obtion2TextField.getText().isEmpty()) || !(obtion3textField.getText().isEmpty()) || !(obtion3textField.getText().isEmpty())
+					|| !((!easy.isSelected() && !medium.isSelected() && !hard.isSelected()))) {
+				 int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you don't want to continue?", "Confirmation", JOptionPane.YES_NO_OPTION);
+				 if(confirmation==JOptionPane.YES_OPTION) {
+						QuestionsView QuestionViewPage = new QuestionsView();
+						QuestionViewPage.setVisible(true);
+						dispose();
+				 }
+			}
+			else {
+				QuestionsView QuestionViewPage = new QuestionsView();
+				QuestionViewPage.setVisible(true);
+				dispose();
+			}
+		
 		}
 		
 	}
