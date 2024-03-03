@@ -19,7 +19,7 @@ public class SurpriseSquare extends Square {
 
 	@Override
 	public String toString() {
-		return "SurpriseSquare [moveCount=]";
+		return "SurpriseSquare";
 	}
 
 	/**

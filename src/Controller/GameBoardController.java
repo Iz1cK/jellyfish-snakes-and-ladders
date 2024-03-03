@@ -61,8 +61,6 @@ public class GameBoardController {
 		Square[][] squares = this.gameBoard.getSquares();
 		Player currentPlayer = this.gameBoard.getCurrentPlayerTurn();
 		Game game = new Game(this.gameBoard.getDifficultyBoard(), currentPlayer, this.gameBoard.getPlayers(), GameBoardView.timerLabel.getText());
-		int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
-		this.gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
 		int boardSize = (int) Math.pow(this.gameBoard.getRows(), 2);
 		HashMap<Player, Integer> playersPositions = this.gameBoard.getPlayersPositions();
 		
@@ -70,6 +68,7 @@ public class GameBoardController {
 	        @Override
 	        public void onQuestionAnswered(boolean isCorrect) {
 	            // Implement logic based on the answer's correctness
+	        	System.out.println("Current player is: " + currentPlayer);
 	            if (isCorrect) {
 	                System.out.println("correct");
 	            } else {
@@ -87,11 +86,11 @@ public class GameBoardController {
 	    QuestionCallback Mcallback = new QuestionCallback() {
 	        @Override
 	        public void onQuestionAnswered(boolean isCorrect) {
+	        	System.out.println("Current player is: " + currentPlayer);
 	            if (isCorrect) {
 	                System.out.println("correct");
 	            } else {
 	                System.out.println("incorrect");
-	                System.out.println(currentPlayer);
 	                if(playersPositions.get(currentPlayer) <= 0) {
 	        			playersPositions.put(currentPlayer, 1);
 	        		}
@@ -106,6 +105,7 @@ public class GameBoardController {
 	    QuestionCallback Hcallback = new QuestionCallback() {
 	        @Override
 	        public void onQuestionAnswered(boolean isCorrect) {
+	        	System.out.println("Current player is: " + currentPlayer);
 	            if (isCorrect) {
 	                System.out.println("correct");
 	                playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 1);
@@ -196,6 +196,7 @@ public class GameBoardController {
 			}
 			break;
 		case "SurpriseSquare":
+			System.out.println("Landed on a surprise square!");
 			SurpriseSquareController SSC = new SurpriseSquareController(((SurpriseSquare) landingSquare), this.gameBoard);
 			SSC.movePlayerToDestination(playersPositions, currentPlayer);
 			break;
@@ -233,6 +234,10 @@ public class GameBoardController {
 				}
 			}
 			break;
+		}
+		if(withRoll) {
+			int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
+			this.gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
 		}
 	}
 	
