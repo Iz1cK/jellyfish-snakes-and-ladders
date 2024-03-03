@@ -110,6 +110,7 @@ public class GameBoardController {
 		}
 		
 		if(playersPositions.get(currentPlayer) >= boardSize) {
+			sysdata.addGameHistory(game);
 			FinalPage FP = new FinalPage(game);
 			FP.setVisible(true);
 			System.out.println("PLAYER " + currentPlayer.getPlayername() + " WON!");

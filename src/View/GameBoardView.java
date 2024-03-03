@@ -99,13 +99,13 @@ public class GameBoardView extends JFrame {
     	GBC.setGameBoardView(this);
         ArrayList<Player> aplayers = new ArrayList<>();
         aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
-//        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
-//        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
+////        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
+////        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
         aplayers.add(new Player(3,"aseel",PLAYERCOLORS.GREEN));
-//        aplayers.add(new Player(4,"ahmad",PLAYERCOLORS.WHITE));
-//        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
-//        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
-//        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
+////        aplayers.add(new Player(4,"ahmad",PLAYERCOLORS.WHITE));
+////        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
+////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
+////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
         Board aboard = new Board(DIFFICULTY.HARD,aplayers);
         aboard.generateBoard();
         aboard.initiateQuestionSquares();
@@ -113,6 +113,7 @@ public class GameBoardView extends JFrame {
         GBC.setGameBoard(aboard);
 
     	Board board = GBC.getGameBoard();
+    	System.out.println(board);
     	ArrayList<Player> players = board.getPlayers();
     	DIFFICULTY diff = board.getDifficultyBoard();
     	HashMap<Player,Integer> playersPositions = board.getPlayersPositions();

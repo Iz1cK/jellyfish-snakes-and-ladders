@@ -13,10 +13,15 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Controller.GameBoardController;
+import Model.Board;
 import Model.DIFFICULTY;
 import Model.Game;
+import Model.PLAYERCOLORS;
+import Model.Player;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class FinalPage extends JFrame {
 
@@ -33,7 +38,17 @@ public class FinalPage extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    FinalPage frame = new FinalPage(new Game());
+                	ArrayList<Player> aplayers = new ArrayList<>();
+                    aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
+                    aplayers.add(new Player(0,"aseel",PLAYERCOLORS.ORANGE));
+                    
+                    Board board = new Board(DIFFICULTY.EASY, aplayers);
+                    board.generateBoard();
+                    board.initiateQuestionSquares();
+                    board.generateSnakesAndLadder();
+                    
+                    
+                    FinalPage frame = new FinalPage(new Game(DIFFICULTY.EASY, board, aplayers.get(0), aplayers, "19:10.02"));
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -142,10 +157,12 @@ public class FinalPage extends JFrame {
         again.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
-        		GameBoardView gbv = new GameBoardView();
         		GameBoardController gbc = GameBoardController.getInstance();
-        		gbc.setGameBoardView(gbv);
+        		Board board = game.getBoardgame();
+        		System.out.println("finalpage board: " + board);
         		gbc.setGameBoard(game.getBoardgame());
+        		GameBoardView gbv = new GameBoardView();
+        		gbv.setExtendedState(JFrame.MAXIMIZED_BOTH);
         		gbv.setVisible(true);
         		dispose();
         	}
