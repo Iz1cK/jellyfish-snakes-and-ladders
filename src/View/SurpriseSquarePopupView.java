@@ -25,7 +25,7 @@ public class SurpriseSquarePopupView extends JFrame {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						SurpriseSquarePopupView frame = new SurpriseSquarePopupView("forward",null);
+						SurpriseSquarePopupView frame = new SurpriseSquarePopupView("backward",null);
 						frame.setVisible(true);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -58,7 +58,6 @@ public class SurpriseSquarePopupView extends JFrame {
 			lblGo.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					C.innitiateMove();
 					dispose();
 				}
 			});

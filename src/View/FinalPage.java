@@ -3,6 +3,7 @@ package View;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -10,6 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import Model.DIFFICULTY;
+import Model.Game;
 
 public class FinalPage extends JFrame {
 
@@ -26,8 +30,8 @@ public class FinalPage extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    FinalPage frame = new FinalPage();
-                    frame.setVisible(true);
+//                    FinalPage frame = new FinalPage();
+//                    frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -38,13 +42,39 @@ public class FinalPage extends JFrame {
     /**
      * Create the frame.
      */
-    public FinalPage() {
+    public FinalPage(Game game) {
+    	Font labelFont = new Font("Poppins", Font.PLAIN, 36);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(400, 100, 750, 540);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
+                
+        JLabel timerLabel = new JLabel(game.getDuration(), SwingConstants.CENTER);
+        timerLabel.setBounds(514, 359, 163, 37);
+        timerLabel.setForeground(Color.WHITE);
+        timerLabel.setFont(labelFont);
+        contentPane.add(timerLabel);
+        
+        JLabel home = new JLabel();
+        home.setIcon(new ImageIcon(FinalPage.class.getResource("/img/home.png")));
+        home.setBounds(40, 427, 181, 63);
+        contentPane.add(home);
+        
+        JLabel winnerName = new JLabel("New label");
+        winnerName.setBounds(293, 213, 184, 62);
+        winnerName.setFont(labelFont);
+        winnerName.setForeground(Color.WHITE);
+        winnerName.setText(game.getWinningPlayer());
+        contentPane.add(winnerName);
+        
+        JLabel difficultyImage = new JLabel("New label");
+        difficultyImage.setBounds(129, 359, 57, 57);
+        String path = game.getDifficulty() == 1 ? "easy" : game.getDifficulty() == 2 ? "medium" : game.getDifficulty() == 3 ? "hard" : "easy";
+        ImageIcon difficultyIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + path + ".png"));
+        difficultyImage.setIcon(difficultyIcon);
+        contentPane.add(difficultyImage);
 
         
         JLabel logo = new JLabel("");
@@ -107,11 +137,6 @@ public class FinalPage extends JFrame {
         history.setBounds(496, 427, 181, 63);
         contentPane.add(history);
 
-        JLabel home = new JLabel();
-        home.setIcon(new ImageIcon(FinalPage.class.getResource("/img/home.png")));
-        home.setBounds(40, 427, 181, 63);
-        contentPane.add(home);
-
         /*backgrounds*/
         
 //        JLabel logo = new JLabel("");
@@ -134,9 +159,5 @@ public class FinalPage extends JFrame {
         lblNewLabel.setIcon(new ImageIcon(FinalPage.class.getResource("/img/background.png")));
         lblNewLabel.setBounds(0, 0, 750, 540);
         contentPane.add(lblNewLabel);
-        
-        
-        
-       
     }
 }

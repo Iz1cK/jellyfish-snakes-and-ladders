@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 import Controller.SurpriseSquareController;
 
@@ -82,15 +81,21 @@ public class Board {
 	public static void main(String[] args) {
 		ArrayList<Player> players = new ArrayList<Player>();
 		players.add(new Player(0,"george",PLAYERCOLORS.BLUE));
-		Board board = new Board(DIFFICULTY.EASY, players);
+		Board board = new Board(DIFFICULTY.MEDIUM, players);
         board.generateBoard();
-        board.generateSnakesAndLadder();
-        for(int i=0;i<board.getSnakes().size(); i++) {
-        	System.out.println(board.getSnakes().get(i));
+        Square[][] squares = board.getSquares();
+        for(int i=0;i<squares.length; i++) {
+        	for(int j=0;j<squares[0].length;j++) {
+        		System.out.println(squares[i][j]);
+        	}
         }
-        for(int i=0;i<board.getLadders().size(); i++) {
-        	System.out.println(board.getLadders().get(i));
-        }
+//        board.generateSnakesAndLadder();
+//        for(int i=0;i<board.getSnakes().size(); i++) {
+//        	System.out.println(board.getSnakes().get(i));
+//        }
+//        for(int i=0;i<board.getLadders().size(); i++) {
+//        	System.out.println(board.getLadders().get(i));
+//        }
     }
 
 	public Board() {
@@ -208,8 +213,7 @@ public class Board {
 	 */
 	
 	public void generateBoard() {
-		boolean leftToRight = false; 
-		int count = 0;
+		boolean leftToRight = this.rows % 2 == 0; 
 		Random random = new Random();
 		SquareFactory factory = new SquareFactory();
 		SquareInterface square;
@@ -243,9 +247,7 @@ public class Board {
 			break;
 			
 		}
-		
 		for (int i = this.rows - 1; i >= 0; i--) {
-		    leftToRight = !leftToRight;
 		    for (int j = 0; j < this.columns; j++) {
 		        int columnIndex = leftToRight ? j : this.columns - 1 - j;
 		        if(surpriseSquarePositions.contains(getPositionByIdenxes(i,columnIndex)))
@@ -266,8 +268,8 @@ public class Board {
 		        }
 		  
 		        this.squares[i][columnIndex].calculatePosition(this.rows);
-		        count++;
 		    }
+		    leftToRight = !leftToRight;
 		}
 	}
 	

@@ -14,26 +14,20 @@ public class Game {
 	private int difficulty;
 	private Board boardgame;
 	private String winningPlayer;
-	private List<String> Players = new ArrayList<String >();
+	private ArrayList<String> Players = new ArrayList<String >();
 	private String duration; //??
-	public Game(int gameID, int difficulty, Player winningPlayer, List<Player> players, LocalDateTime timer) {
+	public Game(DIFFICULTY difficulty, Player winningPlayer, ArrayList<Player> players, String timer) {
 		super();
-		this.gameID = ++gameID;
-		this.difficulty = difficulty;
+		this.gameID = ++idCounter;
+		this.difficulty = difficulty == DIFFICULTY.EASY ? 1 : difficulty == DIFFICULTY.MEDIUM ? 2 : difficulty == DIFFICULTY.HARD ? 3 : 1;
 		this.winningPlayer = winningPlayer.getPlayername();
 		 for (Player player : players) {
 	            Players.add(player.getPlayername());
 	        }
-		this.duration = convertLocalDatetimeToString(timer);
+		this.duration = timer;
 	}
 	public Game() {
 		this.gameID=++idCounter;
-	}
-	
-	private String convertLocalDatetimeToString(LocalDateTime dateTime) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		String formattedDateTime = dateTime.format(formatter);
-		return formattedDateTime;
 	}
 	
 	public Game(JsonObject jsonObject) {
@@ -76,7 +70,7 @@ public class Game {
 		return gameHistory;
 	}
 
-	public Game(int gameID, int difficulty, Board boardgame, String winningPlayer, List<String> players,
+	public Game(int gameID, int difficulty, Board boardgame, String winningPlayer, ArrayList<String> players,
 			String duration) {
 		super();
 		this.gameID = gameID;
@@ -127,11 +121,11 @@ public class Game {
 		this.winningPlayer = winningPlayer;
 	}
 
-	public List<String> getPlayers() {
+	public ArrayList<String> getPlayers() {
 		return Players;
 	}
 
-	public void setPlayers(List<String> players) {
+	public void setPlayers(ArrayList<String> players) {
 		Players = players;
 	}
 

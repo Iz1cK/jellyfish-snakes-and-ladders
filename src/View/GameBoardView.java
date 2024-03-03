@@ -52,10 +52,10 @@ public class GameBoardView extends JFrame {
 	private static final long serialVersionUID = -3841291012560699747L;
 	private JPanel contentPane;
     private JLabel backgroundImage;
-    private JLabel timerLabel;
+    public static JLabel timerLabel;
     private JPanel overlayPanel;
     private JPanel playerMarkerPanel;
-    private Timer timer;
+    public static Timer timer;
     private long startTime;
     private ImageIcon originalIcon;
     
@@ -87,11 +87,16 @@ public class GameBoardView extends JFrame {
     	
         ArrayList<Player> aplayers = new ArrayList<>();
         aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
-        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
-        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
-        aplayers.add(new Player(3,"aseel",PLAYERCOLORS.PURPLE));
-        Board aboard = new Board(DIFFICULTY.EASY,aplayers);
+//        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
+//        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
+//        aplayers.add(new Player(3,"aseel",PLAYERCOLORS.PURPLE));
+//        aplayers.add(new Player(4,"ahmad",PLAYERCOLORS.WHITE));
+//        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
+//        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
+//        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
+        Board aboard = new Board(DIFFICULTY.MEDIUM,aplayers);
         aboard.generateBoard();
+        
 //        aboard.generateSnakesAndLadder();
         GBC.setGameBoard(aboard);
 
@@ -100,9 +105,19 @@ public class GameBoardView extends JFrame {
     	DIFFICULTY diff = board.getDifficultyBoard();
     	HashMap<Player,Integer> playersPositions = board.getPlayersPositions();
     	
-//    	playersPositions.put(players.get(0), 10);
+    	playersPositions.put(players.get(0), 98);
         
         Square[][] squares = board.getSquares();
+//        for(int i=0;i<squares.length; i++) {
+//        	for(int j=0;j<squares[0].length;j++) {
+//        		System.out.println(squares[i][j]);
+//        	}
+//        }
+        squares[3][4] = new SurpriseSquare(3,4);
+        squares[0][3] = new SurpriseSquare(0,3);
+        squares[0][5] = new SurpriseSquare(0,5);
+        squares[0][6] = new SurpriseSquare(0,6);
+        squares[0][8] = new SurpriseSquare(0,8);
         
         snakes = new ArrayList<>();
         
@@ -244,6 +259,13 @@ public class GameBoardView extends JFrame {
                         diceLabel.setIcon(icon);
                         updatePlayersList(players, playersPositions, board, playersPanel, labelFont);
                         updatePlayerPositionsOnBoard(board.getDifficultyBoard(), players, playersPositions, overlayPanel, squares.length, squares[0].length);
+                        
+                        if(playersPositions.get(board.getCurrentPlayerTurn()) >= board.getRows()*board.getRows()) {
+                        	System.out.println("WINNER WINNER CHGICKEN DINNER");
+                        	timer.stop();
+                        	setVisible(false);
+                        	dispose();
+                        }
                     });
                 }
             }
@@ -447,14 +469,14 @@ public class GameBoardView extends JFrame {
      * !! still need to handle multiple players on the same square in Iteration 3
      */
     private void updatePlayerPositionsOnBoard(DIFFICULTY diff, ArrayList<Player> players, HashMap<Player,Integer> playersPositions, JPanel overlayPanel, int rows, int cols) {
-    	
-    	for (Component comp : overlayPanel.getComponents()) {
-    	    if (Boolean.TRUE.equals(((JComponent) comp).getClientProperty("playerMarker"))) {
-    	    	overlayPanel.remove(comp);
-    	    }
-    	}
-    	
-    	int boardWidth = overlayPanel.getWidth();
+        
+        for (Component comp : overlayPanel.getComponents()) {
+            if (Boolean.TRUE.equals(((JComponent) comp).getClientProperty("playerMarker"))) {
+                overlayPanel.remove(comp);
+            }
+        }
+        
+        int boardWidth = overlayPanel.getWidth();
         int boardHeight = overlayPanel.getHeight();
 
         int cellWidth = boardWidth / cols;
@@ -475,30 +497,43 @@ public class GameBoardView extends JFrame {
             int actualRow = (position - 1) / cols;
             int actualCol = (position - 1) % cols;
 
+            boolean evenRows = rows % 2 == 0;
             int displayRow = rows - 1 - actualRow;
-            if (displayRow % 2 != 0) {
+            boolean reverseRow = evenRows ? displayRow % 2 == 0 : displayRow % 2 != 0;
+
+            if (reverseRow) {
                 actualCol = cols - 1 - actualCol;
             }
 
+            // Determine number of rows for player placement (1 or 2)
+            int numRowsForPlayers = playersInSquare.size() > 4 ? 2 : 1;
+            int playersPerRow = (int) Math.ceil(playersInSquare.size() / (double) numRowsForPlayers);
+            int rowOffset;
+            int x,y;
             for (int i = 0; i < playersInSquare.size(); i++) {
                 Player player = playersInSquare.get(i);
-                int x = actualCol * cellWidth + (i * cellWidth / playersInSquare.size()) + cellWidth / playersInSquare.size() / 2;
-//                int x = actualCol * cellWidth + cellWidth / 2;
-                int y = displayRow * cellHeight + cellHeight / 2;
-
                 ImageIcon playerIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + player.getColor().toString().toLowerCase() + "player.png"));
                 JLabel playerMarker = new JLabel(new ImageIcon(playerIcon.getImage().getScaledInstance(15, 25, Image.SCALE_SMOOTH)));
                 playerMarker.putClientProperty("playerMarker", true);
                 // Adjust positioning based on difficulty
                 switch(diff) {
                     case EASY:
+                    	rowOffset = (i / playersPerRow) * cellHeight/2; // Adjust for 2nd row if needed
+                        x = actualCol * cellWidth + ((i % playersPerRow) * cellWidth / playersPerRow) + cellWidth / playersPerRow / 2;
+                        y = displayRow * cellHeight + rowOffset;
                         playerMarker.setBounds(x - cellWidth/2 + 25, y - 10, 15, 35);
                         break;
                     case MEDIUM: 
-                        playerMarker.setBounds(x + 30, y, 25, 50);
+                    	rowOffset = (i / playersPerRow) * cellHeight/2 - cellHeight/2; // Adjust for 2nd row if needed
+                        x = actualCol * cellWidth + ((i % playersPerRow) * cellWidth / playersPerRow) + cellWidth / playersPerRow / 2;
+                        y = displayRow * cellHeight + rowOffset;
+                        playerMarker.setBounds(x - cellWidth/2 + 30, y, 25, 50);
                         break;
                     case HARD:
-                        playerMarker.setBounds(x + 15/2, y, 35, 75);
+                    	rowOffset = (i / playersPerRow) * cellHeight/2 - cellHeight/2; // Adjust for 2nd row if needed
+                        x = actualCol * cellWidth + ((i % playersPerRow) * cellWidth / playersPerRow) + cellWidth / playersPerRow / 2;
+                        y = displayRow * cellHeight + rowOffset;
+                        playerMarker.setBounds(x - cellWidth/2 + 20, y, 35, 75);
                         break;
                 }
 
@@ -510,6 +545,7 @@ public class GameBoardView extends JFrame {
         overlayPanel.revalidate();
         overlayPanel.repaint();
     }
+
 
     private static void rollDice(JLabel diceImage, Board board, Runnable callback) {
         new Thread(() -> {
