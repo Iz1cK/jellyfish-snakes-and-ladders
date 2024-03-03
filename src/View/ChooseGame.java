@@ -61,6 +61,8 @@ public class ChooseGame extends JFrame {
 	private PLAYERCOLORS color;
 	String playerNumber="none";
 	String validName="no";
+int count=0;
+	
 	ArrayList<String> allNames=new ArrayList<String>();
 	
     public static void main(String[] args) {
@@ -85,6 +87,8 @@ public class ChooseGame extends JFrame {
 		contentPane.setLayout(null);
 		
 	
+		
+		
 		JLabel difficltyLeve = new JLabel("level difficulty");
 		contentPane.add(difficltyLeve);
 		difficltyLeve.setForeground(Color.WHITE); // Set the foreground color to white
@@ -241,7 +245,7 @@ public class ChooseGame extends JFrame {
 	        easy.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
-	            //	level++;
+	            	level++;
 	            	if(isReady==0) {
 	            	selectedDifficulty=DIFFICULTY.EASY;
 	        		selectedLevel.setVisible(false);
@@ -260,7 +264,7 @@ public class ChooseGame extends JFrame {
 	        medium.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
-	            	//level++;
+	            	level++;
 	            	if(isReady==0) {
 	            	selectedDifficulty=DIFFICULTY.MEDIUM;
 	        		selectedLevel.setVisible(false);
@@ -278,7 +282,7 @@ public class ChooseGame extends JFrame {
 	        hard.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
-	            	//level++;
+	            	level++;
 	            	if(isReady==0) {
 	            	selectedDifficulty=DIFFICULTY.HARD;
 	        		selectedLevel.setVisible(false);
@@ -467,14 +471,20 @@ public class ChooseGame extends JFrame {
 		
 		int players = Integer.parseInt(numbers.getText());
 		
+		
 		player1.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		    	if(isHard==false && isMedium==false && isEasy==false) {
+		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
+		    	}
+		    	else {
+		    		
 		    	y=y+46;
 		    	iconChosed=true;
 		    		colorsCounter++;
 		    		color=PLAYERCOLORS.WHITE;
-		    		if(colorsCounter<=currentNumberOfPlayers) {
+		    		if(colorsCounter<=currentNumberOfPlayers&& color!=null) {
 		    			selectedPlayer.setVisible(true);
 			    	    selectedPlayer.setBounds(player1.getBounds());
 			           // playerN1=true;
@@ -484,6 +494,7 @@ public class ChooseGame extends JFrame {
 		    			selectedPlayer.setVisible(false);
 		    		}
 		    			
+		    	}
 		    	
 		    }
 		});
@@ -491,6 +502,10 @@ public class ChooseGame extends JFrame {
 		player2.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		    	if(isHard==false && isMedium==false && isEasy==false) {
+		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
+		    	}
+		    	else {
 		    	y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
@@ -502,11 +517,16 @@ public class ChooseGame extends JFrame {
 			    	playerNumber="playerN2";
 		    	}
 		    }
+		    }
 		});
 
 		player3.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		    	if(isHard==false && isMedium==false && isEasy==false) {
+		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
+		    	}
+		    	else {
 		    	y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
@@ -517,12 +537,17 @@ public class ChooseGame extends JFrame {
 			      //  playerN3=true;
 			    	playerNumber="playerN3";
 		    	}
+		    	}
 		    }
 		});
 
 		player4.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		    	if(isHard==false && isMedium==false && isEasy==false) {
+		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
+		    	}
+		    	else {
 		    	y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
@@ -533,11 +558,16 @@ public class ChooseGame extends JFrame {
 			      //  playerN4=true;
 			    	playerNumber="playerN4";
 		    	}
+		    	}
 		    }
 		});
 		player5.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		    	if(isHard==false && isMedium==false && isEasy==false) {
+		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
+		    	}
+		    	else {
 		    	y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
@@ -548,11 +578,16 @@ public class ChooseGame extends JFrame {
 			       // playerN5=true;
 			    	playerNumber="playerN5";
 		    	}
+		    	}
 		    }
 		});
 		player6.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		    	if(isHard==false && isMedium==false && isEasy==false) {
+		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
+		    	}
+		    	else {
 		    	y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
@@ -563,11 +598,16 @@ public class ChooseGame extends JFrame {
 			       // playerN6=true;
 			    	playerNumber="playerN6";
 		    	}
+		    	}
 		    }
 		});
 		player7.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		    	if(isHard==false && isMedium==false && isEasy==false) {
+		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
+		    	}
+		    	else {
 		    	y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
@@ -578,11 +618,16 @@ public class ChooseGame extends JFrame {
 		    	  // playerN7=true;
 			    	playerNumber="playerN7";
 		    	}
+		    	}
 		    }
 		});
 		player8.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		    	if(isHard==false && isMedium==false && isEasy==false) {
+		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
+		    	}
+		    	else {
 		    	y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
@@ -592,6 +637,7 @@ public class ChooseGame extends JFrame {
 			    	selectedPlayer.setBounds(player8.getBounds());
 			       // playerN8=true;
 			    	playerNumber="playerN8";
+		    	}
 		    	}
 		    }
 		});
@@ -683,135 +729,159 @@ public class ChooseGame extends JFrame {
 		lblNewLabel.setBounds(0, 0,671,491);
 		contentPane.add(lblNewLabel);
 		
-
+		JPanel blackPanel = new JPanel();
+        blackPanel.setBackground(Color.BLACK);
+        
 		// ** LOGIC **//
 		next.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		    	
 		    	validName="no";
-		    	if(isEasy==false && isMedium==false && isHard==false) {
-		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
-		    	}
-		    	if(playerNumber.equals("none")) {
-		    		JOptionPane.showMessageDialog(contentPane, "please choose color");
+		    	String nickname = nicknameField.getText();
+		    	
+		    	if(isEasy==false && isMedium==false && isHard==false && nickname.equals("") && playerNumber.equals("none")  ) {
+		    		JOptionPane.showMessageDialog(contentPane, "please choose the game's parameters!");
+		    		
 		    	}
 		    	
-		    	isReady=1;
-		        int playersNumber = Integer.parseInt(numbers.getText());
-		        playersCounter++;
-		        if (isEasy && counter < playersNumber) {
-		            counter++; // Increment numCurrentPlayer
-		            currentPlayer.setText("player " + counter); // Update currentPlayer label text
-		        } else if (isMedium && counter < playersNumber) {
-		            counter++; // Increment numCurrentPlayer
-		            currentPlayer.setText("player " + counter); // Update currentPlayer label text
-		        } else if (isHard && counter < playersNumber) {
-		            counter++; // Increment numCurrentPlayer
-		            currentPlayer.setText("player " + counter); // Update currentPlayer label text
-		        }
-		        if (counter == playersNumber+1) {
-		            difficltyLeve_1.setText("play");
-		        }
-		        
+		    	else if(level!=0 && nickname.equals("") && playerNumber.equals("none")) {
+					JOptionPane.showMessageDialog(contentPane, "please choose your color and insert your nickname");
+	        	}
+	        	
+		    	else if(playerNumber.equals("none")&&!nickname.equals("")) {
+		    		JOptionPane.showMessageDialog(contentPane, "please choose color");
+		    	}
+		    	else if(!playerNumber.equals("none")&&nickname.equals("")) {
+		    		JOptionPane.showMessageDialog(contentPane, "please insert your nickname");
+		    	}
 
-		        if(playersCounter<=playersNumber) {
-		        	playerID++;
-		        	String nickname = nicknameField.getText();
-		        	if(nickname.equals("")) {
-						JOptionPane.showMessageDialog(contentPane, "please insert your nickname");
-		        		//System.out.println("insert nickname");
-		        	}
-		        	
-		        	else {
-		        		if(allNames.contains(nickname)){
-		        	
-		        		JOptionPane.showMessageDialog(contentPane, "this nickname is unvalid! try another one");
-		        	}
-		        		else{
-		        			allNames.add(nickname);
-		        			validName="yes";
-		        			}
-		        	}
-		        	
-		        	Player player=new Player(playerID,nickname,color);
-		        	allPlayers.add(player);
-		        	gameCreationController.setPlayers(allPlayers);
-		        	
-		            nicknameField.setText("");
-		            
-		            if(iconChosed==false) {
-		            	System.out.println("chose icon");
-		            }
-		            
-		            
-		        if(playerNumber.equals("playerN1")&&!nickname.equals("")&& validName.equals("yes")) {
-		        	
-		        	player1_1.setBounds(y, 364, 41, 78);
-		        	player1_1.setVisible(true); 
-		        	selectedPlayer.setVisible(false);
-		        	player1.setVisible(false);
-		        	playerN1=false;
-		        	
-		        }
-		        if(playerNumber.equals("playerN2")&&!nickname.equals("")&&validName.equals("yes")) {
-		        	System.out.println("test");
-		        	player2_1.setBounds(y, 364, 41, 78);
-		        	player2_1.setVisible(true);
-		        	selectedPlayer.setVisible(false);
-		        	player2.setVisible(false);
-		        	playerN2=false;
-		        }
-		        if(playerNumber.equals("playerN3")&&!nickname.equals("")&&validName.equals("yes")) {
-		      
-		        	player3_1.setBounds(y, 364, 41, 78);
-		        	player3_1.setVisible(true);
-		       
-		        	selectedPlayer.setVisible(false);
-		        	player3.setVisible(false);
-		        	playerN3=false;
-		        }
-		        if(playerNumber.equals("playerN4")&&!nickname.equals("")&&validName.equals("yes")) {
-		        	player4_1.setBounds(y, 364, 41, 78);
-		        	player4_1.setVisible(true);
+		    	
+		    	else if(level!=0 && !nickname.equals("") && !playerNumber.equals("none") ) {
+		    		
+		    		if(allNames.contains(nickname)) {
+		    		//	  System.out.println("testttttttttttttttt"); 
+	    			  validName="no";
+	    			  JOptionPane.showMessageDialog(contentPane, "this nickname is unvalid! try another one");
+	        	    }
+		    		else {
+		    			allNames.add(nickname);
+              			validName="yes";
+		    		
+			    	playersCounter++;
+			        int playersNumber = Integer.parseInt(numbers.getText());
+			       
+			        if (isEasy && counter < playersNumber )  {
+			            counter++; // Increment numCurrentPlayer
+			            currentPlayer.setText("player " + counter); // Update currentPlayer label text
+			        } else if (isMedium && counter < playersNumber) {
+			            counter++; // Increment numCurrentPlayer
+			            currentPlayer.setText("player " + counter); // Update currentPlayer label text
+			        } else if (isHard && counter < playersNumber ) {
+			            counter++; // Increment numCurrentPlayer
+			            currentPlayer.setText("player " + counter); // Update currentPlayer label text
+			        }
+			        
+			        
+			    
+			        
 	
-		        	selectedPlayer.setVisible(false);
-		        	player4.setVisible(false);
-		        	playerN4=false;
-		        	
-		        }
-		        if(playerNumber.equals("playerN5")&&!nickname.equals("")&&validName.equals("yes")) {
-		        	player5_1.setBounds(y, 364, 41, 78);
-		        	player5_1.setVisible(true);
-
-		        	selectedPlayer.setVisible(false);
-		        	player5.setVisible(false);
-		        	playerN5=false;
-		        }
-		        if(playerNumber.equals("playerN6")&&!nickname.equals("")&&validName.equals("yes")) {
-		        	player6_1.setBounds(y, 364, 41, 78);
-		        	player6_1.setVisible(true);
-
-		        	selectedPlayer.setVisible(false);
-		        	player6.setVisible(false);
-		        	playerN6=false;
-		        }
-		        if(playerNumber.equals("playerN7")&&!nickname.equals("")&&validName.equals("yes")) {
-		        	player7_1.setBounds(y, 364, 41, 78);
-		        	player7_1.setVisible(true);
-
-		        	selectedPlayer.setVisible(false);
-		        	player7.setVisible(false);
-		        	playerN7=false;
-		        }
-		        if(playerNumber.equals("playerN8")&&!nickname.equals("")&&validName.equals("yes")) {
-		        	player8_1.setBounds(y, 364, 41, 78);
-		        	player8_1.setVisible(true);
-		        	selectedPlayer.setVisible(false);
-		        	player8.setVisible(false);
-		        	playerN8=false;
-		        }
-		        }
-		    }
+			        if(playersCounter<=playersNumber) {
+			        	playerID++;
+			        	
+			        	Player player=new Player(playerID,nickname,color);
+			        	allPlayers.add(player);
+			        	gameCreationController.setPlayers(allPlayers);
+			            nicknameField.setText("");
+			            
+			        
+		
+			            
+			        if(playerNumber.equals("playerN1")) {
+			        	count++;
+			        	player1_1.setBounds(y, 364, 41, 78);
+			        	player1_1.setVisible(true); 
+			        	selectedPlayer.setVisible(false);
+			        	player1.setVisible(false);
+			        	playerN1=false;
+			        	
+			        }
+			        if(playerNumber.equals("playerN2")) {
+			        	count++;
+			        	player2_1.setBounds(y, 364, 41, 78);
+			        	player2_1.setVisible(true);
+			        	selectedPlayer.setVisible(false);
+			        	player2.setVisible(false);
+			        	playerN2=false;
+			        }
+			        if(playerNumber.equals("playerN3")) {
+			        	count++;
+			        	player3_1.setBounds(y, 364, 41, 78);
+			        	player3_1.setVisible(true);
+			       
+			        	selectedPlayer.setVisible(false);
+			        	player3.setVisible(false);
+			        	playerN3=false;
+			        }
+			        if(playerNumber.equals("playerN4")) {
+			        	count++;
+			        	player4_1.setBounds(y, 364, 41, 78);
+			        	player4_1.setVisible(true);
+		
+			        	selectedPlayer.setVisible(false);
+			        	player4.setVisible(false);
+			        	playerN4=false;
+			        	
+			        }
+			        if(playerNumber.equals("playerN5")) {
+			        	count++;
+			        	player5_1.setBounds(y, 364, 41, 78);
+			        	player5_1.setVisible(true);
+	
+			        	selectedPlayer.setVisible(false);
+			        	player5.setVisible(false);
+			        	playerN5=false;
+			        }
+			        if(playerNumber.equals("playerN6")) {
+			        	count++;
+			        	player6_1.setBounds(y, 364, 41, 78);
+			        	player6_1.setVisible(true);
+	
+			        	selectedPlayer.setVisible(false);
+			        	player6.setVisible(false);
+			        	playerN6=false;
+			        }
+			        if(playerNumber.equals("playerN7")) {
+			        	count++;
+			        	player7_1.setBounds(y, 364, 41, 78);
+			        	player7_1.setVisible(true);
+	
+			        	selectedPlayer.setVisible(false);
+			        	player7.setVisible(false);
+			        	playerN7=false;
+			        }
+			        if(playerNumber.equals("playerN8")) {
+			        	count++;
+			        	player8_1.setBounds(y, 364, 41, 78);
+			        	player8_1.setVisible(true);
+			        	selectedPlayer.setVisible(false);
+			        	player8.setVisible(false);
+			        	playerN8=false;
+			        }
+			        }
+			       
+			        if (count == playersNumber) {
+			            difficltyLeve_1.setText("play");
+			        }
+			        
+			        
+		    		}
+		    	}
+        	   
+		    }	    
 		});
+		
     }
+
+    
 }
