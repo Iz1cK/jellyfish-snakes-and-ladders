@@ -7,11 +7,18 @@ import Model.Player;
 
 public class GameCreationController {
 	
-	DIFFICULTY difficultyLevel;
-	public void setDifficultyLevel(DIFFICULTY difficulty) {
-        this.difficultyLevel = difficulty;
-       // System.out.println(difficulty);
+	
+	private static GameCreationController GCCinstance = null;
+	
+	private GameCreationController() {}
+	
+	public static synchronized GameCreationController getInstance()
+    {
+        if (GCCinstance == null)
+        	GCCinstance = new GameCreationController();
+        return GCCinstance;
     }
+	
 	
 	ArrayList<Player> players=new ArrayList<Player>();
 	
@@ -23,12 +30,4 @@ public class GameCreationController {
 		this.players = players;
 		//System.out.println(players);
 	}
-
-	@Override
-	public String toString() {
-		return "GameCreationController [difficultyLevel=" + difficultyLevel + ", players=" + players + "]";
-	}
-	
-	
-	
 }

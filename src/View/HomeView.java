@@ -215,9 +215,9 @@ public class HomeView extends JFrame {
 		exitIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/ExitIcon.png")));
 		exitIcon.setBounds(59, 26, 59, 63);
 		exitPanel.add(exitIcon);
-		Sysdata sysdata= Sysdata.getInstance();
-		sysdata.readQuestions();
-		System.out.println(sysdata.questionsList.toString());
+		//Sysdata sysdata= Sysdata.getInstance();
+		//sysdata.readQuestions();
+		//System.out.println(sysdata.questionsList.toString());
 		
 		JLabel lblInstructionsIcon = new JLabel("");
 		lblInstructionsIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/circle_crop.png")));

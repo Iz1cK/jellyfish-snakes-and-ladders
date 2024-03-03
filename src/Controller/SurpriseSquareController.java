@@ -74,7 +74,7 @@ public class SurpriseSquareController {
 					}
 				else
 					{
-						playerPositions.put(currentPlayer, (int) (Math.pow(board.getRows(), 2)-(10-(Math.pow(board.getRows(), 2)-square.getPosition()))));
+						playerPositions.put(currentPlayer, 1);
 					}
 			}
 	}

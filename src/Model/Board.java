@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import Controller.SurpriseSquareController;
 
@@ -82,8 +82,16 @@ public class Board {
 	public static void main(String[] args) {
 		ArrayList<Player> players = new ArrayList<Player>();
 		players.add(new Player(0,"george",PLAYERCOLORS.BLUE));
-		Board board = new Board(DIFFICULTY.EASY, players);
+		Board board = new Board(DIFFICULTY.MEDIUM, players);
         board.generateBoard();
+        Square[][] squares = board.getSquares();
+        board.initiateQuestionSquares();
+//        for(int i=0;i<squares.length;i++) {
+//        	for(int j=0;j<squares[0].length;j++) {
+//        		System.out.println(squares[i][j]);
+//        	}
+//        }
+        
         board.generateSnakesAndLadder();
         for(int i=0;i<board.getSnakes().size(); i++) {
         	System.out.println(board.getSnakes().get(i));
@@ -91,6 +99,20 @@ public class Board {
         for(int i=0;i<board.getLadders().size(); i++) {
         	System.out.println(board.getLadders().get(i));
         }
+    }
+	
+	public void initiateQuestionSquares() {
+        this.assignQuestionToSquare(0);   // Assuming index 1 is intentional; adjust if needed
+
+	}
+	
+	public void assignQuestionToSquare(int num) {
+	    int[] eindexes = this.getIndexesByPosition(this.questionSquarePositions.get(num));
+	    squares[eindexes[0]][eindexes[1]] = new QuesSquare(eindexes[0], eindexes[1], num+1);
+	    int[] mindexes = this.getIndexesByPosition(this.questionSquarePositions.get(num+1));
+	    squares[mindexes[0]][mindexes[1]] = new QuesSquare(mindexes[0], mindexes[1], num+2);
+	    int[] hindexes = this.getIndexesByPosition(this.questionSquarePositions.get(num+2));
+	    squares[hindexes[0]][hindexes[1]] = new QuesSquare(hindexes[0], hindexes[1], num+3);
     }
 
 	public Board() {
@@ -208,8 +230,7 @@ public class Board {
 	 */
 	
 	public void generateBoard() {
-		boolean leftToRight = false; 
-		int count = 0;
+		boolean leftToRight = this.rows % 2 == 0; 
 		Random random = new Random();
 		SquareFactory factory = new SquareFactory();
 		SquareInterface square;
@@ -243,21 +264,19 @@ public class Board {
 			break;
 			
 		}
-		
 		for (int i = this.rows - 1; i >= 0; i--) {
-		    leftToRight = !leftToRight;
 		    for (int j = 0; j < this.columns; j++) {
 		        int columnIndex = leftToRight ? j : this.columns - 1 - j;
 		        if(surpriseSquarePositions.contains(getPositionByIdenxes(i,columnIndex)))
 		        {
-		        	 square =factory.getSquare("SurpriseSquare", i, columnIndex);
-		        	 this.squares[i][columnIndex] = (SurpriseSquare) square;
+		        	square =factory.getSquare("SurpriseSquare", i, columnIndex);
+		        	this.squares[i][columnIndex] = (SurpriseSquare) square;
 		        }
 		        	
 		        else if(questionSquarePositions.contains(getPositionByIdenxes(i,columnIndex)))
 		        {
-		        	 square =factory.getSquare("QuestionSquare", i, columnIndex);
-		        	 this.squares[i][columnIndex] = (QuesSquare) square;
+		        	square =factory.getSquare("QuestionSquare", i, columnIndex);
+		        	this.squares[i][columnIndex] = (QuesSquare) square;
 		        }	
 		        else
 		        {
@@ -266,88 +285,167 @@ public class Board {
 		        }
 		  
 		        this.squares[i][columnIndex].calculatePosition(this.rows);
-		        count++;
 		    }
+		    leftToRight = !leftToRight;
 		}
 	}
 	
 	public void generateSnakesAndLadder() {
-		int numberOfSnakes = 0;
-		int numberOfRedSnakes = 0;
-		int numberOfLadders = 0;
-		switch(this.difficultyBoard) {
-		case EASY:
-			numberOfSnakes = 3;
-			numberOfRedSnakes = 1;
-			numberOfLadders = 4;
-			break;
-		case MEDIUM:
-			numberOfSnakes = 4;
-			numberOfRedSnakes = 2;
-			numberOfLadders = 6;
-			break;
-		case HARD:
-			numberOfSnakes = 6;
-			numberOfRedSnakes = 2;
-			numberOfLadders = 8;
-			break;
-		}
-		int snakeStart;
-		int boardSize = this.rows;
-		int i;
-		for(i=0;i < numberOfSnakes; i++) {
-			snakeStart = getRandom(boardSize + 1 + (i-1), boardSize*boardSize + 1);
-			while(questionSquarePositions.contains(snakeStart) || surpriseSquarePositions.contains(snakeStart))
-				snakeStart = getRandom(boardSize + 1 + (i-1)*boardSize, boardSize*boardSize + 1);
-			// SNAKE HEAD
-			System.out.println("Snake Start: " + snakeStart);
-			Square headSquare = new Square(snakeStart);
-			headSquare.calculateRowAndColumn(this.getRows());
-			// SNAKE TAIL
-			int row = (int) Math.floor(snakeStart/boardSize);
-			int snakeEnd = getRandom(boardSize*(row-i) + 1, boardSize*row + (i-1));
-			while(questionSquarePositions.contains(snakeEnd) || surpriseSquarePositions.contains(snakeEnd))
-				snakeEnd = getRandom(boardSize*(row-i) + 1, boardSize*row + (i-1));
-			System.out.println("Snake End: "  + snakeEnd);
-			Square tailSquare = new Square(snakeEnd);
-			tailSquare.calculateRowAndColumn(this.getRows());
-			Snake snake = null;
-			switch(i%3) {
-			case 0:
-				snake = new Snake("" + i,headSquare,tailSquare,COLORS.YELLOW);
-				break;
-			case 1: 
-				snake = new Snake("" + i,headSquare,tailSquare,COLORS.GREEN);
-				break;
-			case 2: 
-				snake = new Snake("" + i,headSquare,tailSquare,COLORS.BLUE);
-				break;
-			}
-			snakes.add(snake);
-		}
-		snakeStart = getRandom(boardSize + 1 + (i-1), boardSize*boardSize + 1);
-		for(int j=i;j<numberOfRedSnakes+i;j++) {
-			while(questionSquarePositions.contains(snakeStart) || surpriseSquarePositions.contains(snakeStart))
-				snakeStart = getRandom(2, boardSize*boardSize + 1);
-			Square headSquare = new Square(snakeStart);
-			headSquare.calculateRowAndColumn(this.getRows());
-			snakes.add(new Snake("" + j,headSquare, null, COLORS.RED));
-		}
-		for(int k = 0; k < numberOfLadders; k++) {
-			int ladderStart = getRandom(2, boardSize*(boardSize-1));
-			while(questionSquarePositions.contains(ladderStart) || surpriseSquarePositions.contains(ladderStart))
-				ladderStart = getRandom(2, boardSize*boardSize-boardSize*k);
-			Square startSquare = new Square(ladderStart);
-			startSquare.calculateRowAndColumn(this.getRows());
-			int row = (int) Math.floor(ladderStart/boardSize);
-			int ladderEnd = getRandom(boardSize*(row+k) + 1, boardSize*(row+k) + boardSize);
-			while(questionSquarePositions.contains(ladderEnd) || surpriseSquarePositions.contains(ladderEnd))
-				ladderEnd = getRandom(boardSize*(row+k) + 1, boardSize*(row+k) + boardSize);
-			Square endSquare = new Square(ladderEnd);
-			endSquare.calculateRowAndColumn(this.getRows());
-			ladders.add(new Ladder("" + k,startSquare,endSquare));
-		}
+	    int numberOfRedSnakes = 0;
+	    int numberOfGreenSnakes = 0;
+	    int numberOfYellowSnakes = 0;
+	    int numberOfBlueSnakes = 0;
+	    int numberOfLadders = 0;
+	    switch(this.difficultyBoard) {
+	        case EASY:
+	            numberOfGreenSnakes = 1;
+	            numberOfBlueSnakes = 1;
+	            numberOfYellowSnakes = 1;
+	            numberOfRedSnakes = 1;
+	            numberOfLadders = 4;
+	            break;
+	        case MEDIUM:
+	            numberOfGreenSnakes = 2;
+	            numberOfBlueSnakes = 1;
+	            numberOfYellowSnakes = 1;
+	            numberOfRedSnakes = 2;
+	            numberOfLadders = 6;
+	            break;
+	        case HARD:
+	            numberOfGreenSnakes = 2;
+	            numberOfBlueSnakes = 2;
+	            numberOfYellowSnakes = 2;
+	            numberOfRedSnakes = 2;
+	            numberOfLadders = 8;
+	            break;
+	    }
+
+	    ArrayList<Integer> occupiedPositions = new ArrayList<>();
+	    occupiedPositions.addAll(questionSquarePositions);
+	    occupiedPositions.addAll(surpriseSquarePositions);
+	    
+	    int boardSize = this.rows;
+	    
+	    for (int rank = 1; rank <= numberOfLadders; rank++) {
+	        boolean validLadderFound = false;
+	        while (!validLadderFound) {
+	            int ladderStart = getRandom(1, boardSize * boardSize - 1);
+	            int startRow = (ladderStart - 1) / boardSize;
+	            int endRow = startRow + rank;
+	            
+	            if (endRow >= boardSize) continue;
+
+	            int ladderEnd = getRandom(boardSize * endRow + 1, boardSize * (endRow + 1));
+
+	            if (!occupiedPositions.contains(ladderStart) && !occupiedPositions.contains(ladderEnd) && ladderStart != ladderEnd) {
+	                Square startSquare = new Square(ladderStart);
+	                startSquare.calculateRowAndColumn(this.getRows());
+	                Square endSquare = new Square(ladderEnd);
+	                endSquare.calculateRowAndColumn(this.getRows());
+
+	                occupiedPositions.add(ladderStart);
+	                occupiedPositions.add(ladderEnd);
+	                
+	                ladders.add(new Ladder("" + rank, startSquare, endSquare));
+	                validLadderFound = true;
+	            }
+	        }
+	    }
+	    
+	    generateSpecificSnakes(COLORS.RED, numberOfRedSnakes, occupiedPositions, 0);
+	    generateSpecificSnakes(COLORS.YELLOW, numberOfYellowSnakes, occupiedPositions, 1);
+	    generateSpecificSnakes(COLORS.GREEN, numberOfGreenSnakes, occupiedPositions, 2);
+	    generateSpecificSnakes(COLORS.BLUE, numberOfBlueSnakes, occupiedPositions, 3);
 	}
+	
+	private void generateSpecificSnakes(COLORS color, int count, ArrayList<Integer> occupiedPositions, int rowsBack) {
+	    for (int i = 0; i < count; i++) {
+	        int snakeStart;
+	        // Adjust the range for snakeStart based on rowsBack to ensure enough space
+	        do {
+	            int minRowForStart = rowsBack; // Minimum row index where a snake can start
+	            int minPositionForStart = rows * minRowForStart + 1; // Convert row index to board position
+	            snakeStart = getRandom(minPositionForStart, rows * rows);
+	        } while (occupiedPositions.contains(snakeStart));
+
+	        occupiedPositions.add(snakeStart);
+	        
+	        Square headSquare = new Square(snakeStart);
+	        headSquare.calculateRowAndColumn(this.rows);
+
+	        if (color == COLORS.RED) {
+	            // Red snakes don't need an end position as they take the player back to the start
+	            snakes.add(new Snake("Red" + i, headSquare, null, color));
+	        } else {
+	            // For non-red snakes, calculate the end position based on the specified rowsBack
+	            int startRow = (snakeStart - 1) / rows;
+	            int endRow = Math.max(startRow - rowsBack, 0); // Ensure the endRow is at least rowsBack behind
+
+	            int snakeEnd;
+	            // Make sure snakeEnd is also within the correct range to drop the player by rowsBack
+	            do {
+	                snakeEnd = getRandom(rows * endRow + 1, rows * (endRow + 1) - 1); // Adjusted to ensure it's within the end row
+	            } while (occupiedPositions.contains(snakeEnd) || snakeStart == snakeEnd);
+
+	            occupiedPositions.add(snakeEnd);
+	            Square tailSquare = new Square(snakeEnd);
+	            tailSquare.calculateRowAndColumn(this.rows);
+	            snakes.add(new Snake(color.toString() + i, headSquare, tailSquare, color));
+	        }
+	    }
+	}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		
+//		int i;
+//		for(i=0;i < numberOfSnakes; i++) {
+//			snakeStart = getRandom(boardSize + 1 + (i-1), boardSize*boardSize + 1);
+//			while(questionSquarePositions.contains(snakeStart) || surpriseSquarePositions.contains(snakeStart))
+//				snakeStart = getRandom(boardSize + 1 + (i-1)*boardSize, boardSize*boardSize + 1);
+//			// SNAKE HEAD
+//			System.out.println("Snake Start: " + snakeStart);
+//			Square headSquare = new Square(snakeStart);
+//			headSquare.calculateRowAndColumn(this.getRows());
+//			// SNAKE TAIL
+//			int row = (int) Math.floor(snakeStart/boardSize);
+//			int snakeEnd = getRandom(boardSize*(row-i) + 1, boardSize*row + (i-1));
+//			while(questionSquarePositions.contains(snakeEnd) || surpriseSquarePositions.contains(snakeEnd))
+//				snakeEnd = getRandom(boardSize*(row-i) + 1, boardSize*row + (i-1));
+//			System.out.println("Snake End: "  + snakeEnd);
+//			Square tailSquare = new Square(snakeEnd);
+//			tailSquare.calculateRowAndColumn(this.getRows());
+//			Snake snake = null;
+//			switch(i%3) {
+//			case 0:
+//				snake = new Snake("" + i,headSquare,tailSquare,COLORS.YELLOW);
+//				break;
+//			case 1: 
+//				snake = new Snake("" + i,headSquare,tailSquare,COLORS.GREEN);
+//				break;
+//			case 2: 
+//				snake = new Snake("" + i,headSquare,tailSquare,COLORS.BLUE);
+//				break;
+//			}
+//			snakes.add(snake);
+//		}
+//		snakeStart = getRandom(boardSize + 1 + (i-1), boardSize*boardSize + 1);
+//		for(int j=i;j<numberOfRedSnakes+i;j++) {
+//			while(questionSquarePositions.contains(snakeStart) || surpriseSquarePositions.contains(snakeStart))
+//				snakeStart = getRandom(2, boardSize*boardSize + 1);
+//			Square headSquare = new Square(snakeStart);
+//			headSquare.calculateRowAndColumn(this.getRows());
+//			snakes.add(new Snake("" + j,headSquare, null, COLORS.RED));
+//		}
+//	}
 	
 	/*
 	 * rollDice()
@@ -394,7 +492,28 @@ public class Board {
             return row * this.rows + column + 1;
         } else { // Odd row, numbers increase from right to left
             return row * this.rows + (this.rows - column - 1) + 1;
-        }}
+        }
+	}
+	
+	public int[] getIndexesByPosition(int position) {
+	    // Adjust position to be 0-indexed
+	    position -= 1;
+	    
+	    int rows = this.rows; // Assuming 'this.rows' is the number of rows in your grid
+	    int row = position / rows;
+	    int column;
+
+	    if (row % 2 == 0) {
+	        // Even row, numbers increase from left to right
+	        column = position % rows;
+	    } else {
+	        // Odd row, numbers increase from right to left
+	        column = rows - (position % rows) - 1;
+	    }
+
+	    // Adjust row and column to be 1-indexed if necessary
+	    return new int[]{row, column};
+	}
 
 	/*
 	 * checkWinner()

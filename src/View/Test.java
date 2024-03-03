@@ -90,7 +90,7 @@ public class Test extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
        // MessageDialog obj = new MessageDialog(this);
-        controller.questionRank(1);
+        controller.questionRank(3);
         //Questions question= questionRank(2);
         //obj.cmdobt1.setText(question.getAnswers().get(0));
         //obj.cmdobt2.setText(question.getAnswers().get(1));

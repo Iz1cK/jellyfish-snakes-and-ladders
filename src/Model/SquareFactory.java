@@ -11,7 +11,7 @@ public class SquareFactory {
         case "SurpriseSquare":
             return new SurpriseSquare(i,columnIndex);
         case "QuestionSquare":
-            return new QuesSquare(i,columnIndex);
+            return new QuesSquare(i,columnIndex, -1);
         default:
             throw new IllegalArgumentException("Unknown type "+type);
         }
