@@ -55,75 +55,15 @@ public class GameBoardController {
 		return this.gameBoard;
 	}
 	
-	public void playTurn(boolean withRoll) {
+	public void playTurn() {
 		ArrayList<Player> players = this.gameBoard.getPlayers();
-		Board board = this.gameBoard;
-		Square[][] squares = this.gameBoard.getSquares();
 		Player currentPlayer = this.gameBoard.getCurrentPlayerTurn();
 		Game game = new Game(this.gameBoard.getDifficultyBoard(), currentPlayer, this.gameBoard.getPlayers(), GameBoardView.timerLabel.getText());
 		int boardSize = (int) Math.pow(this.gameBoard.getRows(), 2);
 		HashMap<Player, Integer> playersPositions = this.gameBoard.getPlayersPositions();
-		
-		QuestionCallback Ecallback = new QuestionCallback() {
-	        @Override
-	        public void onQuestionAnswered(boolean isCorrect) {
-	            // Implement logic based on the answer's correctness
-	        	System.out.println("Current player is: " + currentPlayer);
-	            if (isCorrect) {
-	                System.out.println("correct");
-	            } else {
-	            	playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) - 1);
-	            	if(playersPositions.get(currentPlayer) <= 0) {
-	        			playersPositions.put(currentPlayer, 1);
-	        		}
-	            	playTurn(false);
-	            	gameBoardView.updatePlayersList(players, playersPositions, board);
-                    gameBoardView.updatePlayerPositionsOnBoard(board.getDifficultyBoard(), players, playersPositions, squares.length, squares[0].length);
-	            }
-	        }
-	    };
-	    
-	    QuestionCallback Mcallback = new QuestionCallback() {
-	        @Override
-	        public void onQuestionAnswered(boolean isCorrect) {
-	        	System.out.println("Current player is: " + currentPlayer);
-	            if (isCorrect) {
-	                System.out.println("correct");
-	            } else {
-	                System.out.println("incorrect");
-	                if(playersPositions.get(currentPlayer) <= 0) {
-	        			playersPositions.put(currentPlayer, 1);
-	        		}
-	                playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) - 2);
-	                playTurn(false);	                
-	            	gameBoardView.updatePlayersList(players, playersPositions, board);
-                    gameBoardView.updatePlayerPositionsOnBoard(board.getDifficultyBoard(), players, playersPositions, squares.length, squares[0].length);
-	            }
-	        }
-	    };
-	    
-	    QuestionCallback Hcallback = new QuestionCallback() {
-	        @Override
-	        public void onQuestionAnswered(boolean isCorrect) {
-	        	System.out.println("Current player is: " + currentPlayer);
-	            if (isCorrect) {
-	                System.out.println("correct");
-	                playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 1);
-	            } else {
-	                System.out.println("incorrect");
-	                playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) - 3);
-	            }
-	            if(playersPositions.get(currentPlayer) <= 0) {
-	    			playersPositions.put(currentPlayer, 1);
-	    		}
-	            playTurn(false);
-            	gameBoardView.updatePlayersList(players, playersPositions, board);
-                gameBoardView.updatePlayerPositionsOnBoard(board.getDifficultyBoard(), players, playersPositions, squares.length, squares[0].length);
-	        }
-	    };
-		if(withRoll) {
-			diceRoll = this.gameBoard.rollDice();
-			switch(diceRoll) {
+
+		diceRoll = this.gameBoard.rollDice();
+		switch(diceRoll) {
 			case "0":
 				System.out.println("you got 0, you dont move");
 				break;
@@ -153,47 +93,42 @@ public class GameBoardController {
 				break;
 			case "E":
 				System.out.println("you rolled an easy question!");
-				showQuestion(Ecallback, 1);
+				showQuestion(1,currentPlayer);
 				break;
 			case "M":
 				System.out.println("you rolled a medium question!");
-				showQuestion(Mcallback, 2);
+				showQuestion(2,currentPlayer);
 				break;
 			case "H":
 				System.out.println("you rolled a hard question!");
-				showQuestion(Hcallback, 3);
+				showQuestion(3,currentPlayer);
 				break;
-			}
 		}
 		
 		if(playersPositions.get(currentPlayer) <= 0) {
 			playersPositions.put(currentPlayer, 1);
 		}
 		
-		if(playersPositions.get(currentPlayer) > boardSize) {
-			
+		if(playersPositions.get(currentPlayer) >= boardSize) {
 			FinalPage FP = new FinalPage(game);
 			FP.setVisible(true);
 			System.out.println("PLAYER " + currentPlayer.getPlayername() + " WON!");
-		} else if(playersPositions.get(currentPlayer) == boardSize) {
-			FinalPage FP = new FinalPage(game);
-			FP.setVisible(true);
-			System.out.println("PLAYER " + currentPlayer.getPlayername() + " WON!");
-		}
-		
+		} 
+		this.checkSquares(currentPlayer);
+		int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
+		this.gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
+	}
+	
+	private void checkSquares(Player currentPlayer) {
+		HashMap<Player, Integer> playersPositions = this.gameBoard.getPlayersPositions();
+
 		Square landingSquare = this.gameBoard.getSquareByPosition(playersPositions.get(currentPlayer));
 		String landingSquareType = this.gameBoard.checkLandingSquare(landingSquare);
 		switch(landingSquareType) {
 		case "QuestionSquare":
 			int questionDifficulty = ((QuesSquare) landingSquare).getDifficulty();
 			System.out.println("Landed on a question square with difficulty: " + questionDifficulty);
-			if(questionDifficulty == 1) {
-				showQuestion(Ecallback, questionDifficulty);
-			} else if(questionDifficulty == 2) {
-				showQuestion(Mcallback, questionDifficulty);
-			} else if(questionDifficulty == 3) {
-				showQuestion(Hcallback, questionDifficulty);
-			}
+			showQuestion(questionDifficulty, currentPlayer);
 			break;
 		case "SurpriseSquare":
 			System.out.println("Landed on a surprise square!");
@@ -201,7 +136,6 @@ public class GameBoardController {
 			SSC.movePlayerToDestination(playersPositions, currentPlayer);
 			break;
 		default:
-			// check for snakes and ladders
 			ArrayList<Snake> snakes = this.gameBoard.getSnakes();
 			for (Snake snake : snakes) {
 				if(snake.getColor() == COLORS.RED) {
@@ -235,13 +169,40 @@ public class GameBoardController {
 			}
 			break;
 		}
-		if(withRoll) {
-			int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
-			this.gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
-		}
 	}
 	
-	private void showQuestion(QuestionCallback callback,int difficulty) {
+	private QuestionCallback generateQuestionCallback(final int difficulty, Player currentPlayer) {
+	    return new QuestionCallback() {
+	        @Override
+	        public void onQuestionAnswered(boolean isCorrect) {
+	        	ArrayList<Player> players = gameBoard.getPlayers();
+	        	HashMap<Player,Integer> playersPositions = gameBoard.getPlayersPositions();
+	            System.out.println("Current player is: " + currentPlayer);
+	            int penaltyOrReward = calculatePenaltyOrReward(difficulty, isCorrect);
+	            updatePlayerPosition(currentPlayer, penaltyOrReward);
+	            checkSquares(currentPlayer);
+	            gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
+	            gameBoardView.updatePlayerPositionsOnBoard(gameBoard.getDifficultyBoard(), players, playersPositions, gameBoard.getSquares().length, gameBoard.getSquares()[0].length);
+	        }
+	    };
+	}
+
+	private int calculatePenaltyOrReward(int difficulty, boolean isCorrect) {
+	    if (isCorrect) {
+	        return difficulty == 3 ? 1 : 0;
+	    } else {
+	        return -difficulty;
+	    }
+	}
+
+	private void updatePlayerPosition(Player currentPlayer, int move) {
+	    HashMap<Player, Integer> playersPositions = gameBoard.getPlayersPositions();
+	    int newPosition = Math.max(playersPositions.get(currentPlayer) + move, 1); // Ensure position doesn't go below 1
+	    playersPositions.put(currentPlayer, newPosition);
+	}
+	
+	private void showQuestion(int difficulty, Player currentPlayer) {
+		QuestionCallback callback = generateQuestionCallback(difficulty, currentPlayer);
 		Random random = new Random();
 		List<Questions> Questions = new ArrayList<>();
 		for (Questions qd : sysdata.questionsList) {
