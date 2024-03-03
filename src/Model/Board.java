@@ -86,12 +86,7 @@ public class Board {
         board.generateBoard();
         Square[][] squares = board.getSquares();
         board.initiateQuestionSquares();
-//        for(int i=0;i<squares.length;i++) {
-//        	for(int j=0;j<squares[0].length;j++) {
-//        		System.out.println(squares[i][j]);
-//        	}
-//        }
-        
+
         board.generateSnakesAndLadder();
         for(int i=0;i<board.getSnakes().size(); i++) {
         	System.out.println(board.getSnakes().get(i));
@@ -316,7 +311,7 @@ public class Board {
 	    ArrayList<Integer> occupiedPositions = new ArrayList<>();
 	    occupiedPositions.addAll(questionSquarePositions);
 	    occupiedPositions.addAll(surpriseSquarePositions);
-	    
+	    occupiedPositions.add(1);
 	    int boardSize = this.rows;
 	    
 	    for (int rank = 1; rank <= numberOfLadders; rank++) {
@@ -387,58 +382,6 @@ public class Board {
 	        }
 	    }
 	}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		
-//		int i;
-//		for(i=0;i < numberOfSnakes; i++) {
-//			snakeStart = getRandom(boardSize + 1 + (i-1), boardSize*boardSize + 1);
-//			while(questionSquarePositions.contains(snakeStart) || surpriseSquarePositions.contains(snakeStart))
-//				snakeStart = getRandom(boardSize + 1 + (i-1)*boardSize, boardSize*boardSize + 1);
-//			// SNAKE HEAD
-//			System.out.println("Snake Start: " + snakeStart);
-//			Square headSquare = new Square(snakeStart);
-//			headSquare.calculateRowAndColumn(this.getRows());
-//			// SNAKE TAIL
-//			int row = (int) Math.floor(snakeStart/boardSize);
-//			int snakeEnd = getRandom(boardSize*(row-i) + 1, boardSize*row + (i-1));
-//			while(questionSquarePositions.contains(snakeEnd) || surpriseSquarePositions.contains(snakeEnd))
-//				snakeEnd = getRandom(boardSize*(row-i) + 1, boardSize*row + (i-1));
-//			System.out.println("Snake End: "  + snakeEnd);
-//			Square tailSquare = new Square(snakeEnd);
-//			tailSquare.calculateRowAndColumn(this.getRows());
-//			Snake snake = null;
-//			switch(i%3) {
-//			case 0:
-//				snake = new Snake("" + i,headSquare,tailSquare,COLORS.YELLOW);
-//				break;
-//			case 1: 
-//				snake = new Snake("" + i,headSquare,tailSquare,COLORS.GREEN);
-//				break;
-//			case 2: 
-//				snake = new Snake("" + i,headSquare,tailSquare,COLORS.BLUE);
-//				break;
-//			}
-//			snakes.add(snake);
-//		}
-//		snakeStart = getRandom(boardSize + 1 + (i-1), boardSize*boardSize + 1);
-//		for(int j=i;j<numberOfRedSnakes+i;j++) {
-//			while(questionSquarePositions.contains(snakeStart) || surpriseSquarePositions.contains(snakeStart))
-//				snakeStart = getRandom(2, boardSize*boardSize + 1);
-//			Square headSquare = new Square(snakeStart);
-//			headSquare.calculateRowAndColumn(this.getRows());
-//			snakes.add(new Snake("" + j,headSquare, null, COLORS.RED));
-//		}
-//	}
 	
 	/*
 	 * rollDice()

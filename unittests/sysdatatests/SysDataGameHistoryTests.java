@@ -13,6 +13,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import Model.DIFFICULTY;
 import Model.Game;
 import Model.PLAYERCOLORS;
 import Model.Player;
@@ -36,13 +37,12 @@ public class SysDataGameHistoryTests {
     @Test
     public void testAddGameHistoryWithMock() {
     	//initiate Game instance
-    	List<Player> players = new ArrayList<Player>();
-    	LocalDateTime time =LocalDateTime.of(2023, 2, 9, 23, 58);
+    	ArrayList<Player> players = new ArrayList<Player>();
     	Player newpl= new Player(1, "aseel",PLAYERCOLORS.PINK);
     	Player newp2= new Player(1, "lna", PLAYERCOLORS.PURPLE);
     	players.add(newpl);
     	players.add(newp2);
-    	Game mockGame= new Game(1, 2, newpl, players, time);
+    	Game mockGame= new Game(DIFFICULTY.EASY, newpl, players, "14:13.22");
 
         when(sysdataMock.getScoresList()).thenReturn(Arrays.asList(mockGame));
 
@@ -58,19 +58,19 @@ public class SysDataGameHistoryTests {
 
         // Fill up to max capacity
         for (int i = 1; i <= maxCapacity; i++) {
-            Game game = new Game(i, 2, new Player(), new ArrayList<Player>(), LocalDateTime.now());
+            Game game = new Game(DIFFICULTY.EASY, new Player(), new ArrayList<Player>(), "14:13.22");
             sysdata.addGameHistory(game);
         }
 
         assertEquals("The game history list should reach its maximum capacity", maxCapacity, sysdata.getScoresList().size());
 
         // Add one more game beyond the capacity
-        Game extraGame = new Game(maxCapacity + 1, 3, new Player(), new ArrayList<>(), LocalDateTime.now());
+        Game extraGame = new Game(DIFFICULTY.EASY, new Player(), new ArrayList<>(), "14:13.22");
         sysdata.addGameHistory(extraGame); // This should trigger removal of the oldest game
 
         // Verify that the size remains at max capacity and that the oldest game is removed
         assertEquals("The game history list should maintain its maximum capacity after adding extra game", maxCapacity, sysdata.getScoresList().size());
-        assertFalse("The oldest game should be removed", sysdata.getScoresList().contains(new Game(1, 2, new Player(), new ArrayList<>(), LocalDateTime.now())));
+        assertFalse("The oldest game should be removed", sysdata.getScoresList().contains(new Game(DIFFICULTY.EASY, new Player(), new ArrayList<>(), "14:13.22")));
     }
 
 }

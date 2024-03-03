@@ -67,9 +67,9 @@ public class QuestionPopUp extends JDialog {
 
     
     // End of variables declaration//GEN-END:variables
-    public QuestionPopUp(QuestionCallback callback, int level) {
-    	super();
-		this.fram = new JFrame();
+    public QuestionPopUp(QuestionCallback callback, int level, GameBoardView gameBoardView) {
+    	super(gameBoardView,true);
+		this.fram = gameBoardView;
 		this.level = level;
 		this.callback = callback;
 		initComponents();
@@ -84,6 +84,7 @@ public class QuestionPopUp extends JDialog {
     }*/
  
 	private void init() {
+//		setModalityType(ModalityType.APPLICATION_MODAL);
     	setBackground(new Color(0, 0, 0, 0));
         StyledDocument doc = txt.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
@@ -357,8 +358,8 @@ public class QuestionPopUp extends JDialog {
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
             g2.setColor(Color.gray);
             g2.fillRect(0, 0, getWidth(), getHeight());
-            System.out.println("width "+ getWidth());
-            System.out.println("height "+ getHeight());
+            
+            
             g2.dispose();
             super.paintComponent(g);
         }
@@ -389,7 +390,7 @@ public class QuestionPopUp extends JDialog {
             answerChosen = true; // Mark that an answer has been chosen
             setCorrect();
             disableAllButtons(); // Disable all buttons
-            Timer timer = new Timer(2000, new ActionListener() {
+            Timer timer = new Timer(1000, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     showFeedback();
@@ -401,13 +402,13 @@ public class QuestionPopUp extends JDialog {
 
         private void showFeedback() {
             if (isCorrect) {
-            	System.out.println("the isCorrect "+ isCorrect);
+            	
                 setBackground(Color.GREEN);
                
-                Timer timer = new Timer(2000, new ActionListener() {
+                Timer timer = new Timer(1000, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        MessageDialog obj = new MessageDialog();
+                        MessageDialog obj = new MessageDialog(fram);
                         if(difficulty==1) {
                         obj.showMessage("CORRECT", "stay in your position");
                         }
@@ -423,14 +424,15 @@ public class QuestionPopUp extends JDialog {
                 });
                 timer.setRepeats(false);
                 timer.start();
+                dispose();
                // JOptionPane.showMessageDialog(null, "Your answer is correct", "Feedback", JOptionPane.INFORMATION_MESSAGE);
                // closeMessage();
             } else {
                 setBackground(Color.RED);
-                Timer timer = new Timer(2000, new ActionListener() {
+                Timer timer = new Timer(1000, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                    	MessageDialog obj = new MessageDialog();
+                    	MessageDialog obj = new MessageDialog(fram);
                     	if(difficulty ==1) {
                         obj.showMessage("WRONG", "Take one step back");
                         }
@@ -446,6 +448,7 @@ public class QuestionPopUp extends JDialog {
                 });
                 timer.setRepeats(false);
                 timer.start();
+                dispose();
                // JOptionPane.showMessageDialog(null, "Your answer is wrong", "Feedback", JOptionPane.ERROR_MESSAGE);
              //   closeMessage();
             }

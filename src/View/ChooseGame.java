@@ -13,7 +13,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Controller.GameBoardController;
 import Controller.GameCreationController;
+import Model.Board;
 import Model.DIFFICULTY;
 import Model.PLAYERCOLORS;
 import Model.Player;
@@ -740,6 +742,22 @@ int count=0;
 		    	validName="no";
 		    	String nickname = nicknameField.getText();
 		    	
+		    	if(difficltyLeve_1.getText().equals("play")) {
+		        	System.out.println("PLAY NOW START GAME");
+		        	
+		        	GameBoardController gbc = GameBoardController.getInstance();
+	        		Board board = new Board(selectedDifficulty, allPlayers);
+	        		board.generateBoard();
+                    board.initiateQuestionSquares();
+                    board.generateSnakesAndLadder();
+	        		gbc.setGameBoard(board);
+	        		GameBoardView gbv = new GameBoardView();
+	        		gbv.setExtendedState(JFrame.MAXIMIZED_BOTH);
+	        		gbv.setVisible(true);
+		        	dispose();
+		        	return;
+		        }
+		    	
 		    	if(isEasy==false && isMedium==false && isHard==false && nickname.equals("") && playerNumber.equals("none")  ) {
 		    		JOptionPane.showMessageDialog(contentPane, "please choose the game's parameters!");
 		    		
@@ -760,124 +778,114 @@ int count=0;
 		    	else if(level!=0 && !nickname.equals("") && !playerNumber.equals("none") ) {
 		    		
 		    		if(allNames.contains(nickname)) {
-		    		//	  System.out.println("testttttttttttttttt"); 
-	    			//  validName="no";
+	    			  validName="no";
 	    			  JOptionPane.showMessageDialog(contentPane, "this nickname is unvalid! try another one");
 	        	    }
 		    		else {
 		    			allNames.add(nickname);
               			//validName="yes";
 		    		
-			    	playersCounter++;
-			        int playersNumber = Integer.parseInt(numbers.getText());
-			       
-			        if (isEasy && counter < playersNumber )  {
-			            counter++; // Increment numCurrentPlayer
-			            currentPlayer.setText("player " + counter); // Update currentPlayer label text
-			        } else if (isMedium && counter < playersNumber) {
-			            counter++; // Increment numCurrentPlayer
-			            currentPlayer.setText("player " + counter); // Update currentPlayer label text
-			        } else if (isHard && counter < playersNumber ) {
-			            counter++; // Increment numCurrentPlayer
-			            currentPlayer.setText("player " + counter); // Update currentPlayer label text
-			        }
-			        
-			        
-			    
-			        
-	
-			        if(playersCounter<=playersNumber) {
-			        	playerID++;
-			        	
-			        	Player player=new Player(playerID,nickname,color);
-			        	allPlayers.add(player);
-			        	gameCreationController.setPlayers(allPlayers);
-			            nicknameField.setText("");
-			            
-			        
-		
-			            
-			        if(playerNumber.equals("playerN1")) {
-			        	count++;
-			        	player1_1.setBounds(y, 364, 41, 78);
-			        	player1_1.setVisible(true); 
-			        	selectedPlayer.setVisible(false);
-			        	player1.setVisible(false);
-			        	playerN1=false;
-			        	
-			        }
-			        if(playerNumber.equals("playerN2")) {
-			        	count++;
-			        	player2_1.setBounds(y, 364, 41, 78);
-			        	player2_1.setVisible(true);
-			        	selectedPlayer.setVisible(false);
-			        	player2.setVisible(false);
-			        	playerN2=false;
-			        }
-			        if(playerNumber.equals("playerN3")) {
-			        	count++;
-			        	player3_1.setBounds(y, 364, 41, 78);
-			        	player3_1.setVisible(true);
-			       
-			        	selectedPlayer.setVisible(false);
-			        	player3.setVisible(false);
-			        	playerN3=false;
-			        }
-			        if(playerNumber.equals("playerN4")) {
-			        	count++;
-			        	player4_1.setBounds(y, 364, 41, 78);
-			        	player4_1.setVisible(true);
-		
-			        	selectedPlayer.setVisible(false);
-			        	player4.setVisible(false);
-			        	playerN4=false;
-			        	
-			        }
-			        if(playerNumber.equals("playerN5")) {
-			        	count++;
-			        	player5_1.setBounds(y, 364, 41, 78);
-			        	player5_1.setVisible(true);
-	
-			        	selectedPlayer.setVisible(false);
-			        	player5.setVisible(false);
-			        	playerN5=false;
-			        }
-			        if(playerNumber.equals("playerN6")) {
-			        	count++;
-			        	player6_1.setBounds(y, 364, 41, 78);
-			        	player6_1.setVisible(true);
-	
-			        	selectedPlayer.setVisible(false);
-			        	player6.setVisible(false);
-			        	playerN6=false;
-			        }
-			        if(playerNumber.equals("playerN7")) {
-			        	count++;
-			        	player7_1.setBounds(y, 364, 41, 78);
-			        	player7_1.setVisible(true);
-	
-			        	selectedPlayer.setVisible(false);
-			        	player7.setVisible(false);
-			        	playerN7=false;
-			        }
-			        if(playerNumber.equals("playerN8")) {
-			        	count++;
-			        	player8_1.setBounds(y, 364, 41, 78);
-			        	player8_1.setVisible(true);
-			        	selectedPlayer.setVisible(false);
-			        	player8.setVisible(false);
-			        	playerN8=false;
-			        }
-			        }
-			       
-			        if (count == playersNumber) {
-			            difficltyLeve_1.setText("play");
-			        }
-			        
-			        
+				    	playersCounter++;
+				        int playersNumber = Integer.parseInt(numbers.getText());
+				       
+				        if (isEasy && counter < playersNumber )  {
+				            counter++;
+				            currentPlayer.setText("player " + counter);
+				        } else if (isMedium && counter < playersNumber) {
+				            counter++;
+				            currentPlayer.setText("player " + counter);
+				        } else if (isHard && counter < playersNumber ) {
+				            counter++;
+				            currentPlayer.setText("player " + counter);
+				        }
+				        
+				        if(playersCounter<=playersNumber) {
+				        	playerID++;
+				        	
+				        	Player player=new Player(playerID,nickname,color);
+				        	allPlayers.add(player);
+				        	gameCreationController.setPlayers(allPlayers);
+				            nicknameField.setText("");
+
+					        if(playerNumber.equals("playerN1")) {
+					        	count++;
+					        	player1_1.setBounds(y, 364, 41, 78);
+					        	player1_1.setVisible(true); 
+					        	selectedPlayer.setVisible(false);
+					        	player1.setVisible(false);
+					        	playerN1=false;
+					        	
+					        }
+					        if(playerNumber.equals("playerN2")) {
+					        	count++;
+					        	player2_1.setBounds(y, 364, 41, 78);
+					        	player2_1.setVisible(true);
+					        	selectedPlayer.setVisible(false);
+					        	player2.setVisible(false);
+					        	playerN2=false;
+					        }
+					        if(playerNumber.equals("playerN3")) {
+					        	count++;
+					        	player3_1.setBounds(y, 364, 41, 78);
+					        	player3_1.setVisible(true);
+					       
+					        	selectedPlayer.setVisible(false);
+					        	player3.setVisible(false);
+					        	playerN3=false;
+					        }
+					        if(playerNumber.equals("playerN4")) {
+					        	count++;
+					        	player4_1.setBounds(y, 364, 41, 78);
+					        	player4_1.setVisible(true);
+				
+					        	selectedPlayer.setVisible(false);
+					        	player4.setVisible(false);
+					        	playerN4=false;
+					        	
+					        }
+					        if(playerNumber.equals("playerN5")) {
+					        	count++;
+					        	player5_1.setBounds(y, 364, 41, 78);
+					        	player5_1.setVisible(true);
+			
+					        	selectedPlayer.setVisible(false);
+					        	player5.setVisible(false);
+					        	playerN5=false;
+					        }
+					        if(playerNumber.equals("playerN6")) {
+					        	count++;
+					        	player6_1.setBounds(y, 364, 41, 78);
+					        	player6_1.setVisible(true);
+			
+					        	selectedPlayer.setVisible(false);
+					        	player6.setVisible(false);
+					        	playerN6=false;
+					        }
+					        if(playerNumber.equals("playerN7")) {
+					        	count++;
+					        	player7_1.setBounds(y, 364, 41, 78);
+					        	player7_1.setVisible(true);
+			
+					        	selectedPlayer.setVisible(false);
+					        	player7.setVisible(false);
+					        	playerN7=false;
+					        }
+					        if(playerNumber.equals("playerN8")) {
+					        	count++;
+					        	player8_1.setBounds(y, 364, 41, 78);
+					        	player8_1.setVisible(true);
+					        	selectedPlayer.setVisible(false);
+					        	player8.setVisible(false);
+					        	playerN8=false;
+					        }
+				        }
+				        
+				        if (count == playersNumber) {
+				            difficltyLeve_1.setText("play");
+				            
+				        }
 		    		}
 		    	}
-        	   
 		    }	    
 		});
 		
