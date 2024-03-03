@@ -230,64 +230,57 @@ public class Board {
 	 */
 	
 	public void generateBoard() {
-		boolean leftToRight = this.rows % 2 == 0; 
-		Random random = new Random();
-		SquareFactory factory = new SquareFactory();
-		SquareInterface square;
+	    boolean leftToRight = this.rows % 2 == 0; 
+	    Random random = new Random();
+	    SquareFactory factory = new SquareFactory();
+	    SquareInterface square;
 
-		while(questionSquarePositions.size()!=3)
-		{
-			int coin=(random.nextInt(this.rows*this.rows-1)+1);
-			if(!questionSquarePositions.contains(coin))
-				questionSquarePositions.add(coin);
-		}
-		
-		switch (this.getDifficultyBoard())
-		{
-		case MEDIUM: 
-			while(surpriseSquarePositions.size()!=1)
-			{
-				int coin=(random.nextInt(this.rows*this.rows-1)+1);
-				if(!questionSquarePositions.contains(coin))
-					surpriseSquarePositions.add(coin);
-			}
-			break;
-		case HARD:
-			while(surpriseSquarePositions.size()!=2)
-			{
-				int coin=(random.nextInt(this.rows*this.rows-1)+1);
-				if(!questionSquarePositions.contains(coin)&&!surpriseSquarePositions.contains(coin))
-					surpriseSquarePositions.add(coin);
-			}
-			break;
-		default:
-			break;
-			
-		}
-		for (int i = this.rows - 1; i >= 0; i--) {
-		    for (int j = 0; j < this.columns; j++) {
-		        int columnIndex = leftToRight ? j : this.columns - 1 - j;
-		        if(surpriseSquarePositions.contains(getPositionByIdenxes(i,columnIndex)))
-		        {
-		        	square =factory.getSquare("SurpriseSquare", i, columnIndex);
-		        	this.squares[i][columnIndex] = (SurpriseSquare) square;
-		        }
-		        	
-		        else if(questionSquarePositions.contains(getPositionByIdenxes(i,columnIndex)))
-		        {
-		        	square =factory.getSquare("QuestionSquare", i, columnIndex);
-		        	this.squares[i][columnIndex] = (QuesSquare) square;
-		        }	
-		        else
-		        {
-		        	square =factory.getSquare("Square", i, columnIndex);
-		        	this.squares[i][columnIndex] = (Square) square;
-		        }
-		  
-		        this.squares[i][columnIndex].calculatePosition(this.rows);
-		    }
-		    leftToRight = !leftToRight;
-		}
+	    while (questionSquarePositions.size() != 3) {
+	        int coin = (random.nextInt(this.rows * this.rows - 4) + 4);
+	        if (!questionSquarePositions.contains(coin))
+	            questionSquarePositions.add(coin);
+	    }
+	    
+	    int exclusionZoneEnd = this.rows * this.rows;
+	    switch (this.getDifficultyBoard()) {
+	    case MEDIUM:
+	        while (surpriseSquarePositions.size() != 1) {
+	            int coin = (random.nextInt(exclusionZoneEnd - 10) + 1);
+	            if (!questionSquarePositions.contains(coin) && !surpriseSquarePositions.contains(coin))
+	                surpriseSquarePositions.add(coin);
+	        }
+	        break;
+	    case HARD:
+	        while (surpriseSquarePositions.size() != 2) {
+	            int coin = (random.nextInt(exclusionZoneEnd - 10) + 1);
+	            if (!questionSquarePositions.contains(coin) && !surpriseSquarePositions.contains(coin))
+	                surpriseSquarePositions.add(coin);
+	        }
+	        break;
+	    default:
+	        break;
+	    }
+
+	    for (int i = this.rows - 1; i >= 0; i--) {
+	        for (int j = 0; j < this.columns; j++) {
+	            int columnIndex = leftToRight ? j : this.columns - 1 - j;
+	            int position = getPositionByIdenxes(i, columnIndex);
+
+	            if (surpriseSquarePositions.contains(position)) {
+	                square = factory.getSquare("SurpriseSquare", i, columnIndex);
+	                this.squares[i][columnIndex] = (SurpriseSquare) square;
+	            } else if (questionSquarePositions.contains(position)) {
+	                square = factory.getSquare("QuestionSquare", i, columnIndex);
+	                this.squares[i][columnIndex] = (QuesSquare) square;
+	            } else {
+	                square = factory.getSquare("Square", i, columnIndex);
+	                this.squares[i][columnIndex] = (Square) square;
+	            }
+
+	            this.squares[i][columnIndex].calculatePosition(this.rows);
+	        }
+	        leftToRight = !leftToRight;
+	    }
 	}
 	
 	public void generateSnakesAndLadder() {
@@ -329,7 +322,7 @@ public class Board {
 	    for (int rank = 1; rank <= numberOfLadders; rank++) {
 	        boolean validLadderFound = false;
 	        while (!validLadderFound) {
-	            int ladderStart = getRandom(1, boardSize * boardSize - 1);
+	            int ladderStart = getRandom(2, boardSize * boardSize - 1);
 	            int startRow = (ladderStart - 1) / boardSize;
 	            int endRow = startRow + rank;
 	            
