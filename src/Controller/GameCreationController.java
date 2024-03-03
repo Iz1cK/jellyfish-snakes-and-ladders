@@ -10,6 +10,7 @@ public class GameCreationController {
 	DIFFICULTY difficultyLevel;
 	public void setDifficultyLevel(DIFFICULTY difficulty) {
         this.difficultyLevel = difficulty;
+       // System.out.println(difficulty);
     }
 	
 	ArrayList<Player> players=new ArrayList<Player>();
@@ -20,6 +21,7 @@ public class GameCreationController {
 
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
+		//System.out.println(players);
 	}
 
 	@Override
