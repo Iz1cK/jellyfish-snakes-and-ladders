@@ -51,9 +51,9 @@ public class ChooseGame extends JFrame {
 	int icon=0;
 	int isReady=0;
 	boolean iconChosed=false;
-	GameCreationController gameCreationController = new GameCreationController();
+	GameCreationController gameCreationController = GameCreationController.getInstance();
 	private boolean isEasy=false, isMedium=false, isHard=false;
-	DIFFICULTY selectedDifficulty;
+	public static DIFFICULTY selectedDifficulty;
 	Boolean playerN1=false, playerN2=false,playerN3=false, playerN4=false, playerN5=false, playerN6=false, playerN7=false,playerN8=false;
 	ArrayList<Player> allPlayers=new ArrayList<Player>();
 	private int playerID=0; 
@@ -244,7 +244,6 @@ public class ChooseGame extends JFrame {
 	            //	level++;
 	            	if(isReady==0) {
 	            	selectedDifficulty=DIFFICULTY.EASY;
-	            	gameCreationController.setDifficultyLevel(selectedDifficulty);
 	        		selectedLevel.setVisible(false);
 	        		isEasy=true;
 	        		isMedium=false;
@@ -264,7 +263,6 @@ public class ChooseGame extends JFrame {
 	            	//level++;
 	            	if(isReady==0) {
 	            	selectedDifficulty=DIFFICULTY.MEDIUM;
-	            	gameCreationController.setDifficultyLevel(selectedDifficulty);
 	        		selectedLevel.setVisible(false);
 	        		isEasy=false;
 	        		isMedium=true;
@@ -283,7 +281,6 @@ public class ChooseGame extends JFrame {
 	            	//level++;
 	            	if(isReady==0) {
 	            	selectedDifficulty=DIFFICULTY.HARD;
-	            	gameCreationController.setDifficultyLevel(selectedDifficulty);
 	        		selectedLevel.setVisible(false);
 	        		isEasy=false;
 	        		isMedium=false;

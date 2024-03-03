@@ -54,6 +54,7 @@ public class GameBoardView extends JFrame {
     private JLabel backgroundImage;
     public static JLabel timerLabel;
     private JPanel overlayPanel;
+    private JPanel playersPanel;
     private JPanel playerMarkerPanel;
     public static Timer timer;
     private long startTime;
@@ -63,6 +64,8 @@ public class GameBoardView extends JFrame {
     private static ArrayList<Ladder> ladders;
     private static boolean rolling = false;
     GameBoardController GBC = GameBoardController.getInstance();
+    Font labelFont = new Font("Poppins", Font.BOLD, 36);
+    
     /**
      * Launch the application.
      */
@@ -84,7 +87,7 @@ public class GameBoardView extends JFrame {
      * Create the frame.
      */
     public GameBoardView() {
-    	
+    	GBC.setGameBoardView(this);
         ArrayList<Player> aplayers = new ArrayList<>();
         aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
 //        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
@@ -96,7 +99,7 @@ public class GameBoardView extends JFrame {
 //        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
         Board aboard = new Board(DIFFICULTY.MEDIUM,aplayers);
         aboard.generateBoard();
-        
+        aboard.initiateQuestionSquares();
 //        aboard.generateSnakesAndLadder();
         GBC.setGameBoard(aboard);
 
@@ -105,19 +108,13 @@ public class GameBoardView extends JFrame {
     	DIFFICULTY diff = board.getDifficultyBoard();
     	HashMap<Player,Integer> playersPositions = board.getPlayersPositions();
     	
-    	playersPositions.put(players.get(0), 98);
+//    	playersPositions.put(players.get(0), 99);
         
         Square[][] squares = board.getSquares();
-//        for(int i=0;i<squares.length; i++) {
-//        	for(int j=0;j<squares[0].length;j++) {
-//        		System.out.println(squares[i][j]);
-//        	}
-//        }
         squares[3][4] = new SurpriseSquare(3,4);
-        squares[0][3] = new SurpriseSquare(0,3);
-        squares[0][5] = new SurpriseSquare(0,5);
-        squares[0][6] = new SurpriseSquare(0,6);
-        squares[0][8] = new SurpriseSquare(0,8);
+//        squares[0][3] = new QuesSquare(0,3,1);
+//        squares[0][5] = new QuesSquare(0,5,2);
+//        squares[0][6] = new QuesSquare(0,6,3);
         
         snakes = new ArrayList<>();
         
@@ -152,17 +149,15 @@ public class GameBoardView extends JFrame {
         backgroundImage.setBounds(0, 0, 1280, 720);
         updateLabelImage(getWidth(), getHeight());
         
-        JPanel playersPanel = new JPanel();
+        playersPanel = new JPanel();
         playersPanel.setBounds(getWidth(), 43, 248, 381);
         contentPane.add(playersPanel);
         playersPanel.setLayout(new BoxLayout(playersPanel, BoxLayout.Y_AXIS));
         
         playersPanel.revalidate();
         playersPanel.repaint();
-        
-        Font labelFont = new Font("Poppins", Font.BOLD, 36);
 
-        updatePlayersList(players, playersPositions, board, playersPanel, labelFont);
+        updatePlayersList(players, playersPositions, board);
         
         JPanel timerPanel = new JPanel();
         timerPanel.setBounds((int) (getWidth() + 100), (int) (getHeight() - 100), 400, 50);
@@ -253,12 +248,12 @@ public class GameBoardView extends JFrame {
                     rollDice(diceLabel, board, () -> {
                         // This will be executed after the dice rolling animation completes
                         System.out.println("clicked");
-                        GBC.playTurn();
+                        GBC.playTurn(true);
                         String imagePath = "/img/dice" + GameBoardController.diceRoll + ".png";
                         ImageIcon icon = new ImageIcon(Main.class.getResource(imagePath));
                         diceLabel.setIcon(icon);
-                        updatePlayersList(players, playersPositions, board, playersPanel, labelFont);
-                        updatePlayerPositionsOnBoard(board.getDifficultyBoard(), players, playersPositions, overlayPanel, squares.length, squares[0].length);
+                        updatePlayersList(players, playersPositions, board);
+                        updatePlayerPositionsOnBoard(board.getDifficultyBoard(), players, playersPositions, squares.length, squares[0].length);
                         
                         if(playersPositions.get(board.getCurrentPlayerTurn()) >= board.getRows()*board.getRows()) {
                         	System.out.println("WINNER WINNER CHGICKEN DINNER");
@@ -322,7 +317,7 @@ public class GameBoardView extends JFrame {
                 timerPanel.revalidate();
                 timerPanel.repaint();
                 playersPanel.setBounds(getWidth() - 560, y, 300, 381);
-                updatePlayerPositionsOnBoard(diff, players, playersPositions, overlayPanel, squares.length, squares[0].length);
+                updatePlayerPositionsOnBoard(diff, players, playersPositions, squares.length, squares[0].length);
                 diceLabel.setBounds(getWidth() - 560 + 100, getHeight() - 250, 200, 200);//getWidth() - 560 + playerPanelWidth/2
                 contentPane.revalidate();
                 contentPane.repaint();
@@ -408,7 +403,7 @@ public class GameBoardView extends JFrame {
         }
     }
     
-    private void updatePlayersList(ArrayList<Player> players, HashMap<Player,Integer> playersPositions, Board board, JPanel playersPanel, Font labelFont) {
+    public void updatePlayersList(ArrayList<Player> players, HashMap<Player,Integer> playersPositions, Board board) {
     	playersPanel.removeAll();
     	for (Player player : players) {
             JPanel playerPanel = new JPanel();
@@ -468,7 +463,7 @@ public class GameBoardView extends JFrame {
      * Update the players positions on the board
      * !! still need to handle multiple players on the same square in Iteration 3
      */
-    private void updatePlayerPositionsOnBoard(DIFFICULTY diff, ArrayList<Player> players, HashMap<Player,Integer> playersPositions, JPanel overlayPanel, int rows, int cols) {
+    public void updatePlayerPositionsOnBoard(DIFFICULTY diff, ArrayList<Player> players, HashMap<Player,Integer> playersPositions, int rows, int cols) {
         
         for (Component comp : overlayPanel.getComponents()) {
             if (Boolean.TRUE.equals(((JComponent) comp).getClientProperty("playerMarker"))) {

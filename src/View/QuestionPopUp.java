@@ -41,6 +41,7 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 import Controller.AddQuestionController;
 import Controller.questionPopUpController;
+import Utils.QuestionCallback;
 
 public class QuestionPopUp extends JDialog {
 
@@ -61,12 +62,16 @@ public class QuestionPopUp extends JDialog {
     public int difficulty;
     public boolean isCorrect;
 	questionPopUpController controller= questionPopUpController.getInstance();
+	private QuestionCallback callback;
+	private int level;
 
     
     // End of variables declaration//GEN-END:variables
-    public QuestionPopUp() {
+    public QuestionPopUp(QuestionCallback callback, int level) {
     	super();
 		this.fram = new JFrame();
+		this.level = level;
+		this.callback = callback;
 		initComponents();
         init();
 	}
@@ -200,16 +205,16 @@ public class QuestionPopUp extends JDialog {
         });
 
         lbIcon.setHorizontalAlignment(SwingConstants.CENTER);
-        if(controller.level==1) {
+        if(level==1) {
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/img/easyquestion.png")));
             lbTitle.setForeground(new Color(255, 255, 0));
         }
-        else if(controller.level==2) {
+        else if(level==2) {
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/img/mediumquestion.png"))); // NOI18N
             lbTitle.setForeground(new Color(0, 128, 0));
 
         }
-        if(controller.level==3) {
+        if(level==3) {
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/img/icon.png"))); // NOI18N
             lbTitle.setForeground(new Color(245, 71, 71));
 
@@ -455,17 +460,20 @@ public class QuestionPopUp extends JDialog {
         } 
 
         public void setCorrect() {
-        if((getMessageType() == MessageType.ANS1 && correctAns==1)
-        		|| (getMessageType() == MessageType.ANS2 && correctAns==2)
-        		|| (getMessageType() == MessageType.ANS3 && correctAns==3)
-        		|| (getMessageType() == MessageType.ANS4 && correctAns==4)) {
-        	isCorrect=true;
-        	controller.setCorrectAns(isCorrect);
-        }
-        else {
-        	isCorrect=false;
-        	controller.setCorrectAns(isCorrect);
-        }
+	        if((getMessageType() == MessageType.ANS1 && correctAns==1)
+	        		|| (getMessageType() == MessageType.ANS2 && correctAns==2)
+	        		|| (getMessageType() == MessageType.ANS3 && correctAns==3)
+	        		|| (getMessageType() == MessageType.ANS4 && correctAns==4)) {
+	        	isCorrect=true;
+	        	controller.setCorrectAns(isCorrect);
+	        }
+	        else {
+	        	isCorrect=false;
+	        	controller.setCorrectAns(isCorrect);
+	        }
+	        if (callback != null) {
+            	callback.onQuestionAnswered(isCorrect);
+            }
         }
 
         public boolean isAnswerChosen() {

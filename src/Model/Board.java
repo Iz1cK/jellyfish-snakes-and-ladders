@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import Controller.SurpriseSquareController;
 
@@ -84,11 +85,13 @@ public class Board {
 		Board board = new Board(DIFFICULTY.MEDIUM, players);
         board.generateBoard();
         Square[][] squares = board.getSquares();
-        for(int i=0;i<squares.length; i++) {
+        board.initiateQuestionSquares();
+        for(int i=0;i<squares.length;i++) {
         	for(int j=0;j<squares[0].length;j++) {
         		System.out.println(squares[i][j]);
         	}
         }
+        
 //        board.generateSnakesAndLadder();
 //        for(int i=0;i<board.getSnakes().size(); i++) {
 //        	System.out.println(board.getSnakes().get(i));
@@ -96,6 +99,20 @@ public class Board {
 //        for(int i=0;i<board.getLadders().size(); i++) {
 //        	System.out.println(board.getLadders().get(i));
 //        }
+    }
+	
+	public void initiateQuestionSquares() {
+        this.assignQuestionToSquare(0);   // Assuming index 1 is intentional; adjust if needed
+
+	}
+	
+	public void assignQuestionToSquare(int num) {
+	    int[] eindexes = this.getIndexesByPosition(this.questionSquarePositions.get(num));
+	    squares[eindexes[0]][eindexes[1]] = new QuesSquare(eindexes[0], eindexes[1], num+1);
+	    int[] mindexes = this.getIndexesByPosition(this.questionSquarePositions.get(num+1));
+	    squares[mindexes[0]][mindexes[1]] = new QuesSquare(mindexes[0], mindexes[1], num+2);
+	    int[] hindexes = this.getIndexesByPosition(this.questionSquarePositions.get(num+2));
+	    squares[hindexes[0]][hindexes[1]] = new QuesSquare(hindexes[0], hindexes[1], num+3);
     }
 
 	public Board() {
@@ -252,14 +269,14 @@ public class Board {
 		        int columnIndex = leftToRight ? j : this.columns - 1 - j;
 		        if(surpriseSquarePositions.contains(getPositionByIdenxes(i,columnIndex)))
 		        {
-		        	 square =factory.getSquare("SurpriseSquare", i, columnIndex);
-		        	 this.squares[i][columnIndex] = (SurpriseSquare) square;
+		        	square =factory.getSquare("SurpriseSquare", i, columnIndex);
+		        	this.squares[i][columnIndex] = (SurpriseSquare) square;
 		        }
 		        	
 		        else if(questionSquarePositions.contains(getPositionByIdenxes(i,columnIndex)))
 		        {
-		        	 square =factory.getSquare("QuestionSquare", i, columnIndex);
-		        	 this.squares[i][columnIndex] = (QuesSquare) square;
+		        	square =factory.getSquare("QuestionSquare", i, columnIndex);
+		        	this.squares[i][columnIndex] = (QuesSquare) square;
 		        }	
 		        else
 		        {
@@ -396,7 +413,28 @@ public class Board {
             return row * this.rows + column + 1;
         } else { // Odd row, numbers increase from right to left
             return row * this.rows + (this.rows - column - 1) + 1;
-        }}
+        }
+	}
+	
+	public int[] getIndexesByPosition(int position) {
+	    // Adjust position to be 0-indexed
+	    position -= 1;
+	    
+	    int rows = this.rows; // Assuming 'this.rows' is the number of rows in your grid
+	    int row = position / rows;
+	    int column;
+
+	    if (row % 2 == 0) {
+	        // Even row, numbers increase from left to right
+	        column = position % rows;
+	    } else {
+	        // Odd row, numbers increase from right to left
+	        column = rows - (position % rows) - 1;
+	    }
+
+	    // Adjust row and column to be 1-indexed if necessary
+	    return new int[]{row, column};
+	}
 
 	/*
 	 * checkWinner()

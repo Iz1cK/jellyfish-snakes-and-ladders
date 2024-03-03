@@ -6,6 +6,7 @@ import java.util.Random;
 
 import Model.Questions;
 import Model.Sysdata;
+import Utils.QuestionCallback;
 import View.QuestionPopUp;
 import View.Test;
 
@@ -37,7 +38,7 @@ public class questionPopUpController {
 		return instance;
 	}
 	
-	public void questionRank(int diffculty) {
+	public void questionRank(int diffculty,QuestionCallback callback) {
 		level=diffculty;
 		for (Questions qd : sysdata.questionsList) {
 			if(qd.getDifficulty()==diffculty) {
@@ -58,7 +59,7 @@ public class questionPopUpController {
 		    // Now you have a random question from the easyQuestion list
 		    // Do something with the random question
 			
-			QuestionPopUp obj = new QuestionPopUp();
+			QuestionPopUp obj = new QuestionPopUp(callback, diffculty);
 	        obj.cmdobt1.setText(answer1);
 	        obj.cmdobt2.setText(answer2);
 	        obj.cmdobt3.setText(answer3);
@@ -79,10 +80,7 @@ public class questionPopUpController {
 		} else {
 		    // Handle the case where the easyQuestion list is empty
 		    System.out.println("No questions available in the Question list.");
-		}	
-		
-		
-		
+		}
 	}
 	
 	public String getQuestion() {
