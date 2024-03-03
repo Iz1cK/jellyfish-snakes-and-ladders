@@ -19,6 +19,17 @@ public class questionPopUpController {
 	String answer4;
 	public List<Questions> Questions= new ArrayList<>();
 	Random random = new Random();
+    public boolean isCorrectAns;
+    public int level;
+	
+	public boolean isCorrectAns() {
+		return isCorrectAns;
+	}
+
+	public void setCorrectAns(boolean isCorrectAns) {
+		this.isCorrectAns = isCorrectAns;
+	}
+
 	private static questionPopUpController instance;
 	public static questionPopUpController getInstance() {
 		if (instance == null)
@@ -27,6 +38,7 @@ public class questionPopUpController {
 	}
 	
 	public void questionRank(int diffculty) {
+		level=diffculty;
 		for (Questions qd : sysdata.questionsList) {
 			if(qd.getDifficulty()==diffculty) {
 				Questions.add(qd);
@@ -53,7 +65,7 @@ public class questionPopUpController {
 	        obj.cmdobt4.setText(answer4);
 	        String questionBody=question;
 	        obj.correctAns=randomQuestion.getCorrect_ans();
-	        
+	        obj.difficulty=diffculty;
 	        if(diffculty==1) {
 	        obj.showMessage("easy", questionBody);
 	        }
@@ -66,8 +78,9 @@ public class questionPopUpController {
 	        
 		} else {
 		    // Handle the case where the easyQuestion list is empty
-		    System.out.println("No questions available in the easyQuestion list.");
+		    System.out.println("No questions available in the Question list.");
 		}	
+		
 		
 		
 	}
