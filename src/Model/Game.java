@@ -26,6 +26,19 @@ public class Game {
 	        }
 		this.duration = timer;
 	}
+	
+	public Game(DIFFICULTY difficulty, Board board, Player winningPlayer, ArrayList<Player> players, String timer) {
+		super();
+		this.gameID = ++idCounter;
+		this.boardgame = board;
+		this.difficulty = difficulty == DIFFICULTY.EASY ? 1 : difficulty == DIFFICULTY.MEDIUM ? 2 : difficulty == DIFFICULTY.HARD ? 3 : 1;
+		this.winningPlayer = winningPlayer.getPlayername();
+		 for (Player player : players) {
+	            Players.add(player.getPlayername());
+	        }
+		this.duration = timer;
+	}
+	
 	public Game() {
 		this.gameID=++idCounter;
 	}

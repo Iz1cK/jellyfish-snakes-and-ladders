@@ -12,8 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import Controller.GameBoardController;
 import Model.DIFFICULTY;
 import Model.Game;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FinalPage extends JFrame {
 
@@ -30,8 +33,8 @@ public class FinalPage extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-//                    FinalPage frame = new FinalPage();
-//                    frame.setVisible(true);
+                    FinalPage frame = new FinalPage(new Game());
+                    frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -58,6 +61,14 @@ public class FinalPage extends JFrame {
         contentPane.add(timerLabel);
         
         JLabel home = new JLabel();
+        home.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent arg0) {
+        		HomeView hv = new HomeView();
+        		hv.setVisible(true);
+        		dispose();
+        	}
+        });
         home.setIcon(new ImageIcon(FinalPage.class.getResource("/img/home.png")));
         home.setBounds(40, 427, 181, 63);
         contentPane.add(home);
@@ -128,11 +139,30 @@ public class FinalPage extends JFrame {
         contentPane.add(lblNewLabe3);
 
         JLabel again = new JLabel();
+        again.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		GameBoardView gbv = new GameBoardView();
+        		GameBoardController gbc = GameBoardController.getInstance();
+        		gbc.setGameBoardView(gbv);
+        		gbc.setGameBoard(game.getBoardgame());
+        		gbv.setVisible(true);
+        		dispose();
+        	}
+        });
         again.setIcon(new ImageIcon(FinalPage.class.getResource("/img/again.png")));
         again.setBounds(278, 427, 176, 63);
         contentPane.add(again);
 
         JLabel history = new JLabel();
+        history.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		GameHistoryViews ghv = new GameHistoryViews();
+        		ghv.setVisible(true);
+        		dispose();
+        	}
+        });
         history.setIcon(new ImageIcon(FinalPage.class.getResource("/img/history.png")));
         history.setBounds(496, 427, 181, 63);
         contentPane.add(history);

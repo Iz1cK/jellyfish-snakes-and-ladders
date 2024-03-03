@@ -223,7 +223,7 @@ public class GameBoardView extends JFrame {
                     rollDice(diceLabel, board, () -> {
                         // This will be executed after the dice rolling animation completes
                         System.out.println("clicked");
-                        GBC.playTurn(true);
+                        GBC.playTurn();
                         String imagePath = "/img/dice" + GameBoardController.diceRoll + ".png";
                         ImageIcon icon = new ImageIcon(Main.class.getResource(imagePath));
                         diceLabel.setIcon(icon);
