@@ -34,7 +34,7 @@ public class Questions extends JSONSerializable {
 			
 		}
 	}
-
+	@Override
 	public void fromJSON(JsonObject jsonObject) {
 		 this.question = jsonObject.get("question").getAsString();
 
@@ -54,7 +54,7 @@ public class Questions extends JSONSerializable {
 	}
 	
 	
-
+	@Override
 	public JsonObject toJSON() {
 		JsonObject question = new JsonObject();
 		JsonArray jsonArray = new JsonArray();

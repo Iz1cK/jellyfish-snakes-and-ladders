@@ -38,7 +38,7 @@ public class Game extends JSONSerializable{
 		}
 	}
 
-	
+	@Override
 	public void fromJSON(JsonObject jsonObject) {
 		this.gameID = Integer.parseInt(jsonObject.get("gameID").toString());
 		this.difficulty = Integer.parseInt(jsonObject.get("difficulty").toString());
@@ -55,7 +55,7 @@ public class Game extends JSONSerializable{
 		this.winningPlayer = jsonObject.get("winningPlayer").getAsString();
 		this.duration = (String) jsonObject.get("duration").getAsString();
 	}
-
+	@Override
 	public JsonObject toJSON() {
 		JsonObject gameHistory = new JsonObject();
 		JsonArray jsonArray = new JsonArray();
