@@ -58,6 +58,11 @@ public class QuestionPopUp extends JDialog {
     private JLabel lbTitle;
     private JTextPane txt;
     public int correctAns;
+    public int difficulty;
+    public boolean isCorrect;
+	questionPopUpController controller= questionPopUpController.getInstance();
+
+    
     // End of variables declaration//GEN-END:variables
     public QuestionPopUp() {
     	super();
@@ -195,10 +200,22 @@ public class QuestionPopUp extends JDialog {
         });
 
         lbIcon.setHorizontalAlignment(SwingConstants.CENTER);
-        lbIcon.setIcon(new ImageIcon(getClass().getResource("/img/icon.png"))); // NOI18N
+        if(controller.level==1) {
+            lbIcon.setIcon(new ImageIcon(getClass().getResource("/img/easyquestion.png")));
+            lbTitle.setForeground(new Color(255, 255, 0));
+        }
+        else if(controller.level==2) {
+            lbIcon.setIcon(new ImageIcon(getClass().getResource("/img/mediumquestion.png"))); // NOI18N
+            lbTitle.setForeground(new Color(0, 128, 0));
+
+        }
+        if(controller.level==3) {
+            lbIcon.setIcon(new ImageIcon(getClass().getResource("/img/icon.png"))); // NOI18N
+            lbTitle.setForeground(new Color(245, 71, 71));
+
+        }
 
         lbTitle.setFont(new Font("sansserif", 1, 18)); // NOI18N
-        lbTitle.setForeground(new Color(245, 71, 71));
         lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
         lbTitle.setText("Message Title");
 
@@ -343,7 +360,6 @@ public class QuestionPopUp extends JDialog {
     }
     
     public class ButtonCustom extends JButton {
-    	private boolean isCorrect = false;
         private boolean answerChosen = false;
 
         public ButtonCustom() {
@@ -380,12 +396,22 @@ public class QuestionPopUp extends JDialog {
 
         private void showFeedback() {
             if (isCorrect) {
+            	System.out.println("the isCorrect "+ isCorrect);
                 setBackground(Color.GREEN);
+               
                 Timer timer = new Timer(2000, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         MessageDialog obj = new MessageDialog();
-                        obj.showMessage("correct", "stay in your position");
+                        if(difficulty==1) {
+                        obj.showMessage("CORRECT", "stay in your position");
+                        }
+                        else if (difficulty==2) {
+                        	obj.showMessage("CORRECT", "stay in your position");	
+                        }
+                        else if (difficulty==3) {
+                        	obj.showMessage("CORRECT", "Take one step forward");	
+                        }
                         closeMessage();
 
                     }
@@ -400,7 +426,15 @@ public class QuestionPopUp extends JDialog {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                     	MessageDialog obj = new MessageDialog();
-                        obj.showMessage("wrong", "take one step back");
+                    	if(difficulty ==1) {
+                        obj.showMessage("WRONG", "Take one step back");
+                        }
+                    	else if(difficulty ==2) {
+                            obj.showMessage("WRONG", "Take two steps back");
+                            }
+                    	else if(difficulty ==3) {
+                            obj.showMessage("WRONG", "Take three steps back");
+                            }
                         closeMessage();
 
                     }
@@ -426,9 +460,11 @@ public class QuestionPopUp extends JDialog {
         		|| (getMessageType() == MessageType.ANS3 && correctAns==3)
         		|| (getMessageType() == MessageType.ANS4 && correctAns==4)) {
         	isCorrect=true;
+        	controller.setCorrectAns(isCorrect);
         }
         else {
         	isCorrect=false;
+        	controller.setCorrectAns(isCorrect);
         }
         }
 

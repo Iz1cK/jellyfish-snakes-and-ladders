@@ -11,6 +11,7 @@ public class Start {
 		
 		Sysdata sysdata= Sysdata.getInstance();
 		sysdata.readQuestions();
+		System.out.println(sysdata.questionsList.toString());
 		// TODO Auto-generated method stub
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

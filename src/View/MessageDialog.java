@@ -35,6 +35,8 @@ import javax.swing.text.StyledDocument;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
+import Controller.questionPopUpController;
+
 public class MessageDialog extends JDialog {
 
     private final JFrame fram;
@@ -42,6 +44,8 @@ public class MessageDialog extends JDialog {
     private Glass glass;
     private boolean show;
     private MessageType messageType = MessageType.CANCEL;
+	questionPopUpController controller= questionPopUpController.getInstance();
+
 
     public MessageDialog() {
         super();
@@ -146,16 +150,27 @@ public class MessageDialog extends JDialog {
         });
 
         lbIcon.setHorizontalAlignment(SwingConstants.CENTER);
-        lbIcon.setIcon(new ImageIcon(getClass().getResource("/img/icon.png"))); // NOI18N
-
-        lbTitle.setFont(new Font("sansserif", 1, 18)); // NOI18N
+        System.out.println("we are in last popup"+controller.isCorrectAns);
+        if(controller.isCorrectAns==false) {
+        lbIcon.setIcon(new ImageIcon(getClass().getResource("/img/wrong.png"))); // NOI18N
         lbTitle.setForeground(new Color(245, 71, 71));
+        }
+        else if(controller.isCorrectAns==true) {
+            lbIcon.setIcon(new ImageIcon(getClass().getResource("/img/correct.png"))); // NOI18N
+            lbTitle.setForeground(new Color(0, 128, 0));
+
+
+        }
+        System.out.println("we are in last popup"+controller.isCorrectAns);
+
+
+        lbTitle.setFont(new Font("sansserif", 3, 24)); // NOI18N
         lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
         lbTitle.setText("Message Title");
 
         txt.setEditable(false);
-        txt.setFont(new Font("sansserif", 0, 14)); // NOI18N
-        txt.setForeground(new Color(76, 76, 76));
+        txt.setFont(new Font("sansserif", 0, 20)); // NOI18N
+        txt.setForeground(new Color(255, 255, 255));
         txt.setText("Message Text\nSimple");
         txt.setFocusable(false);
 
@@ -163,35 +178,39 @@ public class MessageDialog extends JDialog {
         background1.setLayout(background1Layout);
         background1Layout.setHorizontalGroup(
             background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(background1Layout.createSequentialGroup()
-                
-                .addComponent(cmdOK, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
-            .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(txt)
+                .addGroup(background1Layout.createSequentialGroup()
+                    .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                )
+                .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txt)
+                .addGroup(background1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(cmdOK, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE) // Set the preferred size of the button
+                    .addGap(0, 0, Short.MAX_VALUE)
+                )
         );
         background1Layout.setVerticalGroup(
             background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, background1Layout.createSequentialGroup()
-                .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lbTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmdOK, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(background1Layout.createSequentialGroup()
+                    .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(20, 20, 20)
+                    .addComponent(lbTitle)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(cmdOK, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE) // Set the preferred size of the button
+                )
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(background1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(background1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -216,7 +235,7 @@ public class MessageDialog extends JDialog {
 
         private void init() {
             setOpaque(false);
-            setBackground(new Color(245, 245, 245));
+            setBackground(new Color(0, 0, 0));
             setPreferredSize(new Dimension(700, 400)); 
             setForeground(new Color(118, 118, 118));
         }
