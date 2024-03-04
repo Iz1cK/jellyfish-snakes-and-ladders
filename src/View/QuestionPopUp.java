@@ -390,7 +390,7 @@ public class QuestionPopUp extends JDialog {
             answerChosen = true; // Mark that an answer has been chosen
             setCorrect();
             disableAllButtons(); // Disable all buttons
-            Timer timer = new Timer(1000, new ActionListener() {
+            Timer timer = new Timer(2000, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     showFeedback();
@@ -405,7 +405,7 @@ public class QuestionPopUp extends JDialog {
             	
                 setBackground(Color.GREEN);
                
-                Timer timer = new Timer(1000, new ActionListener() {
+                Timer timer = new Timer(2000, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         MessageDialog obj = new MessageDialog(fram);
@@ -418,18 +418,18 @@ public class QuestionPopUp extends JDialog {
                         else if (difficulty==3) {
                         	obj.showMessage("CORRECT", "Take one step forward");	
                         }
-                        closeMessage();
+                       closeMessage();
 
                     }
                 });
                 timer.setRepeats(false);
                 timer.start();
-                dispose();
+                
                // JOptionPane.showMessageDialog(null, "Your answer is correct", "Feedback", JOptionPane.INFORMATION_MESSAGE);
-               // closeMessage();
+                
             } else {
                 setBackground(Color.RED);
-                Timer timer = new Timer(1000, new ActionListener() {
+                Timer timer = new Timer(2000, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                     	MessageDialog obj = new MessageDialog(fram);
@@ -443,15 +443,16 @@ public class QuestionPopUp extends JDialog {
                             obj.showMessage("WRONG", "Take three steps back");
                             }
                         closeMessage();
-
                     }
                 });
                 timer.setRepeats(false);
                 timer.start();
-                dispose();
+               
+               // dispose();
                // JOptionPane.showMessageDialog(null, "Your answer is wrong", "Feedback", JOptionPane.ERROR_MESSAGE);
-             //   closeMessage();
+             // closeMessage();
             }
+            //closeMessage();
         }
 
         private void disableAllButtons() {

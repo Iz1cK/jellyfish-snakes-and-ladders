@@ -287,11 +287,12 @@ public class AddQuestionView extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==save) {
+			
 			int q=0;
 			try {
 				/*check if the admin full all the text field and if not nullPointerException will throw*/
-				if(comboBox.getSelectedItem().equals("...")||questionTextField.getText().isEmpty()|| obtion1TeksField.getText().isEmpty() || obtion2TextField.getText().isEmpty() || obtion3textField.getText().isEmpty() || obtion3textField.getText().isEmpty()
-						|| (!easy.isSelected() && !medium.isSelected() && !hard.isSelected())) {
+				if(comboBox.getSelectedItem().equals("...")|| questionTextField.getText().trim().isEmpty()|| obtion1TeksField.getText().trim().isEmpty() || obtion2TextField.getText().trim().isEmpty() || obtion3textField.getText().trim().isEmpty() || obtion4textField.getText().trim().isEmpty()
+						 ||(!easy.isSelected() && !medium.isSelected() && !hard.isSelected())) {
 					throw new NullPointerException("return value is null");
 				}		
 				} catch( NullPointerException e2) {
@@ -310,10 +311,11 @@ public class AddQuestionView extends JFrame implements ActionListener{
 	                return;
 				}
 				
-				 String answer1 = obtion1TeksField.getText().trim();
-		         String answer2 = obtion2TextField.getText().trim();
-		         String answer3 = obtion3textField.getText().trim();
-		         String answer4 = obtion4textField.getText().trim();
+				String answer1 = obtion1TeksField.getText().trim();
+		        String answer2 = obtion2TextField.getText().trim();
+		        String answer3 = obtion3textField.getText().trim();
+		        String answer4 = obtion4textField.getText().trim();
+				 
 		         if (answer1.equals(answer2) || answer1.equals(answer3) || answer1.equals(answer4) ||
 		                    answer2.equals(answer3) || answer2.equals(answer4) || answer3.equals(answer4)) {
 		                JOptionPane.showMessageDialog(null, "All answers should be different.", "Error", JOptionPane.ERROR_MESSAGE);
