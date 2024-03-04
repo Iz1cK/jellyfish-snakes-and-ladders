@@ -13,6 +13,11 @@ import Model.Questions;
 import Model.Sysdata;
 
 public class Test extends javax.swing.JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	questionPopUpController controller= questionPopUpController.getInstance();
 	
 	Sysdata sysdata= Sysdata.getInstance();
@@ -45,7 +50,7 @@ public class Test extends javax.swing.JFrame {
     }
 
     private void initComponents() {
-        jButton1 = new javax.swing.JButton();
+        new javax.swing.JButton();
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
@@ -73,21 +78,6 @@ public class Test extends javax.swing.JFrame {
 	
 		
 	}
-    private String splitTextIntoLines(String message) {
-        String[] words = message.split("\\s+");
-        StringBuilder formattedMessage = new StringBuilder();
-        int wordCount = 0;
-        for (String word : words) {
-            if (wordCount == 3) {
-                formattedMessage.append("\n"); // Add newline after every 5 words
-                wordCount = 0;
-            }
-            formattedMessage.append(word).append(" ");
-            wordCount++;
-        }
-        return formattedMessage.toString().trim(); // Trim to remove trailing whitespace
-    }
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
        // MessageDialog obj = new MessageDialog(this);
 //        controller.questionRank(3, null);
@@ -115,6 +105,4 @@ public class Test extends javax.swing.JFrame {
             }
         });
     }
-
-    private javax.swing.JButton jButton1;
 }

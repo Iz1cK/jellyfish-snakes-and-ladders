@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import Controller.SurpriseSquareController;
 
@@ -84,7 +83,6 @@ public class Board {
 		players.add(new Player(0,"george",PLAYERCOLORS.BLUE));
 		Board board = new Board(DIFFICULTY.MEDIUM, players);
         board.generateBoard();
-        Square[][] squares = board.getSquares();
         board.initiateQuestionSquares();
 
         board.generateSnakesAndLadder();

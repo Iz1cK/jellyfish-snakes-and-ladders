@@ -11,8 +11,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Area;
@@ -35,17 +33,18 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import org.jdesktop.animation.timing.Animator;
-import javax.swing.JOptionPane;
-
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
-import Controller.AddQuestionController;
 import Controller.questionPopUpController;
 import Utils.QuestionCallback;
 
 public class QuestionPopUp extends JDialog {
 
-    private final JFrame fram;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final JFrame fram;
     private Animator animator;
     private Glass glass;
     private boolean show;
@@ -153,7 +152,6 @@ public class QuestionPopUp extends JDialog {
         return messageType;
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -302,7 +300,12 @@ public class QuestionPopUp extends JDialog {
     
     class Background extends JPanel {
 
-        public Background() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public Background() {
             init();
         }
 
@@ -338,7 +341,12 @@ public class QuestionPopUp extends JDialog {
     
     class Glass extends JComponent {
 
-        public float getAlpha() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public float getAlpha() {
             return alpha;
         }
 
@@ -366,7 +374,11 @@ public class QuestionPopUp extends JDialog {
     }
     
     public class ButtonCustom extends JButton {
-        private boolean answerChosen = false;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private boolean answerChosen = false;
 
         public ButtonCustom() {
             init();

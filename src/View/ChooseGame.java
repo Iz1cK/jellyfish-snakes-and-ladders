@@ -22,8 +22,6 @@ import Model.Player;
 
 import javax.swing.SwingConstants;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
@@ -42,7 +40,6 @@ public class ChooseGame extends JFrame {
 	int numCurrentPlayer=1;
 	int counter=1;
 	int y=0;
-	private int maxNumberOfPlayers=2;
 	int players=0;
 	int playersCounter=0;
 	int colorsCounter=0;
@@ -256,7 +253,6 @@ int count=0;
 	        		isHard=false;
 	                selectedLevel.setBounds(55, 120, 101, 87);
 	        		selectedLevel.setVisible(true);
-	        		maxNumberOfPlayers=3;
 	        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
 
 	           }
@@ -275,7 +271,6 @@ int count=0;
 	        		isHard=false;
 	                selectedLevel.setBounds(135, 120, 101, 87);
 	        		selectedLevel.setVisible(true);
-	        		maxNumberOfPlayers=6;
 	        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
 	            	}
 	            }
@@ -293,7 +288,6 @@ int count=0;
 	        		isHard=true;
 	                selectedLevel.setBounds(215, 120, 101, 87);
 	        		selectedLevel.setVisible(true);
-	        		maxNumberOfPlayers=8;
 	        		numbers.setText(Integer.toString(2)); // Update the text field with the new value
 	            }
 	            }
@@ -469,10 +463,7 @@ int count=0;
 		homePage.setBounds(438, 373, 75, 41);
 		contentPane.add(homePage);
 		homePage.setLayout(null);
-		
-		
-		int players = Integer.parseInt(numbers.getText());
-		
+				
 		
 		player1.addMouseListener(new MouseAdapter() {
 		    @Override
@@ -740,7 +731,7 @@ int count=0;
 		    public void mouseClicked(MouseEvent e) {
 		    	
 		    	validName="no";
-		    	String nickname = nicknameField.getText();
+		    	String nickname = nicknameField.getText().trim();
 		    	
 		    	if(difficltyLeve_1.getText().equals("play")) {
 		        	System.out.println("PLAY NOW START GAME");
