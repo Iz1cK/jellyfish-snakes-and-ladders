@@ -2,7 +2,6 @@ package Controller;
 
 import java.util.ArrayList;
 
-import Model.DIFFICULTY;
 import Model.Player;
 
 public class GameCreationController {

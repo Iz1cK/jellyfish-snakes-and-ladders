@@ -1,8 +1,5 @@
 package Model;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 public class Ladder {
 	private String LadderUD;
 	private int length;
@@ -49,11 +46,6 @@ public class Ladder {
 		this.destSquare = destSquare;
 	}
 	
-	private static int getRandom(int from, int to) {
-	    if (from < to)
-	        return from + new Random().nextInt(Math.abs(to - from));
-	    return from - new Random().nextInt(Math.abs(to - from));
-	}
 	@Override
 	public String toString() {
 		return "Ladder [LadderUD=" + LadderUD + ", length=" + length + ", startSquare=" + startSquare + ", destSquare="

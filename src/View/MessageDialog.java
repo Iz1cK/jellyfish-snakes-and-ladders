@@ -39,7 +39,11 @@ import Controller.questionPopUpController;
 
 public class MessageDialog extends JDialog {
 
-    private final JFrame fram;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final JFrame fram;
     private Animator animator;
     private Glass glass;
     private boolean show;
@@ -123,7 +127,6 @@ public class MessageDialog extends JDialog {
         return messageType;
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
     	
@@ -230,7 +233,12 @@ public class MessageDialog extends JDialog {
     
     class Background extends JPanel {
 
-        public Background() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public Background() {
             init();
         }
 
@@ -266,7 +274,12 @@ public class MessageDialog extends JDialog {
     
     class Glass extends JComponent {
 
-        public float getAlpha() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public float getAlpha() {
             return alpha;
         }
 
@@ -293,7 +306,11 @@ public class MessageDialog extends JDialog {
     
     class ButtonCustom extends JButton {
 
-        private Color background = new Color(69, 191, 71);
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private Color background = new Color(69, 191, 71);
         private Color colorHover = new Color(76, 206, 78);
         private Color colorPressed = new Color(63, 175, 65);
         private boolean mouseOver = false;

@@ -7,7 +7,6 @@ import java.util.Random;
 
 import Model.Board;
 import Model.COLORS;
-import Model.DIFFICULTY;
 import Model.Game;
 import Model.Ladder;
 import Model.Player;
@@ -21,7 +20,6 @@ import Utils.QuestionCallback;
 import View.FinalPage;
 import View.GameBoardView;
 import View.QuestionPopUp;
-import View.SurpriseSquarePopupView;
 
 public class GameBoardController {
 	
@@ -32,7 +30,6 @@ public class GameBoardController {
 	static Sysdata sysdata = Sysdata.getInstance();
 	static questionPopUpController QPUC= questionPopUpController.getInstance();
 	private GameBoardView gameBoardView;
-	private boolean squareCheckedThisTurn = false;
 	private HashMap<Player, Integer> lastCheckedSquarePosition = new HashMap<>();
 	
 	public void setGameBoardView(GameBoardView gameBoardView) {
@@ -63,7 +60,6 @@ public class GameBoardController {
 	}
 	
 	public void playTurn() {
-		squareCheckedThisTurn = false;
 		ArrayList<Player> players = this.gameBoard.getPlayers();
 		Player currentPlayer = this.gameBoard.getCurrentPlayerTurn();
 		Game game = new Game(this.gameBoard.getDifficultyBoard(), this.gameBoard ,currentPlayer, this.gameBoard.getPlayers(), GameBoardView.timerLabel.getText());

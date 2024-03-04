@@ -139,7 +139,6 @@ public class QuestionsView extends JFrame {
             @Override
             public void onDelete(int row) {
             	System.out.println("this is my row"+ row);
-            	boolean n= QuestionViewController.onDelete(row);
             	dispose();
             }
 
@@ -234,7 +233,6 @@ public class QuestionsView extends JFrame {
         newQuestionButton1.setBorderPainted(false);
         newQuestionButton1.setPreferredSize(new Dimension(0,0));
         newQuestionButton1.addActionListener(new ActionListener() {
-        	@SuppressWarnings("deprecation")
         	@Override
         	public void actionPerformed(ActionEvent e) {
         		//TODO add functionalitiy when controler for view is finished
@@ -253,7 +251,6 @@ public class QuestionsView extends JFrame {
         newQuestionButton2.setBorderPainted(false);
         newQuestionButton2.setPreferredSize(new Dimension(0,0));
         newQuestionButton2.addActionListener(new ActionListener() {
-            @SuppressWarnings("deprecation")
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO add functionality when controler for view is finished
@@ -272,7 +269,6 @@ public class QuestionsView extends JFrame {
         newQuestionButton3.setBorderPainted(false);
         newQuestionButton3.setPreferredSize(new Dimension(0,0));
         newQuestionButton3.addActionListener(new ActionListener() {
-            @SuppressWarnings("deprecation")
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO add functionality when controler for view is finished

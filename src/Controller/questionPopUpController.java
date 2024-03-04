@@ -6,8 +6,6 @@ import java.util.Random;
 
 import Model.Questions;
 import Model.Sysdata;
-import Utils.QuestionCallback;
-import View.QuestionPopUp;
 import View.Test;
 
 public class questionPopUpController {
