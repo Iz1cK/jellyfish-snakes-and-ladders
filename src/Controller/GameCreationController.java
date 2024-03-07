@@ -3,6 +3,8 @@ package Controller;
 import java.util.ArrayList;
 
 import Model.Player;
+import Model.Questions;
+import Model.Sysdata;
 
 public class GameCreationController {
 	
@@ -28,5 +30,21 @@ public class GameCreationController {
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
 		//System.out.println(players);
+	}
+
+	public boolean minimumQuestionsRequirment() {
+		boolean easy=false,medium=false,hard=false;
+		for(Questions q : Sysdata.getInstance().questionsList)
+		{
+			if(q.getDifficulty()==1)
+				easy=true;
+			if(q.getDifficulty()==2)
+				easy=true;
+			if(q.getDifficulty()==3)
+				easy=true;
+		}
+		if(easy&&medium&&hard)
+			return true;
+		return false;
 	}
 }

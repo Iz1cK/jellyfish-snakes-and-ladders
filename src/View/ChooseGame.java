@@ -19,6 +19,8 @@ import Model.Board;
 import Model.DIFFICULTY;
 import Model.PLAYERCOLORS;
 import Model.Player;
+import Model.Questions;
+import Model.Sysdata;
 
 import javax.swing.SwingConstants;
 
@@ -732,8 +734,11 @@ int count=0;
 		    	
 		    	validName="no";
 		    	String nickname = nicknameField.getText().trim();
-		    	
-		    	if(difficltyLeve_1.getText().equals("play")) {
+		    	if(!gameCreationController.minimumQuestionsRequirment())
+		    	{
+		    		JOptionPane.showMessageDialog(contentPane, "please make sure there is at least 1 question for each difficulty");
+		    	}
+		    	else if(difficltyLeve_1.getText().equals("play")) {
 		        	System.out.println("PLAY NOW START GAME");
 		        	
 		        	GameBoardController gbc = GameBoardController.getInstance();
@@ -877,7 +882,9 @@ int count=0;
 				        }
 		    		}
 		    	}
-		    }	    
+		    }
+
+			   
 		});
 		
     }

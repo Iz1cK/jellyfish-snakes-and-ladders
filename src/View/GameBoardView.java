@@ -50,6 +50,7 @@ public class GameBoardView extends JFrame {
     private JPanel overlayPanel;
     private JPanel playersPanel;
     private JPanel playerMarkerPanel;
+    private JPanel settingsPannel;
     public static Timer timer;
     private long startTime;
     private ImageIcon originalIcon;
@@ -277,6 +278,46 @@ public class GameBoardView extends JFrame {
         playerMarkerPanel.setOpaque(false);
         playerMarkerPanel.setLayout(null);
         
+        settingsPannel= new JPanel();
+        settingsPannel.setBounds(boardPanel.getBounds());
+        settingsPannel.setOpaque(false);
+        settingsPannel.setLayout(null);
+        
+        JLabel pause= new JLabel();
+        pause.setIcon(new ImageIcon(GameBoardView.class.getResource("/img/pause.png")));
+        pause.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}});
+        
+        
+        
+        JLabel home= new JLabel();
+        home.setIcon(new ImageIcon(GameBoardView.class.getResource("/img/goHome.png")));
+        home.addMouseListener(new MouseAdapter() {
+        	@Override 
+        	public void mouseClicked(MouseEvent e) {
+				int choice= JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", 
+                        "Confirmation", JOptionPane.YES_NO_OPTION); 
+				if (choice == JOptionPane.YES_OPTION) { 
+		           
+		        } else if (choice == JOptionPane.NO_OPTION) { 
+
+		        }
+			}
+        	
+		});
+        
+        JLabel resume= new JLabel();
+        resume.setIcon(new ImageIcon(GameBoardView.class.getResource("/img/play.png")));
+        resume.addMouseListener(new MouseAdapter() {
+        	@Override 
+        	public void mouseClicked(MouseEvent e) {
+			
+			}
+        	
+		});
 
         contentPane.add(overlayPanel);
         contentPane.add(playerMarkerPanel);
