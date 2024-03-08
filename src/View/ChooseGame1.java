@@ -192,8 +192,19 @@ int count=0;
         JLabel players_1 = new JLabel();
 		players_1.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));
 
-		players_1.setBounds(37, 47, 280, 151);
-		contentPane.add(players_1);	
+	//	players_1.setBounds(172, 83, 524, 267);
+	//	contentPane.add(players_1);
+		
+		//difficulyLabel.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));		
+		players_1.setBounds(172, 73, 524, 267);
+		players_1.setLayout(null);
+				
+				ImageIcon ImageIcon1 = new ImageIcon(ChooseGame1.class.getResource("/img/woodenPanel.png"));
+				ImageIcon test1= resized(ImageIcon1.getImage(), 530, 250);
+				players_1.setIcon(test1);
+				// Set size to match content pane
+				//difficulyLabel.setBounds(1028, 265, 232, 72);
+				contentPane.add(players_1);
 			
 		/* number of players *///////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -384,11 +395,11 @@ int count=0;
 		player8.setLayout(null);
 		
 		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setBounds(400, 281, 212, 41);
+		layeredPane.setBounds(800, 450, 300, 41);
 		contentPane.add(layeredPane);
 
 		JTextField nicknameField = new JTextField("insert your nickname");
-        nicknameField.setBounds(0, 0, 212, 41);
+        nicknameField.setBounds(0, 0, 300, 41);
         layeredPane.add(nicknameField, JLayeredPane.PALETTE_LAYER);
 
         JLabel iconLabel = new JLabel(new ImageIcon(ChooseGame1.class.getResource("/img/id.png")));
@@ -417,7 +428,7 @@ int count=0;
 		currentPlayer.setForeground(Color.WHITE); // Set the foreground color to white
 		currentPlayer.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
 		currentPlayer.setHorizontalAlignment(SwingConstants.CENTER);
-		currentPlayer.setBounds(285, 230, 69, 28);
+		currentPlayer.setBounds(866, 399, 69, 28);
 		contentPane.add(currentPlayer); 	
 
 		JLabel next_1 = new JLabel();
