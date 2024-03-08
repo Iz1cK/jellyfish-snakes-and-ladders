@@ -3,6 +3,7 @@ package View;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -43,89 +44,230 @@ public class QuestionsView extends JFrame {
 	private JTable table;
 	private static final long serialVersionUID = -2878161185923702132L;
 
+	public ImageIcon resized(Image image, int weight, int height) {
+		 Image backImage = image;
+	        Image resized = backImage.getScaledInstance(weight, height, Image.SCALE_SMOOTH);
+	        ImageIcon resizeds = new ImageIcon(resized);
+		
+		return resizeds;
+		
+	}
+	
     public QuestionsView() {
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(400, 100, 822, 532);
+    	setBounds(0, 0, 1350, 760);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton backButton = new JButton();
-		backButton.setBounds(0,0,53,94);
-		backButton.setOpaque(false);
-		backButton.setContentAreaFilled(false);
-		backButton.setBorderPainted(false);
-		backButton.setPreferredSize(new Dimension(0,0));
-		backButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				HomeView homeview = new HomeView();
-				homeview.setVisible(true);
-				dispose();
-				
-			}
-		});
-		JLabel backIcon = new JLabel("");
-		backIcon.setBounds(0, -25, 53, 100);
-		backIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/backQuestionView1.png")));
-		 //contentPane.add(backIcon);	
-		 
-		JPanel backPanel = new JPanel();
-		backPanel.setBounds(47, 44, 53, 53);
-		backPanel.setOpaque(false);
-		backPanel.setLayout(null);
-		backPanel.add(backIcon);
-		backPanel.add(backButton);	
-		contentPane.add(backPanel);
+		 //easy filter button
+        JLabel easyLabel = new JLabel("EASY");
+        easyLabel.setForeground(Color.WHITE);
+        easyLabel.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 28));
+        easyLabel.setBounds(1097, 268, 125, 51);
+        contentPane.add(easyLabel);
+        
+		JLabel easyJLabel = new JLabel("");
+		ImageIcon ImageIcon1 = new ImageIcon(QuestionsView.class.getResource("/img/greenWood.png"));
+		ImageIcon test1= resized(ImageIcon1.getImage(), 232, 150);
+		easyJLabel.setIcon(test1);
+		// Set size to match content pane
+		easyJLabel.setBounds(1028, 265, 232, 72);
+		contentPane.add(easyJLabel);
 		
-		JButton newQuestionButton = new JButton();
-		newQuestionButton.setBounds(0,0,85,63);
-		newQuestionButton.setOpaque(false);
-		newQuestionButton.setContentAreaFilled(false);
-		newQuestionButton.setBorderPainted(false);
-		newQuestionButton.setPreferredSize(new Dimension(0,0));
-		newQuestionButton.addActionListener(new ActionListener() {
-			
-			@SuppressWarnings("deprecation")
+		easyJLabel.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				//TODO add functionalitiy when controler for view is finished
-				AddQuestionView addQ= new AddQuestionView();
-				addQ.show();
-				dispose();
-			}
-		});
-		//contentPane.add(newQuestionButton);
-
-		JLabel newQuestionIcon = new JLabel("");
-		newQuestionIcon.setBounds(0, 0, 85, 63);
-		newQuestionIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/addQuestion.png")));
-		
-		JPanel newQuestionPanel = new JPanel();
-		newQuestionPanel.setBounds(730, 396, 85, 63);
-		newQuestionPanel.setOpaque(false);
-		newQuestionPanel.setLayout(null);
-		newQuestionPanel.add(newQuestionIcon);
-		newQuestionPanel.add(newQuestionButton);
-		contentPane.add(newQuestionPanel);
-	
-		searchField = new JTextField();
-        searchField.setBounds(200, 135, 200, 25);
-        contentPane.add(searchField);
-
-        searchButton = new JButton("Search");
-        searchButton.setBounds(420, 135, 100, 25);
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String searchText = searchField.getText().toLowerCase().trim();
+			public void mouseEntered(MouseEvent e) {
+				ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/greenWood2.png"));
+				ImageIcon test= resized(ImageIcon.getImage(), 232, 150);
+				easyJLabel.setIcon(test);
+				}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/greenWood.png"));
+			    ImageIcon test= resized(ImageIcon.getImage(), 232, 150);
+			    easyJLabel.setIcon(test);
+			    }
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String searchText = "easy".toLowerCase().trim();
                 filterTableData(searchText);
-            }			
-        });
-        contentPane.add(searchButton);
+				}
+			});
+		
+		//medium filter button
+		JLabel mediumLabel = new JLabel("MEDIUM");
+        mediumLabel.setForeground(Color.WHITE);
+        mediumLabel.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 30));
+        mediumLabel.setBounds(1058, 348, 257, 51);
+        contentPane.add(mediumLabel);
+        
+		JLabel mediumJLabel = new JLabel("");
+		ImageIcon ImageIcon4 = new ImageIcon(QuestionsView.class.getResource("/img/yellowWood.png"));
+	    ImageIcon test4= resized(ImageIcon4.getImage(), 330, 150);
+	    mediumJLabel.setIcon(test4);
+	    // Set size to match content pane
+	    mediumJLabel.setBounds(966, 335, 293, 72);
+	    contentPane.add(mediumJLabel);
+	    mediumJLabel.addMouseListener(new MouseAdapter() {
+	    	@Override
+	    	public void mouseEntered(MouseEvent e) {
+	    		ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/yellowWood2.png"));
+	    		ImageIcon test= resized(ImageIcon.getImage(), 330, 150);
+	    		mediumJLabel.setIcon(test);
+	    		}
+	    	@Override
+	    	public void mouseExited(MouseEvent e) {
+	    		ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/yellowWood.png"));
+	    		ImageIcon test= resized(ImageIcon.getImage(), 330, 150);
+	    		mediumJLabel.setIcon(test);
+				}
+	    	@Override
+	    	public void mouseClicked(MouseEvent arg0) {
+	    		String searchText = "medium".toLowerCase().trim();
+                filterTableData(searchText);
+				}
+			});
+	        
+	       //hard filter button
+	        JLabel hardLabel = new JLabel("HARD");
+	        hardLabel.setForeground(Color.WHITE);
+	        hardLabel.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 30));
+	        hardLabel.setBounds(1078, 417, 125, 51);
+	        contentPane.add(hardLabel);
+	        
+			JLabel hardJLabel = new JLabel("");
+			ImageIcon ImageIcon3 = new ImageIcon(QuestionsView.class.getResource("/img/orangeWood.png"));
+			ImageIcon test3= resized(ImageIcon3.getImage(), 250, 150);
+			hardJLabel.setIcon(test3);
+			// Set size to match content pane
+			hardJLabel.setBounds(1003, 404, 257, 88);
+			contentPane.add(hardJLabel);
+			hardJLabel.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/orangeWood2.png"));
+				    ImageIcon test= resized(ImageIcon.getImage(), 250, 150);
+				    hardJLabel.setIcon(test);
+					}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/orangeWood.png"));
+				    ImageIcon test= resized(ImageIcon.getImage(), 250, 150);
+				    hardJLabel.setIcon(test);
+					}
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					String searchText = "hard".toLowerCase().trim();
+	                filterTableData(searchText);
+					}
+				});
+			
+			//add question button
+			JLabel addQuestion = new JLabel("");
+			ImageIcon ImageIcon5 = new ImageIcon(QuestionsView.class.getResource("/img/addQ1.png"));
+			ImageIcon test5= resized(ImageIcon5.getImage(), 100, 100);
+			addQuestion.setIcon(test5);
+			// Set size to match content pane
+			addQuestion.setBounds(1078, 545, 142, 126);
+			contentPane.add(addQuestion);
+			addQuestion.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/addQ2.png"));
+					ImageIcon test= resized(ImageIcon.getImage(), 100, 100);
+					addQuestion.setIcon(test);
+					}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/addQ1.png"));
+					ImageIcon test= resized(ImageIcon.getImage(), 100, 100);
+					addQuestion.setIcon(test);
+					}
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					Login addQ= new Login();
+					//addQ.setUndecorated(true);
+					addQ.setVisible(true);
+					dispose();
+					}
+				});
+			
+			//home button
+			JLabel home = new JLabel("");
+			ImageIcon ImageIcon6 = new ImageIcon(QuestionsView.class.getResource("/img/home1.png"));
+			ImageIcon test6= resized(ImageIcon6.getImage(), 80, 80);
+			home.setIcon(test6);
+			// Set size to match content pane
+			home.setBounds(41, 24, 75, 72);
+			contentPane.add(home);
+			home.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/home2.png"));
+					ImageIcon test= resized(ImageIcon.getImage(), 80, 80);
+					home.setIcon(test);
+					}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/home1.png"));
+					ImageIcon test= resized(ImageIcon.getImage(), 80, 80);
+					home.setIcon(test);
+					}
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					HomeView homeview = new HomeView();
+					homeview.setVisible(true);
+					dispose();
+					}
+				});
+			
+			 //search filter 
+			searchField = new JTextField();
+			searchField.setFont(new Font("Tahoma", Font.PLAIN, 23));
+	        searchField.setBounds(406, 167 , 293, 43);
+	        searchField.setOpaque(false); 
+	        searchField.setForeground(Color.WHITE);
+	        contentPane.add(searchField);
+	        
+			JLabel searchJLabel = new JLabel("");
+			ImageIcon searchImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/seachPanel.png"));
+			ImageIcon searchtest= resized(searchImageIcon.getImage(), 400, 150);
+			searchJLabel.setIcon(searchtest);
+			// Set size to match content pane
+			searchJLabel.setBounds(367, 140, 450, 88);
+			contentPane.add(searchJLabel);
+			
+			//search button
+			JLabel search = new JLabel("");
+			ImageIcon searchImageIcon1 = new ImageIcon(QuestionsView.class.getResource("/img/search.png"));
+			ImageIcon testS= resized(searchImageIcon1.getImage(), 80, 80);
+			search.setIcon(testS);
+			// Set size to match content pane
+			search.setBounds(304, 148, 75, 72);
+			contentPane.add(search);
+			search.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/search1.png"));
+					ImageIcon test= resized(ImageIcon.getImage(), 80, 80);
+					search.setIcon(test);
+					}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/search.png"));
+					ImageIcon test= resized(ImageIcon.getImage(), 80, 80);
+					search.setIcon(test);
+					}
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					String searchText = searchField.getText().toLowerCase().trim();
+	                filterTableData(searchText);
+					}
+				});
+		
+	
         
         initComponents();
         
@@ -165,17 +307,17 @@ public class QuestionsView extends JFrame {
         
         /* setting background */
             JLabel backgrounde = new JLabel("");
-	        ImageIcon backgroundImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/questionTableBackground.png"));
+	        ImageIcon backgroundImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/QuestionTableView.png"));
 
 	        // Resize the background image to fit the frame
 	        Image backgroundImage = backgroundImageIcon.getImage();
-	        Image resizedBackgroundImage = backgroundImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
+	        Image resizedBackgroundImage = backgroundImage.getScaledInstance(getWidth(), getHeight()-40, Image.SCALE_SMOOTH);
 	        ImageIcon resizedBackgroundIcon = new ImageIcon(resizedBackgroundImage);
 
 	        backgrounde.setIcon(resizedBackgroundIcon);
 
 	        // Set size to match content pane
-	        backgrounde.setBounds(0, 0, getWidth(), getHeight());
+	        backgrounde.setBounds(0, 0, getWidth(), getHeight()-40);
 
 	        contentPane.add(backgrounde);	
 	        
@@ -195,6 +337,7 @@ public class QuestionsView extends JFrame {
     private void initComponents() {
     	jScrollPane1 = new JScrollPane();
         table = new JTable();
+        table.setFont(new Font("Tahoma", Font.PLAIN, 17));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Object[][] newData= QuestionViewController.getTableData();
         
@@ -219,95 +362,46 @@ public class QuestionsView extends JFrame {
         //columnModel.getColumn(5).setPreferredWidth(60);
         //columnModel.getColumn(6).setPreferredWidth(55);
        // columnModel.getColumn(7).setPreferredWidth(110);
-       
+        table.setOpaque(false);
+      
+        table.setBackground(new Color(0, 0, 0, 0));
         jScrollPane1.setViewportView(table);
         jScrollPane1.setBounds(29, 170, 780, 440);
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
         contentPane.add(jScrollPane1);
         
-        JButton newQuestionButton1 = new JButton("EASY");
-        newQuestionButton1.setLocation(726, 200);
-        newQuestionButton1.setForeground(Color.WHITE);
-        newQuestionButton1.setIcon(new ImageIcon(QuestionsView.class.getResource("/img/easyRank.png")));
-        newQuestionButton1.setOpaque(false);
-        newQuestionButton1.setContentAreaFilled(false);
-        newQuestionButton1.setBorderPainted(false);
-        newQuestionButton1.setPreferredSize(new Dimension(0,0));
-        newQuestionButton1.addActionListener(new ActionListener() {
-        	@Override
-        	public void actionPerformed(ActionEvent e) {
-        		//TODO add functionalitiy when controler for view is finished
-        		String searchText = "easy".toLowerCase().trim();
-                filterTableData(searchText);
-        		}
-        	});
-
-        JButton newQuestionButton2 = new JButton("MEDIUM");
-        newQuestionButton2.setSize(110, 36);
-        newQuestionButton2.setLocation(726, 250);
-        newQuestionButton2.setForeground(Color.WHITE);
-        newQuestionButton2.setIcon(new ImageIcon(QuestionsView.class.getResource("/img/medRank.png")));
-        newQuestionButton2.setOpaque(false);
-        newQuestionButton2.setContentAreaFilled(false);
-        newQuestionButton2.setBorderPainted(false);
-        newQuestionButton2.setPreferredSize(new Dimension(0,0));
-        newQuestionButton2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO add functionality when controler for view is finished
-                // Add your functionality here for medium difficulty
-            	String searchText = "medium".toLowerCase().trim();
-                filterTableData(searchText);
-            }
-        });
-
-        JButton newQuestionButton3 = new JButton("HARD");
-        newQuestionButton3.setLocation(726, 300);
-        newQuestionButton3.setForeground(Color.WHITE);
-        newQuestionButton3.setIcon(new ImageIcon(QuestionsView.class.getResource("/img/hardRank.png")));
-        newQuestionButton3.setOpaque(false);
-        newQuestionButton3.setContentAreaFilled(false);
-        newQuestionButton3.setBorderPainted(false);
-        newQuestionButton3.setPreferredSize(new Dimension(0,0));
-        newQuestionButton3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO add functionality when controler for view is finished
-                // Add your functionality here for hard difficulty
-            	String searchText = "hard".toLowerCase().trim();
-                filterTableData(searchText);
-            }
-        });
+        JLabel historyLabel_3 = new JLabel("QUESTIONS");
+        historyLabel_3.setForeground(Color.WHITE);
+        historyLabel_3.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 45));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
-        			.addContainerGap()
-        			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 688, GroupLayout.PREFERRED_SIZE)
-        			.addPreferredGap(ComponentPlacement.UNRELATED)
         			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addComponent(newQuestionButton1, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(newQuestionButton3, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(newQuestionButton2, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE))
-        			.addContainerGap(28, Short.MAX_VALUE))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(144)
+        					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 724, GroupLayout.PREFERRED_SIZE))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(316)
+        					.addComponent(historyLabel_3, GroupLayout.PREFERRED_SIZE, 382, GroupLayout.PREFERRED_SIZE)))
+        			.addContainerGap(405, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
-        			.addContainerGap(174, Short.MAX_VALUE)
-        			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 341, GroupLayout.PREFERRED_SIZE)
-        			.addGap(36))
-        		.addGroup(layout.createSequentialGroup()
-        			.addGap(200)
-        			.addComponent(newQuestionButton1, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-        			.addGap(20)
-        			.addComponent(newQuestionButton2, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-        			.addGap(20)
-        			.addComponent(newQuestionButton3, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(203, Short.MAX_VALUE))
+        			.addGap(41)
+        			.addComponent(historyLabel_3, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+        			.addGap(149)
+        			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 415, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(81, Short.MAX_VALUE))
         );
         getContentPane().setLayout(layout);
         pack();
+        setMinimumSize(new Dimension(1350, 760));
+
+        // Center the frame on the screen
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -470,6 +564,7 @@ public class QuestionsView extends JFrame {
         public Component getTableCellRendererComponent(JTable jtable, Object o, boolean isSeleted, boolean bln1, int row, int column) {
             Component com = super.getTableCellRendererComponent(jtable, o, isSeleted, bln1, row, column);
             PanelAction action = new PanelAction(null, row);
+            com.setFont(com.getFont().deriveFont(Font.BOLD, 14));
             if (isSeleted == false && row % 2 == 0) {
                 action.setBackground(Color.WHITE);
             } else {
@@ -486,40 +581,4 @@ public class QuestionsView extends JFrame {
         void onView(int row);
         
     }
-    
-    /**
-     * @param args the command line arguments
-     */
-  /*  public static void main(String args[]) {
-    	
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-     /*   try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QuestionsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QuestionsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QuestionsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QuestionsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-      /*  java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new QuestionsView().setVisible(true);
-            }
-        });
-    }*/
 }

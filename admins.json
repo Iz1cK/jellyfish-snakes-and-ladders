@@ -2,6 +2,9 @@
   "admins" : [ {
     "adminName" : "aseel",
     "password" : "1234"
+  },{
+    "adminName" : "1",
+    "password" : "1"
   }, {
     "adminName" : "lna",
     "password" : "5678"

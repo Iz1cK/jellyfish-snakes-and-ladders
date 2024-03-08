@@ -278,7 +278,7 @@ public class AddQuestionView extends JFrame implements ActionListener{
 		contentPane.add(backPanel);
 		
 		JLabel backgrounde = new JLabel("");
-		backgrounde.setIcon(new ImageIcon(QuestionsView.class.getResource("/img/addQuestionBackground.jpeg")));
+		backgrounde.setIcon(new ImageIcon(QuestionsView.class.getResource("Untitled_Artwork.png")));
 		backgrounde.setBounds(0, -38,848,605);
 		contentPane.add(backgrounde);	
 		
