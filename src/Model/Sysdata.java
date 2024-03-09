@@ -132,6 +132,22 @@ public class Sysdata {
 		}
 		
 		/*********************************************************************************
+		 * Checks if there are enough questions to start a game
+		 */
+		public boolean minimumQuestionsRequirment() {
+			boolean easy=false,medium=false,hard=false;
+			for(Questions q : Sysdata.getInstance().questionsList) {
+				if(q.getDifficulty()==1)
+					easy=true;
+				if(q.getDifficulty()==2)
+					medium=true;
+				if(q.getDifficulty()==3)
+					hard=true;
+			}
+			return easy && medium && hard;
+		}
+		
+		/*********************************************************************************
 		 * Gets a question and adds it to questionsList, and then writes it to questions
 		 * json file
 		 *********************************************************************************/

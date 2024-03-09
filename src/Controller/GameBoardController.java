@@ -60,6 +60,7 @@ public class GameBoardController {
 	}
 	
 	public void playTurn() {
+		GameBoardView.rolling = true;
 		ArrayList<Player> players = this.gameBoard.getPlayers();
 		Player currentPlayer = this.gameBoard.getCurrentPlayerTurn();
 		Game game = new Game(this.gameBoard.getDifficultyBoard(), this.gameBoard ,currentPlayer, this.gameBoard.getPlayers(), GameBoardView.timerLabel.getText());
@@ -106,28 +107,42 @@ public class GameBoardController {
 			showQuestion(3,currentPlayer);
 			break;
 	}
-		if(playersPositions.get(currentPlayer) <= 0) {
-			playersPositions.put(currentPlayer, 1);
-		}
-		
-		if(playersPositions.get(currentPlayer) >= boardSize) {
-			gameBoardView.setVisible(false);
-			gameBoardView.dispose();
-			sysdata.addGameHistory(game);
-			FinalPage FP = new FinalPage(game);
-			FP.setVisible(true);
-			System.out.println("PLAYER " + currentPlayer.getPlayername() + " WON!");
-		} 
-		this.checkSquares(currentPlayer, false);
-		int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
-		this.gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
+		gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, ()->{
+			if(playersPositions.get(currentPlayer) <= 0) {
+				playersPositions.put(currentPlayer, 1);
+			}
+			
+			if(playersPositions.get(currentPlayer) >= boardSize) {
+				gameBoardView.setVisible(false);
+				gameBoardView.dispose();
+				sysdata.addGameHistory(game);
+				FinalPage FP = new FinalPage(game);
+				FP.setVisible(true);
+				System.out.println("PLAYER " + currentPlayer.getPlayername() + " WON!");
+			} 
+			
+			if(this.checkSquares(currentPlayer, false)) {
+				gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, ()->{
+					int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
+					this.gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
+					GameBoardView.rolling = false;
+					gameBoardView.updatePlayersList(players, playersPositions, this.gameBoard);
+				});
+			} else {
+				int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
+				this.gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
+				GameBoardView.rolling = false;
+				gameBoardView.updatePlayersList(players, playersPositions, this.gameBoard);
+			}
+		});
+//		gameBoardView.updatePlayerPositionsOnBoard(this.gameBoard.getDifficultyBoard(), players, playersPositions,this.gameBoard.getRows(),this.gameBoard.getColumns());
 	}
 	
-	private void checkSquares(Player currentPlayer, boolean noQuestions) {
+	private boolean checkSquares(Player currentPlayer, boolean noQuestions) {
 		HashMap<Player, Integer> playersPositions = this.gameBoard.getPlayersPositions();
 		int currentPosition = playersPositions.get(currentPlayer);
 		if (lastCheckedSquarePosition.containsKey(currentPlayer) && lastCheckedSquarePosition.get(currentPlayer) == currentPosition) {
-	        return;
+	        return false;
 	    }
 		 
 
@@ -140,13 +155,14 @@ public class GameBoardController {
 				System.out.println("Landed on a question square with difficulty: " + questionDifficulty);
 				showQuestion(questionDifficulty, currentPlayer);
 				lastCheckedSquarePosition.put(currentPlayer, currentPosition);
+				return true;
 			}
 			break;
 		case "SurpriseSquare":
 			System.out.println("Landed on a surprise square!");
 			SurpriseSquareController SSC = new SurpriseSquareController(((SurpriseSquare) landingSquare), this.gameBoard);
 			SSC.movePlayerToDestination(playersPositions, currentPlayer);
-			break;
+			return true;
 		default:
 			ArrayList<Snake> snakes = this.gameBoard.getSnakes();
 			for (Snake snake : snakes) {
@@ -156,6 +172,7 @@ public class GameBoardController {
 					if(playersPositions.get(currentPlayer) == headSquare.getPosition()) {
 						System.out.println("Found RED snake head, falling down to START!");
 						playersPositions.put(currentPlayer, 1);
+						return true;
 					}
 				} else {
 					Square headSquare = snake.getHeadSquare();
@@ -165,6 +182,7 @@ public class GameBoardController {
 					if(playersPositions.get(currentPlayer) == headSquare.getPosition()) {
 						System.out.println("Found snake head, falling down to tail!");
 						playersPositions.put(currentPlayer, tailSquare.getPosition());
+						return true;
 					}
 				}
 			}
@@ -177,10 +195,12 @@ public class GameBoardController {
 				if(playersPositions.get(currentPlayer) == startSquare.getPosition()) {
 					System.out.println("Found start ladder, climbing it up!");
 					playersPositions.put(currentPlayer, destSquare.getPosition());
+					return true;
 				}
 			}
 			break;
 		}
+		return false;
 	}
 	
 	private QuestionCallback generateQuestionCallback(final int difficulty, Player currentPlayer) {

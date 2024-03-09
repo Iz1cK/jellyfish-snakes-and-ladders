@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
 public class HomeView extends JFrame {
 
 	/**
@@ -23,7 +22,6 @@ public class HomeView extends JFrame {
 	 */
 	private static final long serialVersionUID = 3514602183732985694L;
 	private JPanel contentPane;
-
 	/**
 	 * Launch the application.
 	 */
@@ -67,7 +65,6 @@ public class HomeView extends JFrame {
 		
 	}
 	
-	
 	public HomeView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1350, 760);
@@ -77,11 +74,6 @@ public class HomeView extends JFrame {
 		contentPane.setLayout(null);
 		
 		/*this for start a new game in menu*/
-		JLabel playGame = new JLabel("PLAY");
-        playGame.setForeground(Color.WHITE);
-        playGame.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 30));
-        playGame.setBounds(624, 240, 141, 51);
-        contentPane.add(playGame);
 		
         JLabel playgame1 = new JLabel("");
 		contentPane.add(playgame1);
