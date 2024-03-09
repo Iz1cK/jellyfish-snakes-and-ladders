@@ -3,6 +3,7 @@ package View;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 
 public class HomeView extends JFrame {
 
@@ -56,46 +58,60 @@ public class HomeView extends JFrame {
 		panel.setBackground(new java.awt.Color(117, 123, 235));
 	}
 	
+	public ImageIcon resized(Image image, int weight, int height) {
+		 Image backImage = image;
+	        Image resized = backImage.getScaledInstance(weight, height, Image.SCALE_SMOOTH);
+	        ImageIcon resizeds = new ImageIcon(resized);
+		
+		return resizeds;
+		
+	}
+	
+	
 	public HomeView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(400, 100, 650, 670);
+		setBounds(0, 0, 1350, 760);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
 		/*this for start a new game in menu*/
-		JPanel startGamePanel = new JPanel();
-		startGamePanel.setBackground(new Color(117, 123, 235));
-		startGamePanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				setColor(startGamePanel);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				resetColor(startGamePanel);
-			}
-			public void mousePressed(MouseEvent e) {
-			 	ChooseGame chooseGame = new ChooseGame();
-			 	chooseGame.setVisible(true);
-			 	dispose();
-                }
-			
-		});
-		startGamePanel.setBounds(144, 255, 150, 150);
-		contentPane.add(startGamePanel);
-		startGamePanel.setLayout(null);
+		JLabel playGame = new JLabel("PLAY");
+        playGame.setForeground(Color.WHITE);
+        playGame.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 30));
+        playGame.setBounds(624, 240, 141, 51);
+        contentPane.add(playGame);
 		
-		JLabel startGameLabel = new JLabel("Start Game");
-		startGameLabel.setForeground(Color.white);
-		startGameLabel.setFont(new Font("Kristen ITC", Font.BOLD, 18));
-		startGameLabel.setBounds(20, 98, 120, 41);
-		startGamePanel.add(startGameLabel);
+        JLabel playgame1 = new JLabel("");
+		contentPane.add(playgame1);
+		 ImageIcon ImageIcon = new ImageIcon(HomeView.class.getResource("/img/blueWood.png"));
+		 ImageIcon test= resized(ImageIcon.getImage(), 500, 212);
+	     playgame1.setIcon(test);
+	     // Set size to match content pane
+	     playgame1.setBounds(430, 233, 457, 72);
+	     contentPane.add(playgame1);	
+	     playgame1.addMouseListener(new MouseAdapter() {
+	    	 @Override
+	    	 public void mouseEntered(MouseEvent e) {
+	    		 ImageIcon ImageIcon = new ImageIcon(HomeView.class.getResource("/img/blueWood2.png"));
+			     ImageIcon test= resized(ImageIcon.getImage(), 500, 212);
+			     playgame1.setIcon(test);
+					}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					ImageIcon ImageIcon = new ImageIcon(HomeView.class.getResource("/img/blueWood.png"));
+					ImageIcon test= resized(ImageIcon.getImage(), 500, 212);
+					playgame1.setIcon(test);
+					}
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					ChooseGame1 chooseGame = new ChooseGame1();
+				 	chooseGame.setVisible(true);
+				 	dispose();
+				 	}
+				});
 		
-		JLabel startGameIcon = new JLabel("");
-		startGameIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/startGameIcon.png")));
-		startGameIcon.setBounds(46, 32, 59, 63);
-		startGamePanel.add(startGameIcon);
 		
 		
 		/*that's for game history */

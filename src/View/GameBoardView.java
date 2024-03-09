@@ -294,7 +294,7 @@ public class GameBoardView extends JFrame {
         
         
         JLabel home= new JLabel();
-        home.setIcon(new ImageIcon(GameBoardView.class.getResource("/img/goHome.png")));
+        home.setIcon(new ImageIcon(GameBoardView.class.getResource("/img/home.png")));
         home.addMouseListener(new MouseAdapter() {
         	@Override 
         	public void mouseClicked(MouseEvent e) {

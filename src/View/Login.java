@@ -2,11 +2,18 @@ package View;
 
 import java.awt.Color;
 import java.awt.Font;
-
+import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.Border;
 
 import Controller.AddQuestionController;
+import Controller.EditQuestionController;
+import Model.Questions;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -15,44 +22,45 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-/**
- *
- * @author RAVEN
- */
+
 public class Login extends javax.swing.JFrame {
 	
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTextField obtion1TeksField;
-	private String k;
 	private JTextField questionTextField;
 	private JTextField obtion3textField;
 	private JTextField obtion2TextField;
 	private JTextField obtion4textField;
-	private JButton save;
 	@SuppressWarnings("rawtypes")
 	private JComboBox<Comparable> comboBox;
 	private JRadioButton easy;
 	private JRadioButton medium;
 	private JRadioButton hard;
-	private JButton backButton;
-	private AddQuestionController controller = AddQuestionController.getInstance();
-
-
-
-    /**
+	private int questionid;
+	/**
      * Creates new form Login
      */
-    public Login() {
-        initComponents();
+    public Login(Questions question1) {
+    	questionid=question1.getQuestionId();
+        initComponents(question1);
         setBackground(new Color(0, 0, 0, 0));
     }
+    
+    public ImageIcon resized(Image image, int weight, int height) {
+		 Image backImage = image;
+	        Image resized = backImage.getScaledInstance(weight, height, Image.SCALE_SMOOTH);
+	        ImageIcon resizeds = new ImageIcon(resized);
+		
+		return resizeds;
+		
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,7 +69,7 @@ public class Login extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents(Questions question1) {
 
         background = new Background();
         
@@ -76,15 +84,15 @@ public class Login extends javax.swing.JFrame {
         background.add(questionPanel);
 
         JLabel questionLabel = new JLabel("Question:");
-        questionLabel.setIcon(new ImageIcon(AddQuestionView.class.getResource("/img/questionIcon1.png")));
+        questionLabel.setIcon(new ImageIcon(Login.class.getResource("/img/questionIcon1.png")));
         questionLabel.setForeground(Color.WHITE);
         questionLabel.setBounds(10, 15, 162, 25);
         questionPanel.add(questionLabel);
         questionLabel.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
 
-        questionTextField = new JTextField();
-        questionTextField.setText((String) null);
+        questionTextField = new JTextField(question1.getQuestion());       
         questionTextField.setColumns(10);
+        questionTextField.setEditable(false);
         questionTextField.setBounds(126, 14, 494, 28);
         questionPanel.add(questionTextField);
         
@@ -111,9 +119,9 @@ public class Login extends javax.swing.JFrame {
 	    obtion1.setBounds(10, 53, 103, 25);
 	    choicesPanel.add(obtion1);
 	     
-	    obtion1TeksField = new JTextField();
+	    obtion1TeksField = new JTextField(question1.getAnswers().get(0));
+	    obtion1TeksField.setEditable(false);
 	    obtion1TeksField.setColumns(10);
-	    obtion1TeksField.setText(k);
 	    obtion1TeksField.setBounds(106, 52, 197, 28);
 	    choicesPanel.add(obtion1TeksField);
 		
@@ -124,9 +132,9 @@ public class Login extends javax.swing.JFrame {
 		obtion2.setBounds(10, 102, 94, 25);
 		choicesPanel.add(obtion2);
 		
-		obtion2TextField = new JTextField();
-	    obtion2TextField.setText((String) null);
+		obtion2TextField = new JTextField(question1.getAnswers().get(1));
 	    obtion2TextField.setColumns(10);
+	    obtion2TextField.setEditable(false);
 	    obtion2TextField.setBounds(106, 101, 197, 28);
 	    choicesPanel.add(obtion2TextField);
 		
@@ -137,9 +145,9 @@ public class Login extends javax.swing.JFrame {
 		obtion3.setBounds(314, 53, 118, 25);
 		choicesPanel.add(obtion3);
 		
-		obtion3textField = new JTextField();
-	    obtion3textField.setText((String) null);
+		obtion3textField = new JTextField(question1.getAnswers().get(2));
 	    obtion3textField.setColumns(10);
+	    obtion3textField.setEditable(false);
 	    obtion3textField.setBounds(423, 52, 197, 28);
 	    choicesPanel.add(obtion3textField);
 		
@@ -150,9 +158,9 @@ public class Login extends javax.swing.JFrame {
 		obtion4.setBounds(313, 102, 118, 25);
 		choicesPanel.add(obtion4);
 		
-	    obtion4textField = new JTextField();
-	    obtion4textField.setText((String) null);
+	    obtion4textField = new JTextField(question1.getAnswers().get(3));
 	    obtion4textField.setColumns(10);
+	    obtion4textField.setEditable(false);
 	    obtion4textField.setBounds(423, 101, 197, 28);
 	    choicesPanel.add(obtion4textField);
 	    
@@ -173,6 +181,7 @@ public class Login extends javax.swing.JFrame {
 		correctDiffPanel.add(correctAns);
 		
 		comboBox = new JComboBox<Comparable>();
+		comboBox.setEnabled(false);
 		comboBox.setBounds(162, 17, 84, 22);
 		comboBox.addItem("...");
 		comboBox.addItem(1);
@@ -180,6 +189,8 @@ public class Login extends javax.swing.JFrame {
 		comboBox.addItem(3);
 		comboBox.addItem(4);
 		correctDiffPanel.add(comboBox);
+		
+		comboBox.setSelectedItem(question1.getCorrect_ans());
 			
 		JLabel difficulty = new JLabel("Difficulty:");
 		difficulty.setForeground(Color.WHITE);
@@ -188,24 +199,28 @@ public class Login extends javax.swing.JFrame {
 		difficulty.setBounds(286, 15, 122, 25);
 		correctDiffPanel.add(difficulty);
 		
+	
 		ButtonGroup buttonGroup = new ButtonGroup();
 			
 		easy = new JRadioButton("Easy");
 		easy.setForeground(Color.WHITE);
 		easy.setBackground(new Color(0, 0, 0, 140));
 		easy.setBounds(402, 17, 60, 23);
+		easy.setEnabled(false);
 		correctDiffPanel.add(easy);
 			
 		medium = new JRadioButton("Medium");
 		medium.setBackground(new Color(0, 0, 0, 140));
 		medium.setForeground(Color.WHITE);
 		medium.setBounds(402, 47, 77, 23);
+		medium.setEnabled(false);
 		correctDiffPanel.add(medium);
 			
 		hard = new JRadioButton("Hard");
 		hard.setBackground(new Color(0, 0, 0, 140));
 		hard.setForeground(Color.WHITE);
 		hard.setBounds(402, 73, 60, 23);
+		hard.setEnabled(false);
 		correctDiffPanel.add(hard);
 		
 		buttonGroup.add(easy);
@@ -235,15 +250,48 @@ public class Login extends javax.swing.JFrame {
 		hardIcon.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
 		hardIcon.setBounds(468, 71, 30, 25);
 		correctDiffPanel.add(hardIcon);
+		switch (question1.getDifficulty()) {
+	    case 1:
+	        easy.setSelected(true);
+	        break;
+	    case 2:
+	        medium.setSelected(true);
+	        break;
+	    case 3:
+	        hard.setSelected(true);
+	        break;
+	    default:
+	        // Handle the case where the difficulty level is not 1, 2, or 3 (optional)
+	        break;
+		}
 		
-		questionLabel_1 = new JLabel("NEW QUESTION");
+		questionLabel_1 = new JLabel("EDIT QUESTION");
         questionLabel_1.setForeground(Color.WHITE);
         questionLabel_1.setBounds(280, 20, 500, 50);
         questionLabel_1.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 45));
         background.add(questionLabel_1);
+        
+    	JLabel homePage = new JLabel();
+    	//	homePage.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));		
+    		homePage.setBounds(90, 40, 90, 90);
+    		homePage.setLayout(null);
+    		
+    		ImageIcon ImageIconHome = new ImageIcon(ChooseGame1.class.getResource("/img/backIcon.png"));
+    		ImageIcon testHome= resized(ImageIconHome.getImage(), 90, 90);
+    		homePage.setIcon(testHome);
+    		background.add(homePage);
+    		homePage.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    // Open HomeView and close the current view
+                	 QuestionsView testPage = new QuestionsView();
+              	    testPage.setVisible(true);
+              	    dispose();
+                }
+            });
 		
-
-
+    		
+    		
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
@@ -277,41 +325,6 @@ public class Login extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Background background;

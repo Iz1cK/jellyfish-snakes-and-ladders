@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import Model.Sysdata;
 
-
+ 
 public class Start {
 
 	public static void main(String[] args) {

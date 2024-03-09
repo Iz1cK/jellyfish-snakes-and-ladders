@@ -187,8 +187,8 @@ public class QuestionsView extends JFrame {
 					}
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					Login addQ= new Login();
-					//addQ.setUndecorated(true);
+					
+					AddQuestionView addQ= new AddQuestionView();
 					addQ.setVisible(true);
 					dispose();
 					}

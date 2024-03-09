@@ -94,19 +94,21 @@ int count=0;
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		
+		
 	
 		
 		
-		JLabel difficltyLeve = new JLabel("level difficulty");
+		JLabel difficltyLeve = new JLabel("DIFFICULTY");
 		contentPane.add(difficltyLeve);
 		difficltyLeve.setForeground(Color.WHITE); // Set the foreground color to white
-		difficltyLeve.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
+		difficltyLeve.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 25));  // Set the font family, size, and weight
         difficltyLeve.setHorizontalAlignment(SwingConstants.CENTER);
-		difficltyLeve.setBounds(97, 78, 155, 41);
+		difficltyLeve.setBounds(336, 103, 227, 41);
 		
 		JLabel selectedLevel = new JLabel();
 		selectedLevel.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/selected.png")));		
-		selectedLevel.setBounds(37, 119, 101, 87);
+		selectedLevel.setBounds(285, 193, 101, 87);
 		contentPane.add(selectedLevel);
 		selectedLevel.setLayout(null);
 		selectedLevel.setVisible(false);
@@ -114,7 +116,7 @@ int count=0;
 		JLabel selectedPlayer = new JLabel();
 		ImageIcon colorSelected=new ImageIcon(ChooseGame1.class.getResource("/img/selected.png"));
 		selectedPlayer.setIcon(new ImageIcon(colorSelected.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));		
-		selectedPlayer.setBounds(37, 119, 101, 87);
+		selectedPlayer.setBounds(285, 193, 101, 87);
 		contentPane.add(selectedPlayer);
 		selectedPlayer.setLayout(null);
 		selectedPlayer.setVisible(false);
@@ -125,49 +127,59 @@ int count=0;
 		ImageIcon playerISTaken=new ImageIcon(ChooseGame1.class.getResource("/img/taken.png"));
 		playerTaken.setIcon(new ImageIcon(playerISTaken.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
 			
-		playerTaken.setBounds(37, 119, 30, 30);
+		playerTaken.setBounds(295, 226, 30, 30);
 		contentPane.add(playerTaken);
 		playerTaken.setLayout(null);
 		playerTaken.setVisible(false);
 		
 			
-		JLabel easy = new JLabel("easy");
+		JLabel easy = new JLabel("EASY");
 		easy.setForeground(Color.WHITE); // Set the foreground color to white
-		easy.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
-		easy.setBounds(27, 130, 116, 48); // Adjusted bounds to fit the text
+		easy.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 20)); // Set the font family, size, and weight
+		easy.setBounds(270, 208, 116, 48); // Adjusted bounds to fit the text
 		easy.setHorizontalAlignment(SwingConstants.CENTER); // Set text alignment to center
         contentPane.add(easy);
         
 		JLabel easyLevel = new JLabel();
-		easyLevel.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/easy.png")));		
-		easyLevel.setBounds(58, 130, 55, 55);
+	//	easyLevel.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/easy.png")));		
+		easyLevel.setBounds(280, 193, 90, 90);
+		ImageIcon ImageIconEasy = new ImageIcon(ChooseGame1.class.getResource("/img/greenEasy.png"));
+		ImageIcon testEasy= resized(ImageIconEasy.getImage(), 90, 90);
+		easyLevel.setIcon(testEasy);
 		contentPane.add(easyLevel);
 		easyLevel.setLayout(null);
 		
 		
-		JLabel medium = new JLabel("medium");
+		JLabel medium = new JLabel("MEDIUM");
 		medium.setForeground(Color.WHITE); // Set the foreground color to white
-		medium.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
-		medium.setBounds(123, 130, 90, 48); // Adjusted bounds to fit the text
+		medium.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 15)); // Set the font family, size, and weight
+		medium.setBounds(396, 210, 90, 48); // Adjusted bounds to fit the text
 		medium.setHorizontalAlignment(SwingConstants.CENTER); // Set text alignment to center
         contentPane.add(medium);
 		
 		JLabel mediumLevel = new JLabel();
-		mediumLevel.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/medium.png")));		
-		mediumLevel.setBounds(141, 130, 55, 55);
+		//mediumLevel.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/medium.png")));		
+		mediumLevel.setBounds(396, 193, 90, 90);
+		ImageIcon ImageIconMedium = new ImageIcon(ChooseGame1.class.getResource("/img/yellowMedium.png"));
+		ImageIcon testMedium= resized(ImageIconMedium.getImage(), 90, 90);
+		mediumLevel.setIcon(testMedium);
 		contentPane.add(mediumLevel);
 		mediumLevel.setLayout(null);
 		
-		JLabel hard = new JLabel("hard");
+		JLabel hard = new JLabel("HARD");
 		hard.setForeground(Color.WHITE); // Set the foreground color to white
-		hard.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
-		hard.setBounds(195, 130, 90, 48); // Adjusted bounds to fit the text
+		hard.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 20)); // Set the font family, size, and weight
+ // Set the font family, size, and weight
+		hard.setBounds(511, 208, 90, 48); // Adjusted bounds to fit the text
 		hard.setHorizontalAlignment(SwingConstants.CENTER); // Set text alignment to center
         contentPane.add(hard);
 		
 		JLabel hardLevel = new JLabel();
-		hardLevel.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/hard.png")));		
-		hardLevel.setBounds(217, 130, 55, 55);
+		//hardLevel.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/hard.png")));		
+		hardLevel.setBounds(511, 193, 90, 90);
+		ImageIcon ImageIconHard = new ImageIcon(ChooseGame1.class.getResource("/img/redHard.png"));
+		ImageIcon testHard= resized(ImageIconHard.getImage(), 90, 90);
+		hardLevel.setIcon(testHard);
 		contentPane.add(hardLevel);
 		hardLevel.setLayout(null);
 		
@@ -181,16 +193,31 @@ int count=0;
 		
 		
 		JLabel numbers = new JLabel("2");
-		numbers.setForeground(Color.WHITE); // Set the foreground color to white
-		numbers.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
+		numbers.setForeground(Color.BLACK); // Set the foreground color to white
+		numbers.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 40)); // Set the font family, size, and weight
 		numbers.setHorizontalAlignment(SwingConstants.CENTER);
-		numbers.setBounds(953, 189, 61, 87);
+		numbers.setBounds(918, 182, 61, 87);
 		contentPane.add(numbers); 
 		   
         
+		JLabel diffLevel = new JLabel();
+
+		//	players_1.setBounds(172, 83, 524, 267);
+		//	contentPane.add(players_1);
+			
+			//difficulyLabel.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));		
+		 diffLevel .setBounds(295, 58, 300, 150);
+		 diffLevel .setLayout(null);
+					
+			ImageIcon ImageDiff = new ImageIcon(ChooseGame1.class.getResource("/img/woodRed.png"));
+			ImageIcon testDiff= resized(ImageDiff.getImage(), 300, 150);
+			diffLevel .setIcon(testDiff);
+			contentPane.add(diffLevel );
+			
+			
         
         JLabel players_1 = new JLabel();
-		players_1.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));
+		//players_1.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));
 
 	//	players_1.setBounds(172, 83, 524, 267);
 	//	contentPane.add(players_1);
@@ -199,27 +226,30 @@ int count=0;
 		players_1.setBounds(172, 73, 524, 267);
 		players_1.setLayout(null);
 				
-				ImageIcon ImageIcon1 = new ImageIcon(ChooseGame1.class.getResource("/img/woodenPanel.png"));
-				ImageIcon test1= resized(ImageIcon1.getImage(), 530, 250);
-				players_1.setIcon(test1);
-				// Set size to match content pane
-				//difficulyLabel.setBounds(1028, 265, 232, 72);
-				contentPane.add(players_1);
+		ImageIcon ImageIcon1 = new ImageIcon(ChooseGame1.class.getResource("/img/woodenPanel.png"));
+		ImageIcon test1= resized(ImageIcon1.getImage(), 530, 250);
+		players_1.setIcon(test1);
+		contentPane.add(players_1);
+		
+		 
 			
 		/* number of players *///////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		JLabel lblNewLabel_2 = new JLabel("choose number of players");
+		JLabel lblNewLabel_2 = new JLabel("NUMBER of PLAYERS");
 		contentPane.add(lblNewLabel_2);
 		lblNewLabel_2.setForeground(Color.WHITE); // Set the foreground color to white
-		lblNewLabel_2.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
+		lblNewLabel_2.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 18)); // Set the font family, size, and weight
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setBounds(866, 140, 190, 28);
+		lblNewLabel_2.setBounds(829, 105, 300, 28);
 		
  
 		
 		 JLabel plus = new JLabel();
 	        plus.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/plus.png")));
-	        plus.setBounds(1041, 189, 61, 87);
+	        ImageIcon ImageIconPlus = new ImageIcon(ChooseGame1.class.getResource("/img/plusIcon.png"));
+			ImageIcon testPlus= resized(ImageIconPlus.getImage(), 90, 90);
+			plus.setIcon(testPlus);
+	        plus.setBounds(1009, 182, 90, 90);
 	        plus.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
@@ -246,8 +276,11 @@ int count=0;
 	        
 	        
 	        JLabel minus = new JLabel();
-	        minus.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/menus.png")));
-	        minus.setBounds(836, 189, 61, 87);
+	       // minus.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/menus.png")));
+	        ImageIcon ImageIconMinus = new ImageIcon(ChooseGame1.class.getResource("/img/minusIcon.png"));
+			ImageIcon testMinus= resized(ImageIconMinus.getImage(), 90, 90);
+			minus.setIcon(testMinus);
+	        minus.setBounds(801, 178, 90, 90);
 	        minus.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
@@ -312,15 +345,28 @@ int count=0;
 	            }
 	            }
 	        });
-	        
+	       
+	        JLabel numPlayers = new JLabel();
+
+			//	players_1.setBounds(172, 83, 524, 267);
+			//	contentPane.add(players_1);
+				
+				//difficulyLabel.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));		
+			numPlayers .setBounds(819, 58, 300, 150);
+			numPlayers .setLayout(null);
+						
+				ImageIcon ImageNum = new ImageIcon(ChooseGame1.class.getResource("/img/woodGreed.png"));
+				ImageIcon testNum= resized(ImageNum.getImage(), 300, 150);
+				numPlayers .setIcon(testNum);
+				contentPane.add(numPlayers);
 		JLabel difficulyLabel = new JLabel();
 		//difficulyLabel.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));		
 		difficulyLabel.setBounds(671, 73, 524, 267);
 		difficulyLabel.setLayout(null);
 		
-		ImageIcon ImageIcon1 = new ImageIcon(ChooseGame1.class.getResource("/img/woodenPanel.png"));
-		ImageIcon test1= resized(ImageIcon1.getImage(), 530, 250);
-		difficulyLabel.setIcon(test1);
+		ImageIcon ImageIcon2 = new ImageIcon(ChooseGame1.class.getResource("/img/woodenPanel.png"));
+		ImageIcon test2= resized(ImageIcon2.getImage(), 530, 250);
+		difficulyLabel.setIcon(test2);
 		// Set size to match content pane
 		//difficulyLabel.setBounds(1028, 265, 232, 72);
 		contentPane.add(difficulyLabel);
@@ -328,11 +374,17 @@ int count=0;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		/* nickname and color */
+		JLabel namesColor = new JLabel("NAMES & COLORES");
+		contentPane.add(namesColor);
+		namesColor.setForeground(Color.WHITE); // Set the foreground color to white
+		namesColor.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 18)); // Set the font family, size, and weight
+		namesColor.setHorizontalAlignment(SwingConstants.CENTER);
+		namesColor.setBounds(491, 373, 400, 28);
 		
 
 		JLabel selectedColor = new JLabel();
 		selectedColor.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/selected.png")));		
-		selectedColor.setBounds(227, 437, 116, 71);
+		selectedColor.setBounds(227, 430, 116, 71);
 		contentPane.add(selectedColor);
 		selectedColor.setLayout(null);
 		selectedColor.setVisible(false); 
@@ -347,35 +399,35 @@ int count=0;
 		JLabel player2 = new JLabel();
 		ImageIcon img2=new ImageIcon(ChooseGame1.class.getResource("/img/orangePlayer.png"));
 		player2.setIcon(new ImageIcon(img2.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));
-		player2.setBounds(313, 430, 41, 78);
+		player2.setBounds(306, 430, 41, 78);
 		contentPane.add(player2);
 		player2.setLayout(null);
 
 		JLabel player3 = new JLabel();
 		ImageIcon img3=new ImageIcon(ChooseGame1.class.getResource("/img/purplePlayer.png"));
 		player3.setIcon(new ImageIcon(img3.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));	
-		player3.setBounds(385, 430, 41, 78);
+		player3.setBounds(374, 430, 41, 78);
 		contentPane.add(player3);
 		player3.setLayout(null);
 
 		JLabel player4 = new JLabel();
 		ImageIcon img4=new ImageIcon(ChooseGame1.class.getResource("/img/pinkPlayer.png"));
 		player4.setIcon(new ImageIcon(img4.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));	
-		player4.setBounds(456, 430, 41, 78);
+		player4.setBounds(435, 430, 41, 78);
 		contentPane.add(player4);
 		player4.setLayout(null);
 		
 		JLabel player5 = new JLabel();
 		ImageIcon img5=new ImageIcon(ChooseGame1.class.getResource("/img/greenPlayer.png"));
 		player5.setIcon(new ImageIcon(img5.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));	
-		player5.setBounds(524, 430, 41, 78);
+		player5.setBounds(486, 430, 41, 78);
 		contentPane.add(player5);
 		player5.setLayout(null);
 		
 		JLabel player6 = new JLabel();
 		ImageIcon img6=new ImageIcon(ChooseGame1.class.getResource("/img/bluePlayer.png"));
 		player6.setIcon(new ImageIcon(img6.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));	
-		player6.setBounds(587, 430, 41, 78);
+		player6.setBounds(543, 430, 41, 78);
 		contentPane.add(player6);
 		player6.setLayout(null);
 		
@@ -383,19 +435,19 @@ int count=0;
 		JLabel player7 = new JLabel();
 		ImageIcon img7=new ImageIcon(ChooseGame1.class.getResource("/img/redPlayer.png"));
 		player7.setIcon(new ImageIcon(img7.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));	
-		player7.setBounds(655, 430, 41, 78);
+		player7.setBounds(608, 430, 41, 78);
 		contentPane.add(player7);
 		player7.setLayout(null);
 		
 		JLabel player8 = new JLabel();
 		ImageIcon img8=new ImageIcon(ChooseGame1.class.getResource("/img/yellowPlayer.png"));
 		player8.setIcon(new ImageIcon(img8.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));	
-		player8.setBounds(723, 430, 41, 78);
+		player8.setBounds(671, 430, 41, 78);
 		contentPane.add(player8);
 		player8.setLayout(null);
 		
 		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setBounds(800, 450, 300, 41);
+		layeredPane.setBounds(770, 450, 300, 41);
 		contentPane.add(layeredPane);
 
 		JTextField nicknameField = new JTextField("insert your nickname");
@@ -424,16 +476,35 @@ int count=0;
 
 
 
-        JLabel currentPlayer = new JLabel("player "+numCurrentPlayer);
-		currentPlayer.setForeground(Color.WHITE); // Set the foreground color to white
-		currentPlayer.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
+        JLabel currentPlayer = new JLabel("PLAYER "+numCurrentPlayer);
+		currentPlayer.setForeground(Color.BLACK); // Set the foreground color to white
+		//currentPlayer.setFont(new Font("Poppins", Font.BOLD, 15)); // Set the font family, size, and weight
+		currentPlayer.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 20)); // Set the font family, size, and weight
+
 		currentPlayer.setHorizontalAlignment(SwingConstants.CENTER);
-		currentPlayer.setBounds(866, 399, 69, 28);
-		contentPane.add(currentPlayer); 	
+		currentPlayer.setBounds(836, 411, 161, 28);
+		contentPane.add(currentPlayer); 
+		
+		 JLabel PlayersNamesColors = new JLabel();
+
+			//	players_1.setBounds(172, 83, 524, 267);
+			//	contentPane.add(players_1);
+				
+				//difficulyLabel.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));		
+		 PlayersNamesColors .setBounds(526, 341, 300, 98);
+		 PlayersNamesColors .setLayout(null);
+						
+				ImageIcon ImageName = new ImageIcon(ChooseGame1.class.getResource("/img/woodBlue.png"));
+				ImageIcon testName= resized(ImageName.getImage(), 300, 150);
+				PlayersNamesColors .setIcon(testName);
+				contentPane.add(PlayersNamesColors);
 
 		JLabel next_1 = new JLabel();
-		next_1.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));
-		next_1.setBounds(207, 373, 953, 193);
+		//next_1.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));
+		next_1.setBounds(40, 373, 1155, 193);
+		ImageIcon ImageNext = new ImageIcon(ChooseGame1.class.getResource("/img/woodenPanel.png"));
+		ImageIcon testNext= resized(ImageNext.getImage(), 1200, 193);
+		next_1.setIcon(testNext);
 		contentPane.add(next_1);
 		
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
@@ -441,43 +512,42 @@ int count=0;
 		/* next */
 
 
-		JLabel difficltyLeve_1 = new JLabel("next");
+		JLabel difficltyLeve_1 = new JLabel("NEXT");
 		difficltyLeve_1.setHorizontalAlignment(SwingConstants.CENTER);
 		difficltyLeve_1.setForeground(Color.WHITE);
-		difficltyLeve_1.setFont(new Font("Dialog", Font.BOLD, 15));
-		difficltyLeve_1.setBounds(1040, 577, 155, 41);
+		difficltyLeve_1.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 25));
+		difficltyLeve_1.setBounds(901, 577, 155, 41);
 		contentPane.add(difficltyLeve_1);
 		
 		JLabel next = new JLabel();
-		next.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));		
-		next.setBounds(1073, 577, 75, 41);
+		//next.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));		
+		next.setBounds(829, 502, 300, 200);
 		contentPane.add(next);
 		next.setLayout(null);
 		
-
-
-		JLabel homeButton = new JLabel("Home");
-		homeButton.setHorizontalAlignment(SwingConstants.CENTER);
-		homeButton.setForeground(Color.WHITE);
-		homeButton.setFont(new Font("Dialog", Font.BOLD, 15));
-		homeButton.setBounds(596, 577, 94, 41);
-		contentPane.add(homeButton);
-		homeButton.addMouseListener(new MouseAdapter() {
+		ImageIcon ImageIcon4 = new ImageIcon(ChooseGame1.class.getResource("/img/yellowWood.png"));
+	    ImageIcon test4= resized(ImageIcon4.getImage(), 300, 200);
+	    next.setIcon(test4);
+		
+		JLabel homePage = new JLabel();
+	//	homePage.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));		
+		homePage.setBounds(40, 47, 90, 90);
+		contentPane.add(homePage);
+		homePage.setLayout(null);
+		
+		ImageIcon ImageIconHome = new ImageIcon(ChooseGame1.class.getResource("/img/backIcon.png"));
+		ImageIcon testHome= resized(ImageIconHome.getImage(), 90, 90);
+		homePage.setIcon(testHome);
+		
+		homePage.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // Open HomeView and close the current view
-                dispose(); // Close the current view
                 HomeView homeView = new HomeView();
                 homeView.setVisible(true);
                 dispose();
             }
         });
-		
-		JLabel homePage = new JLabel();
-		homePage.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));		
-		homePage.setBounds(608, 577, 75, 41);
-		contentPane.add(homePage);
-		homePage.setLayout(null);
 				
 		
 		player1.addMouseListener(new MouseAdapter() {
@@ -742,6 +812,13 @@ int count=0;
         backgrounde.setBounds(0, 0, getWidth(), getHeight()-40);
 
         contentPane.add(backgrounde);	
+        
+        JLabel lblNewLabel_2_1 = new JLabel("NUMBER of PLAYERS");
+        lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_2_1.setForeground(Color.WHITE);
+        lblNewLabel_2_1.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 18));
+        lblNewLabel_2_1.setBounds(572, 372, 300, 28);
+        contentPane.add(lblNewLabel_2_1);
 		
 		JPanel blackPanel = new JPanel();
         blackPanel.setBackground(Color.BLACK);
@@ -902,6 +979,4 @@ int count=0;
 		});
 		
     }
-
-    
 }
