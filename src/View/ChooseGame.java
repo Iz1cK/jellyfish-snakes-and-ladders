@@ -734,8 +734,7 @@ int count=0;
 		    	int playersNumber = Integer.parseInt(numbers.getText());
 		    	
 		    	//System.out.println(allPlayers.size());
-		    	System.out.println(playersNumber);
-	        	
+		    	//System.out.println(playersNumber);
 		    	if(difficltyLeve_1.getText().equals("play") && allPlayers.size()==playersNumber) {
 		    		readyToStart=1;
 		        	System.out.println("PLAY NOW START GAME");
