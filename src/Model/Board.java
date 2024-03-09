@@ -36,7 +36,8 @@ public class Board {
 			case EASY:
 				this.rows = 7;
 				this.columns = 7;
-				String[] easyOptions = {"0","1","2","3","4","E","M","H"};
+				String[] easyOptions = {"0","1","2","3","4"};
+//				String[] easyOptions = {"0","1","2","3","4","E","M","H"};
 				List<String> easyList = Arrays.asList(easyOptions);
 				this.diceOptions.addAll(easyList);
 			break;

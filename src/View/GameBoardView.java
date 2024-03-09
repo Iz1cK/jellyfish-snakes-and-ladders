@@ -55,7 +55,9 @@ public class GameBoardView extends JFrame {
     private ImageIcon originalIcon;
     private static ArrayList<Snake> snakes;
     private static ArrayList<Ladder> ladders;
-    private static boolean rolling = false;
+    public static boolean rolling = false;
+    public static boolean playerMoving = false;
+    public static HashMap<Player, JLabel> playerLabels = new HashMap<>();
     private static final Color[] COLORSs = {
             new Color(238, 125, 166),
             new Color(170, 227, 250),
@@ -245,9 +247,6 @@ public class GameBoardView extends JFrame {
                         ImageIcon icon = new ImageIcon(Main.class.getResource(imagePath));
                         diceLabel.setIcon(icon);
                         GBC.playTurn();
-                        updatePlayersList(players, playersPositions, board);
-                        updatePlayerPositionsOnBoard(board.getDifficultyBoard(), players, playersPositions, squares.length, squares[0].length);
-                        
                         if(playersPositions.get(board.getCurrentPlayerTurn()) >= board.getRows()*board.getRows()) {
                         	timer.stop();
                         	setVisible(false);
@@ -265,7 +264,7 @@ public class GameBoardView extends JFrame {
 			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawSnakesAndLadders(g, board, boardPanel); // Custom method to draw snakes and ladders
+                drawSnakesAndLadders(g, board, boardPanel);
             }
         };
         overlayPanel.setBounds(boardPanel.getBounds());
@@ -477,6 +476,8 @@ public class GameBoardView extends JFrame {
                 squareToPlayers.get(position).add(player);
             }
         }
+        
+        playerLabels.clear();
 
         // Iterate over each square and position players
         squareToPlayers.forEach((position, playersInSquare) -> {
@@ -523,6 +524,7 @@ public class GameBoardView extends JFrame {
                         break;
                 }
 
+                playerLabels.put(player, playerMarker);
                 overlayPanel.add(playerMarker);
                 overlayPanel.setComponentZOrder(playerMarker, 0);
             }
@@ -554,4 +556,66 @@ public class GameBoardView extends JFrame {
             }
         }).start();
     }
+    
+//    private static void animatePlayerMovement(Runnable callback) {
+//    	new Thread(()->{
+//    		playerMoving = true;
+//    		try {
+//    			Thread.sleep(100);
+//    		}catch(InterruptedException ex) {
+//    			ex.printStackTrace();
+//    		} finally {
+//    			SwingUtilities.invokeLater(callback);
+//    		}
+//    	}).start();
+//    }
+    
+    public void animatePlayerMovement(Player player, JLabel playerLabel, Board board, Runnable onAnimationEnd) {
+        HashMap<Player,Integer> playersPositions = board.getPlayersPositions();
+        int position = playersPositions.get(player); // The target board position
+
+        int rows = board.getRows();
+        int cols = board.getColumns();
+        int actualRow = (position - 1) / cols;
+        int actualCol = (position - 1) % cols;
+
+        int cellWidth = overlayPanel.getWidth() / cols;
+        int cellHeight = overlayPanel.getHeight() / rows;
+
+        int displayRow = rows - 1 - actualRow;
+        boolean reverseRow = rows % 2 == 0 ? displayRow % 2 == 0 : displayRow % 2 != 0;
+        if (reverseRow) {
+            actualCol = cols - 1 - actualCol;
+        }
+
+        // Calculate the center of the target cell
+        int targetX = actualCol * cellWidth + cellWidth / 2;
+        int targetY = displayRow * cellHeight + cellHeight / 2;
+
+        final int delay = 50; // Milliseconds between updates
+        final int steps = 30; // Number of steps to reach the target
+        final int startX = playerLabel.getX();
+        final int startY = playerLabel.getY();
+        final double dx = (double) (targetX - startX) / steps; // Incremental change per step
+        final double dy = (double) (targetY - startY) / steps;
+
+        final Timer timer = new Timer(delay, null);
+        timer.addActionListener(new ActionListener() {
+            private int currentStep = 0;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (currentStep < steps) {
+                    playerLabel.setLocation((int) (startX + dx * currentStep), (int) (startY + dy * currentStep));
+                    currentStep++;
+                } else {
+                    playerLabel.setLocation(targetX, targetY); // Ensure it ends exactly at the target
+                    timer.stop();
+                    SwingUtilities.invokeLater(onAnimationEnd);
+                }
+            }
+        });
+        timer.start();
+    }
+
 }
