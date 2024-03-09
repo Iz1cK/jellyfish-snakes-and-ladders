@@ -31,6 +31,7 @@ public class GameBoardController {
 	static questionPopUpController QPUC= questionPopUpController.getInstance();
 	private GameBoardView gameBoardView;
 	private HashMap<Player, Integer> lastCheckedSquarePosition = new HashMap<>();
+	private int previousPosition;
 	
 	public void setGameBoardView(GameBoardView gameBoardView) {
 	    this.gameBoardView = gameBoardView;
@@ -65,7 +66,9 @@ public class GameBoardController {
 		Player currentPlayer = this.gameBoard.getCurrentPlayerTurn();
 		Game game = new Game(this.gameBoard.getDifficultyBoard(), this.gameBoard ,currentPlayer, this.gameBoard.getPlayers(), GameBoardView.timerLabel.getText());
 		int boardSize = (int) Math.pow(this.gameBoard.getRows(), 2);
+		lastCheckedSquarePosition = new HashMap<>();
 		HashMap<Player, Integer> playersPositions = this.gameBoard.getPlayersPositions();
+		previousPosition = playersPositions.get(currentPlayer);
 		switch(diceRoll) {
 		case "0":
 			System.out.println("you got 0, you dont move");
@@ -97,20 +100,20 @@ public class GameBoardController {
 		case "E":
 			System.out.println("you rolled an easy question!");
 			showQuestion(1,currentPlayer);
-			break;
+			return;
 		case "M":
 			System.out.println("you rolled a medium question!");
 			showQuestion(2,currentPlayer);
-			break;
+			return;
 		case "H":
 			System.out.println("you rolled a hard question!");
 			showQuestion(3,currentPlayer);
-			break;
-	}
-		gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, ()->{
-			if(playersPositions.get(currentPlayer) <= 0) {
-				playersPositions.put(currentPlayer, 1);
-			}
+			return;
+		}
+		if(playersPositions.get(currentPlayer) <= 0) {
+			playersPositions.put(currentPlayer, 1);
+		}
+		gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, previousPosition ,()->{
 			
 			if(playersPositions.get(currentPlayer) >= boardSize) {
 				gameBoardView.setVisible(false);
@@ -122,7 +125,7 @@ public class GameBoardController {
 			} 
 			
 			if(this.checkSquares(currentPlayer, false)) {
-				gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, ()->{
+				gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer),gameBoard, previousPosition, ()->{
 					int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
 					this.gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
 					GameBoardView.rolling = false;
@@ -160,8 +163,9 @@ public class GameBoardController {
 			break;
 		case "SurpriseSquare":
 			System.out.println("Landed on a surprise square!");
-			SurpriseSquareController SSC = new SurpriseSquareController(((SurpriseSquare) landingSquare), this.gameBoard);
-			SSC.movePlayerToDestination(playersPositions, currentPlayer);
+			SurpriseSquareController SSC = SurpriseSquareController.getInstance();
+			previousPosition = playersPositions.get(currentPlayer);
+			SSC.handleSurpriseSquare(playersPositions, currentPlayer, gameBoard, (SurpriseSquare) landingSquare);
 			return true;
 		default:
 			ArrayList<Snake> snakes = this.gameBoard.getSnakes();
@@ -171,6 +175,7 @@ public class GameBoardController {
 					headSquare.calculatePosition(this.gameBoard.getRows());
 					if(playersPositions.get(currentPlayer) == headSquare.getPosition()) {
 						System.out.println("Found RED snake head, falling down to START!");
+						previousPosition = playersPositions.get(currentPlayer);
 						playersPositions.put(currentPlayer, 1);
 						return true;
 					}
@@ -181,6 +186,7 @@ public class GameBoardController {
 					tailSquare.calculatePosition(this.gameBoard.getRows());
 					if(playersPositions.get(currentPlayer) == headSquare.getPosition()) {
 						System.out.println("Found snake head, falling down to tail!");
+						previousPosition = playersPositions.get(currentPlayer);
 						playersPositions.put(currentPlayer, tailSquare.getPosition());
 						return true;
 					}
@@ -194,6 +200,7 @@ public class GameBoardController {
 				destSquare.calculatePosition(this.gameBoard.getRows());
 				if(playersPositions.get(currentPlayer) == startSquare.getPosition()) {
 					System.out.println("Found start ladder, climbing it up!");
+					previousPosition = playersPositions.get(currentPlayer);
 					playersPositions.put(currentPlayer, destSquare.getPosition());
 					return true;
 				}
@@ -209,14 +216,41 @@ public class GameBoardController {
 	        public void onQuestionAnswered(boolean isCorrect) {
 	        	ArrayList<Player> players = gameBoard.getPlayers();
 	        	HashMap<Player,Integer> playersPositions = gameBoard.getPlayersPositions();
+	        	Game game = new Game(gameBoard.getDifficultyBoard(), gameBoard ,currentPlayer, gameBoard.getPlayers(), GameBoardView.timerLabel.getText());
+	    		int boardSize = (int) Math.pow(gameBoard.getRows(), 2);
 	            System.out.println("Current player is: " + currentPlayer);
 	            int penaltyOrReward = calculatePenaltyOrReward(difficulty, isCorrect);
+	            previousPosition = playersPositions.get(currentPlayer);
 	            updatePlayerPosition(currentPlayer, penaltyOrReward);
-
-	            checkSquares(currentPlayer, true);
-
-	            gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
-	            gameBoardView.updatePlayerPositionsOnBoard(gameBoard.getDifficultyBoard(), players, playersPositions, gameBoard.getSquares().length, gameBoard.getSquares()[0].length);
+	            if(playersPositions.get(currentPlayer) >= boardSize) {
+	            	playersPositions.put(currentPlayer, boardSize);
+	            }
+	            gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, previousPosition, ()->{
+//	            	System.out.println("Moving " + currentPlayer.getPlayername() + " from " + previousPosition + " to " + playersPositions.get(currentPlayer)); 
+	            	if(playersPositions.get(currentPlayer) == boardSize) {
+	            		 sysdata.addGameHistory(game);
+	            		 FinalPage FP = new FinalPage(game);
+	            		 FP.setVisible(true);
+	            		 gameBoardView.setVisible(false);
+	            		 gameBoardView.dispose();
+	            		 System.out.println("PLAYER " + currentPlayer.getPlayername() + " WON!");
+	            	 }
+	            	 
+	            	 if(checkSquares(currentPlayer, true)) {
+	     				gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, previousPosition, ()->{
+	     					int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
+	     					gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
+	     					GameBoardView.rolling = false;
+	     					gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
+	     				});
+	     			} else {
+	     				int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
+	     				gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
+	     				GameBoardView.rolling = false;
+	     				gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
+	     			}
+	            	 
+	            });
 	        }
 	    };
 	}
@@ -232,6 +266,7 @@ public class GameBoardController {
 	private void updatePlayerPosition(Player currentPlayer, int move) {
 	    HashMap<Player, Integer> playersPositions = gameBoard.getPlayersPositions();
 	    int newPosition = Math.max(playersPositions.get(currentPlayer) + move, 1); // Ensure position doesn't go below 1
+	    System.out.println("changed player " + currentPlayer.getPlayername() + " position from : " + playersPositions.get(currentPlayer) + " to: " + newPosition);
 	    playersPositions.put(currentPlayer, newPosition);
 	}
 	

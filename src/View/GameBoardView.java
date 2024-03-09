@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -118,6 +119,8 @@ public class GameBoardView extends JFrame {
     	snakes=board.getSnakes();
     	ladders=board.getLadders();
         Square[][] squares = board.getSquares();
+        
+        squares[0][2] = new SurpriseSquare(0,2);
     	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1280, 720);
@@ -598,46 +601,26 @@ public class GameBoardView extends JFrame {
         }).start();
     }
     
-//    private static void animatePlayerMovement(Runnable callback) {
-//    	new Thread(()->{
-//    		playerMoving = true;
-//    		try {
-//    			Thread.sleep(100);
-//    		}catch(InterruptedException ex) {
-//    			ex.printStackTrace();
-//    		} finally {
-//    			SwingUtilities.invokeLater(callback);
-//    		}
-//    	}).start();
-//    }
-    
-    public void animatePlayerMovement(Player player, JLabel playerLabel, Board board, Runnable onAnimationEnd) {
-        HashMap<Player,Integer> playersPositions = board.getPlayersPositions();
-        int position = playersPositions.get(player); // The target board position
+    public void animatePlayerMovement(Player player, JLabel playerLabel, Board board, int previousPosition, Runnable onAnimationEnd) {
+        HashMap<Player, Integer> playersPositions = board.getPlayersPositions();
+        int position = playersPositions.get(player);
+        System.out.println("moving player " + player.getPlayername() + "from " + previousPosition + " to " + position);
+        
+        Point previousCenter = getSquareCenter(board, previousPosition);
+        Point newCenter = getSquareCenter(board, position);
+        
+        Point playerCurrentPos = playerLabel.getLocation();
+        int offsetX = playerCurrentPos.x - previousCenter.x;
+        int offsetY = playerCurrentPos.y - previousCenter.y;
+        
+        int targetX = newCenter.x + offsetX;
+        int targetY = newCenter.y + offsetY;
 
-        int rows = board.getRows();
-        int cols = board.getColumns();
-        int actualRow = (position - 1) / cols;
-        int actualCol = (position - 1) % cols;
-
-        int cellWidth = overlayPanel.getWidth() / cols;
-        int cellHeight = overlayPanel.getHeight() / rows;
-
-        int displayRow = rows - 1 - actualRow;
-        boolean reverseRow = rows % 2 == 0 ? displayRow % 2 == 0 : displayRow % 2 != 0;
-        if (reverseRow) {
-            actualCol = cols - 1 - actualCol;
-        }
-
-        // Calculate the center of the target cell
-        int targetX = actualCol * cellWidth + cellWidth / 2;
-        int targetY = displayRow * cellHeight + cellHeight / 2;
-
-        final int delay = 50; // Milliseconds between updates
-        final int steps = 30; // Number of steps to reach the target
+        final int delay = 25;
+        final int steps = 30;
         final int startX = playerLabel.getX();
         final int startY = playerLabel.getY();
-        final double dx = (double) (targetX - startX) / steps; // Incremental change per step
+        final double dx = (double) (targetX - startX) / steps;
         final double dy = (double) (targetY - startY) / steps;
 
         final Timer timer = new Timer(delay, null);
@@ -650,13 +633,42 @@ public class GameBoardView extends JFrame {
                     playerLabel.setLocation((int) (startX + dx * currentStep), (int) (startY + dy * currentStep));
                     currentStep++;
                 } else {
-                    playerLabel.setLocation(targetX, targetY); // Ensure it ends exactly at the target
+                    playerLabel.setLocation(targetX, targetY);
                     timer.stop();
                     SwingUtilities.invokeLater(onAnimationEnd);
                 }
             }
         });
         timer.start();
+    }
+    
+    private Point getSquareCenter(Board board, int position) {
+        int rows = board.getRows();
+        int cols = board.getColumns();
+        int overlayPanelWidth = overlayPanel.getWidth();
+        int overlayPanelHeight = overlayPanel.getHeight();
+
+        int cellWidth = overlayPanelWidth / cols;
+        int cellHeight = overlayPanelHeight / rows;
+
+        // Convert board position to row and column
+        int row = (position - 1) / cols;
+        int col = (position - 1) % cols;
+
+        // Determine if the row should be reversed
+        // Rows are zero-indexed here, so for display purposes, it might be rows - row - 1
+        boolean evenRows = rows % 2 == 0;
+        int displayRow = rows - 1 - row;
+        boolean reverseRow = evenRows ? displayRow % 2 == 0 : displayRow % 2 != 0;
+        if (reverseRow) {
+            col = cols - 1 - col;
+        }
+
+        // Calculate center of the square relative to the overlayPanel
+        int centerX = col * cellWidth + cellWidth / 2;
+        int centerY = (rows - row - 1) * cellHeight + cellHeight / 2;
+
+        return new Point(centerX, centerY);
     }
 
 }
