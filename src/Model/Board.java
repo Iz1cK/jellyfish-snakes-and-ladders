@@ -96,7 +96,7 @@ public class Board {
     }
 	
 	public void initiateQuestionSquares() {
-        this.assignQuestionToSquare(0);   // Assuming index 1 is intentional; adjust if needed
+        this.assignQuestionToSquare(0);
 
 	}
 	
@@ -415,11 +415,6 @@ public class Board {
         	return "SurpriseSquare";
         }
         return "NormalSquare";
-	}
-	
-	public void moveFromSurpriseSquare(SurpriseSquareController c) {
-		c.movePlayerToDestination(playersPositions, currentPlayerTurn);
-		checkLandingSquare(getSquareByPosition(playersPositions.get(currentPlayerTurn)));
 	}
 	
 	public int getPositionByIdenxes(int row, int column) {

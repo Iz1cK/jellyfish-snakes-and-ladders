@@ -11,78 +11,47 @@ import View.SurpriseSquarePopupView;
 
 
 public class SurpriseSquareController {
-	private SurpriseSquare square;
-	private String direction;
-	private Board board;
-	public SurpriseSquareController(SurpriseSquare square, Board board)
-	{
-		this.board=board;
-		this.square=square;
-		this.direction=randomDirection();
-		openSurpriseSquarePopupView();
-	}
 
-
+	private static SurpriseSquareController SSCinstance = null;
+	
+	private SurpriseSquareController() {}
+	
+	public static synchronized SurpriseSquareController getInstance()
+    {
+        if (SSCinstance == null)
+        	SSCinstance = new SurpriseSquareController();
+        return SSCinstance;
+    }
+	
 	/*
 	 * function to decide a direction for moving
 	 * when landing on a surprise square
 	 */
-	private String randomDirection() {
-		if(square.pickDirection()>=0)
-			return("forward");
-		else
-			return("backward");
+	private String randomDirection(SurpriseSquare square) {
+		return square.pickDirection()>= 0 ? "forward" : "backward";
 	}
 
-	private void openSurpriseSquarePopupView() {
-			SurpriseSquarePopupView S = new SurpriseSquarePopupView(direction,this);
-			S.setVisible(true);
+	public void handleSurpriseSquare(HashMap<Player, Integer> playerPositions, Player currentPlayer, Board board, SurpriseSquare square) {
+		String direction = randomDirection(square);
+		SurpriseSquarePopupView S = new SurpriseSquarePopupView(direction,this);
+		S.setVisible(true);
+		movePlayerToDestination(playerPositions, currentPlayer, direction, board);
 	}
-
-
-
-	public void innitiateMove()
-	{
-		board.moveFromSurpriseSquare(this);
-	}
-	
-	
-
-	
 	/*
 	 * method that updates position of a player that landed
 	 * on a surprise square, 10 squares backward/ forward 
 	 */
-	public void movePlayerToDestination(HashMap<Player, Integer> playerPositions, Player currentPlayer) 
-	{
-		if(direction.equals("forward"))
-			{
-				if(playerPositions.get(currentPlayer)+10<=Math.pow(board.getRows(), 2))
-					{
-						playerPositions.put(currentPlayer, square.getPosition()+10);
-					}
-				else
-					{
-						playerPositions.put(currentPlayer, (int) (Math.pow(board.getRows(), 2)-(10-(Math.pow(board.getRows(), 2)-square.getPosition()))));
-					}
-			}
-		else
-			{
-				if(playerPositions.get(currentPlayer)-10>=1)
-					{
-						playerPositions.put(currentPlayer, square.getPosition()-10);
-					}
-				else
-					{
-						playerPositions.put(currentPlayer, 1);
-					}
-			}
+	public void movePlayerToDestination(HashMap<Player, Integer> playerPositions, Player currentPlayer, String direction, Board board) {
+	    int boardSize = (int) Math.pow(board.getRows(), 2);
+	    int currentPosition = playerPositions.get(currentPlayer);
+	    int newPosition;
+
+	    if ("forward".equals(direction)) {
+	        newPosition = Math.min(currentPosition + 10, boardSize);
+	    } else {
+	        newPosition = Math.max(currentPosition - 10, 1);
+	    }
+
+	    playerPositions.put(currentPlayer, newPosition);
 	}
-	
-	
-	
-	 
-	
-	
-	
 }
