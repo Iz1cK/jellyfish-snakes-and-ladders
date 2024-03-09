@@ -270,7 +270,7 @@ public class GameBoardController {
 	    playersPositions.put(currentPlayer, newPosition);
 	}
 	
-	private void showQuestion(int difficulty, Player currentPlayer) {
+	public void showQuestion(int difficulty, Player currentPlayer) {
 		QuestionCallback callback = generateQuestionCallback(difficulty, currentPlayer);
 		Random random = new Random();
 		List<Questions> Questions = new ArrayList<>();

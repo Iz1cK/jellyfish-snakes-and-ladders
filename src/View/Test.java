@@ -8,7 +8,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Controller.GameBoardController;
 import Controller.questionPopUpController;
+import Model.PLAYERCOLORS;
+import Model.Player;
 import Model.Questions;
 import Model.Sysdata;
 
@@ -80,7 +83,10 @@ public class Test extends javax.swing.JFrame {
 	}
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
        // MessageDialog obj = new MessageDialog(this);
-//        controller.questionRank(3, null);
+    	GameBoardController g=GameBoardController.getInstance();
+    	Player p=new Player(1, "ahmad", PLAYERCOLORS.RED);
+    	g.showQuestion(2, p);
+        
         //Questions question= questionRank(2);
         //obj.cmdobt1.setText(question.getAnswers().get(0));
         //obj.cmdobt2.setText(question.getAnswers().get(1));
