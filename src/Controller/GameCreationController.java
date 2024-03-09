@@ -29,7 +29,7 @@ public class GameCreationController {
 
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
-		//System.out.println(players);
+		System.out.println(players);
 	}
 
 	public boolean minimumQuestionsRequirment() {

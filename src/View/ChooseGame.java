@@ -62,6 +62,7 @@ public class ChooseGame extends JFrame {
 	private PLAYERCOLORS color;
 	String playerNumber="none";
 	String validName="no";
+	
 int count=0;
 	
 	ArrayList<String> allNames=new ArrayList<String>();
