@@ -8,6 +8,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -43,14 +46,22 @@ public class Sysdata {
 		 * objectName, array of question in json, fileName name of json file 
 		 ****************************************************************************/
 		public void writeJsonFile(JsonArray objectList, String objectName, String fileName) {
-			try (FileWriter file = new FileWriter(fileName)) {
-				JsonObject obj = new JsonObject();
-				obj.add(objectName, objectList);
-				file.write(obj.toString());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	        try (FileWriter file = new FileWriter(fileName)) {
+	            JsonObject obj = new JsonObject();
+	            obj.add(objectName, objectList);
+
+	            // Create Gson object with pretty printing enabled
+	            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+	            // Convert JsonObject to JSON string with pretty printing
+	            String jsonString = gson.toJson(obj);
+
+	            // Write JSON string to file
+	            file.write(jsonString);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
 
 		/************************************************************************
 		 * function to read a json file (name of file is passed as an argument)

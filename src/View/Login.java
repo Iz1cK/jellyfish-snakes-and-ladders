@@ -21,7 +21,6 @@ import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,7 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 
-public class ViewQuestionView extends JFrame {
+public class Login extends javax.swing.JFrame {
 	
 
 	private static final long serialVersionUID = 1L;
@@ -48,7 +47,7 @@ public class ViewQuestionView extends JFrame {
 	/**
      * Creates new form Login
      */
-    public ViewQuestionView(Questions question1) {
+    public Login(Questions question1) {
     	questionid=question1.getQuestionId();
         initComponents(question1);
         setBackground(new Color(0, 0, 0, 0));
@@ -85,7 +84,7 @@ public class ViewQuestionView extends JFrame {
         background.add(questionPanel);
 
         JLabel questionLabel = new JLabel("Question:");
-        questionLabel.setIcon(new ImageIcon(ViewQuestionView.class.getResource("/img/questionIcon1.png")));
+        questionLabel.setIcon(new ImageIcon(Login.class.getResource("/img/questionIcon1.png")));
         questionLabel.setForeground(Color.WHITE);
         questionLabel.setBounds(10, 15, 162, 25);
         questionPanel.add(questionLabel);
@@ -266,9 +265,9 @@ public class ViewQuestionView extends JFrame {
 	        break;
 		}
 		
-		questionLabel_1 = new JLabel("QUESTION");
+		questionLabel_1 = new JLabel("EDIT QUESTION");
         questionLabel_1.setForeground(Color.WHITE);
-        questionLabel_1.setBounds(330, 20, 500, 50);
+        questionLabel_1.setBounds(280, 20, 500, 50);
         questionLabel_1.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 45));
         background.add(questionLabel_1);
         
