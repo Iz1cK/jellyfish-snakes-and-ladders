@@ -1,9 +1,13 @@
 package Controller;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 import Model.Board;
 import Model.COLORS;
@@ -31,6 +35,7 @@ public class GameBoardController {
 	static questionPopUpController QPUC= questionPopUpController.getInstance();
 	private GameBoardView gameBoardView;
 	private HashMap<Player, Integer> lastCheckedSquarePosition = new HashMap<>();
+	private HashMap<Player, String> playersPowerUps = new HashMap<>();
 	private int previousPosition;
 	
 	public void setGameBoardView(GameBoardView gameBoardView) {
@@ -214,43 +219,55 @@ public class GameBoardController {
 	    return new QuestionCallback() {
 	        @Override
 	        public void onQuestionAnswered(boolean isCorrect) {
+	        	if(playersPowerUps.containsKey(currentPlayer)) {
+	        		return;
+	        	}
 	        	ArrayList<Player> players = gameBoard.getPlayers();
 	        	HashMap<Player,Integer> playersPositions = gameBoard.getPlayersPositions();
 	        	Game game = new Game(gameBoard.getDifficultyBoard(), gameBoard ,currentPlayer, gameBoard.getPlayers(), GameBoardView.timerLabel.getText());
 	    		int boardSize = (int) Math.pow(gameBoard.getRows(), 2);
 	            System.out.println("Current player is: " + currentPlayer);
-	            int penaltyOrReward = calculatePenaltyOrReward(difficulty, isCorrect);
-	            previousPosition = playersPositions.get(currentPlayer);
-	            updatePlayerPosition(currentPlayer, penaltyOrReward);
-	            if(playersPositions.get(currentPlayer) >= boardSize) {
-	            	playersPositions.put(currentPlayer, boardSize);
-	            }
-	            gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, previousPosition, ()->{
-//	            	System.out.println("Moving " + currentPlayer.getPlayername() + " from " + previousPosition + " to " + playersPositions.get(currentPlayer)); 
-	            	if(playersPositions.get(currentPlayer) == boardSize) {
-	            		 sysdata.addGameHistory(game);
-	            		 FinalPage FP = new FinalPage(game);
-	            		 FP.setVisible(true);
-	            		 gameBoardView.setVisible(false);
-	            		 gameBoardView.dispose();
-	            		 System.out.println("PLAYER " + currentPlayer.getPlayername() + " WON!");
-	            	 }
-	            	 
-	            	 if(checkSquares(currentPlayer, true)) {
-	     				gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, previousPosition, ()->{
-	     					int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
-	     					gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
-	     					GameBoardView.rolling = false;
-	     					gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
-	     				});
-	     			} else {
-	     				int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
-	     				gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
-	     				GameBoardView.rolling = false;
-	     				gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
-	     			}
-	            	 
-	            });
+	            
+	            Random random = new Random();
+	            int powerupNumber = random.nextInt(3);
+	            String powerupImage = "Tier" + difficulty + "" + powerupNumber;
+	            ImageIcon powerUpIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + powerupImage + ".png"));
+	            Image powerUpIconScaled = powerUpIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+	            GameBoardView.powerUpLabel.setIcon(new ImageIcon(powerUpIconScaled));
+	            playersPowerUps.put(currentPlayer, powerupImage);
+	            
+//	            int penaltyOrReward = calculatePenaltyOrReward(difficulty, isCorrect);
+//	            previousPosition = playersPositions.get(currentPlayer);
+//	            updatePlayerPosition(currentPlayer, penaltyOrReward);
+//	            if(playersPositions.get(currentPlayer) >= boardSize) {
+//	            	playersPositions.put(currentPlayer, boardSize);
+//	            }
+//	            gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, previousPosition, ()->{
+////	            	System.out.println("Moving " + currentPlayer.getPlayername() + " from " + previousPosition + " to " + playersPositions.get(currentPlayer)); 
+//	            	if(playersPositions.get(currentPlayer) == boardSize) {
+//	            		 sysdata.addGameHistory(game);
+//	            		 FinalPage FP = new FinalPage(game);
+//	            		 FP.setVisible(true);
+//	            		 gameBoardView.setVisible(false);
+//	            		 gameBoardView.dispose();
+//	            		 System.out.println("PLAYER " + currentPlayer.getPlayername() + " WON!");
+//	            	 }
+//	            	 
+//	            	 if(checkSquares(currentPlayer, true)) {
+//	     				gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, previousPosition, ()->{
+//	     					int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
+//	     					gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
+//	     					GameBoardView.rolling = false;
+//	     					gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
+//	     				});
+//	     			} else {
+//	     				int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
+//	     				gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
+//	     				GameBoardView.rolling = false;
+//	     				gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
+//	     			}
+//	            	 
+//	            });
 	        }
 	    };
 	}
