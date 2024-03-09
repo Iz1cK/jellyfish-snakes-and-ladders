@@ -62,7 +62,7 @@ public class ChooseGame extends JFrame {
 	private PLAYERCOLORS color;
 	String playerNumber="none";
 	String validName="no";
-	
+	int nextCliked=0;
 int count=0;
 	
 	ArrayList<String> allNames=new ArrayList<String>();
@@ -732,7 +732,7 @@ int count=0;
 		next.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
-		    	
+		    	isReady=1;
 		    	validName="no";
 		    	String nickname = nicknameField.getText().trim();
 		    	if(difficltyLeve_1.getText().equals("play")) {
