@@ -32,19 +32,4 @@ public class GameCreationController {
 		//System.out.println(players);
 	}
 
-	public boolean minimumQuestionsRequirment() {
-		boolean easy=false,medium=false,hard=false;
-		for(Questions q : Sysdata.getInstance().questionsList)
-		{
-			if(q.getDifficulty()==1)
-				easy=true;
-			if(q.getDifficulty()==2)
-				easy=true;
-			if(q.getDifficulty()==3)
-				easy=true;
-		}
-		if(easy&&medium&&hard)
-			return true;
-		return false;
-	}
 }

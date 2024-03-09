@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Model.Sysdata;
+
 public class HomeView extends JFrame {
 
 	/**
@@ -21,6 +23,7 @@ public class HomeView extends JFrame {
 	 */
 	private static final long serialVersionUID = 3514602183732985694L;
 	private JPanel contentPane;
+	private static Sysdata sysdata = Sysdata.getInstance();
 
 	/**
 	 * Launch the application.
@@ -76,10 +79,14 @@ public class HomeView extends JFrame {
 				resetColor(startGamePanel);
 			}
 			public void mousePressed(MouseEvent e) {
-			 	ChooseGame chooseGame = new ChooseGame();
-			 	chooseGame.setVisible(true);
-			 	dispose();
-                }
+				if(!sysdata.minimumQuestionsRequirment()) {
+		    		JOptionPane.showMessageDialog(contentPane, "please make sure there is at least 1 question for each difficulty");
+		    	} else {
+		    		ChooseGame chooseGame = new ChooseGame();
+		    		chooseGame.setVisible(true);
+		    		dispose();
+		    	}
+			}
 			
 		});
 		startGamePanel.setBounds(144, 255, 150, 150);
