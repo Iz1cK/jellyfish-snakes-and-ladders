@@ -62,7 +62,9 @@ public class ChooseGame extends JFrame {
 	private PLAYERCOLORS color;
 	String playerNumber="none";
 	String validName="no";
-	int nextCliked=0;
+	int readyToStart=0;
+	int noErrors=0;
+	
 int count=0;
 	
 	ArrayList<String> allNames=new ArrayList<String>();
@@ -475,23 +477,17 @@ int count=0;
 		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
 		    	}
 		    	else {
-		    		
-		    	y=y+46;
+		    	//y=y+46;
 		    	iconChosed=true;
-		    		colorsCounter++;
-		    		color=PLAYERCOLORS.WHITE;
-		    		if(colorsCounter<=currentNumberOfPlayers&& color!=null) {
-		    			selectedPlayer.setVisible(true);
-			    	    selectedPlayer.setBounds(player1.getBounds());
-			           // playerN1=true;
-			    	    playerNumber="playerN1";
-		    		}
-		    		else {
-		    			selectedPlayer.setVisible(false);
-		    		}
-		    			
+		    	colorsCounter++;
+		    	color=PLAYERCOLORS.WHITE;
+		    	if(readyToStart==0) {
+		    		selectedPlayer.setVisible(true);
+			    	selectedPlayer.setBounds(player1.getBounds());
+			      //  playerN2=true;
+			    	playerNumber="playerN1";
 		    	}
-		    	
+		    }
 		    }
 		});
 
@@ -502,11 +498,11 @@ int count=0;
 		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
 		    	}
 		    	else {
-		    	y=y+46;
+		    	//y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
 		    	color=PLAYERCOLORS.ORANGE;
-		    	if(colorsCounter<=currentNumberOfPlayers) {
+		    	if(readyToStart==0) {
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player2.getBounds());
 			      //  playerN2=true;
@@ -523,11 +519,11 @@ int count=0;
 		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
 		    	}
 		    	else {
-		    	y=y+46;
+		    //	y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
 		    	color=PLAYERCOLORS.PURPLE;
-		    	if(colorsCounter<=currentNumberOfPlayers) {
+		    	if(readyToStart==0) {
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player3.getBounds());
 			      //  playerN3=true;
@@ -544,11 +540,11 @@ int count=0;
 		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
 		    	}
 		    	else {
-		    	y=y+46;
+		    //	y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
 		    	color=PLAYERCOLORS.PINK;
-		    	if(colorsCounter<=currentNumberOfPlayers) {
+		    	if(readyToStart==0) {
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player4.getBounds());
 			      //  playerN4=true;
@@ -564,11 +560,11 @@ int count=0;
 		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
 		    	}
 		    	else {
-		    	y=y+46;
+		    	//y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
 		    	color=PLAYERCOLORS.GREEN;
-		    	if(colorsCounter<=currentNumberOfPlayers) {
+		    	if(readyToStart==0) {
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player5.getBounds());
 			       // playerN5=true;
@@ -584,11 +580,11 @@ int count=0;
 		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
 		    	}
 		    	else {
-		    	y=y+46;
+		    	//y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
 		    	color=PLAYERCOLORS.BLUE;
-		    	if(colorsCounter<=currentNumberOfPlayers) {
+		    	if(readyToStart==0) {
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player6.getBounds());
 			       // playerN6=true;
@@ -604,11 +600,11 @@ int count=0;
 		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
 		    	}
 		    	else {
-		    	y=y+46;
+		    //	y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
 		    	color=PLAYERCOLORS.RED;
-		    	if(colorsCounter<=currentNumberOfPlayers) {
+		    	if(readyToStart==0) {
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player7.getBounds());
 		    	  // playerN7=true;
@@ -624,11 +620,11 @@ int count=0;
 		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
 		    	}
 		    	else {
-		    	y=y+46;
+		    //	y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
 		    	color=PLAYERCOLORS.YELLOW;
-		    	if(colorsCounter<=currentNumberOfPlayers) {
+		    	if(readyToStart==0) {
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player8.getBounds());
 			       // playerN8=true;
@@ -735,7 +731,13 @@ int count=0;
 		    	isReady=1;
 		    	validName="no";
 		    	String nickname = nicknameField.getText().trim();
-		    	if(difficltyLeve_1.getText().equals("play")) {
+		    	int playersNumber = Integer.parseInt(numbers.getText());
+		    	
+		    	//System.out.println(allPlayers.size());
+		    	System.out.println(playersNumber);
+	        	
+		    	if(difficltyLeve_1.getText().equals("play") && allPlayers.size()==playersNumber) {
+		    		readyToStart=1;
 		        	System.out.println("PLAY NOW START GAME");
 		        	
 		        	GameBoardController gbc = GameBoardController.getInstance();
@@ -750,7 +752,8 @@ int count=0;
 		        	dispose();
 		        	return;
 		        }
-		    	
+		    	else {
+		    		
 		    	if(isEasy==false && isMedium==false && isHard==false && nickname.equals("") && playerNumber.equals("none")  ) {
 		    		JOptionPane.showMessageDialog(contentPane, "please choose the game's parameters!");
 		    		
@@ -773,14 +776,29 @@ int count=0;
 		    		if(allNames.contains(nickname)) {
 	    			  validName="no";
 	    			  JOptionPane.showMessageDialog(contentPane, "this nickname is unvalid! try another one");
-	        	    }
+	        	 }
+//		    	else if(difficltyLeve_1.getText().equals("play")) {
+//				    		readyToStart=1;
+//				        	System.out.println("PLAY NOW START GAME");
+//				        	
+//				        	GameBoardController gbc = GameBoardController.getInstance();
+//			        		Board board = new Board(selectedDifficulty, allPlayers);
+//			        		board.generateBoard();
+//		                    board.initiateQuestionSquares();
+//		                    board.generateSnakesAndLadder();
+//			        		gbc.setGameBoard(board);
+//			        		GameBoardView gbv = new GameBoardView();
+//			        		gbv.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//			        		gbv.setVisible(true);
+//				        	dispose();
+//				        	return;
+//				        }
 		    		else {
+		    			
+		    			noErrors=1;
 		    			allNames.add(nickname);
-              			//validName="yes";
-		    		
+		    			y=y+46;
 				    	playersCounter++;
-				        int playersNumber = Integer.parseInt(numbers.getText());
-				       
 				        if (isEasy && counter < playersNumber )  {
 				            counter++;
 				            currentPlayer.setText("player " + counter);
@@ -794,7 +812,7 @@ int count=0;
 				        
 				        if(playersCounter<=playersNumber) {
 				        	playerID++;
-				        	
+				        //	System.out.println("A"+playerID);
 				        	Player player=new Player(playerID,nickname,color);
 				        	allPlayers.add(player);
 				        	gameCreationController.setPlayers(allPlayers);
@@ -821,7 +839,6 @@ int count=0;
 					        	count++;
 					        	player3_1.setBounds(y, 364, 41, 78);
 					        	player3_1.setVisible(true);
-					       
 					        	selectedPlayer.setVisible(false);
 					        	player3.setVisible(false);
 					        	playerN3=false;
@@ -830,7 +847,6 @@ int count=0;
 					        	count++;
 					        	player4_1.setBounds(y, 364, 41, 78);
 					        	player4_1.setVisible(true);
-				
 					        	selectedPlayer.setVisible(false);
 					        	player4.setVisible(false);
 					        	playerN4=false;
@@ -840,7 +856,6 @@ int count=0;
 					        	count++;
 					        	player5_1.setBounds(y, 364, 41, 78);
 					        	player5_1.setVisible(true);
-			
 					        	selectedPlayer.setVisible(false);
 					        	player5.setVisible(false);
 					        	playerN5=false;
@@ -849,7 +864,6 @@ int count=0;
 					        	count++;
 					        	player6_1.setBounds(y, 364, 41, 78);
 					        	player6_1.setVisible(true);
-			
 					        	selectedPlayer.setVisible(false);
 					        	player6.setVisible(false);
 					        	playerN6=false;
@@ -858,7 +872,6 @@ int count=0;
 					        	count++;
 					        	player7_1.setBounds(y, 364, 41, 78);
 					        	player7_1.setVisible(true);
-			
 					        	selectedPlayer.setVisible(false);
 					        	player7.setVisible(false);
 					        	playerN7=false;
@@ -873,12 +886,13 @@ int count=0;
 					        }
 				        }
 				        
-				        if (count == playersNumber) {
+				        if (playerID == playersNumber-1) {
 				            difficltyLeve_1.setText("play");
 				            
 				        }
 		    		}
 		    	}
+		    }
 		    }
 
 			   
