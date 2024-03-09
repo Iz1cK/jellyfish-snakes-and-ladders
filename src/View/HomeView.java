@@ -7,13 +7,13 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 
 public class HomeView extends JFrame {
 
@@ -37,25 +37,8 @@ public class HomeView extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
-	public void setColor(JPanel panel) 
-	{
-		Random rand = new Random();
-        int red = rand.nextInt(256);
-        int green = rand.nextInt(256);
-        int blue = rand.nextInt(256);
-        
-        panel.setBackground(new Color(red, green, blue));
-		//panel.setBackground(new java.awt.Color(194, 226, 241));
-	}
-	public void resetColor(JPanel panel) 
-	{
-		panel.setBackground(new java.awt.Color(117, 123, 235));
-	}
 	
+	//method to resized the image
 	public ImageIcon resized(Image image, int weight, int height) {
 		 Image backImage = image;
 	        Image resized = backImage.getScaledInstance(weight, height, Image.SCALE_SMOOTH);
@@ -65,6 +48,9 @@ public class HomeView extends JFrame {
 		
 	}
 	
+	/**
+	 * Create the frame.
+	 */
 	public HomeView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1350, 760);
@@ -74,6 +60,11 @@ public class HomeView extends JFrame {
 		contentPane.setLayout(null);
 		
 		/*this for start a new game in menu*/
+		JLabel historyLabel_1 = new JLabel("PLAY");
+        historyLabel_1.setForeground(Color.WHITE);
+        historyLabel_1.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 30));
+        historyLabel_1.setBounds(624, 240, 141, 51);
+        contentPane.add(historyLabel_1);
 		
         JLabel playgame1 = new JLabel("");
 		contentPane.add(playgame1);
@@ -103,127 +94,126 @@ public class HomeView extends JFrame {
 				 	dispose();
 				 	}
 				});
-		
-		
-		
-		/*that's for game history */
-		JPanel gameHistoryPanel = new JPanel();
-		gameHistoryPanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				setColor(gameHistoryPanel);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				resetColor(gameHistoryPanel);
-			}
-			public void mousePressed(MouseEvent e) {
-				 	GameHistoryViews gameDetails = new GameHistoryViews();
-				 	gameDetails.setVisible(true);
-				 	dispose();
-	                }
-		});
-		gameHistoryPanel.setBackground(new Color(117, 123, 235));
-		gameHistoryPanel.setLayout(null);
-		gameHistoryPanel.setBounds(332, 255, 150, 150);
-		contentPane.add(gameHistoryPanel);
-		
-		JLabel historyLabel = new JLabel("History");
-		historyLabel.setForeground(Color.white);
-		historyLabel.setFont(new Font("Kristen ITC", Font.BOLD, 18));
-		historyLabel.setBounds(44, 98, 96, 51);
-		gameHistoryPanel.add(historyLabel);
-		
-		JLabel historyIcon = new JLabel("");
-		historyIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/HistoryIcon.png")));
-		historyIcon.setBounds(48, 33, 59, 63);
-		gameHistoryPanel.add(historyIcon);
+	     
+	     /*that's for game history */
+	     JLabel gameHistory = new JLabel("GANE HISTORY");
+	     gameHistory.setForeground(Color.WHITE);
+	     gameHistory.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 28));
+	     gameHistory.setBounds(532, 335, 303, 51);
+	     contentPane.add(gameHistory);
+	     
+	     JLabel gameHistoryIcon = new JLabel("");
+	     contentPane.add(gameHistoryIcon);
+	     ImageIcon ImageHistory = new ImageIcon(HomeView.class.getResource("/img/greenWood.png"));
+	     ImageIcon testHistory= resized(ImageHistory.getImage(), 500, 212);
+	     gameHistoryIcon.setIcon(testHistory);
+	     // Set size to match content pane
+	     gameHistoryIcon.setBounds(430, 318, 553, 100);
+	     contentPane.add(gameHistoryIcon);	
+	     gameHistoryIcon.addMouseListener(new MouseAdapter() {
+	    	 @Override
+	    	 public void mouseEntered(MouseEvent e) {
+	    		 ImageIcon ImageIcon = new ImageIcon(HomeView.class.getResource("/img/greenWood2.png"));
+	    		 ImageIcon test= resized(ImageIcon.getImage(), 500, 212);
+	    		 gameHistoryIcon.setIcon(test);
+	    		 }
+	    	 @Override
+	    	 public void mouseExited(MouseEvent e) {
+	    		 ImageIcon ImageIcon = new ImageIcon(HomeView.class.getResource("/img/greenWood.png"));
+	    		 ImageIcon test= resized(ImageIcon.getImage(), 500, 212);
+	    		 gameHistoryIcon.setIcon(test);
+	    		 }
+	    	 @Override
+	    	 public void mouseClicked(MouseEvent arg0) {
+	    		 GameHistoryViews gameDetails = new GameHistoryViews();
+	    		 gameDetails.setVisible(true);
+	    		 dispose();
+	    		 }
+	    	 });
 		
 		/*that for question page*/
-		JPanel questionPanel = new JPanel();
-		questionPanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				setColor(questionPanel);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				resetColor(questionPanel);
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {
+		 JLabel questionsLabel = new JLabel("QUESTIONS");
+		 questionsLabel.setForeground(Color.WHITE);
+		 questionsLabel.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 30));
+		 questionsLabel.setBounds(578, 429, 257, 51);
+		 contentPane.add(questionsLabel);
+		 
+		 JLabel questionsIcon = new JLabel("");
+		 contentPane.add(questionsIcon);
+		 ImageIcon ImageQuestion = new ImageIcon(HomeView.class.getResource("/img/yellowWood.png"));
+		 ImageIcon testQuestion= resized(ImageQuestion.getImage(), 500, 212);
+		 questionsIcon.setIcon(testQuestion);
+		 // Set size to match content pane
+		 questionsIcon.setBounds(430, 413, 484, 100);
+		 contentPane.add(questionsIcon);
+		 questionsIcon.addMouseListener(new MouseAdapter() {
+			 @Override
+			 public void mouseEntered(MouseEvent e) {
+				 ImageIcon ImageIcon = new ImageIcon(HomeView.class.getResource("/img/yellowWood2.png"));
+				 ImageIcon test= resized(ImageIcon.getImage(), 500, 212);
+				 questionsIcon.setIcon(test);
+				 }
+			 @Override
+			 public void mouseExited(MouseEvent e) {
+				 ImageIcon ImageIcon = new ImageIcon(HomeView.class.getResource("/img/yellowWood.png"));
+				 ImageIcon test= resized(ImageIcon.getImage(), 500, 212);
+				 questionsIcon.setIcon(test);
+				 }
+			 @Override
+			 public void mouseClicked(MouseEvent arg0) {
 				 String[] messages = {
-		                    "That page is only for admins.",
-		                };
+						 "That page is only for admins.",
+						 };
 				 int option = JOptionPane.showOptionDialog(null,
 						 messages[0], "Admin Confirmation",
-	                        JOptionPane.YES_NO_OPTION,
-	                        JOptionPane.QUESTION_MESSAGE,
-	                        null,
-	                        new Object[]{"I am an admin", "Cancel"},
-	                        null);
-
-	                if (option == JOptionPane.YES_OPTION) {
-	                    // User is an admin
-	                    // Proceed to admin page
-	                    AdminView adminPage = new AdminView();
-	                    adminPage.setVisible(true);
-	                    dispose(); // You need to implement this method to close the current frame/dialog
-	                }
-			}
-			
-		});
-		questionPanel.setBackground(new Color(117, 123, 235));
-		questionPanel.setLayout(null);
-		questionPanel.setBounds(144, 429, 150, 150);
-		contentPane.add(questionPanel);
-		
-		JLabel questionLabel = new JLabel("Question");
-		questionLabel.setForeground(Color.white);
-		questionLabel.setFont(new Font("Kristen ITC", Font.BOLD, 18));
-		questionLabel.setBounds(33, 96, 134, 43);
-		questionPanel.add(questionLabel);
-		
-		JLabel questionIcon = new JLabel("");
-		questionIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/QuestionIcon.png")));
-		questionIcon.setBounds(51, 32, 59, 63);
-		questionPanel.add(questionIcon);
+						 JOptionPane.YES_NO_OPTION,
+						 JOptionPane.QUESTION_MESSAGE,
+						 null,
+						 new Object[]{"I am an admin", "Cancel"},
+						 null);
+				 if (option == JOptionPane.YES_OPTION) {
+					 // User is an admin
+					 // Proceed to admin page
+					 AdminView adminPage = new AdminView();
+					 adminPage.setVisible(true);
+					 dispose(); // You need to implement this method to close the current frame/dialog
+					 }
+				 }
+			 });
 		
 		//exit
-		JPanel exitPanel = new JPanel();
-		
-		exitPanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				setColor(exitPanel);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				resetColor(exitPanel);
-			}
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				System.exit(0);
-			}
-		});
-		exitPanel.setBackground(new Color(117, 123, 235));
-		exitPanel.setLayout(null);
-		exitPanel.setBounds(332, 429, 150, 150);
-		contentPane.add(exitPanel);
-		
-		JLabel exitLabel = new JLabel("EXIT");
-		exitLabel.setForeground(Color.white);
-		exitLabel.setFont(new Font("Kristen ITC", Font.BOLD, 18));
-		exitLabel.setBounds(49, 100, 59, 28);
-		exitPanel.add(exitLabel);
-		
-		JLabel exitIcon = new JLabel("");
-		exitIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/ExitIcon.png")));
-		exitIcon.setBounds(59, 26, 59, 63);
-		exitPanel.add(exitIcon);
-		//Sysdata sysdata= Sysdata.getInstance();
-		//sysdata.readQuestions();
-		//System.out.println(sysdata.questionsList.toString());
+		 JLabel Exit = new JLabel("EXIT");
+		 Exit.setForeground(Color.WHITE);
+		 Exit.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 30));
+		 Exit.setBounds(641, 524, 257, 51);
+		 contentPane.add(Exit);
+				
+		 JLabel exitIcon = new JLabel("");	
+		 contentPane.add(exitIcon);				
+		 ImageIcon ImageExit = new ImageIcon(HomeView.class.getResource("/img/orangeWood.png"));				
+		 ImageIcon testExit= resized(ImageExit.getImage(), 500, 212);	
+		 exitIcon.setIcon(testExit);								
+		 // Set size to match content pane				
+		 exitIcon.setBounds(440, 503, 484, 100);	
+		 contentPane.add(exitIcon);						
+		 exitIcon.addMouseListener(new MouseAdapter() {					
+			 @Override					
+			 public void mouseEntered(MouseEvent e) {						
+				 ImageIcon ImageIcon = new ImageIcon(HomeView.class.getResource("/img/orangeWood2.png"));					    
+				 ImageIcon test= resized(ImageIcon.getImage(), 500, 212);					    
+				 exitIcon.setIcon(test);						
+			 }					
+			 @Override					
+			 public void mouseExited(MouseEvent e) {						
+				 ImageIcon ImageIcon = new ImageIcon(HomeView.class.getResource("/img/orangeWood.png"));						
+				 ImageIcon test= resized(ImageIcon.getImage(), 500, 212);						
+				 exitIcon.setIcon(test);						
+			 }					
+			 @Override					
+			 public void mouseClicked(MouseEvent arg0) {						
+				 System.exit(0);						
+			 }					
+		 });
 		
 		JLabel lblInstructionsIcon = new JLabel("");
 		lblInstructionsIcon.setIcon(new ImageIcon(HomeView.class.getResource("/img/circle_crop.png")));
@@ -242,11 +232,21 @@ public class HomeView extends JFrame {
 		/*
 		 * background icon	
 		 */
-		
-		JLabel lblBackground = new JLabel("");
-		lblBackground.setIcon(new ImageIcon(HomeView.class.getResource("/img/homeBackground.png")));
-		lblBackground.setBounds(0, 0,650,650);
-		contentPane.add(lblBackground);
+		 JLabel backgrounde = new JLabel("");
+	        ImageIcon backgroundImageIcon = new ImageIcon(HomeView.class.getResource("/img/snakeAndLadder.jpg"));
+
+	        // Resize the background image to fit the frame
+	        Image backgroundImage = backgroundImageIcon.getImage();
+	        Image resizedBackgroundImage = backgroundImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
+	        ImageIcon resizedBackgroundIcon = new ImageIcon(resizedBackgroundImage);
+
+	        backgrounde.setIcon(resizedBackgroundIcon);
+
+	        // Set size to match content pane
+	        backgrounde.setBounds(0, 0, getWidth(), getHeight());
+
+	        contentPane.add(backgrounde);	
+	        
 		
 	}	
 
