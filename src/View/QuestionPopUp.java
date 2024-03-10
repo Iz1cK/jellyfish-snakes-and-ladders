@@ -85,6 +85,7 @@ public class QuestionPopUp extends JDialog {
 	private void init() {
 //		setModalityType(ModalityType.APPLICATION_MODAL);
     	setBackground(new Color(0, 0, 0, 0));
+    	 setBounds(300, 300, 1000, 500);
         StyledDocument doc = txt.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
@@ -228,6 +229,12 @@ public class QuestionPopUp extends JDialog {
         txt.setForeground(new Color(76, 76, 76));
         txt.setText("Message Text\nSimple");
         txt.setFocusable(false);
+        
+        
+     // Adjust preferred height for buttons
+     // Adjust preferred width for buttons
+     // Adjust preferred width for buttons
+        int buttonWidth = 150;
 
         javax.swing.GroupLayout background1Layout = new javax.swing.GroupLayout(background1);
         background1.setLayout(background1Layout);
@@ -238,46 +245,46 @@ public class QuestionPopUp extends JDialog {
                         .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txt)
-                        .addGroup(background1Layout.createSequentialGroup()
-                            .addComponent(cmdobt1, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE).addGap(3, 3, 3)
-                            .addComponent(cmdobt2, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE))
-                        .addGroup(background1Layout.createSequentialGroup()
-                            .addComponent(cmdobt3, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE).addGap(3, 3, 3)
-                            .addComponent(cmdobt4, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)))
+                        .addComponent(cmdobt1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmdobt2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmdobt3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmdobt4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGap(3, 3, 3))
         );
 
         background1Layout.setVerticalGroup(
             background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, background1Layout.createSequentialGroup()
+                .addGroup(background1Layout.createSequentialGroup()
                     .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(20, 20, 20)
                     .addComponent(lbTitle)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    .addGroup(background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cmdobt1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cmdobt2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(3, 3, 3)
-                    .addGroup(background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cmdobt3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cmdobt4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(3, 3, 3))
+                    .addComponent(cmdobt1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(cmdobt2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(cmdobt3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(cmdobt4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(background1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(background1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+
         pack();
+        
     }// </editor-fold>//GEN-END:initComponents
 
  
@@ -298,12 +305,12 @@ public class QuestionPopUp extends JDialog {
         ANS1, ANS2, ANS3, ANS4
     }
     
-    class Background extends JPanel {
+   /* class Background extends JPanel {
 
         /**
 		 * 
 		 */
-		private static final long serialVersionUID = 1L;
+/*		private static final long serialVersionUID = 1L;
 
 		public Background() {
             init();
@@ -338,7 +345,7 @@ public class QuestionPopUp extends JDialog {
             super.paintComponent(g);
         }
     }
-    
+    */
     class Glass extends JComponent {
 
         /**
@@ -381,6 +388,8 @@ public class QuestionPopUp extends JDialog {
 		private boolean answerChosen = false;
 
         public ButtonCustom() {
+        	
+        	
             init();
         }
 
