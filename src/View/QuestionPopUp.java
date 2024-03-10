@@ -482,25 +482,7 @@ public class QuestionPopUp extends JDialog {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                     	try {
-							AudioTest.sounds("S", "uncorrectanswer.wav");
-							 Timer stopTimer = new Timer(2000, new ActionListener() {
-								 public void actionPerformed(ActionEvent e) {
-									 try {
-										AudioTest.sounds("P", "correctanswer.wav");
-									} catch (UnsupportedAudioFileException e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									} catch (IOException e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									} catch (LineUnavailableException e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									}
-								 }
-							 });
-							 stopTimer.setRepeats(false);
-							 stopTimer.start();
+							AT.startSounds("uncorrectanswer.wav");
 						} catch (UnsupportedAudioFileException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
