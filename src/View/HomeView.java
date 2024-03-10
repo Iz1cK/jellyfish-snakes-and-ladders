@@ -95,7 +95,7 @@ public class HomeView extends JFrame {
 					if(!sysdata.minimumQuestionsRequirment()) {
 			    		JOptionPane.showMessageDialog(contentPane, "please make sure there is at least 1 question for each difficulty");
 			    	} else {
-			    		ChooseGame chooseGame = new ChooseGame();
+			    		ChooseGame1 chooseGame = new ChooseGame1();
 			    		chooseGame.setVisible(true);
 			    		dispose();
 			    	}

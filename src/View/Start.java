@@ -13,7 +13,6 @@ public class Start {
 		sysdata.readAdmins();
 		sysdata.readGameHistory();
 
-		// TODO Auto-generated method stub
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

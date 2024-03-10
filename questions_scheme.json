@@ -1,17 +1,6 @@
 {
   "questions": [
     {
-      "question": "What is the primary purpose of the software requirements document",
-      "answers": [
-        "Define user requirements and system specifications",
-        "Describe system design details",
-        "Manage project timelines and budgets",
-        "Analyze user feedback"
-      ],
-      "correct_ans": 1,
-      "difficulty": 1
-    },
-    {
       "question": "According to agile methods, why is producing a requirements document often deemed unnecessary",
       "answers": [
         "essential for system design",

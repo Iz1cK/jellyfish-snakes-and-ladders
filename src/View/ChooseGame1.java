@@ -1063,18 +1063,7 @@ public class ChooseGame1 extends JFrame {
 			        		GameBoardView gbv = new GameBoardView();
 			        		gbv.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			        		gbv.setVisible(true);
-			        		try {
-								AT.startSounds("background.wav");
-							} catch (UnsupportedAudioFileException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							} catch (LineUnavailableException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
+			        		
 				        	dispose();
 				        	return;
 				        }

@@ -76,6 +76,7 @@ public class GameBoardView extends JFrame {
     };
     private int colorIndex = 0;
     private AudioTest AT = AudioTest.getInstance();
+    int withsound=1;
     
     long elapsedTime;          // Type: long
     long turnElapsedTime;      // Type: long
@@ -118,29 +119,41 @@ public class GameBoardView extends JFrame {
      * Create the frame.
      */
     public GameBoardView() {
+    	try {
+			AT.startSounds("background.wav");
+		} catch (UnsupportedAudioFileException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (LineUnavailableException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
     	GBC.setGameBoardView(this);
-        ArrayList<Player> aplayers = new ArrayList<>();
-        aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
-////////        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
-////////        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
-        aplayers.add(new Player(3,"aseel",PLAYERCOLORS.GREEN));
-        aplayers.add(new Player(4,"ahmad",PLAYERCOLORS.WHITE));
-////////        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
-////////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
-////////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
-        Board aboard = new Board(DIFFICULTY.EASY,aplayers);
-        aboard.generateBoard();
-        aboard.initiateQuestionSquares();
-        aboard.generateSnakesAndLadder();
-        GBC.setGameBoard(aboard);
+    	GBC.setupPowerups();
+//        ArrayList<Player> aplayers = new ArrayList<>();
+//        aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
+//        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
+//        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
+//        aplayers.add(new Player(3,"aseel",PLAYERCOLORS.GREEN));
+//        aplayers.add(new Player(4,"ahmad",PLAYERCOLORS.WHITE));
+//        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
+//////////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
+//////////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
+//        Board aboard = new Board(DIFFICULTY.HARD,aplayers);
+//        aboard.generateBoard();
+//        aboard.initiateQuestionSquares();
+//        aboard.generateSnakesAndLadder();
+//        GBC.setGameBoard(aboard);
 
     	Board board = GBC.getGameBoard();
     	System.out.println(board);
     	ArrayList<Player> players = board.getPlayers();
     	DIFFICULTY diff = board.getDifficultyBoard();
     	HashMap<Player,Integer> playersPositions = board.getPlayersPositions();
-    	
-    	playersPositions.put(players.get(0), 15);
     	
     	snakes=board.getSnakes();
     	ladders=board.getLadders();
@@ -185,6 +198,42 @@ public class GameBoardView extends JFrame {
 		// Set size to match content pane
 		home.setBounds(1350, 14, 75, 72);
 		contentPane.add(home);
+		
+		JLabel soundHandler = new JLabel("");
+		ImageIcon ImageIcon7 = new ImageIcon(QuestionsView.class.getResource("/img/sound.png"));
+		ImageIcon test7= resized(ImageIcon7.getImage(), 80, 80);
+		soundHandler.setIcon(test7);
+		// Set size to match content pane
+		soundHandler.setBounds(1240, 14, 75, 72);
+		contentPane.add(soundHandler);
+		soundHandler.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+				if(withsound==1) {
+					
+				AT.stopSound();
+				withsound=0;
+				}
+				else {
+					withsound=1;
+					try {
+						AT.startSounds("background.wav");
+					} catch (UnsupportedAudioFileException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (LineUnavailableException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+			}
+			
+		});
+		
 		home.addMouseListener(new MouseAdapter() {
 			
 			@Override
@@ -362,8 +411,9 @@ public class GameBoardView extends JFrame {
             	if(rolling) {
             		return;
             	}
-            	GBC.activatePowerup();
-                System.out.println("POWERUP GOES BRRRRRRRRR");
+            	if(GBC.activatePowerup()) {
+            		powerUpLabel.setIcon(new ImageIcon(powerUpIconScaled));
+            	}
             }
         });
         
@@ -649,13 +699,13 @@ public class GameBoardView extends JFrame {
                     	rowOffset = (i / playersPerRow) * cellHeight/2; // Adjust for 2nd row if needed
                         x = actualCol * cellWidth + ((i % playersPerRow) * cellWidth / playersPerRow) + cellWidth / playersPerRow / 2;
                         y = displayRow * cellHeight + rowOffset;
-                        playerMarker.setBounds(x - cellWidth/2 + 25, y - 10, 15, 35);
+                        playerMarker.setBounds(x - cellWidth/2 + 25, y + 10, 15, 35);
                         break;
                     case MEDIUM: 
                     	rowOffset = (i / playersPerRow) * cellHeight/2 - cellHeight/2; // Adjust for 2nd row if needed
                         x = actualCol * cellWidth + ((i % playersPerRow) * cellWidth / playersPerRow) + cellWidth / playersPerRow / 2;
                         y = displayRow * cellHeight + rowOffset;
-                        playerMarker.setBounds(x - cellWidth/2 + 30, y, 25, 50);
+                        playerMarker.setBounds(x - cellWidth/2 + 30, y + 20, 25, 50);
                         break;
                     case HARD:
                     	rowOffset = (i / playersPerRow) * cellHeight/2 - cellHeight/2; // Adjust for 2nd row if needed
