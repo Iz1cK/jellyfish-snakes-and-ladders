@@ -17,6 +17,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -204,7 +205,25 @@ public class ResumeGame extends javax.swing.JDialog {
 
     private void cmdCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCancelActionPerformed
         messageType = MessageType.CANCEL;
-        closeMessage();
+        
+        String[] messages = {
+				 "Are you sure you want to exit from the game.",
+				 };
+		 int option = JOptionPane.showOptionDialog(null,
+				 messages[0], "GANE EXIT",
+				 JOptionPane.YES_NO_OPTION,
+				 JOptionPane.QUESTION_MESSAGE,
+				 null,
+				 new Object[]{"YES IAM SURE", "CONTINUE GAME"},
+				 null);
+		 if (option == JOptionPane.YES_OPTION) {
+			 System.out.println("User click cancel");
+	            HomeView hv= new HomeView();
+	            hv.setVisible(true);
+	            dispose();
+	            closeMessage();
+			 }
+		
     }//GEN-LAST:event_cmdCancelActionPerformed
 
     private void cmdOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdOKActionPerformed

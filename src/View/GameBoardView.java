@@ -124,11 +124,11 @@ public class GameBoardView extends JFrame {
 ////////        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
 ////////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
 ////////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
-  //      Board aboard = new Board(DIFFICULTY.EASY,aplayers);
-//        aboard.generateBoard();
-//        aboard.initiateQuestionSquares();
-//        aboard.generateSnakesAndLadder();
-//        GBC.setGameBoard(aboard);
+      Board aboard = new Board(DIFFICULTY.EASY,aplayers);
+        aboard.generateBoard();
+        aboard.initiateQuestionSquares();
+        aboard.generateSnakesAndLadder();
+       GBC.setGameBoard(aboard);
 
     	Board board = GBC.getGameBoard();
     	System.out.println(board);
@@ -220,27 +220,11 @@ public class GameBoardView extends JFrame {
 		            // Set game state to not paused
 		            isGamePaused = false;
 		           
-		        } else {
-		        	 String[] messages = {
-							 "Are you sure you want to exit from the game.",
-							 };
-					 int option = JOptionPane.showOptionDialog(null,
-							 messages[0], "GANE EXIT",
-							 JOptionPane.YES_NO_OPTION,
-							 JOptionPane.QUESTION_MESSAGE,
-							 null,
-							 new Object[]{"YES IAM SURE", "CONTINUE GAME"},
-							 null);
-					 if (option == JOptionPane.YES_OPTION) {
-						 System.out.println("User click cancel");
-				            HomeView hv= new HomeView();
-				            hv.setVisible(true);
-				            dispose();
-						 }
-		           
-}
-				}
-			});
+		        }
+		        else {
+		        	dispose();
+		        }
+			}});
         
         JPanel boardPanel = new JPanel();
  
