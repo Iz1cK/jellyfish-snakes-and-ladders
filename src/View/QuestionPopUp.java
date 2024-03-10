@@ -444,7 +444,7 @@ public class QuestionPopUp extends JDialog {
                     public void actionPerformed(ActionEvent e) {
                     	
                     	try {
-							AudioTest.sounds("S");
+							AudioTest.sounds("S", "correctanswer.wav");
 						} catch (UnsupportedAudioFileException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
