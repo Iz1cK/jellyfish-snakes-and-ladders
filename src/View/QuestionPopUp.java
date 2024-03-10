@@ -481,6 +481,7 @@ public class QuestionPopUp extends JDialog {
                         else if (difficulty==2) {
                         	obj.showMessage("CORRECT", "You get a Tier 2 powerup!");	
                         }
+                        
                         else if (difficulty==3) {
                         	obj.showMessage("CORRECT", "You get a Tier 3 powerup!");	
                         }
@@ -497,6 +498,36 @@ public class QuestionPopUp extends JDialog {
                 Timer timer = new Timer(2000, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                    	try {
+							AudioTest.sounds("S", "uncorrectanswer.wav");
+							 Timer stopTimer = new Timer(2000, new ActionListener() {
+								 public void actionPerformed(ActionEvent e) {
+									 try {
+										AudioTest.sounds("P", "correctanswer.wav");
+									} catch (UnsupportedAudioFileException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									} catch (IOException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									} catch (LineUnavailableException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+								 }
+							 });
+							 stopTimer.setRepeats(false);
+							 stopTimer.start();
+						} catch (UnsupportedAudioFileException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (LineUnavailableException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
                     	MessageDialog obj = new MessageDialog(fram);
                     	if(difficulty ==1) {
                         obj.showMessage("WRONG", "You did not get a powerup!");
