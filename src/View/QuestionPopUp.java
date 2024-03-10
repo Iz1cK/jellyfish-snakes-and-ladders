@@ -4,19 +4,13 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,7 +18,6 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
@@ -34,7 +27,6 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
-
 import Controller.questionPopUpController;
 import Utils.QuestionCallback;
 
@@ -66,7 +58,7 @@ public class QuestionPopUp extends JDialog {
 
     
     // End of variables declaration//GEN-END:variables
-    public QuestionPopUp(QuestionCallback callback, int level, GameBoardView gameBoardView) {
+    public QuestionPopUp(QuestionCallback callback, int level, JFrame gameBoardView) {
     	super(gameBoardView,true);
 		this.fram = gameBoardView;
 		this.level = level;
@@ -242,13 +234,16 @@ public class QuestionPopUp extends JDialog {
             background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(background1Layout.createSequentialGroup()
                     .addGroup(background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE).addGap(3, 3, 3)
                         .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txt)
-                        .addComponent(cmdobt1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdobt2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdobt3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdobt4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.CENTER, background1Layout.createSequentialGroup()
+                            .addGap(50, 50, 50)
+                            .addGroup(background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cmdobt1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 650)
+                                .addComponent(cmdobt2, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 650)
+                                .addComponent(cmdobt3, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 650)
+                                .addComponent(cmdobt4, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 650))))
                     .addGap(3, 3, 3))
         );
 
@@ -261,14 +256,17 @@ public class QuestionPopUp extends JDialog {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    .addComponent(cmdobt1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(cmdobt2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(cmdobt3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(cmdobt4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(background1Layout.createSequentialGroup()
+                            .addComponent(cmdobt1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 60)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cmdobt2, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 60)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cmdobt3, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 60)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cmdobt4, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 60))
+                        .addGroup(background1Layout.createSequentialGroup()
+                            .addGap(106, 106, 106)))) // Adjusted alignment
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -415,6 +413,9 @@ public class QuestionPopUp extends JDialog {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     showFeedback();
+                    if (callback != null) {
+                    	callback.onQuestionAnswered(isCorrect);
+                    }
                 }
             });
             timer.setRepeats(false);
@@ -431,16 +432,15 @@ public class QuestionPopUp extends JDialog {
                     public void actionPerformed(ActionEvent e) {
                         MessageDialog obj = new MessageDialog(fram);
                         if(difficulty==1) {
-                        obj.showMessage("CORRECT", "stay in your position");
+                        obj.showMessage("CORRECT", "You get a Tier 1 powerup!");
                         }
                         else if (difficulty==2) {
-                        	obj.showMessage("CORRECT", "stay in your position");	
+                        	obj.showMessage("CORRECT", "You get a Tier 2 powerup!");	
                         }
                         else if (difficulty==3) {
-                        	obj.showMessage("CORRECT", "Take one step forward");	
+                        	obj.showMessage("CORRECT", "You get a Tier 3 powerup!");	
                         }
                        closeMessage();
-
                     }
                 });
                 timer.setRepeats(false);
@@ -455,13 +455,13 @@ public class QuestionPopUp extends JDialog {
                     public void actionPerformed(ActionEvent e) {
                     	MessageDialog obj = new MessageDialog(fram);
                     	if(difficulty ==1) {
-                        obj.showMessage("WRONG", "Take one step back");
+                        obj.showMessage("WRONG", "You did not get a powerup!");
                         }
                     	else if(difficulty ==2) {
-                            obj.showMessage("WRONG", "Take two steps back");
+                            obj.showMessage("WRONG", "You did not get a powerup!");
                             }
                     	else if(difficulty ==3) {
-                            obj.showMessage("WRONG", "Take three steps back");
+                            obj.showMessage("WRONG", "You did not get a powerup!");
                             }
                         closeMessage();
                     }
@@ -473,6 +473,7 @@ public class QuestionPopUp extends JDialog {
                // JOptionPane.showMessageDialog(null, "Your answer is wrong", "Feedback", JOptionPane.ERROR_MESSAGE);
              // closeMessage();
             }
+            
             //closeMessage();
         }
 
@@ -496,9 +497,6 @@ public class QuestionPopUp extends JDialog {
 	        	isCorrect=false;
 	        	controller.setCorrectAns(isCorrect);
 	        }
-	        if (callback != null) {
-            	callback.onQuestionAnswered(isCorrect);
-            }
         }
 
         public boolean isAnswerChosen() {
