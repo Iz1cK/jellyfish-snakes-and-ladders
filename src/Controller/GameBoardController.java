@@ -43,7 +43,7 @@ public class GameBoardController {
 	private boolean ladderPowerupActive = false;
 	private boolean snakePowerupActive = false;
 	private boolean doubleDiceResult = false; // worked
-	private boolean onlySixResult = false;
+	private boolean onlySixResult = false;// worked
 	private int previousPosition;
 	public static boolean powerupsEnabled = true;
 	
@@ -71,6 +71,10 @@ public class GameBoardController {
 	
 	public String rollDice() {
 		diceRoll = this.gameBoard.rollDice();
+		if(onlySixResult) {
+			diceRoll = "6";
+			onlySixResult = false;
+		}
 		return diceRoll;
 	}
 	
@@ -230,7 +234,7 @@ public class GameBoardController {
 	        		Random random = new Random();
 	        		int powerupNumber = random.nextInt(3) + 1;
 //	        		String powerupImage = "Tier" + difficulty + "-" + powerupNumber;
-	        		String powerupImage = "Tier1-1";
+	        		String powerupImage = "Tier1-2";
 	        		System.out.println("Player " + currentPlayer.getPlayername() + " got powerup " + powerupImage);
 	        		ImageIcon powerUpIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + powerupImage + ".png"));
 	        		Image powerUpIconScaled = powerUpIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
