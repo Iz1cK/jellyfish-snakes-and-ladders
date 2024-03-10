@@ -163,8 +163,19 @@ public class MessageDialog extends JDialog {
         cmdOK.setPreferredSize(new Dimension(100, 50)); 
         cmdOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
+            	try {
+					AudioTest.sounds("P", "correctanswer.wav");
+				} catch (UnsupportedAudioFileException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (LineUnavailableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
                 cmdOKActionPerformed(evt);
-               
             }
         });
 
