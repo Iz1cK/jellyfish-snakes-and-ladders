@@ -39,10 +39,11 @@ public class GameBoardController {
 	private HashMap<Player, String> playersPowerUps = new HashMap<>();
 	private boolean freezeActive = false;
 	private boolean anotherTurnActive = false;
-	private static int turnCount = 0;
 	private boolean snakeShieldActive = false;
 	private boolean ladderPowerupActive = false;
 	private boolean snakePowerupActive = false;
+	private boolean doubleDiceResult = false;
+	private boolean onlySixResult = false;
 	private int previousPosition;
 	public static boolean powerupsEnabled = true;
 	
@@ -84,31 +85,22 @@ public class GameBoardController {
 		
 		switch(diceRoll) {
 		case "0":
-			System.out.println("you got 0, you dont move");
-			break;
 		case "1":
-			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 1);
-			break;
 		case "2":
-			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 2);
-			break;
 		case "3":
-			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 3);
-			break;
 		case "4":
-			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 4);
-			break;
 		case "5":
-			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 5);
-			break;
 		case "6":
-			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 6);
-			break;
 		case "7":
-			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 7);
-			break;
 		case "8":
-			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + 8);
+			int value = Integer.parseInt(diceRoll);
+			if(doubleDiceResult) {
+				System.out.println("Doubling result");
+				doubleDiceResult = false;
+				value *= 2;
+			}
+			if(onlySixResult) value = 6;
+			playersPositions.put(currentPlayer, playersPositions.get(currentPlayer) + value);
 			break;
 		case "E":
 			System.out.println("you rolled an easy question!");
@@ -173,6 +165,10 @@ public class GameBoardController {
 			SSC.handleSurpriseSquare(playersPositions, currentPlayer, gameBoard, (SurpriseSquare) landingSquare);
 			return true;
 		default:
+			if(snakeShieldActive) {
+				snakeShieldActive = false;
+				return false;
+			}
 			ArrayList<Snake> snakes = this.gameBoard.getSnakes();
 			for (Snake snake : snakes) {
 				if(snake.getColor() == COLORS.RED) {
@@ -363,54 +359,55 @@ public class GameBoardController {
 		Player currentPlayer = gameBoard.getCurrentPlayerTurn();
 		if(playersPowerUps.containsKey(currentPlayer)) {
 			String powerup = playersPowerUps.get(currentPlayer);
-			String tierAndLevel = powerup.split("Tier")[1];
-			int tier = Integer.parseInt(tierAndLevel.split("-")[0]);
-			int number = Integer.parseInt(tierAndLevel.split("-")[1]);
+//			String tierAndLevel = powerup.split("Tier")[1];
+//			int tier = Integer.parseInt(tierAndLevel.split("-")[0]);
+//			int number = Integer.parseInt(tierAndLevel.split("-")[1]);
 			
 			switch(powerup) {
 			case "Tier1-1":
-				String[] tier1powerupOptions = {"4","5","6","E","M","H"};
-				List<String> tier1powerupList = Arrays.asList(tier1powerupOptions);
-				gameBoard.setDiceOptions(new ArrayList<>(tier1powerupList));
+				onlySixResult = true;
+				playersPowerUps.remove(currentPlayer);
 				break;
 			case "Tier1-2":
 				freezeActive = true;
+				playersPowerUps.remove(currentPlayer);
 				break;
 			case "Tier1-3":
 				
 				break;
 			case "Tier2-1":
 				ladderPowerupActive = true;
+				playersPowerUps.remove(currentPlayer);
 				break;
 			case "Tier2-2":
 				snakePowerupActive = true;
+				playersPowerUps.remove(currentPlayer);
 				break;
 			case "Tier2-3":
 				anotherTurnActive = true;
+				playersPowerUps.remove(currentPlayer);
 				break;
 			case "Tier3-1":
 				snakeShieldActive = true;
+				playersPowerUps.remove(currentPlayer);
 				break;
 			case "Tier3-2":
 				break;
 			case "Tier3-3":
-				String[] tier3powerupOptions = {"2","4","6","8","10","12"};
-				List<String> tier3powerupList = Arrays.asList(tier3powerupOptions);
-				gameBoard.setDiceOptions(new ArrayList<>(tier3powerupList));
+				doubleDiceResult = true;
+				playersPowerUps.remove(currentPlayer);
 				break;
 			}
-			
-			System.out.println("Tier: " + tier + "\nNumber: " + number);
 		}
 	}
-	
-	private void clearPowerup() {
-		gameBoard.setDefaultDiceOptions();
-		freezeActive = false;
-		anotherTurnActive = false;
-		snakeShieldActive = false;
-		ladderPowerupActive = false;
-		snakePowerupActive = false;
-	}
+//	
+//	private void clearPowerup() {
+//		gameBoard.setDefaultDiceOptions();
+//		freezeActive = false;
+//		anotherTurnActive = false;
+//		snakeShieldActive = false;
+//		ladderPowerupActive = false;
+//		snakePowerupActive = false;
+//	}
 }
 
