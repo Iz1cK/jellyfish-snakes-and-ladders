@@ -124,11 +124,11 @@ public class GameBoardView extends JFrame {
 ////////        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
 ////////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
 ////////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
-      Board aboard = new Board(DIFFICULTY.EASY,aplayers);
+        Board aboard = new Board(DIFFICULTY.EASY,aplayers);
         aboard.generateBoard();
         aboard.initiateQuestionSquares();
         aboard.generateSnakesAndLadder();
-       GBC.setGameBoard(aboard);
+        GBC.setGameBoard(aboard);
 
     	Board board = GBC.getGameBoard();
     	System.out.println(board);
