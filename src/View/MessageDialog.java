@@ -38,6 +38,7 @@ import javax.swing.text.StyledDocument;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
+import Controller.GameBoardController;
 import Controller.questionPopUpController;
 
 
@@ -54,7 +55,6 @@ public class MessageDialog extends JDialog {
     private MessageType messageType = MessageType.CANCEL;
     public boolean correct;
 	questionPopUpController controller= questionPopUpController.getInstance();
-	
 	private AudioTest AT = AudioTest.getInstance();
 	
 	
