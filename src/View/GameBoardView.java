@@ -27,6 +27,7 @@ import Model.Board;
 import Model.COLORS;
 import Model.DIFFICULTY;
 import Model.Ladder;
+import Model.PLAYERCOLORS;
 import Model.Player;
 import Model.QuesSquare;
 import Model.Snake;
@@ -48,6 +49,7 @@ public class GameBoardView extends JFrame {
 	private JPanel contentPane;
     private JLabel backgroundImage;
     public static JLabel timerLabel;
+    public static JLabel powerUpLabel;
     private JPanel overlayPanel;
     private JPanel playersPanel;
     private JPanel playerMarkerPanel;
@@ -104,7 +106,7 @@ public class GameBoardView extends JFrame {
 ////////        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
 ////////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
 ////////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
-//        Board aboard = new Board(DIFFICULTY.HARD,aplayers);
+  //      Board aboard = new Board(DIFFICULTY.EASY,aplayers);
 //        aboard.generateBoard();
 //        aboard.initiateQuestionSquares();
 //        aboard.generateSnakesAndLadder();
@@ -116,11 +118,11 @@ public class GameBoardView extends JFrame {
     	DIFFICULTY diff = board.getDifficultyBoard();
     	HashMap<Player,Integer> playersPositions = board.getPlayersPositions();
     	
+    	playersPositions.put(players.get(0), 15);
+    	
     	snakes=board.getSnakes();
     	ladders=board.getLadders();
         Square[][] squares = board.getSquares();
-        
-        squares[0][2] = new SurpriseSquare(0,2);
     	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1280, 720);
@@ -251,6 +253,7 @@ public class GameBoardView extends JFrame {
                         ImageIcon icon = new ImageIcon(Main.class.getResource(imagePath));
                         diceLabel.setIcon(icon);
                         GBC.playTurn();
+                        
                         if(playersPositions.get(board.getCurrentPlayerTurn()) >= board.getRows()*board.getRows()) {
                         	timer.stop();
                         	setVisible(false);
@@ -258,6 +261,21 @@ public class GameBoardView extends JFrame {
                         }
                     });
                 }
+            }
+        });
+        
+        ImageIcon powerUpIcon = new ImageIcon(GameBoardView.class.getResource("/img/noPowerup.png"));
+        Image powerUpIconScaled = powerUpIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        powerUpLabel = new JLabel(new ImageIcon(powerUpIconScaled));
+        
+        powerUpLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	if(rolling) {
+            		return;
+            	}
+            	GBC.activatePowerup();
+                System.out.println("POWERUP GOES BRRRRRRRRR");
             }
         });
         
@@ -324,6 +342,7 @@ public class GameBoardView extends JFrame {
         contentPane.add(overlayPanel);
         contentPane.add(playerMarkerPanel);
         contentPane.add(diceLabel);
+        contentPane.add(powerUpLabel);
         contentPane.add(boardPanel);
         contentPane.add(backgroundImage);
         
@@ -354,6 +373,7 @@ public class GameBoardView extends JFrame {
                 playersPanel.setBounds(getWidth() - 560, y, 300, 381);
                 updatePlayerPositionsOnBoard(diff, players, playersPositions, squares.length, squares[0].length);
                 diceLabel.setBounds(getWidth() - 560 + 100, getHeight() - 250, 200, 200);//getWidth() - 560 + playerPanelWidth/2
+                powerUpLabel.setBounds(getWidth() - 560 + 150, getHeight() - 400, 100, 100);
                 contentPane.revalidate();
                 contentPane.repaint();
             }

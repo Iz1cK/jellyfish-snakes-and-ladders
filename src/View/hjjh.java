@@ -44,7 +44,7 @@ import javax.swing.SwingConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 
-public class FinalPage extends javax.swing.JFrame {
+public class hjjh extends javax.swing.JFrame {
 	
 
 	private static final long serialVersionUID = 1L;
@@ -62,7 +62,7 @@ public class FinalPage extends javax.swing.JFrame {
 	/**
      * Creates new form Login
      */
-    public FinalPage(Game game) {
+    public hjjh(Game game) {
         initComponents(game);
         setBackground(new Color(0, 0, 0, 0));
     }
@@ -334,7 +334,7 @@ public class FinalPage extends javax.swing.JFrame {
                        playersposs.put(aplayers.get(0), 23);
                        board.setPlayersPositions(playersposs);
                        
-                       FinalPage frame = new FinalPage(new Game(DIFFICULTY.EASY, board, aplayers.get(0), aplayers, "19:10.02"));
+                       hjjh frame = new hjjh(new Game(DIFFICULTY.EASY, board, aplayers.get(0), aplayers, "19:10.02"));
                        frame.setVisible(true);
                    } catch (Exception e) {
                        e.printStackTrace();

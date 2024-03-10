@@ -371,9 +371,10 @@ public class QuestionsView extends JFrame {
         jScrollPane1.getViewport().setOpaque(false);
         contentPane.add(jScrollPane1);
         
-        JLabel historyLabel_3 = new JLabel("QUESTIONS");
-        historyLabel_3.setForeground(Color.WHITE);
-        historyLabel_3.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 45));
+        JLabel questionLabel = new JLabel("QUESTIONS");
+        questionLabel.setLocation(400, 46);
+        questionLabel.setForeground(Color.WHITE);
+        questionLabel.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 45));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         layout.setHorizontalGroup(
@@ -385,14 +386,14 @@ public class QuestionsView extends JFrame {
         					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 724, GroupLayout.PREFERRED_SIZE))
         				.addGroup(layout.createSequentialGroup()
         					.addGap(316)
-        					.addComponent(historyLabel_3, GroupLayout.PREFERRED_SIZE, 382, GroupLayout.PREFERRED_SIZE)))
+        					.addComponent(questionLabel, GroupLayout.PREFERRED_SIZE, 382, GroupLayout.PREFERRED_SIZE)))
         			.addContainerGap(405, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
         			.addGap(41)
-        			.addComponent(historyLabel_3, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+        			.addComponent(questionLabel, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
         			.addGap(149)
         			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 415, GroupLayout.PREFERRED_SIZE)
         			.addContainerGap(81, Short.MAX_VALUE))
