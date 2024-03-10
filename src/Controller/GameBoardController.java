@@ -37,9 +37,9 @@ public class GameBoardController {
 	private GameBoardView gameBoardView;
 	private HashMap<Player, Integer> lastCheckedSquarePosition = new HashMap<>();
 	private HashMap<Player, String> playersPowerUps = new HashMap<>();
-	private boolean freezeActive = false;
-	private boolean anotherTurnActive = false;
-	private boolean snakeShieldActive = false;
+	private boolean freezeActive = false; // worked
+	private boolean anotherTurnActive = false; // worked
+	private HashMap <Player, Boolean> playerSnakeShields = new HashMap<>();
 	private boolean ladderPowerupActive = false;
 	private boolean snakePowerupActive = false;
 	private boolean doubleDiceResult = false; // worked
@@ -169,8 +169,8 @@ public class GameBoardController {
 			SSC.handleSurpriseSquare(playersPositions, currentPlayer, gameBoard, (SurpriseSquare) landingSquare);
 			return true;
 		default:
-			if(snakeShieldActive) {
-				snakeShieldActive = false;
+			if(playerSnakeShields.get(currentPlayer)) {
+				playerSnakeShields.put(currentPlayer, false);
 				return false;
 			}
 			ArrayList<Snake> snakes = this.gameBoard.getSnakes();
@@ -234,7 +234,7 @@ public class GameBoardController {
 	        		Random random = new Random();
 	        		int powerupNumber = random.nextInt(3) + 1;
 //	        		String powerupImage = "Tier" + difficulty + "-" + powerupNumber;
-	        		String powerupImage = "Tier1-2";
+	        		String powerupImage = "Tier3-1";
 	        		System.out.println("Player " + currentPlayer.getPlayername() + " got powerup " + powerupImage);
 	        		ImageIcon powerUpIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + powerupImage + ".png"));
 	        		Image powerUpIconScaled = powerUpIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
@@ -362,7 +362,7 @@ public class GameBoardController {
 		}
 	}
 	
-	public void activatePowerup() {
+	public boolean activatePowerup() {
 		Player currentPlayer = gameBoard.getCurrentPlayerTurn();
 		if(playersPowerUps.containsKey(currentPlayer)) {
 			String powerup = playersPowerUps.get(currentPlayer);
@@ -395,7 +395,7 @@ public class GameBoardController {
 				playersPowerUps.remove(currentPlayer);
 				break;
 			case "Tier3-1":
-				snakeShieldActive = true;
+				playerSnakeShields.put(currentPlayer, true);
 				playersPowerUps.remove(currentPlayer);
 				break;
 			case "Tier3-2":
@@ -405,6 +405,9 @@ public class GameBoardController {
 				playersPowerUps.remove(currentPlayer);
 				break;
 			}
+			return true;
+		} else {
+			return false;
 		}
 	}
 //	

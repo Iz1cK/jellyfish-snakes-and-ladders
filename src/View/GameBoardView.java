@@ -362,8 +362,9 @@ public class GameBoardView extends JFrame {
             	if(rolling) {
             		return;
             	}
-            	GBC.activatePowerup();
-                System.out.println("POWERUP GOES BRRRRRRRRR");
+            	if(GBC.activatePowerup()) {
+            		powerUpLabel.setIcon(new ImageIcon(powerUpIconScaled));
+            	}
             }
         });
         
