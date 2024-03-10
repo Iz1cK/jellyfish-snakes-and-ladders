@@ -57,6 +57,7 @@ public class MessageDialog extends JDialog {
 	
 	private AudioTest AT = AudioTest.getInstance();
 	
+	
 
     public MessageDialog(JFrame gbv) {
     	
