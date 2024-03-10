@@ -15,10 +15,13 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -72,6 +75,7 @@ public class GameBoardView extends JFrame {
            
     };
     private int colorIndex = 0;
+    private AudioTest AT = AudioTest.getInstance();
     
     long elapsedTime;          // Type: long
     long turnElapsedTime;      // Type: long
@@ -182,6 +186,7 @@ public class GameBoardView extends JFrame {
 		home.setBounds(1350, 14, 75, 72);
 		contentPane.add(home);
 		home.addMouseListener(new MouseAdapter() {
+			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/pause2.png"));
@@ -201,6 +206,7 @@ public class GameBoardView extends JFrame {
 			    turnElapsedTime = 0;
 			    // Assuming gameTimer, autoRollTimer are initialized elsewhere in your code
 			    timer.stop();
+			    AT.stopSound();
 			    isGamePaused = true;
 			    // Calculate elapsed time based on start time
 			    elapsedTime += System.currentTimeMillis() - startTime;
@@ -215,6 +221,18 @@ public class GameBoardView extends JFrame {
 		            // Calculate new start time based on elapsed time
 		            startTime = System.currentTimeMillis() - elapsedTime;
 		            timer.start();
+		            try {
+						AT.startSounds("background.wav");
+					} catch (UnsupportedAudioFileException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (LineUnavailableException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 		            // Calculate new turn start time based on turn elapsed time
 		            turnStartTime = System.currentTimeMillis() - turnElapsedTime;
 		            // Set game state to not paused

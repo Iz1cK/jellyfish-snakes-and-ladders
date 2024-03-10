@@ -66,9 +66,10 @@ public class QuestionPopUp extends JDialog {
 	questionPopUpController controller= questionPopUpController.getInstance();
 	private QuestionCallback callback;
 	private int level;
+	private AudioTest AT = AudioTest.getInstance();
 
 
-	AudioTest audio= new AudioTest();
+//	AudioTest audio= new AudioTest();
     // End of variables declaration//GEN-END:variables
     public QuestionPopUp(QuestionCallback callback, int level, JFrame gameBoardView) {
     	super(gameBoardView,true);
@@ -444,7 +445,7 @@ public class QuestionPopUp extends JDialog {
                     public void actionPerformed(ActionEvent e) {
                     	
                     	try {
-							AudioTest.sounds("S", "correctanswer.wav");
+							AT.startSounds("correctanswer.wav");
 						} catch (UnsupportedAudioFileException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -463,6 +464,7 @@ public class QuestionPopUp extends JDialog {
                         else if (difficulty==2) {
                         	obj.showMessage("CORRECT", "You get a Tier 2 powerup!");	
                         }
+                        
                         else if (difficulty==3) {
                         	obj.showMessage("CORRECT", "You get a Tier 3 powerup!");	
                         }
@@ -479,6 +481,18 @@ public class QuestionPopUp extends JDialog {
                 Timer timer = new Timer(2000, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                    	try {
+							AT.startSounds("uncorrectanswer.wav");
+						} catch (UnsupportedAudioFileException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (LineUnavailableException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
                     	MessageDialog obj = new MessageDialog(fram);
                     	if(difficulty ==1) {
                         obj.showMessage("WRONG", "You did not get a powerup!");

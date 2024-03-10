@@ -15,6 +15,8 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -54,6 +56,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +95,8 @@ public class ChooseGame1 extends JFrame {
 	int count=0;
 	int readyToStart=0;
 	int noErrors=0;
+	
+	private AudioTest AT = AudioTest.getInstance();
 	
 	ArrayList<String> allNames=new ArrayList<String>();
 	
@@ -1058,6 +1063,18 @@ public class ChooseGame1 extends JFrame {
 			        		GameBoardView gbv = new GameBoardView();
 			        		gbv.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			        		gbv.setVisible(true);
+			        		try {
+								AT.startSounds("background.wav");
+							} catch (UnsupportedAudioFileException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (LineUnavailableException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 				        	dispose();
 				        	return;
 				        }

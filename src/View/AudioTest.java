@@ -8,21 +8,26 @@ public class AudioTest {
 
 	public static Clip clip;
 	
-	public static void sounds(String str, String filename) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
-		switch (str) {
-		      case "S":
-		    	  File file = new File(filename);
-				  AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-				  clip = AudioSystem.getClip();
-				  clip.open(audioStream);
-		          clip.start();
-		          break;
-		      case "P":
-		          clip.stop();
-		          break;
-		      default:
-		          System.out.println("Not a valid response");
-		}		   
+	public static AudioTest ATinstance = null;
+	
+	public static AudioTest getInstance() {
+		if(ATinstance == null)
+			ATinstance = new AudioTest();
+		return ATinstance;
+	}
+	
+	public AudioTest() {}
+	
+	public void startSounds(String filename) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
+		File file = new File(filename);
+		AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+		clip = AudioSystem.getClip();
+		clip.open(audioStream);
+		clip.start();	   
+	}
+	
+	public void stopSound() {
+		clip.stop();
 	}
 }
 
