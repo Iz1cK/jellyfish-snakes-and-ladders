@@ -280,6 +280,7 @@ public class QuestionsView extends JFrame {
 
             @Override
             public void onDelete(int row) {
+            	QuestionViewController.onDelete(row);
             	System.out.println("this is my row"+ row);
             	dispose();
             }

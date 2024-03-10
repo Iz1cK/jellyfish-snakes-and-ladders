@@ -51,6 +51,10 @@ public class GameBoardController {
 	    this.gameBoardView = gameBoardView;
 	}
 	
+	public void setupPowerups() {
+		this.playersPowerUps = new HashMap<>();
+	}
+	
 	private GameBoardController() {}
 	
 	public static synchronized GameBoardController getInstance()
@@ -169,9 +173,11 @@ public class GameBoardController {
 			SSC.handleSurpriseSquare(playersPositions, currentPlayer, gameBoard, (SurpriseSquare) landingSquare);
 			return true;
 		default:
-			if(playerSnakeShields.get(currentPlayer)) {
-				playerSnakeShields.put(currentPlayer, false);
-				return false;
+			if(playerSnakeShields.size() != 0) {
+				if(playerSnakeShields.get(currentPlayer)) {
+					playerSnakeShields.put(currentPlayer, false);
+					return false;
+				}
 			}
 			ArrayList<Snake> snakes = this.gameBoard.getSnakes();
 			for (Snake snake : snakes) {
@@ -232,9 +238,16 @@ public class GameBoardController {
 	        		
 	        		System.out.println("Answered Correctly, get powerup!");
 	        		Random random = new Random();
-	        		int powerupNumber = random.nextInt(3) + 1;
-//	        		String powerupImage = "Tier" + difficulty + "-" + powerupNumber;
-	        		String powerupImage = "Tier3-1";
+	        		int powerupNumber = 0;
+	        		if(difficulty == 3) {
+	        			powerupNumber = 3;
+	        		} else if(difficulty == 2) {
+	        			powerupNumber = 3;
+	        		} else {
+	        			powerupNumber = random.nextInt(2) + 1;
+	        		}
+	        		String powerupImage = "Tier" + difficulty + "-" + powerupNumber;
+//	        		String powerupImage = "Tier3-1";
 	        		System.out.println("Player " + currentPlayer.getPlayername() + " got powerup " + powerupImage);
 	        		ImageIcon powerUpIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + powerupImage + ".png"));
 	        		Image powerUpIconScaled = powerUpIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
