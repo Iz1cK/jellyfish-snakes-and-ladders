@@ -830,25 +830,23 @@ public class ChooseGame1 extends JFrame {
 		    	String nickname = nicknameField.getText().trim();
 		    	int playersNumber = Integer.parseInt(numbers.getText());
 		    	
-		    	//System.out.println(allPlayers.size());
-		    	//System.out.println(playersNumber);
-		    	if(difficltyLeve_1.getText().equals("play") && allPlayers.size()==playersNumber) {
-		    		readyToStart=1;
-		        	System.out.println("PLAY NOW START GAME");
-		        	
-		        	GameBoardController gbc = GameBoardController.getInstance();
-	        		Board board = new Board(selectedDifficulty, allPlayers);
-	        		board.generateBoard();
-                    board.initiateQuestionSquares();
-                    board.generateSnakesAndLadder();
-	        		gbc.setGameBoard(board);
-	        		GameBoardView gbv = new GameBoardView();
-	        		gbv.setExtendedState(JFrame.MAXIMIZED_BOTH);
-	        		gbv.setVisible(true);
-		        	dispose();
-		        	return;
-		        }
-		    	else {
+//		    	if(difficltyLeve_1.getText().equals("play") && allPlayers.size()==playersNumber) {
+//		    		readyToStart=1;
+//		        	System.out.println("PLAY NOW START GAME");
+//		        	
+//		        	GameBoardController gbc = GameBoardController.getInstance();
+//	        		Board board = new Board(selectedDifficulty, allPlayers);
+//	        		board.generateBoard();
+//                    board.initiateQuestionSquares();
+//                    board.generateSnakesAndLadder();
+//	        		gbc.setGameBoard(board);
+//	        		GameBoardView gbv = new GameBoardView();
+//	        		gbv.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//	        		gbv.setVisible(true);
+//		        	dispose();
+//		        	return;
+//		        }
+		    //	else {
 		    		
 		    	if(isEasy==false && isMedium==false && isHard==false && nickname.equals("") && playerNumber.equals("none")  ) {
 		    		JOptionPane.showMessageDialog(contentPane, "please choose the game's parameters!");
@@ -873,22 +871,7 @@ public class ChooseGame1 extends JFrame {
 	    			  validName="no";
 	    			  JOptionPane.showMessageDialog(contentPane, "this nickname is unvalid! try another one");
 	        	 }
-//		    	else if(difficltyLeve_1.getText().equals("play")) {
-//				    		readyToStart=1;
-//				        	System.out.println("PLAY NOW START GAME");
-//				        	
-//				        	GameBoardController gbc = GameBoardController.getInstance();
-//			        		Board board = new Board(selectedDifficulty, allPlayers);
-//			        		board.generateBoard();
-//		                    board.initiateQuestionSquares();
-//		                    board.generateSnakesAndLadder();
-//			        		gbc.setGameBoard(board);
-//			        		GameBoardView gbv = new GameBoardView();
-//			        		gbv.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//			        		gbv.setVisible(true);
-//				        	dispose();
-//				        	return;
-//				        }
+
 		    		else {
 		    			
 		    			noErrors=1;
@@ -917,7 +900,7 @@ public class ChooseGame1 extends JFrame {
 					        if(playerNumber.equals("playerN1")) {
 					        	count++;
 					        	player1_1.setBounds(y, 364, 41, 78);
-					        	player1_1.setVisible(true); 
+					        	//player1_1.setVisible(true); 
 					        	selectedPlayer.setVisible(false);
 					        	player1.setVisible(false);
 					        	playerN1=false;
@@ -926,7 +909,7 @@ public class ChooseGame1 extends JFrame {
 					        if(playerNumber.equals("playerN2")) {
 					        	count++;
 					        	player2_1.setBounds(y, 364, 41, 78);
-					        	player2_1.setVisible(true);
+					        	//setVisible(true);
 					        	selectedPlayer.setVisible(false);
 					        	player2.setVisible(false);
 					        	playerN2=false;
@@ -934,7 +917,7 @@ public class ChooseGame1 extends JFrame {
 					        if(playerNumber.equals("playerN3")) {
 					        	count++;
 					        	player3_1.setBounds(y, 364, 41, 78);
-					        	player3_1.setVisible(true);
+					        	//player3_1.setVisible(true);
 					        	selectedPlayer.setVisible(false);
 					        	player3.setVisible(false);
 					        	playerN3=false;
@@ -942,7 +925,7 @@ public class ChooseGame1 extends JFrame {
 					        if(playerNumber.equals("playerN4")) {
 					        	count++;
 					        	player4_1.setBounds(y, 364, 41, 78);
-					        	player4_1.setVisible(true);
+					        	//player4_1.setVisible(true);
 					        	selectedPlayer.setVisible(false);
 					        	player4.setVisible(false);
 					        	playerN4=false;
@@ -951,7 +934,7 @@ public class ChooseGame1 extends JFrame {
 					        if(playerNumber.equals("playerN5")) {
 					        	count++;
 					        	player5_1.setBounds(y, 364, 41, 78);
-					        	player5_1.setVisible(true);
+					        //	player5_1.setVisible(true);
 					        	selectedPlayer.setVisible(false);
 					        	player5.setVisible(false);
 					        	playerN5=false;
@@ -959,7 +942,7 @@ public class ChooseGame1 extends JFrame {
 					        if(playerNumber.equals("playerN6")) {
 					        	count++;
 					        	player6_1.setBounds(y, 364, 41, 78);
-					        	player6_1.setVisible(true);
+					       // 	player6_1.setVisible(true);
 					        	selectedPlayer.setVisible(false);
 					        	player6.setVisible(false);
 					        	playerN6=false;
@@ -967,7 +950,7 @@ public class ChooseGame1 extends JFrame {
 					        if(playerNumber.equals("playerN7")) {
 					        	count++;
 					        	player7_1.setBounds(y, 364, 41, 78);
-					        	player7_1.setVisible(true);
+					        //	player7_1.setVisible(true);
 					        	selectedPlayer.setVisible(false);
 					        	player7.setVisible(false);
 					        	playerN7=false;
@@ -975,7 +958,7 @@ public class ChooseGame1 extends JFrame {
 					        if(playerNumber.equals("playerN8")) {
 					        	count++;
 					        	player8_1.setBounds(y, 364, 41, 78);
-					        	player8_1.setVisible(true);
+					       // 	player8_1.setVisible(true);
 					        	selectedPlayer.setVisible(false);
 					        	player8.setVisible(false);
 					        	playerN8=false;
@@ -988,10 +971,26 @@ public class ChooseGame1 extends JFrame {
 				            difficltyLeve_1.setText("play");
 				            
 				        }
+				        if(difficltyLeve_1.getText().equals("play") && allPlayers.size()==playersNumber) {
+				    		readyToStart=1;
+				        	System.out.println("PLAY NOW START GAME");
+				        	
+				        	GameBoardController gbc = GameBoardController.getInstance();
+			        		Board board = new Board(selectedDifficulty, allPlayers);
+			        		board.generateBoard();
+		                    board.initiateQuestionSquares();
+		                    board.generateSnakesAndLadder();
+			        		gbc.setGameBoard(board);
+			        		GameBoardView gbv = new GameBoardView();
+			        		gbv.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			        		gbv.setVisible(true);
+				        	dispose();
+				        	return;
+				        }
 		    		}
 		    	}
 		    }
-		    }
+		 //   }
 
 			   
 		});
