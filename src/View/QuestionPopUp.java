@@ -4,11 +4,9 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -31,7 +29,6 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
@@ -41,7 +38,6 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
-
 import Controller.questionPopUpController;
 import Utils.QuestionCallback;
 
@@ -74,7 +70,7 @@ public class QuestionPopUp extends JDialog {
 
 	AudioTest audio= new AudioTest();
     // End of variables declaration//GEN-END:variables
-    public QuestionPopUp(QuestionCallback callback, int level, GameBoardView gameBoardView) {
+    public QuestionPopUp(QuestionCallback callback, int level, JFrame gameBoardView) {
     	super(gameBoardView,true);
 		this.fram = gameBoardView;
 		this.level = level;
@@ -250,13 +246,16 @@ public class QuestionPopUp extends JDialog {
             background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(background1Layout.createSequentialGroup()
                     .addGroup(background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE).addGap(3, 3, 3)
                         .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txt)
-                        .addComponent(cmdobt1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdobt2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdobt3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdobt4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.CENTER, background1Layout.createSequentialGroup()
+                            .addGap(50, 50, 50)
+                            .addGroup(background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cmdobt1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 650)
+                                .addComponent(cmdobt2, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 650)
+                                .addComponent(cmdobt3, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 650)
+                                .addComponent(cmdobt4, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 650))))
                     .addGap(3, 3, 3))
         );
 
@@ -269,14 +268,17 @@ public class QuestionPopUp extends JDialog {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    .addComponent(cmdobt1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(cmdobt2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(cmdobt3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(cmdobt4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(background1Layout.createSequentialGroup()
+                            .addComponent(cmdobt1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 60)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cmdobt2, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 60)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cmdobt3, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 60)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cmdobt4, javax.swing.GroupLayout.DEFAULT_SIZE, 60, 60))
+                        .addGroup(background1Layout.createSequentialGroup()
+                            .addGap(106, 106, 106)))) // Adjusted alignment
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -464,7 +466,6 @@ public class QuestionPopUp extends JDialog {
                         else if (difficulty==3) {
                         	obj.showMessage("CORRECT", "You get a Tier 3 powerup!");	
                         }
-
                        closeMessage();
                     }
                 });

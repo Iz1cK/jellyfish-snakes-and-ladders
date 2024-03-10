@@ -12,6 +12,7 @@ public class Start {
 		sysdata.readQuestions();
 		sysdata.readAdmins();
 		sysdata.readGameHistory();
+
 		// TODO Auto-generated method stub
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -24,7 +25,5 @@ public class Start {
 				}
 			}
 		});
-
 	}
-
 }
