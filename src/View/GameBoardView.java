@@ -76,6 +76,7 @@ public class GameBoardView extends JFrame {
     };
     private int colorIndex = 0;
     private AudioTest AT = AudioTest.getInstance();
+    int withsound=1;
     
     long elapsedTime;          // Type: long
     long turnElapsedTime;      // Type: long
@@ -118,6 +119,19 @@ public class GameBoardView extends JFrame {
      * Create the frame.
      */
     public GameBoardView() {
+    	try {
+			AT.startSounds("background.wav");
+		} catch (UnsupportedAudioFileException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (LineUnavailableException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
     	GBC.setGameBoardView(this);
         ArrayList<Player> aplayers = new ArrayList<>();
         aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
@@ -185,6 +199,42 @@ public class GameBoardView extends JFrame {
 		// Set size to match content pane
 		home.setBounds(1350, 14, 75, 72);
 		contentPane.add(home);
+		
+		JLabel soundHandler = new JLabel("");
+		ImageIcon ImageIcon7 = new ImageIcon(QuestionsView.class.getResource("/img/sound.png"));
+		ImageIcon test7= resized(ImageIcon7.getImage(), 80, 80);
+		soundHandler.setIcon(test7);
+		// Set size to match content pane
+		soundHandler.setBounds(1240, 14, 75, 72);
+		contentPane.add(soundHandler);
+		soundHandler.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+				if(withsound==1) {
+					
+				AT.stopSound();
+				withsound=0;
+				}
+				else {
+					withsound=1;
+					try {
+						AT.startSounds("background.wav");
+					} catch (UnsupportedAudioFileException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (LineUnavailableException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+			}
+			
+		});
+		
 		home.addMouseListener(new MouseAdapter() {
 			
 			@Override
