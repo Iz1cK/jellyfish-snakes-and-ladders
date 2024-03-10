@@ -10,6 +10,10 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.Border;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.PlainDocument;
 
 import Controller.AddQuestionController;
 
@@ -97,8 +101,28 @@ public class AddQuestionView extends javax.swing.JFrame {
         questionPanel.add(questionLabel);
         questionLabel.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
 
-        questionTextField = new JTextField();
+       // questionTextField = new JTextField();
+        questionTextField = new JTextField() {
+            @Override
+            protected Document createDefaultModel() {
+                return new PlainDocument() {
+                    @Override
+                    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                        if (str == null) {
+                            return;
+                        }
+                        String currentText = getText(0, getLength());
+                        String newText = currentText.substring(0, offs) + str + currentText.substring(offs);
+                        if (newText.matches("(?!\\s+$)[a-zA-Z0-9\\s]+")) {
+                            super.insertString(offs, str, a);
+                        }
+                    }
+                };
+            }
+        };
+
         questionTextField.setText((String) null);
+        
         questionTextField.setColumns(10);
         questionTextField.setBounds(126, 14, 494, 28);
         questionPanel.add(questionTextField);
@@ -126,7 +150,25 @@ public class AddQuestionView extends javax.swing.JFrame {
 	    obtion1.setBounds(10, 53, 103, 25);
 	    choicesPanel.add(obtion1);
 	     
-	    obtion1TeksField = new JTextField();
+	    obtion1TeksField = new JTextField(){
+            @Override
+            protected Document createDefaultModel() {
+                return new PlainDocument() {
+                    @Override
+                    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                        if (str == null) {
+                            return;
+                        }
+                        String currentText = getText(0, getLength());
+                        String newText = currentText.substring(0, offs) + str + currentText.substring(offs);
+                        if (newText.matches("(?!\\s+$)[a-zA-Z0-9\\s]+")) {
+                            super.insertString(offs, str, a);
+                        }
+                    }
+                };
+            }
+        };
+
 	    obtion1TeksField.setColumns(10);
 	    obtion1TeksField.setText(k);
 	    obtion1TeksField.setBounds(106, 52, 197, 28);
@@ -139,7 +181,25 @@ public class AddQuestionView extends javax.swing.JFrame {
 		obtion2.setBounds(10, 102, 94, 25);
 		choicesPanel.add(obtion2);
 		
-		obtion2TextField = new JTextField();
+		obtion2TextField = new JTextField(){
+            @Override
+            protected Document createDefaultModel() {
+                return new PlainDocument() {
+                    @Override
+                    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                        if (str == null) {
+                            return;
+                        }
+                        String currentText = getText(0, getLength());
+                        String newText = currentText.substring(0, offs) + str + currentText.substring(offs);
+                        if (newText.matches("(?!\\s+$)[a-zA-Z0-9\\s]+")) {
+                            super.insertString(offs, str, a);
+                        }
+                    }
+                };
+            }
+        };
+
 	    obtion2TextField.setText((String) null);
 	    obtion2TextField.setColumns(10);
 	    obtion2TextField.setBounds(106, 101, 197, 28);
@@ -152,7 +212,25 @@ public class AddQuestionView extends javax.swing.JFrame {
 		obtion3.setBounds(314, 53, 118, 25);
 		choicesPanel.add(obtion3);
 		
-		obtion3textField = new JTextField();
+		obtion3textField = new JTextField(){
+            @Override
+            protected Document createDefaultModel() {
+                return new PlainDocument() {
+                    @Override
+                    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                        if (str == null) {
+                            return;
+                        }
+                        String currentText = getText(0, getLength());
+                        String newText = currentText.substring(0, offs) + str + currentText.substring(offs);
+                        if (newText.matches("(?!\\s+$)[a-zA-Z0-9\\s]+")) {
+                            super.insertString(offs, str, a);
+                        }
+                    }
+                };
+            }
+        };
+
 	    obtion3textField.setText((String) null);
 	    obtion3textField.setColumns(10);
 	    obtion3textField.setBounds(423, 52, 197, 28);
@@ -165,7 +243,25 @@ public class AddQuestionView extends javax.swing.JFrame {
 		obtion4.setBounds(313, 102, 118, 25);
 		choicesPanel.add(obtion4);
 		
-	    obtion4textField = new JTextField();
+	    obtion4textField = new JTextField(){
+            @Override
+            protected Document createDefaultModel() {
+                return new PlainDocument() {
+                    @Override
+                    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                        if (str == null) {
+                            return;
+                        }
+                        String currentText = getText(0, getLength());
+                        String newText = currentText.substring(0, offs) + str + currentText.substring(offs);
+                        if (newText.matches("(?!\\s+$)[a-zA-Z0-9\\s]+")) {
+                            super.insertString(offs, str, a);
+                        }
+                    }
+                };
+            }
+        };
+
 	    obtion4textField.setText((String) null);
 	    obtion4textField.setColumns(10);
 	    obtion4textField.setBounds(423, 101, 197, 28);
@@ -313,13 +409,13 @@ public class AddQuestionView extends javax.swing.JFrame {
             							"warning", JOptionPane.WARNING_MESSAGE);
             				}
             			if(q==0) {
-            				List<String> answers = new ArrayList<String>(); //holds the question’s answers.
+            				List<String> answers = new ArrayList<String>(); //holds the questionï¿½s answers.
             				String questionBody;
             				questionBody= (String)questionTextField.getText();
             				
             				Boolean n=controller.isDulicated(questionBody);
             				if (n==true) {
-            	                JOptionPane.showMessageDialog(null, "sameQuestion.", "Error", JOptionPane.ERROR_MESSAGE);
+            	                JOptionPane.showMessageDialog(null, "This question is exists.", "Error", JOptionPane.ERROR_MESSAGE);
             	                return;
             				}
             				

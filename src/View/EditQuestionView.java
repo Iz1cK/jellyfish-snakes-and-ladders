@@ -10,6 +10,10 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.Border;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.PlainDocument;
 
 import Controller.AddQuestionController;
 import Controller.EditQuestionController;
@@ -33,10 +37,10 @@ public class EditQuestionView extends javax.swing.JFrame {
 	
 
 	private static final long serialVersionUID = 1L;
-	private JTextField obtion1TeksField;
+	private JTextField obtion1textField;
 	private JTextField questionTextField;
 	private JTextField obtion3textField;
-	private JTextField obtion2TextField;
+	private JTextField obtion2textField;
 	private JTextField obtion4textField;
 	@SuppressWarnings("rawtypes")
 	private JComboBox<Comparable> comboBox;
@@ -118,10 +122,10 @@ public class EditQuestionView extends javax.swing.JFrame {
 	    obtion1.setBounds(10, 53, 103, 25);
 	    choicesPanel.add(obtion1);
 	     
-	    obtion1TeksField = new JTextField(question1.getAnswers().get(0));
-	    obtion1TeksField.setColumns(10);
-	    obtion1TeksField.setBounds(106, 52, 197, 28);
-	    choicesPanel.add(obtion1TeksField);
+	    obtion1textField = new JTextField(question1.getAnswers().get(0));
+	    obtion1textField.setColumns(10);
+	    obtion1textField.setBounds(106, 52, 197, 28);
+	    choicesPanel.add(obtion1textField);
 		
 		JLabel obtion2 = new JLabel("Obtion 2");
 		obtion2.setForeground(Color.WHITE);
@@ -130,10 +134,10 @@ public class EditQuestionView extends javax.swing.JFrame {
 		obtion2.setBounds(10, 102, 94, 25);
 		choicesPanel.add(obtion2);
 		
-		obtion2TextField = new JTextField(question1.getAnswers().get(1));
-	    obtion2TextField.setColumns(10);
-	    obtion2TextField.setBounds(106, 101, 197, 28);
-	    choicesPanel.add(obtion2TextField);
+		obtion2textField = new JTextField(question1.getAnswers().get(1));
+	    obtion2textField.setColumns(10);
+	    obtion2textField.setBounds(106, 101, 197, 28);
+	    choicesPanel.add(obtion2textField);
 		
 		JLabel obtion3 = new JLabel("Obtion 3");
 		obtion3.setForeground(Color.WHITE);
@@ -154,7 +158,27 @@ public class EditQuestionView extends javax.swing.JFrame {
 		obtion4.setBounds(313, 102, 118, 25);
 		choicesPanel.add(obtion4);
 		
-	    obtion4textField = new JTextField(question1.getAnswers().get(3));
+	    obtion4textField = new JTextField(){
+            @Override
+            protected Document createDefaultModel() {
+                return new PlainDocument() {
+                    @Override
+                    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                        if (str == null) {
+                            return;
+                        }
+                        String currentText = getText(0, getLength());
+                        String newText = currentText.substring(0, offs) + str + currentText.substring(offs);
+                        if (newText.matches("(?!\\s+$)[a-zA-Z0-9\\s]+")) {
+                            super.insertString(offs, str, a);
+                        }
+                    }
+                };
+            }
+        };
+
+	    		
+	    obtion4textField.setText(question1.getAnswers().get(3));
 	    obtion4textField.setColumns(10);
 	    obtion4textField.setBounds(423, 101, 197, 28);
 	    choicesPanel.add(obtion4textField);
@@ -296,24 +320,72 @@ public class EditQuestionView extends javax.swing.JFrame {
                     public void mouseClicked(MouseEvent e) {
                     	
                 			int q=0;
+                			int difficulty = 0;
+               	         if (easy.isSelected()) {
+               	        	    difficulty = 1;
+               	        	} else if (medium.isSelected()) {
+               	        	    difficulty = 2;
+               	        	} else if (hard.isSelected()) {
+               	        	    difficulty = 3;
+               	        	}
+               	      int correctAns=(int) comboBox.getSelectedItem();
+               	         System.out.println(question1.getQuestion().equals(questionTextField.getText()));
+               	         System.out.println((question1.getAnswers().get(0)).equals(obtion1textField.getText()));
+               	         System.out.println((question1.getAnswers().get(1)).equals(obtion2textField.getText()));
+               	         System.out.println((question1.getAnswers().get(2)).equals(obtion3textField.getText()));
+               	         System.out.println((question1.getAnswers().get(3)).equals(obtion4textField.getText()));
+               	         if(question1.getCorrect_ans()==correctAns) {
+                   	         System.out.println("true");
+
+               	         }
+               	         if(question1.getDifficulty()==difficulty) {
+                   	         System.out.println("true");
+
+               	         }
+
+
+
+
+
+               	         
+               	         
                 			try {
                 				/*check if the admin full all the text field and if not nullPointerException will throw*/
-                				if(comboBox.getSelectedItem().equals("...")||questionTextField.getText().isEmpty()|| obtion1TeksField.getText().isEmpty() || obtion2TextField.getText().isEmpty() || obtion3textField.getText().isEmpty() || obtion3textField.getText().isEmpty()
-                						|| (!easy.isSelected() && !medium.isSelected() && !hard.isSelected())) {
-                					throw new NullPointerException("return value is null");
-                				}		
+                				if(comboBox.getSelectedItem().equals("...")|| questionTextField.getText().trim().isEmpty()|| obtion1textField.getText().trim().isEmpty() || obtion2textField.getText().trim().isEmpty() || obtion3textField.getText().trim().isEmpty() || obtion4textField.getText().trim().isEmpty()
+               						 ||(!easy.isSelected() && !medium.isSelected() && !hard.isSelected())) {
+               					throw new NullPointerException("return value is null");
+               				}		
                 				} catch( NullPointerException e2) {
                 					q=1;
                 					JOptionPane.showMessageDialog(null, "full all field!",
                 							"warning", JOptionPane.WARNING_MESSAGE);
                 				}
+                			
+                			if(question1.getQuestion().equals(questionTextField.getText()) && (question1.getAnswers().get(0)).equals(obtion1textField.getText())&& question1.getAnswers().get(1).equals(obtion2textField.getText())&& question1.getAnswers().get(2).equals(obtion3textField.getText())
+                					&& question1.getAnswers().get(3).equals(obtion4textField.getText()) && question1.getCorrect_ans()==correctAns && question1.getDifficulty()==difficulty) {
+                				q=1;
+                				System.out.println("we here");
+            	        	    JOptionPane.showMessageDialog(EditQuestionView.this, "You dont make any changes", "no changes", JOptionPane.INFORMATION_MESSAGE);
+            	        	    return;
+                			
+         
+                			}
                 			if(q==0) {
                 			String que= questionTextField.getText();
-                			List<String> answers = new ArrayList<String>(); //holds the question’s answers.
-                			 String answer1 = obtion1TeksField.getText();
-                	         String answer2 = obtion2TextField.getText();
-                	         String answer3 = obtion3textField.getText();
-                	         String answer4 = obtion4textField.getText();
+                			String questionBody;
+                			questionBody= (String)questionTextField.getText();
+                			
+                			Boolean n= EditQuestionController.getInstance().isDulicated(questionBody, question1.getQuestionId());
+            				if (n==true) {
+            	                JOptionPane.showMessageDialog(null, "This question is exists", "Error", JOptionPane.ERROR_MESSAGE);
+            	                return;
+            				}
+            				
+                			List<String> answers = new ArrayList<String>(); //holds the questionï¿½s answers.
+                			String answer1 = obtion1textField.getText().trim();
+            		        String answer2 = obtion2textField.getText().trim();
+            		        String answer3 = obtion3textField.getText().trim();
+            		        String answer4 = obtion4textField.getText().trim();
                 	         if (answer1.equals(answer2) || answer1.equals(answer3) || answer1.equals(answer4) ||
                 	                    answer2.equals(answer3) || answer2.equals(answer4) || answer3.equals(answer4)) {
                 	                JOptionPane.showMessageDialog(null, "All answers should be different.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -325,7 +397,7 @@ public class EditQuestionView extends javax.swing.JFrame {
                 	        	 answers.add(answer3);
                 	        	 answers.add(answer4);
                 	         }
-                	         int difficulty = 0;
+                	        difficulty = 0;
                 	         if (easy.isSelected()) {
                 	        	    difficulty = 1;
                 	        	} else if (medium.isSelected()) {
@@ -334,7 +406,7 @@ public class EditQuestionView extends javax.swing.JFrame {
                 	        	    difficulty = 3;
                 	        	}
                 	         
-                	         int correctAns=(int) comboBox.getSelectedItem(); // Add 1 to match question indexes (1-based)
+                	         correctAns=(int) comboBox.getSelectedItem(); // Add 1 to match question indexes (1-based)
                 	         
                 	         try {
                 	        	 EditQuestionController.getInstance().updateQuestion(questionid, que, answers, correctAns, difficulty);	        	    

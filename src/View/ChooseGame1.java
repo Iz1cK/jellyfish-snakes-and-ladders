@@ -26,6 +26,10 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.PlainDocument;
 
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
@@ -477,7 +481,24 @@ public class ChooseGame1 extends JFrame {
 		layeredPane.setBounds(770, 450, 300, 41);
 		contentPane.add(layeredPane);*/
 
-		TextField nicknameField = new TextField();
+		TextField nicknameField = new TextField() {
+	            @Override
+	            protected Document createDefaultModel() {
+	                return new PlainDocument() {
+	                    @Override
+	                    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+	                        if (str == null) {
+	                            return;
+	                        }
+	                        String currentText = getText(0, getLength());
+	                        String newText = currentText.substring(0, offs) + str + currentText.substring(offs);
+	                        if (newText.matches("(?!\\s+$)[a-zA-Z0-9\\s]+")) {
+	                            super.insertString(offs, str, a);
+	                        }
+	                    }
+	                };
+	            }
+	        };
 		nicknameField.setFont(new Font("Gill Sans Ultra Bold", Font.PLAIN, 20));
 		nicknameField.setHint("insert your nickname");
 		//nicknameField.setFont(new Font("Gill Sans Ultra Bold", Font.PLAIN, 25));

@@ -26,6 +26,12 @@ public class EditQuestionController {
         sysdata.updateQuestion(questionid, updatedQuestion);
 		
 	}
+	
+	public Boolean isDulicated(String questionBody, int questionid) {
+		boolean result=sysdata.isDuplicateQuestion2(questionBody, questionid);
+		return result;
+		
+	}
 
 
 

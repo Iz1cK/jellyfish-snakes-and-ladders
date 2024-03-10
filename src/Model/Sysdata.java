@@ -240,6 +240,13 @@ public class Sysdata {
 			return this.questionsList.stream().filter(o -> o.getQuestion().equals(questionBody)).findFirst().isPresent();
 		}
 		
+		public boolean isDuplicateQuestion2(String questionBody, int questionId) {
+		    return this.questionsList.stream()
+		            .filter(o -> o.getQuestion().equals(questionBody) && o.getQuestionId() != questionId)
+		            .findFirst()
+		            .isPresent();
+		}
+		
 		/**********************************game history**************************************/
 		
 		public List<Game> getScoresList() {
