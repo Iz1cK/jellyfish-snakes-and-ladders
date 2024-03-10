@@ -1,9 +1,14 @@
 package Controller;
 
+import java.awt.Image;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 import Model.Board;
 import Model.COLORS;
@@ -31,7 +36,15 @@ public class GameBoardController {
 	static questionPopUpController QPUC= questionPopUpController.getInstance();
 	private GameBoardView gameBoardView;
 	private HashMap<Player, Integer> lastCheckedSquarePosition = new HashMap<>();
+	private HashMap<Player, String> playersPowerUps = new HashMap<>();
+	private boolean freezeActive = false;
+	private boolean anotherTurnActive = false;
+	private static int turnCount = 0;
+	private boolean snakeShieldActive = false;
+	private boolean ladderPowerupActive = false;
+	private boolean snakePowerupActive = false;
 	private int previousPosition;
+	public static boolean powerupsEnabled = true;
 	
 	public void setGameBoardView(GameBoardView gameBoardView) {
 	    this.gameBoardView = gameBoardView;
@@ -62,13 +75,13 @@ public class GameBoardController {
 	
 	public void playTurn() {
 		GameBoardView.rolling = true;
-		ArrayList<Player> players = this.gameBoard.getPlayers();
 		Player currentPlayer = this.gameBoard.getCurrentPlayerTurn();
 		Game game = new Game(this.gameBoard.getDifficultyBoard(), this.gameBoard ,currentPlayer, this.gameBoard.getPlayers(), GameBoardView.timerLabel.getText());
 		int boardSize = (int) Math.pow(this.gameBoard.getRows(), 2);
 		lastCheckedSquarePosition = new HashMap<>();
 		HashMap<Player, Integer> playersPositions = this.gameBoard.getPlayersPositions();
 		previousPosition = playersPositions.get(currentPlayer);
+		
 		switch(diceRoll) {
 		case "0":
 			System.out.println("you got 0, you dont move");
@@ -126,19 +139,12 @@ public class GameBoardController {
 			
 			if(this.checkSquares(currentPlayer, false)) {
 				gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer),gameBoard, previousPosition, ()->{
-					int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
-					this.gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
-					GameBoardView.rolling = false;
-					gameBoardView.updatePlayersList(players, playersPositions, this.gameBoard);
+					goNext();
 				});
 			} else {
-				int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
-				this.gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
-				GameBoardView.rolling = false;
-				gameBoardView.updatePlayersList(players, playersPositions, this.gameBoard);
+				goNext();
 			}
 		});
-//		gameBoardView.updatePlayerPositionsOnBoard(this.gameBoard.getDifficultyBoard(), players, playersPositions,this.gameBoard.getRows(),this.gameBoard.getColumns());
 	}
 	
 	private boolean checkSquares(Player currentPlayer, boolean noQuestions) {
@@ -148,7 +154,6 @@ public class GameBoardController {
 	        return false;
 	    }
 		 
-
 		Square landingSquare = this.gameBoard.getSquareByPosition(playersPositions.get(currentPlayer));
 		String landingSquareType = this.gameBoard.checkLandingSquare(landingSquare);
 		switch(landingSquareType) {
@@ -214,47 +219,69 @@ public class GameBoardController {
 	    return new QuestionCallback() {
 	        @Override
 	        public void onQuestionAnswered(boolean isCorrect) {
-	        	ArrayList<Player> players = gameBoard.getPlayers();
-	        	HashMap<Player,Integer> playersPositions = gameBoard.getPlayersPositions();
-	        	Game game = new Game(gameBoard.getDifficultyBoard(), gameBoard ,currentPlayer, gameBoard.getPlayers(), GameBoardView.timerLabel.getText());
-	    		int boardSize = (int) Math.pow(gameBoard.getRows(), 2);
-	            System.out.println("Current player is: " + currentPlayer);
-	            int penaltyOrReward = calculatePenaltyOrReward(difficulty, isCorrect);
-	            previousPosition = playersPositions.get(currentPlayer);
-	            updatePlayerPosition(currentPlayer, penaltyOrReward);
-	            if(playersPositions.get(currentPlayer) >= boardSize) {
-	            	playersPositions.put(currentPlayer, boardSize);
-	            }
-	            gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, previousPosition, ()->{
-//	            	System.out.println("Moving " + currentPlayer.getPlayername() + " from " + previousPosition + " to " + playersPositions.get(currentPlayer)); 
-	            	if(playersPositions.get(currentPlayer) == boardSize) {
-	            		 sysdata.addGameHistory(game);
-	            		 FinalPage FP = new FinalPage(game);
-	            		 FP.setVisible(true);
-	            		 gameBoardView.setVisible(false);
-	            		 gameBoardView.dispose();
-	            		 System.out.println("PLAYER " + currentPlayer.getPlayername() + " WON!");
-	            	 }
-	            	 
-	            	 if(checkSquares(currentPlayer, true)) {
-	     				gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, previousPosition, ()->{
-	     					int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
-	     					gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
-	     					GameBoardView.rolling = false;
-	     					gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
-	     				});
-	     			} else {
-	     				int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
-	     				gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
-	     				GameBoardView.rolling = false;
-	     				gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
-	     			}
-	            	 
-	            });
+	        	if(powerupsEnabled) {
+	        		if(playersPowerUps.containsKey(currentPlayer)) {
+	        			goNext();
+	        			return;
+	        		}
+	        		if(!isCorrect) {
+	        			System.out.println("Answered incorrectly, go Next!");
+	        			goNext();
+	        			return;
+	        		}
+	        		
+	        		System.out.println("Answered Correctly, get powerup!");
+	        		Random random = new Random();
+	        		int powerupNumber = random.nextInt(3) + 1;
+	        		String powerupImage = "Tier" + difficulty + "-" + powerupNumber;
+	        		System.out.println("Player " + currentPlayer.getPlayername() + " got powerup " + powerupImage);
+	        		ImageIcon powerUpIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + powerupImage + ".png"));
+	        		Image powerUpIconScaled = powerUpIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+	        		GameBoardView.powerUpLabel.setIcon(new ImageIcon(powerUpIconScaled));
+	        		playersPowerUps.put(currentPlayer, powerupImage);
+	        		goNext();
+	        	} else {
+	        		int penaltyOrReward = calculatePenaltyOrReward(difficulty, isCorrect);
+	        		ArrayList<Player> players = gameBoard.getPlayers();
+		        	HashMap<Player,Integer> playersPositions = gameBoard.getPlayersPositions();
+		        	Game game = new Game(gameBoard.getDifficultyBoard(), gameBoard ,currentPlayer, gameBoard.getPlayers(), GameBoardView.timerLabel.getText());
+		    		int boardSize = (int) Math.pow(gameBoard.getRows(), 2);
+		            previousPosition = playersPositions.get(currentPlayer);
+		            updatePlayerPosition(currentPlayer, penaltyOrReward);
+		            if(playersPositions.get(currentPlayer) >= boardSize) {
+		            	playersPositions.put(currentPlayer, boardSize);
+		            }
+		            gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, previousPosition, ()->{
+//		            	System.out.println("Moving " + currentPlayer.getPlayername() + " from " + previousPosition + " to " + playersPositions.get(currentPlayer)); 
+		            	if(playersPositions.get(currentPlayer) == boardSize) {
+		            		 sysdata.addGameHistory(game);
+		            		 FinalPage FP = new FinalPage(game);
+		            		 FP.setVisible(true);
+		            		 gameBoardView.setVisible(false);
+		            		 gameBoardView.dispose();
+		            		 System.out.println("PLAYER " + currentPlayer.getPlayername() + " WON!");
+		            	 }
+		            	 
+		            	 if(checkSquares(currentPlayer, true)) {
+		     				gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer), gameBoard, previousPosition, ()->{
+		     					int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
+		     					gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
+		     					GameBoardView.rolling = false;
+		     					gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
+		     				});
+		     			} else {
+		     				int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
+		     				gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
+		     				GameBoardView.rolling = false;
+		     				gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
+		     			}
+		            	 
+		            });
+	        	}
 	        }
 	    };
 	}
-
+	
 	private int calculatePenaltyOrReward(int difficulty, boolean isCorrect) {
 	    if (isCorrect) {
 	        return difficulty == 3 ? 1 : 0;
@@ -262,7 +289,7 @@ public class GameBoardController {
 	        return -difficulty;
 	    }
 	}
-
+	
 	private void updatePlayerPosition(Player currentPlayer, int move) {
 	    HashMap<Player, Integer> playersPositions = gameBoard.getPlayersPositions();
 	    int newPosition = Math.max(playersPositions.get(currentPlayer) + move, 1); // Ensure position doesn't go below 1
@@ -270,6 +297,34 @@ public class GameBoardController {
 	    playersPositions.put(currentPlayer, newPosition);
 	}
 	
+	public void goNext() {
+		if(powerupsEnabled && anotherTurnActive) {
+			anotherTurnActive = false;
+			return;
+		}
+		ArrayList<Player> players = gameBoard.getPlayers();
+    	HashMap<Player,Integer> playersPositions = gameBoard.getPlayersPositions();
+		int newCurrentPlayerIndex = (players.indexOf(gameBoard.getCurrentPlayerTurn()) + 1) % players.size();
+		gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
+		Player newCurrentPlayer = gameBoard.getCurrentPlayerTurn();
+		GameBoardView.rolling = false;
+		gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
+		if(powerupsEnabled) {
+			ImageIcon powerUpIcon;
+			if(playersPowerUps.containsKey(newCurrentPlayer)) {
+				powerUpIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + playersPowerUps.get(newCurrentPlayer) + ".png"));
+			} else {
+				powerUpIcon = new ImageIcon(GameBoardView.class.getResource("/img/noPowerup.png"));
+			}
+			Image powerUpIconScaled = powerUpIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+			GameBoardView.powerUpLabel.setIcon(new ImageIcon(powerUpIconScaled));
+			if(freezeActive) {
+				freezeActive = false;
+				goNext();
+			}
+		}
+	}
+
 	public void showQuestion(int difficulty, Player currentPlayer) {
 		QuestionCallback callback = generateQuestionCallback(difficulty, currentPlayer);
 		Random random = new Random();
@@ -302,6 +357,60 @@ public class GameBoardController {
 	        obj.showMessage(message, questionBody);
 	        
 		}
+	}
+	
+	public void activatePowerup() {
+		Player currentPlayer = gameBoard.getCurrentPlayerTurn();
+		if(playersPowerUps.containsKey(currentPlayer)) {
+			String powerup = playersPowerUps.get(currentPlayer);
+			String tierAndLevel = powerup.split("Tier")[1];
+			int tier = Integer.parseInt(tierAndLevel.split("-")[0]);
+			int number = Integer.parseInt(tierAndLevel.split("-")[1]);
+			
+			switch(powerup) {
+			case "Tier1-1":
+				String[] tier1powerupOptions = {"4","5","6","E","M","H"};
+				List<String> tier1powerupList = Arrays.asList(tier1powerupOptions);
+				gameBoard.setDiceOptions(new ArrayList<>(tier1powerupList));
+				break;
+			case "Tier1-2":
+				freezeActive = true;
+				break;
+			case "Tier1-3":
+				
+				break;
+			case "Tier2-1":
+				ladderPowerupActive = true;
+				break;
+			case "Tier2-2":
+				snakePowerupActive = true;
+				break;
+			case "Tier2-3":
+				anotherTurnActive = true;
+				break;
+			case "Tier3-1":
+				snakeShieldActive = true;
+				break;
+			case "Tier3-2":
+				break;
+			case "Tier3-3":
+				String[] tier3powerupOptions = {"2","4","6","8","10","12"};
+				List<String> tier3powerupList = Arrays.asList(tier3powerupOptions);
+				gameBoard.setDiceOptions(new ArrayList<>(tier3powerupList));
+				break;
+			}
+			
+			System.out.println("Tier: " + tier + "\nNumber: " + number);
+		}
+	}
+	
+	private void clearPowerup() {
+		gameBoard.setDefaultDiceOptions();
+		freezeActive = false;
+		anotherTurnActive = false;
+		snakeShieldActive = false;
+		ladderPowerupActive = false;
+		snakePowerupActive = false;
 	}
 }
 

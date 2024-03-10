@@ -17,7 +17,10 @@ import java.awt.event.WindowEvent;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,6 +40,7 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 import Controller.questionPopUpController;
 
+
 public class MessageDialog extends JDialog {
 
     /**
@@ -50,16 +54,25 @@ public class MessageDialog extends JDialog {
     private MessageType messageType = MessageType.CANCEL;
     public boolean correct;
 	questionPopUpController controller= questionPopUpController.getInstance();
-
+	
+	AudioTest audio=new AudioTest();
+	
 
     public MessageDialog(JFrame gbv) {
+    	
         super(gbv, true);
         this.fram = new JFrame();
         initComponents();
         init();
+        
     }
 
-    private void init() {
+    
+
+
+    
+    private void init()  {
+    	
     	setBackground(new Color(0, 0, 0, 0));
         StyledDocument doc = txt.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
@@ -129,7 +142,7 @@ public class MessageDialog extends JDialog {
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-    	
+    	//start
 
         background1 = new Background();
         cmdOK = new ButtonCustom();
@@ -145,11 +158,26 @@ public class MessageDialog extends JDialog {
         
 
         cmdOK.setText("OK");
+      //  System.out.println("closing is here");
         cmdOK.setFont(new Font("sansserif", 0, 14)); // NOI18N
         cmdOK.setPreferredSize(new Dimension(100, 50)); 
         cmdOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
+            	   System.out.println("closing is here");
+            	 try {
+         			AudioTest.sounds("P");
+         		} catch (UnsupportedAudioFileException e1) {
+         			// TODO Auto-generated catch block
+         			e1.printStackTrace();
+         		} catch (IOException e1) {
+         			// TODO Auto-generated catch block
+         			e1.printStackTrace();
+         		} catch (LineUnavailableException e1) {
+         			// TODO Auto-generated catch block
+         			e1.printStackTrace();
+         		}
                 cmdOKActionPerformed(evt);
+               
             }
         });
 
@@ -224,6 +252,7 @@ public class MessageDialog extends JDialog {
    
     private void cmdOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdOKActionPerformed
         messageType = MessageType.OK;
+       
         closeMessage();
     }//GEN-LAST:event_cmdOKActionPerformed
 

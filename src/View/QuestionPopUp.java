@@ -11,6 +11,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -56,7 +67,8 @@ public class QuestionPopUp extends JDialog {
 	private QuestionCallback callback;
 	private int level;
 
-    
+
+	AudioTest audio= new AudioTest();
     // End of variables declaration//GEN-END:variables
     public QuestionPopUp(QuestionCallback callback, int level, JFrame gameBoardView) {
     	super(gameBoardView,true);
@@ -430,7 +442,21 @@ public class QuestionPopUp extends JDialog {
                 Timer timer = new Timer(2000, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                    	
+                    	try {
+							AudioTest.sounds("S");
+						} catch (UnsupportedAudioFileException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (LineUnavailableException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
                         MessageDialog obj = new MessageDialog(fram);
+                        
                         if(difficulty==1) {
                         obj.showMessage("CORRECT", "You get a Tier 1 powerup!");
                         }

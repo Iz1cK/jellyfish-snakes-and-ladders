@@ -96,7 +96,7 @@ public class HomeView extends JFrame {
 				});
 	     
 	     /*that's for game history */
-	     JLabel gameHistory = new JLabel("GANE HISTORY");
+	     JLabel gameHistory = new JLabel("GAME HISTORY");
 	     gameHistory.setForeground(Color.WHITE);
 	     gameHistory.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 28));
 	     gameHistory.setBounds(532, 335, 303, 51);

@@ -499,11 +499,11 @@ int count=0;
 		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
 		    	}
 		    	else {
-		    	//y=y+46;
+		    	y=y+46;
 		    	iconChosed=true;
 		    	colorsCounter++;
 		    	color=PLAYERCOLORS.ORANGE;
-		    	if(readyToStart==0) {
+		    	if(colorsCounter<=currentNumberOfPlayers) {
 		    		selectedPlayer.setVisible(true);
 			    	selectedPlayer.setBounds(player2.getBounds());
 			      //  playerN2=true;

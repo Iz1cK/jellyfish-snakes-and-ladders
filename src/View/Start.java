@@ -12,8 +12,7 @@ public class Start {
 		sysdata.readQuestions();
 		sysdata.readAdmins();
 		sysdata.readGameHistory();
-		System.out.println(sysdata.questionsList.toString());
-		
+
 		// TODO Auto-generated method stub
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
