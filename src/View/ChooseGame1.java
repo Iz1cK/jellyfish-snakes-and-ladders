@@ -580,14 +580,14 @@ public class ChooseGame1 extends JFrame {
 		    		JOptionPane.showMessageDialog(contentPane, "please choose level difficulty");
 		    	}
 		    	else {
-		    	y=y+46;
-		    	iconChosed=true;
-		    	colorsCounter++;
-		    	color=PLAYERCOLORS.ORANGE;
-		    	if(colorsCounter<=currentNumberOfPlayers) {
-		    		selectedPlayer.setVisible(true);
-			    	selectedPlayer.setBounds(player2.getBounds());
-			      //  playerN2=true;
+			    	//y=y+46;
+			    	iconChosed=true;
+			    	colorsCounter++;
+			    	color=PLAYERCOLORS.ORANGE;
+			    	if(readyToStart==0) {
+			    		selectedPlayer.setVisible(true);
+				    	selectedPlayer.setBounds(player2.getBounds());
+				      //  playerN2=true;
 			    	playerNumber="playerN2";
 		    	}
 		    }
