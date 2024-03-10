@@ -283,17 +283,17 @@ public class ChooseGame1 extends JFrame {
 			ImageIcon testMinus= resized(ImageIconMinus.getImage(), 90, 90);
 			minus.setIcon(testMinus);
 	        minus.setBounds(801, 178, 90, 90);
-	        minus.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseClicked(MouseEvent e) {
-	                int currentNumberOfPlayers = Integer.parseInt(numbers.getText());
-	                if (currentNumberOfPlayers > 2) {
-	                    currentNumberOfPlayers--;
-	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
-	                  
-	                }
-	            }
-	        });
+//	        minus.addMouseListener(new MouseAdapter() {
+//	            @Override
+//	            public void mouseClicked(MouseEvent e) {
+//	                int currentNumberOfPlayers = Integer.parseInt(numbers.getText());
+//	                if (currentNumberOfPlayers > 2) {
+//	                    currentNumberOfPlayers--;
+//	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
+//	                  
+//	                }
+//	            }
+//	        });
 	        contentPane.add(minus);
 	        
 	        easy.addMouseListener(new MouseAdapter() {
@@ -538,6 +538,23 @@ public class ChooseGame1 extends JFrame {
 	                }
 	                difficltyLeve_1.setText("NEXT");
 	              
+	            }
+	        });
+		 
+		 minus.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	                int currentNumberOfPlayers = Integer.parseInt(numbers.getText());
+	                if (currentNumberOfPlayers > 2) {
+	                    currentNumberOfPlayers--;
+	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
+	                  
+	                }
+	                if (playerID == currentNumberOfPlayers-1) {
+			            difficltyLeve_1.setText("play");
+			            
+			        }
+	                
 	            }
 	        });
 		JLabel next = new JLabel();
@@ -974,6 +991,8 @@ public class ChooseGame1 extends JFrame {
 			            difficltyLeve_1.setText("play");
 			            
 			        }
+				        
+				        
 				       
 				        if(difficltyLeve_1.getText().equals("play") && allPlayers.size()==playersNumber) {
 				    		readyToStart=1;
@@ -996,13 +1015,9 @@ public class ChooseGame1 extends JFrame {
 		    }
 		 //   }
 
-			private int parseInt(String text) {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
 			   
 		});
+		
 		
     }
 
