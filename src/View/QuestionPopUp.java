@@ -66,9 +66,10 @@ public class QuestionPopUp extends JDialog {
 	questionPopUpController controller= questionPopUpController.getInstance();
 	private QuestionCallback callback;
 	private int level;
+	private AudioTest AT = AudioTest.getInstance();
 
 
-	AudioTest audio= new AudioTest();
+//	AudioTest audio= new AudioTest();
     // End of variables declaration//GEN-END:variables
     public QuestionPopUp(QuestionCallback callback, int level, JFrame gameBoardView) {
     	super(gameBoardView,true);
@@ -444,7 +445,7 @@ public class QuestionPopUp extends JDialog {
                     public void actionPerformed(ActionEvent e) {
                     	
                     	try {
-							AudioTest.sounds("S", "correctanswer.wav");
+							AT.startSounds("correctanswer.wav");
 						} catch (UnsupportedAudioFileException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
