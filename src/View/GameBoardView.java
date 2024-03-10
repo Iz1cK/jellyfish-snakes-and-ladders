@@ -138,7 +138,7 @@ public class GameBoardView extends JFrame {
 ////////        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
 ////////        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
         aplayers.add(new Player(3,"aseel",PLAYERCOLORS.GREEN));
-////////        aplayers.add(new Player(4,"ahmad",PLAYERCOLORS.WHITE));
+        aplayers.add(new Player(4,"ahmad",PLAYERCOLORS.WHITE));
 ////////        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
 ////////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
 ////////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));

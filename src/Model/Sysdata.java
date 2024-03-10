@@ -146,7 +146,20 @@ public class Sysdata {
 			}
 			return easy && medium && hard;
 		}
-		
+//		
+//		/*********************************************************************************
+//		 * Checks if the Questions Json exists if not creates it
+//		 */
+//		
+//		public void checkQuestionsJson() {
+//			try {
+//				this.readJsonFile(QUESTIONS_JSONOBJECT, QUESTIONS_FILENAME);
+//			} catch (ParseException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		
 		/*********************************************************************************
 		 * Gets a question and adds it to questionsList, and then writes it to questions
 		 * json file
