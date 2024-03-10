@@ -252,25 +252,25 @@ public class ChooseGame1 extends JFrame {
 			ImageIcon testPlus= resized(ImageIconPlus.getImage(), 90, 90);
 			plus.setIcon(testPlus);
 	        plus.setBounds(1009, 182, 90, 90);
-	        plus.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseClicked(MouseEvent e) {
-	                currentNumberOfPlayers = Integer.parseInt(numbers.getText());
-	                
-	                if (isEasy && currentNumberOfPlayers < 3) {
-	                    currentNumberOfPlayers++;
-	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
-	                } else if (isMedium && currentNumberOfPlayers < 6) {
-	                    currentNumberOfPlayers++;
-	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
-	                } else if (isHard && currentNumberOfPlayers < 8) {
-	                    currentNumberOfPlayers++;
-	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
-	                }
-	              
-	              
-	            }
-	        });
+//	        plus.addMouseListener(new MouseAdapter() {
+//	            @Override
+//	            public void mouseClicked(MouseEvent e) {
+//	                currentNumberOfPlayers = Integer.parseInt(numbers.getText());
+//	                
+//	                if (isEasy && currentNumberOfPlayers < 3) {
+//	                    currentNumberOfPlayers++;
+//	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
+//	                } else if (isMedium && currentNumberOfPlayers < 6) {
+//	                    currentNumberOfPlayers++;
+//	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
+//	                } else if (isHard && currentNumberOfPlayers < 8) {
+//	                    currentNumberOfPlayers++;
+//	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
+//	                }
+//	              
+//	              
+//	            }
+//	        });
 	        contentPane.add(plus);
     
 	        
@@ -521,6 +521,25 @@ public class ChooseGame1 extends JFrame {
 		difficltyLeve_1.setBounds(901, 577, 155, 41);
 		contentPane.add(difficltyLeve_1);
 		
+		 plus.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	                currentNumberOfPlayers = Integer.parseInt(numbers.getText());
+	                
+	                if (isEasy && currentNumberOfPlayers < 3) {
+	                    currentNumberOfPlayers++;
+	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
+	                } else if (isMedium && currentNumberOfPlayers < 6) {
+	                    currentNumberOfPlayers++;
+	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
+	                } else if (isHard && currentNumberOfPlayers < 8) {
+	                    currentNumberOfPlayers++;
+	                    numbers.setText(Integer.toString(currentNumberOfPlayers));
+	                }
+	                difficltyLeve_1.setText("NEXT");
+	              
+	            }
+	        });
 		JLabel next = new JLabel();
 		//next.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));		
 		next.setBounds(829, 502, 300, 200);
@@ -830,23 +849,6 @@ public class ChooseGame1 extends JFrame {
 		    	String nickname = nicknameField.getText().trim();
 		    	int playersNumber = Integer.parseInt(numbers.getText());
 		    	
-//		    	if(difficltyLeve_1.getText().equals("play") && allPlayers.size()==playersNumber) {
-//		    		readyToStart=1;
-//		        	System.out.println("PLAY NOW START GAME");
-//		        	
-//		        	GameBoardController gbc = GameBoardController.getInstance();
-//	        		Board board = new Board(selectedDifficulty, allPlayers);
-//	        		board.generateBoard();
-//                    board.initiateQuestionSquares();
-//                    board.generateSnakesAndLadder();
-//	        		gbc.setGameBoard(board);
-//	        		GameBoardView gbv = new GameBoardView();
-//	        		gbv.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//	        		gbv.setVisible(true);
-//		        	dispose();
-//		        	return;
-//		        }
-		    //	else {
 		    		
 		    	if(isEasy==false && isMedium==false && isHard==false && nickname.equals("") && playerNumber.equals("none")  ) {
 		    		JOptionPane.showMessageDialog(contentPane, "please choose the game's parameters!");
@@ -891,6 +893,7 @@ public class ChooseGame1 extends JFrame {
 				        
 				        if(playersCounter<=playersNumber) {
 				        	playerID++;
+				        	
 				        //	System.out.println("A"+playerID);
 				        	Player player=new Player(playerID,nickname,color);
 				        	allPlayers.add(player);
@@ -968,9 +971,10 @@ public class ChooseGame1 extends JFrame {
 				        }
 				        
 				        if (playerID == playersNumber-1) {
-				            difficltyLeve_1.setText("play");
-				            
-				        }
+			            difficltyLeve_1.setText("play");
+			            
+			        }
+				       
 				        if(difficltyLeve_1.getText().equals("play") && allPlayers.size()==playersNumber) {
 				    		readyToStart=1;
 				        	System.out.println("PLAY NOW START GAME");
@@ -991,6 +995,11 @@ public class ChooseGame1 extends JFrame {
 		    	}
 		    }
 		 //   }
+
+			private int parseInt(String text) {
+				// TODO Auto-generated method stub
+				return 0;
+			}
 
 			   
 		});
