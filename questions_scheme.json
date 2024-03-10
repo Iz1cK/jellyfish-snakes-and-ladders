@@ -1,7 +1,7 @@
 {
   "questions": [
     {
-      "question": "What is the primary purpose of the software requirements document?",
+      "question": "What is the primary purpose of the software requirements document",
       "answers": [
         "Define user requirements and system specifications",
         "Describe system design details",
@@ -12,7 +12,7 @@
       "difficulty": 1
     },
     {
-      "question": "According to agile methods, why is producing a requirements document often deemed unnecessary?",
+      "question": "According to agile methods, why is producing a requirements document often deemed unnecessary",
       "answers": [
         "essential for system design",
         "Requirements change rapidly",
@@ -23,7 +23,7 @@
       "difficulty": 2
     },
     {
-      "question": "Which agile method uses incremental requirements engineering and expresses requirements as \u0027user stories\u0027?",
+      "question": "Which agile method uses incremental requirements engineering and expresses requirements as user stories",
       "answers": [
         "Waterfall Model",
         "Scrum",
@@ -34,7 +34,7 @@
       "difficulty": 1
     },
     {
-      "question": "What factor influences the level of detail in a requirements document for systems developed incrementally?",
+      "question": "What factor influences the level of detail in a requirements document for systems developed incrementally",
       "answers": [
         "Project budget",
         "Type of system and development approach",
@@ -45,7 +45,7 @@
       "difficulty": 2
     },
     {
-      "question": "In agile planning, how is the functionality of increments determined?",
+      "question": "In agile planning, how is the functionality of increments determined",
       "answers": [
         "By following a predetermined plan",
         "By customer feedback",
@@ -56,7 +56,7 @@
       "difficulty": 1
     },
     {
-      "question": "What is a key benefit of Agile in terms of project visibility?",
+      "question": "What is a key benefit of Agile in terms of project visibility",
       "answers": [
         "Limited visibility",
         "Poor visibility",
@@ -67,7 +67,7 @@
       "difficulty": 2
     },
     {
-      "question": "Why does Waterfall project management struggle with handling change?",
+      "question": "Why does Waterfall project management struggle with handling change",
       "answers": [
         "Poor quality testing",
         "Lack of customer feedback",
@@ -78,7 +78,7 @@
       "difficulty": 3
     },
     {
-      "question": "What drives success in Agile software development?",
+      "question": "What drives success in Agile software development",
       "answers": [
         "Embracing change, prioritizing quality, and open communication",
         "Strict adherence to initial project plans",
@@ -89,7 +89,7 @@
       "difficulty": 3
     },
     {
-      "question": "What is the primary focus of release planning in agile development?",
+      "question": "What is the primary focus of release planning in agile development",
       "answers": [
         "Long-term project milestones",
         "Short-term iteration goals",
@@ -100,7 +100,7 @@
       "difficulty": 3
     },
     {
-      "question": " What range may a requirement cover?",
+      "question": " What range may a requirement cover",
       "answers": [
         " High-level abstract to detailed specification",
         " Mathematical functions",
@@ -111,7 +111,7 @@
       "difficulty": 1
     },
     {
-      "question": "What ensures solutions are not pre-defined in a large software development project?",
+      "question": "What ensures solutions are not pre-defined in a large software development project",
       "answers": [
         "Detailed specifications",
         "Abstract requirements",
@@ -122,7 +122,7 @@
       "difficulty": 2
     },
     {
-      "question": "What are domain requirements based on?",
+      "question": "What are domain requirements based on",
       "answers": [
         "User preferences",
         "Operational domain",
@@ -133,7 +133,7 @@
       "difficulty": 1
     },
     {
-      "question": "What do functional requirements describe?",
+      "question": "What do functional requirements describe",
       "answers": [
         "System constraints",
         "User functionality",
@@ -144,7 +144,7 @@
       "difficulty": 1
     },
     {
-      "question": "What issue arises when requirements are not precisely stated?",
+      "question": "What issue arises when requirements are not precisely stated",
       "answers": [
         "Over-precision",
         "Under-interpretation",
@@ -155,7 +155,7 @@
       "difficulty": 2
     },
     {
-      "question": "What should requirements ideally be?",
+      "question": "What should requirements ideally be",
       "answers": [
         "Detailed and diverse",
         "Comprehensive and contradictory",
@@ -166,7 +166,7 @@
       "difficulty": 2
     },
     {
-      "question": "What issue arises due to implicitness in domain requirements?",
+      "question": "What issue arises due to implicitness in domain requirements",
       "answers": [
         "Over-specification",
         "Lack of clarity",
@@ -177,7 +177,7 @@
       "difficulty": 3
     },
     {
-      "question": "What is the main challenge in validating requirements?",
+      "question": "What is the main challenge in validating requirements",
       "answers": [
         "Technical complexity",
         "Stakeholder feedback",
@@ -188,7 +188,7 @@
       "difficulty": 3
     },
     {
-      "question": "What helps in gathering accurate requirements from stakeholders?",
+      "question": "What helps in gathering accurate requirements from stakeholders",
       "answers": [
         "Ambiguous statements",
         "Open-ended questions",
@@ -199,7 +199,7 @@
       "difficulty": 3
     },
     {
-      "question": "What is a formal, scheduled activity where a designer presents material about a design and peers evaluate the technical aspects?",
+      "question": "What is a formal, scheduled activity where a designer presents material about a design and peers evaluate the technical aspects",
       "answers": [
         "Inspection",
         "Walkthrough",
@@ -210,7 +210,7 @@
       "difficulty": 1
     },
     {
-      "question": "What type of review is primarily aimed at detecting errors and identifying risks?",
+      "question": "What type of review is primarily aimed at detecting errors and identifying risks",
       "answers": [
         "Management",
         "Peer Review",
@@ -221,7 +221,7 @@
       "difficulty": 1
     },
     {
-      "question": "What is the primary objective of reviews regarding error detection?",
+      "question": "What is the primary objective of reviews regarding error detection",
       "answers": [
         "Product approval",
         "Identifying risks",
@@ -232,7 +232,7 @@
       "difficulty": 1
     },
     {
-      "question": "What is the primary method of review in Scrum after completing each iteration?",
+      "question": "What is the primary method of review in Scrum after completing each iteration",
       "answers": [
         "Inspection",
         "Walkthrough",
@@ -243,7 +243,7 @@
       "difficulty": 2
     },
     {
-      "question": "What is a secondary function of management in the review process?",
+      "question": "What is a secondary function of management in the review process",
       "answers": [
         "Identifying risks",
         "Certifying correctness",
@@ -254,7 +254,7 @@
       "difficulty": 2
     },
     {
-      "question": "What type of review involves a specialist checking a document for conformity with established standards?",
+      "question": "What type of review involves a specialist checking a document for conformity with established standards",
       "answers": [
         "Program Inspections",
         "Walkthrough",
@@ -265,7 +265,7 @@
       "difficulty": 2
     },
     {
-      "question": "What is the main purpose of a Detailed (Critical) Design Review?",
+      "question": "What is the main purpose of a Detailed (Critical) Design Review",
       "answers": [
         "Approval of a product",
         "Approval of development plan",
@@ -276,7 +276,7 @@
       "difficulty": 3
     },
     {
-      "question": "What is the primary function of a peer review?",
+      "question": "What is the primary function of a peer review",
       "answers": [
         "Identifying risks",
         "Encouraging uniformity",
@@ -287,7 +287,7 @@
       "difficulty": 3
     },
     {
-      "question": "Which review type does not require the execution of a system and can be used before implementation?",
+      "question": "Which review type does not require the execution of a system and can be used before implementation",
       "answers": [
         "Quality Review",
         "Program Inspections",
@@ -298,7 +298,7 @@
       "difficulty": 3
     },
     {
-      "question": "What does software architecture encompass?",
+      "question": "What does software architecture encompass",
       "answers": [
         "Structure, Behavior, Interaction",
         "Design, Implementation, Testing",
@@ -309,7 +309,7 @@
       "difficulty": 1
     },
     {
-      "question": "What is the fundamental organization of a system, according to IEEE 1471-2000?",
+      "question": "What is the fundamental organization of a system, according to IEEE 1471-2000",
       "answers": [
         "Components, Constraints, Environment",
         "Elements, Form, Rationale",
@@ -320,7 +320,7 @@
       "difficulty": 2
     },
     {
-      "question": "What are Architectural patterns based on?",
+      "question": "What are Architectural patterns based on",
       "answers": [
         "Unique system organization",
         "Trial and error",
@@ -331,172 +331,172 @@
       "difficulty": 1
     },
     {
-      "question": "What do common sector-specific applications share?",
+      "question": "What do common sector-specific applications share",
       "answers": [
-        " Unique characteristics",
-        " Business functions",
-        " Design principles",
-        " Operational domains"
+        "Unique characteristics",
+        "Business functions",
+        "Design principles",
+        "Operational domains"
       ],
       "correct_ans": 2,
       "difficulty": 1
     },
     {
-      "question": " What aspect does architecture have?",
+      "question": "What aspect does architecture have",
       "answers": [
-        " Dynamic",
-        " Static",
-        " Temporal",
-        " Structural"
+        "Dynamic",
+        "Static",
+        "Temporal",
+        "Structural"
       ],
       "correct_ans": 3,
       "difficulty": 2
     },
     {
-      "question": " What is a system�s prescriptive architecture?",
+      "question": "What is a system�s prescriptive architecture",
       "answers": [
-        " As-conceived architecture",
-        " As-implemented architecture",
-        " As-intended architecture",
-        " As-realized architecture"
+        "As-conceived architecture",
+        "As-implemented architecture",
+        "As-intended architecture",
+        "As-realized architecture"
       ],
       "correct_ans": 3,
       "difficulty": 2
     },
     {
-      "question": " What often leads to direct modification of a system\u0027s descriptive architecture?",
+      "question": "What often leads to direct modification of a system\u0027s descriptive architecture",
       "answers": [
-        " Developer collaboration",
-        " Adequate documentation",
-        " Perception of short deadlines",
-        " Long-term planning"
+        "Developer collaboration",
+        "Adequate documentation",
+        "Perception of short deadlines",
+        "Long-term planning"
       ],
       "correct_ans": 3,
       "difficulty": 3
     },
     {
-      "question": " What is architectural drift?",
+      "question": "What is architectural drift",
       "answers": [
-        " Introduction of design decisions not included in the prescriptive architecture",
-        " Violation of prescriptive architecture",
-        " Introduction of new design decisions",
-        " Consistency with prescriptive architecture"
+        "Introduction of design decisions not included in the prescriptive architecture",
+        "Violation of prescriptive architecture",
+        "Introduction of new design decisions",
+        "Consistency with prescriptive architecture"
       ],
       "correct_ans": 1,
       "difficulty": 3
     },
     {
-      "question": " What is architectural recovery?",
+      "question": "What is architectural recovery",
       "answers": [
-        " Determining a system�s architecture from its implementation-level artifacts",
-        " Modification of system architecture",
-        " Documentation of prescriptive architecture",
-        " Testing of descriptive architecture"
+        "Determining a system�s architecture from its implementation-level artifacts",
+        "Modification of system architecture",
+        "Documentation of prescriptive architecture",
+        "Testing of descriptive architecture"
       ],
       "correct_ans": 1,
       "difficulty": 3
     },
     {
-      "question": " What type of maintenance involves fixing bugs and vulnerabilities in the system?",
+      "question": "What type of maintenance involves fixing bugs and vulnerabilities in the system",
       "answers": [
-        " Adaptive Maintenance",
-        " Perfective Maintenance",
-        " Corrective Maintenance",
-        " Preventive Maintenance"
+        "Adaptive Maintenance",
+        "Perfective Maintenance",
+        "Corrective Maintenance",
+        "Preventive Maintenance"
       ],
       "correct_ans": 3,
       "difficulty": 1
     },
     {
-      "question": " What is the primary challenge in corrective maintenance when fixing faults?",
+      "question": "What is the primary challenge in corrective maintenance when fixing faults",
       "answers": [
-        " Unique system organization",
-        " Trial and error",
-        " Previous successful systems",
-        " Random design choices"
+        "Unique system organization",
+        "Trial and error",
+        "Previous successful systems",
+        "Random design choices"
       ],
       "correct_ans": 3,
       "difficulty": 1
     },
     {
-      "question": " What are Architectural patterns based on?",
+      "question": "What are Architectural patterns based on",
       "answers": [
-        " Finding the fault report",
-        " Consulting detailed documentation",
-        " Superb diagnostic skills",
-        " Test that the modification works correctly"
+        "Finding the fault report",
+        "Consulting detailed documentation",
+        "Superb diagnostic skills",
+        "Test that the modification works correctly"
       ],
       "correct_ans": 3,
       "difficulty": 1
     },
     {
-      "question": " What is usually more expensive during maintenance than during development?",
+      "question": "What is usually more expensive during maintenance than during development",
       "answers": [
-        " Adding new features",
-        " Testing the software",
-        " Understanding the programs",
-        " Documentation"
+        "Adding new features",
+        "Testing the software",
+        "Understanding the programs",
+        "Documentation"
       ],
       "correct_ans": 1,
       "difficulty": 1
     },
     {
-      "question": " What factor determines maintenance costs related to change acceptance?",
+      "question": "What factor determines maintenance costs related to change acceptance",
       "answers": [
-        " Number of changes",
-        " Complexity of the system",
-        " Maintainability of the components",
-        " Age of the software"
+        "Number of changes",
+        "Complexity of the system",
+        "Maintainability of the components",
+        "Age of the software"
       ],
       "correct_ans": 3,
       "difficulty": 2
     },
     {
-      "question": " What determines the complexity of system components for maintainability predictions?",
+      "question": "What determines the complexity of system components for maintainability predictions",
       "answers": [
-        " Complexity of data structures ",
-        " Complexity of control structures",
-        " Object size",
-        " Module size"
+        "Complexity of data structures ",
+        "Complexity of control structures",
+        "Object size",
+        "Module size"
       ],
       "correct_ans": 1,
       "difficulty": 2
     },
     {
-      "question": " What metric may indicate a decline in maintainability if it is increasing?",
+      "question": "What metric may indicate a decline in maintainability if it is increasing",
       "answers": [
-        " Number of change requests",
-        " Average time for impact analysis",
-        " Average time for implementation",
-        " Number of outstanding change requests"
+        "Number of change requests",
+        "Average time for impact analysis",
+        "Average time for implementation",
+        "Number of outstanding change requests"
       ],
       "correct_ans": 1,
       "difficulty": 2
     },
     {
-      "question": " What does software reengineering involve without changing the functionality of a legacy system?",
+      "question": "What does software reengineering involve without changing the functionality of a legacy system",
       "answers": [
-        " Adding new features",
-        " Rewriting part or all of the system",
-        " Changing the system architecture",
-        " Enhancing system performance"
+        "Adding new features",
+        "Rewriting part or all of the system",
+        "Changing the system architecture",
+        "Enhancing system performance"
       ],
       "correct_ans": 2,
       "difficulty": 3
     },
     {
-      "question": " What is a significant challenge faced by maintainers regarding dissatisfied users?",
+      "question": "What is a significant challenge faced by maintainers regarding dissatisfied users",
       "answers": [
-        " Dealing with poor documentation",
-        " Identifying the root cause of faults",
-        " Fixing bugs introduced by developers",
-        " Handling client dissatisfaction"
+        "Dealing with poor documentation",
+        "Identifying the root cause of faults",
+        "Fixing bugs introduced by developers",
+        "Handling client dissatisfaction"
       ],
       "correct_ans": 4,
       "difficulty": 3
     },
     {
-      "question": "What model is considered unrealistic for software development and maintenance today?",
+      "question": "What model is considered unrealistic for software development and maintenance today",
       "answers": [
         "Development-then-maintenance model",
         "Agile development model",
@@ -507,7 +507,7 @@
       "difficulty": 3
     },
     {
-      "question": "What is the primary objective of software testing?",
+      "question": "What is the primary objective of software testing",
       "answers": [
         "Identify errors",
         "Create documentation",
@@ -518,7 +518,7 @@
       "difficulty": 1
     },
     {
-      "question": "What is the purpose of defect testing in software testing?",
+      "question": "What is the purpose of defect testing in software testing",
       "answers": [
         "To validate software requirements",
         "To demonstrate system performance",
@@ -529,7 +529,7 @@
       "difficulty": 1
     },
     {
-      "question": "What is software testing according to IEEE 610.12?",
+      "question": "What is software testing according to IEEE 610.12",
       "answers": [
         "Executing programs",
         "Detecting differences",
@@ -540,7 +540,7 @@
       "difficulty": 1
     },
     {
-      "question": "Which test strategy is based on the structure of the software?",
+      "question": "Which test strategy is based on the structure of the software",
       "answers": [
         "Functional",
         "Black-box",
@@ -551,7 +551,7 @@
       "difficulty": 2
     },
     {
-      "question": "What is the primary advantage of white-box testing?",
+      "question": "What is the primary advantage of white-box testing",
       "answers": [
         "Knowledge of software structure",
         "Behavior-driven testing",
@@ -562,7 +562,7 @@
       "difficulty": 2
     },
     {
-      "question": "What distinguishes validation testing from defect testing?",
+      "question": "What distinguishes validation testing from defect testing",
       "answers": [
         "Type of test cases used",
         "Test case complexity",
@@ -573,7 +573,7 @@
       "difficulty": 2
     },
     {
-      "question": "What is the goal of defect testing in the software testing process?",
+      "question": "What is the goal of defect testing in the software testing process",
       "answers": [
         "Validate system requirements",
         "Demonstrate software functionality",
@@ -584,7 +584,7 @@
       "difficulty": 3
     },
     {
-      "question": "What is the primary focus of verification in software testing?",
+      "question": "What is the primary focus of verification in software testing",
       "answers": [
         "Conforming to specifications",
         "Demonstrating system performance",
@@ -595,7 +595,7 @@
       "difficulty": 3
     },
     {
-      "question": "What is the primary characteristic of behavioral test strategies?",
+      "question": "What is the primary characteristic of behavioral test strategies",
       "answers": [
         "Based on software structure",
         "Focus on system requirements",
@@ -604,28 +604,6 @@
       ],
       "correct_ans": 2,
       "difficulty": 3
-    },
-    {
-      "question": "how are you????",
-      "answers": [
-        "fine",
-        "perfect",
-        "good",
-        "not good"
-      ],
-      "correct_ans": 3,
-      "difficulty": 2
-    },
-    {
-      "question": "how are you today???",
-      "answers": [
-        "fine",
-        "good",
-        "not good",
-        "not fine"
-      ],
-      "correct_ans": 3,
-      "difficulty": 1
     }
   ]
 }
