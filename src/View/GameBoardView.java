@@ -118,6 +118,8 @@ public class GameBoardView extends JFrame {
     	DIFFICULTY diff = board.getDifficultyBoard();
     	HashMap<Player,Integer> playersPositions = board.getPlayersPositions();
     	
+    	playersPositions.put(players.get(0), 15);
+    	
     	snakes=board.getSnakes();
     	ladders=board.getLadders();
         Square[][] squares = board.getSquares();
@@ -251,6 +253,7 @@ public class GameBoardView extends JFrame {
                         ImageIcon icon = new ImageIcon(Main.class.getResource(imagePath));
                         diceLabel.setIcon(icon);
                         GBC.playTurn();
+                        
                         if(playersPositions.get(board.getCurrentPlayerTurn()) >= board.getRows()*board.getRows()) {
                         	timer.stop();
                         	setVisible(false);
@@ -268,6 +271,10 @@ public class GameBoardView extends JFrame {
         powerUpLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+            	if(rolling) {
+            		return;
+            	}
+            	GBC.activatePowerup();
                 System.out.println("POWERUP GOES BRRRRRRRRR");
             }
         });

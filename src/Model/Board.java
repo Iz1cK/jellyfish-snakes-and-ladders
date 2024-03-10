@@ -108,6 +108,26 @@ public class Board {
 	    int[] hindexes = this.getIndexesByPosition(this.questionSquarePositions.get(num+2));
 	    squares[hindexes[0]][hindexes[1]] = new QuesSquare(hindexes[0], hindexes[1], num+3);
     }
+	
+	public void setDefaultDiceOptions() {
+		switch(difficultyBoard) {
+			case EASY:
+				String[] easyOptions = {"0","1","2","3","4","E","M","H"};
+				List<String> easyList = Arrays.asList(easyOptions);
+				this.diceOptions.addAll(easyList);
+			break;
+			case MEDIUM:
+				String[] mediumOptions = {"0","1","2","3","4","5","6","E","E","M","M","H","H"};
+				List<String> mediumList = Arrays.asList(mediumOptions);
+				this.diceOptions.addAll(mediumList);
+			break;
+			case HARD:
+				String[] hardOptions = {"0","1","2","3","4","5","6","E","E","M","M","H","H","H","H"};
+				List<String> hardList = Arrays.asList(hardOptions);
+				this.diceOptions.addAll(hardList);
+			break;
+		}
+	}
 
 	public Board() {
 		super();

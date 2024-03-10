@@ -406,6 +406,9 @@ public class QuestionPopUp extends JDialog {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     showFeedback();
+                    if (callback != null) {
+                    	callback.onQuestionAnswered(isCorrect);
+                    }
                 }
             });
             timer.setRepeats(false);
@@ -422,16 +425,15 @@ public class QuestionPopUp extends JDialog {
                     public void actionPerformed(ActionEvent e) {
                         MessageDialog obj = new MessageDialog(fram);
                         if(difficulty==1) {
-                        obj.showMessage("CORRECT", "stay in your position");
+                        obj.showMessage("CORRECT", "You get a Tier 1 powerup!");
                         }
                         else if (difficulty==2) {
-                        	obj.showMessage("CORRECT", "stay in your position");	
+                        	obj.showMessage("CORRECT", "You get a Tier 2 powerup!");	
                         }
                         else if (difficulty==3) {
-                        	obj.showMessage("CORRECT", "Take one step forward");	
+                        	obj.showMessage("CORRECT", "You get a Tier 3 powerup!");	
                         }
                        closeMessage();
-
                     }
                 });
                 timer.setRepeats(false);
@@ -446,13 +448,13 @@ public class QuestionPopUp extends JDialog {
                     public void actionPerformed(ActionEvent e) {
                     	MessageDialog obj = new MessageDialog(fram);
                     	if(difficulty ==1) {
-                        obj.showMessage("WRONG", "Take one step back");
+                        obj.showMessage("WRONG", "You did not get a powerup!");
                         }
                     	else if(difficulty ==2) {
-                            obj.showMessage("WRONG", "Take two steps back");
+                            obj.showMessage("WRONG", "You did not get a powerup!");
                             }
                     	else if(difficulty ==3) {
-                            obj.showMessage("WRONG", "Take three steps back");
+                            obj.showMessage("WRONG", "You did not get a powerup!");
                             }
                         closeMessage();
                     }
@@ -464,6 +466,7 @@ public class QuestionPopUp extends JDialog {
                // JOptionPane.showMessageDialog(null, "Your answer is wrong", "Feedback", JOptionPane.ERROR_MESSAGE);
              // closeMessage();
             }
+            
             //closeMessage();
         }
 
@@ -487,9 +490,6 @@ public class QuestionPopUp extends JDialog {
 	        	isCorrect=false;
 	        	controller.setCorrectAns(isCorrect);
 	        }
-	        if (callback != null) {
-            	callback.onQuestionAnswered(isCorrect);
-            }
         }
 
         public boolean isAnswerChosen() {
