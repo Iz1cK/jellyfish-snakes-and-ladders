@@ -38,6 +38,8 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
+
+import Controller.GameBoardController;
 import Controller.questionPopUpController;
 import Utils.QuestionCallback;
 
@@ -67,6 +69,7 @@ public class QuestionPopUp extends JDialog {
 	private QuestionCallback callback;
 	private int level;
 	private AudioTest AT = AudioTest.getInstance();
+	private GameBoardController GBC = GameBoardController.getInstance();
 
 
 //	AudioTest audio= new AudioTest();
@@ -457,16 +460,28 @@ public class QuestionPopUp extends JDialog {
 							e1.printStackTrace();
 						}
                         MessageDialog obj = new MessageDialog(fram);
-                        
-                        if(difficulty==1) {
-                        obj.showMessage("CORRECT", "You get a Tier 1 powerup!");
-                        }
-                        else if (difficulty==2) {
-                        	obj.showMessage("CORRECT", "You get a Tier 2 powerup!");	
-                        }
-                        
-                        else if (difficulty==3) {
-                        	obj.showMessage("CORRECT", "You get a Tier 3 powerup!");	
+                        if(GameBoardController.powerupsEnabled) {
+                        	if(difficulty==1) {
+                        		obj.showMessage("CORRECT", "You get a Tier 1 powerup!");
+                        	}
+                        	else if (difficulty==2) {
+                        		obj.showMessage("CORRECT", "You get a Tier 2 powerup!");	
+                        	}
+                        	
+                        	else if (difficulty==3) {
+                        		obj.showMessage("CORRECT", "You get a Tier 3 powerup!");	
+                        	}
+                        } else {
+                        	if(difficulty==1) {
+                        		obj.showMessage("CORRECT", "You stay in your place!");
+                        	}
+                        	else if (difficulty==2) {
+                        		obj.showMessage("CORRECT", "You stay in your place!");	
+                        	}
+                        	
+                        	else if (difficulty==3) {
+                        		obj.showMessage("CORRECT", "You move one square forwards!");	
+                        	}
                         }
                        closeMessage();
                     }
@@ -494,15 +509,19 @@ public class QuestionPopUp extends JDialog {
 							e1.printStackTrace();
 						}
                     	MessageDialog obj = new MessageDialog(fram);
-                    	if(difficulty ==1) {
-                        obj.showMessage("WRONG", "You did not get a powerup!");
-                        }
-                    	else if(difficulty ==2) {
-                            obj.showMessage("WRONG", "You did not get a powerup!");
-                            }
-                    	else if(difficulty ==3) {
-                            obj.showMessage("WRONG", "You did not get a powerup!");
-                            }
+                    	if(GameBoardController.powerupsEnabled) {
+                    		obj.showMessage("WRONG", "You did not get a powerup!");
+                    	} else {
+                    		if(difficulty ==1) {
+                    			obj.showMessage("WRONG", "You move one square backwards!");
+                    		}
+                    		else if(difficulty ==2) {
+                    			obj.showMessage("WRONG", "You move two squares backwards!");
+                    		}
+                    		else if(difficulty ==3) {
+                    			obj.showMessage("WRONG", "You move three squares backwards!");
+                    		}
+                    	}
                         closeMessage();
                     }
                 });

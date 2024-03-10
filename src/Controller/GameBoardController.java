@@ -42,7 +42,7 @@ public class GameBoardController {
 	private boolean snakeShieldActive = false;
 	private boolean ladderPowerupActive = false;
 	private boolean snakePowerupActive = false;
-	private boolean doubleDiceResult = false;
+	private boolean doubleDiceResult = false; // worked
 	private boolean onlySixResult = false;
 	private int previousPosition;
 	public static boolean powerupsEnabled = true;
@@ -150,14 +150,14 @@ public class GameBoardController {
 		String landingSquareType = this.gameBoard.checkLandingSquare(landingSquare);
 		switch(landingSquareType) {
 		case "QuestionSquare":
-			if(!noQuestions) {
+//			if(!noQuestions) {
 				int questionDifficulty = ((QuesSquare) landingSquare).getDifficulty();
 				System.out.println("Landed on a question square with difficulty: " + questionDifficulty);
 				showQuestion(questionDifficulty, currentPlayer);
 				lastCheckedSquarePosition.put(currentPlayer, currentPosition);
 				return true;
-			}
-			break;
+//			}
+//			break;
 		case "SurpriseSquare":
 			System.out.println("Landed on a surprise square!");
 			SurpriseSquareController SSC = SurpriseSquareController.getInstance();
@@ -229,7 +229,8 @@ public class GameBoardController {
 	        		System.out.println("Answered Correctly, get powerup!");
 	        		Random random = new Random();
 	        		int powerupNumber = random.nextInt(3) + 1;
-	        		String powerupImage = "Tier" + difficulty + "-" + powerupNumber;
+//	        		String powerupImage = "Tier" + difficulty + "-" + powerupNumber;
+	        		String powerupImage = "Tier1-1";
 	        		System.out.println("Player " + currentPlayer.getPlayername() + " got powerup " + powerupImage);
 	        		ImageIcon powerUpIcon = new ImageIcon(GameBoardView.class.getResource("/img/" + powerupImage + ".png"));
 	        		Image powerUpIconScaled = powerUpIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
@@ -294,12 +295,14 @@ public class GameBoardController {
 	}
 	
 	public void goNext() {
-		if(powerupsEnabled && anotherTurnActive) {
+		ArrayList<Player> players = gameBoard.getPlayers();
+		HashMap<Player,Integer> playersPositions = gameBoard.getPlayersPositions();
+		if(anotherTurnActive) {
 			anotherTurnActive = false;
+			GameBoardView.rolling = false;
+			gameBoardView.updatePlayersList(players, playersPositions, gameBoard);
 			return;
 		}
-		ArrayList<Player> players = gameBoard.getPlayers();
-    	HashMap<Player,Integer> playersPositions = gameBoard.getPlayersPositions();
 		int newCurrentPlayerIndex = (players.indexOf(gameBoard.getCurrentPlayerTurn()) + 1) % players.size();
 		gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
 		Player newCurrentPlayer = gameBoard.getCurrentPlayerTurn();

@@ -27,6 +27,7 @@ public class AudioTest {
 	}
 	
 	public void stopSound() {
+		if(clip == null) return;
 		clip.stop();
 	}
 }
