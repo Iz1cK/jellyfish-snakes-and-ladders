@@ -141,12 +141,13 @@ public class ghostGame extends JFrame {
 //////////        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
 //////////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
 //////////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
-//        Board aboard = new Board(DIFFICULTY.EASY,aplayers);
+//        Board aboard = new Board(DIFFICULTY.MEDIUM,aplayers);
 //        aboard.generateBoard();
 //       	aboard.initiateQuestionSquares();
 //       	aboard.generateSnakesAndLadder();
 //       GBC.setGameBoard(aboard);
-
+    	ghostsPositions.clear();
+    	ghostsToRemove.clear();
     	Board board = GBC.getGameBoard();
     	System.out.println(board);
     	ArrayList<Player> players = board.getPlayers();
@@ -739,13 +740,13 @@ public class ghostGame extends JFrame {
                     	rowOffset = (i / playersPerRow) * cellHeight/2; // Adjust for 2nd row if needed
                         x = actualCol * cellWidth + ((i % playersPerRow) * cellWidth / playersPerRow) + cellWidth / playersPerRow / 2;
                         y = displayRow * cellHeight + rowOffset;
-                        playerMarker.setBounds(x - cellWidth/2 + 25, y - 10, 15, 35);
+                        playerMarker.setBounds(x - cellWidth/2 + 25, y + 10, 15, 35);
                         break;
                     case MEDIUM: 
                     	rowOffset = (i / playersPerRow) * cellHeight/2 - cellHeight/2; // Adjust for 2nd row if needed
                         x = actualCol * cellWidth + ((i % playersPerRow) * cellWidth / playersPerRow) + cellWidth / playersPerRow / 2;
                         y = displayRow * cellHeight + rowOffset;
-                        playerMarker.setBounds(x - cellWidth/2 + 30, y, 25, 50);
+                        playerMarker.setBounds(x - cellWidth/2 + 30, y + 20, 25, 50);
                         break;
                     case HARD:
                     	rowOffset = (i / playersPerRow) * cellHeight/2 - cellHeight/2; // Adjust for 2nd row if needed
@@ -817,13 +818,13 @@ public void updateGhostsPositionsOnBoard(DIFFICULTY diff, ArrayList<Player> play
                     	rowOffset = (i / playersPerRow) * cellHeight/2; // Adjust for 2nd row if needed
                         x = actualCol * cellWidth + ((i % playersPerRow) * cellWidth / playersPerRow) + cellWidth / playersPerRow / 2;
                         y = displayRow * cellHeight + rowOffset;
-                        ghostMarker.setBounds(x - cellWidth/2 + 25, y - 10, 50, 50);
+                        ghostMarker.setBounds(x - cellWidth/2 + 25, y + 10, 50, 50);
                         break;
                     case MEDIUM: 
                     	rowOffset = (i / playersPerRow) * cellHeight/2 - cellHeight/2; // Adjust for 2nd row if needed
                         x = actualCol * cellWidth + ((i % playersPerRow) * cellWidth / playersPerRow) + cellWidth / playersPerRow / 2;
                         y = displayRow * cellHeight + rowOffset;
-                        ghostMarker.setBounds(x - cellWidth/2 + 30, y, 50, 50);
+                        ghostMarker.setBounds(x - cellWidth/2 + 30, y + 20, 50, 50);
                         break;
                     case HARD:
                     	rowOffset = (i / playersPerRow) * cellHeight/2 - cellHeight/2; // Adjust for 2nd row if needed
