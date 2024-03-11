@@ -1,6 +1,5 @@
 package Model;
 
-import java.util.ArrayList;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

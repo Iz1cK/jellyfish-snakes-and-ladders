@@ -3,8 +3,6 @@ package Controller;
 import java.util.ArrayList;
 
 import Model.Player;
-import Model.Questions;
-import Model.Sysdata;
 
 public class GameCreationController {
 	

@@ -20,6 +20,7 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 import Controller.AddQuestionController;
 import Controller.EditQuestionController;
 import Controller.GameBoardController;
+import Controller.ghostGameBoardController;
 import Model.Board;
 import Model.DIFFICULTY;
 import Model.Game;
@@ -194,14 +195,14 @@ public class FinalPageScores extends javax.swing.JFrame {
 				}
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				GameBoardController gbc = GameBoardController.getInstance();
+				ghostGameBoardController gbc = ghostGameBoardController.getInstance();
         		Board board = game.getBoardgame();
         		Board newBoard = new Board(board.getDifficultyBoard(), board.getPlayers());
         		newBoard.generateBoard();
         		newBoard.initiateQuestionSquares();
         		newBoard.generateSnakesAndLadder();
         		gbc.setGameBoard(newBoard);
-        		GameBoardView gbv = new GameBoardView();
+        		ghostGame gbv = new ghostGame();
         		gbv.setExtendedState(JFrame.MAXIMIZED_BOTH);
         		gbv.setVisible(true);
         		dispose();
@@ -231,8 +232,7 @@ public class FinalPageScores extends javax.swing.JFrame {
 				}
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				GameBoardController gbc = GameBoardController.getInstance();
-				GameHistoryViews ghv = new GameHistoryViews();
+				GameScoreView ghv = new GameScoreView();
         		ghv.setVisible(true);
         		dispose();
 				}

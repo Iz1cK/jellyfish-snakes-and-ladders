@@ -1,10 +1,16 @@
 package Controller;
 
-import Model.Game;
 import Model.Scores;
 import Model.Sysdata;
 
 public class GameScoreController {
+	
+	private static GameScoreController instance;
+	public static GameScoreController getInstance() {
+		if (instance == null)
+			instance = new GameScoreController();
+		return instance;
+	}
 private static Sysdata sysdata= Sysdata.getInstance();
 	
 
@@ -41,6 +47,12 @@ private static Sysdata sysdata= Sysdata.getInstance();
 
         return data;
 	}
+	
+	public void addScore(Scores score) {
+		sysdata.addScore(score);
+		
+	}
+
 	
 
 }

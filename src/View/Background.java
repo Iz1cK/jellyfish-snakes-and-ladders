@@ -1,29 +1,14 @@
 package View;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
 
-/**
- *
- * @author RAVEN
- */
-import javax.swing.*;
-import java.awt.*;
-
+@SuppressWarnings("serial")
 public class Background extends JComponent {
 
     private ImageIcon backgroundImage; // Change the type to ImageIcon
@@ -36,7 +21,8 @@ public class Background extends JComponent {
 
     // Rest of your methods...
 
-    private void createImage() {
+    @SuppressWarnings("unused")
+	private void createImage() {
         // Modify the creation of the bufferedImage
         if (backgroundImage != null) {
             int width = getWidth();

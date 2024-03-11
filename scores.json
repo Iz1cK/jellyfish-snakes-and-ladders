@@ -62,6 +62,27 @@
       "score": 89,
       "winningPlayer": "a",
       "duration": "00:53.69"
+    },
+    {
+      "gameID": 21,
+      "difficulty": 1,
+      "winningPlayer": "aseel",
+      "duration": "02:06.78",
+      "score": 305
+    },
+    {
+      "gameID": 28,
+      "difficulty": 1,
+      "winningPlayer": "aseel",
+      "duration": "00:40.68",
+      "score": 463
+    },
+    {
+      "gameID": 7,
+      "difficulty": 2,
+      "winningPlayer": "aseel",
+      "duration": "00:36.98",
+      "score": 20
     }
   ]
 }

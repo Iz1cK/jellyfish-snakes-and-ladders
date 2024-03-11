@@ -38,6 +38,7 @@ import Model.Scores;
 import Model.Snake;
 import Model.Square;
 import Model.SurpriseSquare;
+import Controller.GameScoreController;
 
 import java.awt.Font;
 import java.awt.Graphics;
@@ -45,6 +46,7 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.util.HashSet;
 import java.util.Iterator;
+
 
 
 public class ghostGame extends JFrame {
@@ -433,6 +435,7 @@ public class ghostGame extends JFrame {
                                   		if(lives==0) {
                                   			live3.setVisible(false);
                                   			Scores sco= new Scores(board.getDifficultyBoard(), board, players.get(0).getPlayername(), score, timerLabel.getText());
+                                  			GameScoreController.getInstance().addScore(sco);
                                   			FinalPageScores FP = new FinalPageScores(sco);
                             				FP.setVisible(true);
                                       	timer.stop();

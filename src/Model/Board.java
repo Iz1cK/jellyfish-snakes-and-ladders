@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import Controller.SurpriseSquareController;
-
 public class Board {
 	
     private static int lastBoardId = 0; // Static variable to track the last used board ID

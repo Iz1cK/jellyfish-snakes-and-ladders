@@ -15,7 +15,6 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -26,7 +25,6 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -40,10 +38,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
-
 import Controller.AdminAuthentication;
 
 public class AdminView extends JFrame implements ActionListener{
@@ -54,7 +50,6 @@ public class AdminView extends JFrame implements ActionListener{
 	private PasswordField txtPassword;
 	private TextField txtUsername;
 	private JCheckBox showPassword;
-	private PasswordField txtPassword2;
 	private Button login;
 	/**
 	 * Launch the application.
@@ -231,6 +226,7 @@ public class AdminView extends JFrame implements ActionListener{
 		
 	}
 
+@SuppressWarnings("serial")
 public class TextField extends JTextField {
 
     public String getHint() {
@@ -335,6 +331,7 @@ public class TextField extends JTextField {
     }
 }
 
+	@SuppressWarnings("serial")
 	public class PasswordField extends JPasswordField {
 
 	    public String getHint() {
@@ -394,7 +391,8 @@ public class TextField extends JTextField {
 	                }
 	            }
 
-	            @Override
+	            @SuppressWarnings("deprecation")
+				@Override
 	            public void removeUpdate(DocumentEvent e) {
 	                if (getText().equals("")) {
 	                    stop();
@@ -439,6 +437,7 @@ public class TextField extends JTextField {
 	    }
 	}
 	
+	@SuppressWarnings("serial")
 	public class Button extends JButton {
 
 	    private Shape shape;

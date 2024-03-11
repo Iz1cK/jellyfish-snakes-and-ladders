@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-
 import Model.Board;
 import Model.COLORS;
 import Model.Game;
 import Model.Ladder;
-import Model.PLAYERCOLORS;
 import Model.Player;
 import Model.QuesSquare;
 import Model.Questions;
@@ -21,7 +19,6 @@ import Model.Sysdata;
 import Utils.QuestionCallback;
 import View.FinalPage;
 import View.FinalPageScores;
-import View.GameBoardView;
 import View.QuestionPopUp;
 import View.ghostGame;
 
