@@ -138,6 +138,7 @@ public class GameBoardController {
 			} 
 			
 			if(this.checkSquares(currentPlayer, false)) {
+				if(powerupsEnabled) return;
 				gameBoardView.animatePlayerMovement(currentPlayer, GameBoardView.playerLabels.get(currentPlayer),gameBoard, previousPosition, ()->{
 					goNext();
 				});
@@ -165,7 +166,7 @@ public class GameBoardController {
 				lastCheckedSquarePosition.put(currentPlayer, currentPosition);
 				return true;
 			}
-//			break;
+			break;
 		case "SurpriseSquare":
 			System.out.println("Landed on a surprise square!");
 			SurpriseSquareController SSC = SurpriseSquareController.getInstance();

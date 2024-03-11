@@ -137,13 +137,13 @@ public class GameBoardView extends JFrame {
 //        ArrayList<Player> aplayers = new ArrayList<>();
 //        aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
 //        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
-//        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
-//        aplayers.add(new Player(3,"aseel",PLAYERCOLORS.GREEN));
-//        aplayers.add(new Player(4,"ahmad",PLAYERCOLORS.WHITE));
-//        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
+////        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
+////        aplayers.add(new Player(3,"aseel",PLAYERCOLORS.GREEN));
+////        aplayers.add(new Player(4,"ahmad",PLAYERCOLORS.WHITE));
+////        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
 //////////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
 //////////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
-//        Board aboard = new Board(DIFFICULTY.HARD,aplayers);
+//        Board aboard = new Board(DIFFICULTY.EASY,aplayers);
 //        aboard.generateBoard();
 //        aboard.initiateQuestionSquares();
 //        aboard.generateSnakesAndLadder();
@@ -158,6 +158,8 @@ public class GameBoardView extends JFrame {
     	snakes=board.getSnakes();
     	ladders=board.getLadders();
         Square[][] squares = board.getSquares();
+        
+        squares[0][2] = new QuesSquare(0,2);
     	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1280, 720);
@@ -405,6 +407,10 @@ public class GameBoardView extends JFrame {
         Image powerUpIconScaled = powerUpIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         powerUpLabel = new JLabel(new ImageIcon(powerUpIconScaled));
         
+        if(GameBoardController.powerupsEnabled == false) {
+        	powerUpLabel.setVisible(false);
+        }
+        
         powerUpLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -485,6 +491,18 @@ public class GameBoardView extends JFrame {
             public void componentResized(ComponentEvent componentEvent) {
             	int x = (contentPane.getWidth() - boardPanel.getPreferredSize().width) / 4;
                 int y = (contentPane.getHeight() - boardPanel.getPreferredSize().height) / 3;
+                int newY = 0;
+                switch(board.getDifficultyBoard()) {
+                case EASY:
+                	newY = y;
+                	break;
+                case MEDIUM:
+                	newY = y;
+                	break;
+                case HARD:
+                	newY = y + 100;
+                	break;
+                }
 
                 boardPanel.setBounds(30, 10, 750, 750);
                 overlayPanel.setBounds(boardPanel.getBounds());
@@ -493,10 +511,10 @@ public class GameBoardView extends JFrame {
                 timerPanel.setBounds(900, 10, 200, 50);
                 timerPanel.revalidate();
                 timerPanel.repaint();
-                playersPanel.setBounds(getWidth() - 560, y, 300, 381);
+                playersPanel.setBounds(getWidth() - 560, newY, 300, 381);
                 updatePlayerPositionsOnBoard(diff, players, playersPositions, squares.length, squares[0].length);
                 diceLabel.setBounds(getWidth() - 560 + 100, getHeight() - 250, 200, 200);//getWidth() - 560 + playerPanelWidth/2
-                powerUpLabel.setBounds(getWidth() - 560 + 150, getHeight() - 400, 100, 100);
+                powerUpLabel.setBounds(getWidth() - 560 - 150, getHeight() - 200, 100, 100);
                 contentPane.revalidate();
                 contentPane.repaint();
             }

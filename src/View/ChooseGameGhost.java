@@ -38,6 +38,7 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 import Controller.GameBoardController;
 import Controller.GameCreationController;
+import Controller.ghostGameBoardController;
 import Model.Board;
 import Model.DIFFICULTY;
 import Model.PLAYERCOLORS;
@@ -972,13 +973,13 @@ public class ChooseGameGhost extends JFrame {
 				    		readyToStart=1;
 				        	System.out.println("PLAY NOW START GAME");
 				        	
-				        	GameBoardController gbc = GameBoardController.getInstance();
+				        	ghostGameBoardController gbc = ghostGameBoardController.getInstance();
 			        		Board board = new Board(selectedDifficulty, allPlayers);
 			        		board.generateBoard();
 		                    board.initiateQuestionSquares();
 		                    board.generateSnakesAndLadder();
 			        		gbc.setGameBoard(board);
-			        		GameBoardView gbv = new GameBoardView();
+			        		ghostGame gbv = new ghostGame();
 			        		gbv.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			        		gbv.setVisible(true);
 			        		

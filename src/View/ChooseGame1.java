@@ -88,6 +88,7 @@ public class ChooseGame1 extends JFrame {
 	Boolean playerN1=false, playerN2=false,playerN3=false, playerN4=false, playerN5=false, playerN6=false, playerN7=false,playerN8=false;
 	ArrayList<Player> allPlayers=new ArrayList<Player>();
 	private int playerID=0; 
+	private boolean powerupsEnabled = false;
 	//private String playername;
 	private PLAYERCOLORS color;
 	String playerNumber="none";
@@ -425,6 +426,35 @@ public class ChooseGame1 extends JFrame {
 		selectedColor.setLayout(null);
 		selectedColor.setVisible(false); 
 		
+		
+		JLabel powerupsToggle = new JLabel();
+		ImageIcon powerupToggleIcon = new ImageIcon(ChooseGame1.class.getResource("/img/powerupOff.png"));
+		powerupsToggle.setIcon(new ImageIcon(powerupToggleIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		powerupsToggle.setBounds(227, 630,50,50);
+		contentPane.add(powerupsToggle);
+		powerupsToggle.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(powerupsEnabled == true) {
+					ImageIcon powerupToggleIcon = new ImageIcon(ChooseGame1.class.getResource("/img/powerupOff.png"));
+					powerupsToggle.setIcon(new ImageIcon(powerupToggleIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+					powerupsEnabled = false;
+				} else {
+					ImageIcon powerupToggleIcon = new ImageIcon(ChooseGame1.class.getResource("/img/powerupOn.png"));
+					powerupsToggle.setIcon(new ImageIcon(powerupToggleIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+					powerupsEnabled = true;
+				}
+			}
+		});
+		
+		JLabel powerupsLabel = new JLabel("Powerups");
+		contentPane.add(powerupsLabel);
+		powerupsLabel.setForeground(Color.WHITE); // Set the foreground color to white
+		powerupsLabel.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 18)); // Set the font family, size, and weight
+		powerupsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		powerupsLabel.setBounds(285, 620, 150, 70);
+		
+		
 		JLabel player1 = new JLabel();
 		ImageIcon img1=new ImageIcon(ChooseGame1.class.getResource("/img/whitePlayer.png"));
 		player1.setIcon(new ImageIcon(img1.getImage().getScaledInstance(41, 78, Image.SCALE_SMOOTH)));
@@ -549,7 +579,7 @@ public class ChooseGame1 extends JFrame {
 			//	contentPane.add(players_1);
 				
 				//difficulyLabel.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));		
-		 PlayersNamesColors .setBounds(526, 341, 300, 98);
+		 PlayersNamesColors .setBounds(526, 335, 300, 98);
 		 PlayersNamesColors .setLayout(null);
 						
 				ImageIcon ImageName = new ImageIcon(ChooseGame1.class.getResource("/img/woodBlue.png"));
@@ -1053,8 +1083,9 @@ public class ChooseGame1 extends JFrame {
 				        if(difficltyLeve_1.getText().equals("play") && allPlayers.size()==playersNumber) {
 				    		readyToStart=1;
 				        	System.out.println("PLAY NOW START GAME");
-				        	
+				        		
 				        	GameBoardController gbc = GameBoardController.getInstance();
+				        	GameBoardController.powerupsEnabled = powerupsEnabled;
 			        		Board board = new Board(selectedDifficulty, allPlayers);
 			        		board.generateBoard();
 		                    board.initiateQuestionSquares();

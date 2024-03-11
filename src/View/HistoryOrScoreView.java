@@ -118,19 +118,25 @@ public class HistoryOrScoreView extends JFrame {
 			 }					
 		 });
 		
-		JLabel lblInstructionsIcon = new JLabel("");
-		lblInstructionsIcon.setIcon(new ImageIcon(HistoryOrScoreView.class.getResource("/img/circle_crop.png")));
-		lblInstructionsIcon.setBounds(10, 100,100,100);
-		contentPane.add(lblInstructionsIcon);
-		
-		lblInstructionsIcon.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				InstructionsView instructions = new InstructionsView();
-				instructions.setVisible(true);
-				dispose();
-			}
-		});
+		 JLabel homePage = new JLabel();
+			//	homePage.setIcon(new ImageIcon(ChooseGame1.class.getResource("/img/rectangle.png")));		
+				homePage.setBounds(40, 47, 90, 90);
+				contentPane.add(homePage);
+				homePage.setLayout(null);
+				
+				ImageIcon ImageIconHome = new ImageIcon(ChooseGame1.class.getResource("/img/backIcon.png"));
+				ImageIcon testHome= resized(ImageIconHome.getImage(), 90, 90);
+				homePage.setIcon(testHome);
+				
+				homePage.addMouseListener(new MouseAdapter() {
+		            @Override
+		            public void mouseClicked(MouseEvent e) {
+		                // Open HomeView and close the current view
+		                HomeView homeView = new HomeView();
+		                homeView.setVisible(true);
+		                dispose();
+		            }
+		        });
 		
 		/*
 		 * background icon	
