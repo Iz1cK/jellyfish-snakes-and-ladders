@@ -46,6 +46,18 @@ public class Scores extends JSONSerializable{
 		}
 	}
 
+
+	public Scores(DIFFICULTY difficulty,Board boardgame,  String winningPlayer, int score, String duration) {
+		super();
+		this.gameID = ++idCounter;
+		this.difficulty = difficulty == DIFFICULTY.EASY ? 1 : difficulty == DIFFICULTY.MEDIUM ? 2 : difficulty == DIFFICULTY.HARD ? 3 : 1;
+		this.boardgame = boardgame;
+		this.winningPlayer = winningPlayer;
+		this.score = score;
+		this.duration = duration;
+	}
+	
+
 	@Override
 	public void fromJSON(JsonObject jsonObject) {
 		this.gameID = Integer.parseInt(jsonObject.get("gameID").toString());

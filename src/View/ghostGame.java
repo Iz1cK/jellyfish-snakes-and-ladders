@@ -70,6 +70,7 @@ public class ghostGame extends JFrame {
     public static HashMap<Player, JLabel> playerLabels = new HashMap<>();
     public static HashMap<Player, JLabel> ghostsLabels = new HashMap<>();
     public static HashMap<Player, Integer> ghostsPositions = new HashMap<>();
+    public static ArrayList<Player> ghostsToRemove = new ArrayList<>();
     HashSet<Integer> assignedPositions = new HashSet<>();
     public static int score = 0;
     public int lives=3;
@@ -405,43 +406,11 @@ public class ghostGame extends JFrame {
                         	ghostsPositions.put(ghost, ghostsPositions.get(ghost)+r.nextInt(6));
                         	
                         	animateGhostMovement(ghost,ghostsLabels.get(ghost), board, previousPos, ()->{
-                        		Iterator<Player> iterator = ghosts.iterator();
-                        		while (iterator.hasNext()) {
-                        		    Player ghost1 = iterator.next();
-                        		    // Your existing code here
-                        		    if(playersPositions.get(board.getCurrentPlayerTurn())==ghostsPositions.get(ghost1)) {
-                                  		lives--;
-                                  		System.out.println("keep to you "+ lives);
-                                  		 ghostsPositions.remove(ghost1);
-                                  		 ghosts.remove(ghost1);
-                                  		 if(lives==2) {
-                                  			live1.setVisible(false);
-                                  			
-                                  		 }
-                                  		 if(lives==1) {
-                                   			live2.setVisible(false);
-                                   			
-                                   		 }
-                                  		 
-                                  		 
-                                  		if(lives==0) {
-                                  			live3.setVisible(false);
-                                      	timer.stop();
-                                      	setVisible(false);
-                                      	dispose();
-                                      	}
-                                      
-                        		        // Your existing code here
-                        		    	
-                        		        iterator.remove(); // Safely remove the current element from the list
-                        		    }
-                        		}
-                        	/*	  for(Player ghost1: ghosts) {
+                        		  for(Player ghost1: ghosts) {
                                   	if(playersPositions.get(board.getCurrentPlayerTurn())==ghostsPositions.get(ghost1)) {
                                   		lives--;
                                   		System.out.println("keep to you "+ lives);
-                                  		 ghostsPositions.remove(ghost1);
-                                  		 ghosts.remove(ghost1);
+                                  		ghostsToRemove.add(ghost1);
                                   		 if(lives==2) {
                                   			live1.setVisible(false);
                                   			
@@ -454,19 +423,25 @@ public class ghostGame extends JFrame {
                                   		 
                                   		if(lives==0) {
                                   			live3.setVisible(false);
+                                  			Scores sco= new Scores(board.getDifficultyBoard(), board, players.get(0).getPlayername(), score, timerLabel.getText());
+                                  			FinalPageScores FP = new FinalPageScores(sco);
+                            				FP.setVisible(true);
                                       	timer.stop();
                                       	setVisible(false);
                                       	dispose();
                                       	}
                                       }
-                                  }*/
+                                  }
                         		  if(ghostsPositions.get(ghost)>= board.getRows()*board.getRows()) {
                                 	  ghostsPositions.remove(ghost);
                                 	  ghosts.remove(ghost);
                                   }
                                   updateGhostsPositionsOnBoard(board.getDifficultyBoard(),ghosts,ghostsPositions, board.getRows(), board.getRows());
                         	});
-                        	
+                        	for(Player ghost2 : ghostsToRemove) {
+                        		ghostsPositions.remove(ghost2);
+                          	  	ghosts.remove(ghost2);
+                        	}
                         }
                         
                     });
