@@ -158,13 +158,13 @@ public class GameBoardController {
 		String landingSquareType = this.gameBoard.checkLandingSquare(landingSquare);
 		switch(landingSquareType) {
 		case "QuestionSquare":
-//			if(!noQuestions) {
+			if(!noQuestions) {
 				int questionDifficulty = ((QuesSquare) landingSquare).getDifficulty();
 				System.out.println("Landed on a question square with difficulty: " + questionDifficulty);
 				showQuestion(questionDifficulty, currentPlayer);
 				lastCheckedSquarePosition.put(currentPlayer, currentPosition);
 				return true;
-//			}
+			}
 //			break;
 		case "SurpriseSquare":
 			System.out.println("Landed on a surprise square!");
