@@ -41,7 +41,7 @@ public class GameBoardController {
 	private boolean doubleDiceResult = false; // worked
 	private boolean onlySixResult = false;// worked
 	private int previousPosition;
-	public static boolean powerupsEnabled = true;
+	public static boolean powerupsEnabled = false;
 	
 	public void setGameBoardView(GameBoardView gameBoardView) {
 	    this.gameBoardView = gameBoardView;

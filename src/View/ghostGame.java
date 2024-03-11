@@ -133,24 +133,29 @@ public class ghostGame extends JFrame {
      */
     public ghostGame() {
     	GBC.setGameBoardView(this);
-//        ArrayList<Player> aplayers = new ArrayList<>();
-//        aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
-//        
-//////////        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
-//////////        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
-//////////		aplayers.add(new Player(3,"aseel",PLAYERCOLORS.GREEN));
-//////////        aplayers.add(new Player(4,"ahmad",PLAYERCOLORS.WHITE));
-//////////        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
-//////////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
-//////////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
-//        Board aboard = new Board(DIFFICULTY.MEDIUM,aplayers);
-//        aboard.generateBoard();
-//       	aboard.initiateQuestionSquares();
-//       	aboard.generateSnakesAndLadder();
-//       GBC.setGameBoard(aboard);
+        ArrayList<Player> aplayers = new ArrayList<>();
+        aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
+        
+////////        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
+////////        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
+////////		aplayers.add(new Player(3,"aseel",PLAYERCOLORS.GREEN));
+////////        aplayers.add(new Player(4,"ahmad",PLAYERCOLORS.WHITE));
+////////        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
+////////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
+////////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
+        Board aboard = new Board(DIFFICULTY.MEDIUM,aplayers);
+        aboard.generateBoard();
+       	aboard.initiateQuestionSquares();
+       	aboard.generateSnakesAndLadder();
+       GBC.setGameBoard(aboard);
     	ghostsPositions.clear();
     	ghostsToRemove.clear();
+    	ghosts.clear();
+    	
     	Board board = GBC.getGameBoard();
+    	ArrayList<String> diceOptions = new ArrayList<String>();
+    	diceOptions.add("1");
+    	board.setDiceOptions(diceOptions);
     	System.out.println(board);
     	ArrayList<Player> players = board.getPlayers();
     	DIFFICULTY diff = board.getDifficultyBoard();
@@ -419,7 +424,7 @@ public class ghostGame extends JFrame {
                         	
                         	animateGhostMovement(ghost,ghostsLabels.get(ghost), board, previousPos, ()->{
                         		  for(Player ghost1: ghosts) {
-                                  	if(playersPositions.get(board.getCurrentPlayerTurn())==ghostsPositions.get(ghost1)) {
+                                  	if(playersPositions.get(board.getCurrentPlayerTurn())==ghostsPositions.get(ghost1) && !ghostsToRemove.contains(ghost1)) {
                                   		lives--;
                                   		System.out.println("keep to you "+ lives);
                                   		ghostsToRemove.add(ghost1);
