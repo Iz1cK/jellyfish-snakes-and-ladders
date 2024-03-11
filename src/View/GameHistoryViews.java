@@ -179,11 +179,22 @@ public class GameHistoryViews extends JFrame {
         table.setModel(new DefaultTableModel(
             newData,
             columnNames
-        ));
+        ) {
+        	/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+        	       //all cells false
+        	       return false;
+        	    }
+        });
 
         table.setRowHeight(40);
         table.setSelectionBackground(new java.awt.Color(56, 138, 112));
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // Disable auto resizing
+        
         TableColumnModel columnModel = table.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(50); // Set width of column 0 (Difficulty) to 100 pixels
         columnModel.getColumn(1).setPreferredWidth(100);
