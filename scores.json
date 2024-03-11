@@ -1,0 +1,67 @@
+{
+  "scores": [
+    {
+      "gameID": 1,
+      "difficulty": 3,
+      "duration": "12:34.56",
+      "winningPlayer": "Aseel",
+      "score": 34
+    },
+    {
+      "gameID": 2,
+      "difficulty": 2,
+      "duration": "21:43:65",
+      "winningPlayer": "Walaa",
+      "score": 50
+    },
+    {
+      "gameID": 3,
+      "difficulty": 1,
+      "duration": "11:59.99",
+      "winningPlayer": "Anood",
+      "score": 343
+    },
+    {
+      "gameID": 4,
+      "difficulty": 3,
+      "duration": "24:18.41",
+      "winningPlayer": "Ahmad",
+      "score": 78
+    },
+    {
+      "gameID": 5,
+      "difficulty": 2,
+      "score": 290,
+      "winningPlayer": "aseel",
+      "duration": "15:04.56"
+    },
+    {
+      "gameID": 6,
+      "difficulty": 2,
+      "score": 350,
+      "winningPlayer": "aseel",
+      "duration": "10:04.56"
+    },
+    {
+      "gameID": 34,
+      "difficulty": 1,
+      "score": 150,
+      "winningPlayer": "aseel",
+      "duration": "01:26.21"
+    },
+    {
+      "gameID": 68,
+      "difficulty": 1,
+      "score": 59,
+      "winningPlayer": "george",
+      "duration": "05:09.93"
+    },
+    {
+      "gameID": 16,
+      "difficulty": 1,
+      "score": 89,
+      "winningPlayer": "a",
+      "duration": "00:53.69"
+    }
+  ]
+}

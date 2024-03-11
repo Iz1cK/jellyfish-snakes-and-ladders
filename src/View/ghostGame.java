@@ -15,10 +15,13 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -31,6 +34,7 @@ import Model.Ladder;
 import Model.PLAYERCOLORS;
 import Model.Player;
 import Model.QuesSquare;
+import Model.Scores;
 import Model.Snake;
 import Model.Square;
 import Model.SurpriseSquare;
@@ -39,6 +43,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.util.HashSet;
 
 
 public class ghostGame extends JFrame {
@@ -62,6 +67,24 @@ public class ghostGame extends JFrame {
     public static boolean rolling = false;
     public static boolean playerMoving = false;
     public static HashMap<Player, JLabel> playerLabels = new HashMap<>();
+    public static HashMap<Player, JLabel> ghostsLabels = new HashMap<>();
+    public static HashMap<Player, Integer> ghostsPositions = new HashMap<>();
+    HashSet<Integer> assignedPositions = new HashSet<>();
+    public static int score = 0;
+    public int lives=3;
+    private AudioTest AT = AudioTest.getInstance();
+    int withsound=1;
+    
+    long elapsedTime;          // Type: long
+    long turnElapsedTime;      // Type: long
+    Timer gameTimer;           // Type: javax.swing.Timer
+    boolean isGamePaused;      // Type: boolean
+           // Type: long
+    Timer autoRollTimer;       // Type: javax.swing.Timer
+    long turnStartTime;
+    
+
+    public static ArrayList<Player> ghosts= new ArrayList<>();
     private static final Color[] COLORSs = {
             new Color(238, 125, 166),
             new Color(170, 227, 250),
@@ -71,6 +94,7 @@ public class ghostGame extends JFrame {
            
     };
     private int colorIndex = 0;
+    
     
     ghostGameBoardController GBC = ghostGameBoardController.getInstance();
     Font labelFont = new Font("Poppins", Font.BOLD, 36);
@@ -91,6 +115,14 @@ public class ghostGame extends JFrame {
             }
         });
     }
+    public ImageIcon resized(Image image, int weight, int height) {
+		 Image backImage = image;
+	        Image resized = backImage.getScaledInstance(weight, height, Image.SCALE_SMOOTH);
+	        ImageIcon resizeds = new ImageIcon(resized);
+		
+		return resizeds;
+		
+	}
 
     /**
      * Create the frame.
@@ -99,18 +131,19 @@ public class ghostGame extends JFrame {
     	GBC.setGameBoardView(this);
         ArrayList<Player> aplayers = new ArrayList<>();
         aplayers.add(new Player(0,"george",PLAYERCOLORS.BLUE));
+        
 ////////        aplayers.add(new Player(1,"adeeb",PLAYERCOLORS.GREEN));
 ////////        aplayers.add(new Player(2,"lana",PLAYERCOLORS.RED));
-      //  aplayers.add(new Player(3,"aseel",PLAYERCOLORS.GREEN));
+////////		aplayers.add(new Player(3,"aseel",PLAYERCOLORS.GREEN));
 ////////        aplayers.add(new Player(4,"ahmad",PLAYERCOLORS.WHITE));
 ////////        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
 ////////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
 ////////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
-      Board aboard = new Board(DIFFICULTY.EASY,aplayers);
-       aboard.generateBoard();
-       aboard.initiateQuestionSquares();
-      aboard.generateSnakesAndLadder();
-        GBC.setGameBoard(aboard);
+        Board aboard = new Board(DIFFICULTY.EASY,aplayers);
+        aboard.generateBoard();
+       	aboard.initiateQuestionSquares();
+       	aboard.generateSnakesAndLadder();
+       GBC.setGameBoard(aboard);
 
     	Board board = GBC.getGameBoard();
     	System.out.println(board);
@@ -155,6 +188,73 @@ public class ghostGame extends JFrame {
         timerLabel.setFont(labelFont);
         timerPanel.add(timerLabel);
         contentPane.add(timerPanel);
+        
+        JLabel home = new JLabel("");
+		ImageIcon ImageIcon6 = new ImageIcon(QuestionsView.class.getResource("/img/pause1.png"));
+		ImageIcon test6= resized(ImageIcon6.getImage(), 80, 80);
+		home.setIcon(test6);
+		// Set size to match content pane
+		home.setBounds(1350, 14, 75, 72);
+		contentPane.add(home);
+home.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/pause2.png"));
+				ImageIcon test= resized(ImageIcon.getImage(), 80, 80);
+				home.setIcon(test);
+				}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				ImageIcon ImageIcon = new ImageIcon(QuestionsView.class.getResource("/img/pause1.png"));
+				ImageIcon test= resized(ImageIcon.getImage(), 80, 80);
+				home.setIcon(test);
+				}
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ResumeGame obj = new ResumeGame(ghostGame.this);
+				elapsedTime = 0;
+			    turnElapsedTime = 0;
+			    // Assuming gameTimer, autoRollTimer are initialized elsewhere in your code
+			    timer.stop();
+			    AT.stopSound();
+			    isGamePaused = true;
+			    // Calculate elapsed time based on start time
+			    elapsedTime += System.currentTimeMillis() - startTime;
+			    // Calculate turn elapsed time based on turn start time
+			    turnElapsedTime += System.currentTimeMillis() - turnStartTime;
+			
+		        obj.showMessage("", "");
+		        if (obj.getMessageType() == ResumeGame.MessageType.OK) {
+		            System.out.println("User click ok");
+		            startTime = 0;
+		            turnStartTime = 0;
+		            // Calculate new start time based on elapsed time
+		            startTime = System.currentTimeMillis() - elapsedTime;
+		            timer.start();
+		            try {
+						AT.startSounds("background.wav");
+					} catch (UnsupportedAudioFileException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (LineUnavailableException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		            // Calculate new turn start time based on turn elapsed time
+		            turnStartTime = System.currentTimeMillis() - turnElapsedTime;
+		            // Set game state to not paused
+		            isGamePaused = false;
+		           
+		        }
+		        else {
+		        	dispose();
+		        }
+			}});
+        
         
         JPanel boardPanel = new JPanel();
  
@@ -253,12 +353,59 @@ public class ghostGame extends JFrame {
                         ImageIcon icon = new ImageIcon(Main.class.getResource(imagePath));
                         diceLabel.setIcon(icon);
                         GBC.playTurn();
+                        int position=playersPositions.get(board.getCurrentPlayerTurn());
+                        score += position;
+                        System.out.println("score"+score);
                         if(playersPositions.get(board.getCurrentPlayerTurn()) >= board.getRows()*board.getRows()) {
                         	timer.stop();
                         	setVisible(false);
                         	dispose();
                         }
+                        
+                        
+                    
+                        
+                        Player p= new Player(ghosts.size(),"ghost"+ghosts.size(),PLAYERCOLORS.GHOST);
+                        ghosts.add(p);
+                        Random r= new Random();
+                        int rand;
+                        
+                        do {
+                            rand = r.nextInt(board.getRows()*board.getColumns()-5) + 1;
+                        } while (!assignedPositions.add(rand)); 
+                        
+                        ghostsPositions.put(p, rand);
+                        updateGhostsPositionsOnBoard(board.getDifficultyBoard(),ghosts,ghostsPositions, board.getRows(), board.getRows());
+                        for(Player ghost: ghosts) {
+                        	int previousPos= ghostsPositions.get(ghost);
+                        	ghostsPositions.put(ghost, ghostsPositions.get(ghost)+r.nextInt(6));
+                        	
+                        	animateGhostMovement(ghost,ghostsLabels.get(ghost), board, previousPos, ()->{
+                        		  for(Player ghost1: ghosts) {
+                                  	if(playersPositions.get(board.getCurrentPlayerTurn())==ghostsPositions.get(ghost1)) {
+                                  		lives--;
+                                  		System.out.println("keep to you "+ lives);
+                                  		 ghostsPositions.remove(ghost1);
+                                  		 ghosts.remove(ghost1);
+                                  		 
+                                  		if(lives==0) {
+                                      	timer.stop();
+                                      	setVisible(false);
+                                      	dispose();
+                                      	}
+                                      }
+                                  }
+                        		  if(ghostsPositions.get(ghost)>= board.getRows()*board.getRows()) {
+                                	  ghostsPositions.remove(ghost);
+                                	  ghosts.remove(ghost);
+                                  }
+                                  updateGhostsPositionsOnBoard(board.getDifficultyBoard(),ghosts,ghostsPositions, board.getRows(), board.getRows());
+                        	});
+                        	
+                        }
+                        
                     });
+                    
                 }
             }
         });
@@ -296,22 +443,7 @@ public class ghostGame extends JFrame {
 			}});
         
         
-        
-        JLabel home= new JLabel();
-        home.setIcon(new ImageIcon(ghostGame.class.getResource("/img/endGame.png")));
-        home.addMouseListener(new MouseAdapter() {
-        	@Override 
-        	public void mouseClicked(MouseEvent e) {
-				int choice= JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", 
-                        "Confirmation", JOptionPane.YES_NO_OPTION); 
-				if (choice == JOptionPane.YES_OPTION) { 
-		           
-		        } else if (choice == JOptionPane.NO_OPTION) { 
-
-		        }
-			}
-        	
-		});
+ 
         
         JLabel resume= new JLabel();
         resume.setIcon(new ImageIcon(ghostGame.class.getResource("/img/play.png")));
@@ -583,6 +715,84 @@ public class ghostGame extends JFrame {
         overlayPanel.revalidate();
         overlayPanel.repaint();
     }
+public void updateGhostsPositionsOnBoard(DIFFICULTY diff, ArrayList<Player> players, HashMap<Player,Integer> playersPositions, int rows, int cols) {
+        
+        for (Component comp : overlayPanel.getComponents()) {
+            if (Boolean.TRUE.equals(((JComponent) comp).getClientProperty("ghostMarker"))) {
+                overlayPanel.remove(comp);
+            }
+        }
+        
+        int boardWidth = overlayPanel.getWidth();
+        int boardHeight = overlayPanel.getHeight();
+        
+        int cellWidth = boardWidth / cols;
+        int cellHeight = boardHeight / rows;
+
+        // Create a map to count players per square
+        HashMap<Integer, ArrayList<Player>> squareToPlayers = new HashMap<>();
+        for (Player player : ghosts) {
+            Integer position = playersPositions.get(player);
+            if (position != null) {
+                squareToPlayers.putIfAbsent(position, new ArrayList<>());
+                squareToPlayers.get(position).add(player);
+            }
+        }
+        
+        // Iterate over each square and position players
+        squareToPlayers.forEach((position, playersInSquare) -> {
+            int actualRow = (position - 1) / cols;
+            int actualCol = (position - 1) % cols;
+
+            boolean evenRows = rows % 2 == 0;
+            int displayRow = rows - 1 - actualRow;
+            boolean reverseRow = evenRows ? displayRow % 2 == 0 : displayRow % 2 != 0;
+
+            if (reverseRow) {
+                actualCol = cols - 1 - actualCol;
+            }
+
+            // Determine number of rows for player placement (1 or 2)
+            int numRowsForPlayers = playersInSquare.size() > 4 ? 2 : 1;
+            int playersPerRow = (int) Math.ceil(playersInSquare.size() / (double) numRowsForPlayers);
+            int rowOffset;
+            int x,y;
+            for (int i = 0; i < playersInSquare.size(); i++) {
+                Player player = playersInSquare.get(i);
+                ImageIcon playerIcon = new ImageIcon(ghostGame.class.getResource("/img/ghost.png"));
+                JLabel ghostMarker = new JLabel(new ImageIcon(playerIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+                ghostMarker.putClientProperty("ghostMarker", true);
+                // Adjust positioning based on difficulty
+                switch(diff) {
+                    case EASY:
+                    	rowOffset = (i / playersPerRow) * cellHeight/2; // Adjust for 2nd row if needed
+                        x = actualCol * cellWidth + ((i % playersPerRow) * cellWidth / playersPerRow) + cellWidth / playersPerRow / 2;
+                        y = displayRow * cellHeight + rowOffset;
+                        ghostMarker.setBounds(x - cellWidth/2 + 25, y - 10, 50, 50);
+                        break;
+                    case MEDIUM: 
+                    	rowOffset = (i / playersPerRow) * cellHeight/2 - cellHeight/2; // Adjust for 2nd row if needed
+                        x = actualCol * cellWidth + ((i % playersPerRow) * cellWidth / playersPerRow) + cellWidth / playersPerRow / 2;
+                        y = displayRow * cellHeight + rowOffset;
+                        ghostMarker.setBounds(x - cellWidth/2 + 30, y, 50, 50);
+                        break;
+                    case HARD:
+                    	rowOffset = (i / playersPerRow) * cellHeight/2 - cellHeight/2; // Adjust for 2nd row if needed
+                        x = actualCol * cellWidth + ((i % playersPerRow) * cellWidth / playersPerRow) + cellWidth / playersPerRow / 2;
+                        y = displayRow * cellHeight + rowOffset;
+                        ghostMarker.setBounds(x - cellWidth/2 + 20, y, 50, 50);
+                        break;
+                }
+
+                ghostsLabels.put(player, ghostMarker);
+                overlayPanel.add(ghostMarker);
+                overlayPanel.setComponentZOrder(ghostMarker, 0);
+            }
+        });
+
+        overlayPanel.revalidate();
+        overlayPanel.repaint();
+    }
 
 
     private static void rollDice(JLabel diceImage, Board board, Runnable callback) {
@@ -647,6 +857,46 @@ public class ghostGame extends JFrame {
         });
         timer.start();
     }
+    public void animateGhostMovement(Player player, JLabel playerLabel, Board board, int previousPosition, Runnable onAnimationEnd) {
+        int position = ghostsPositions.get(player);
+        System.out.println("moving player " + player.getPlayername() + "from " + previousPosition + " to " + position);
+        
+        Point previousCenter = getSquareCenter(board, previousPosition);
+        Point newCenter = getSquareCenter(board, position);
+        
+        Point playerCurrentPos = playerLabel.getLocation();
+        int offsetX = playerCurrentPos.x - previousCenter.x;
+        int offsetY = playerCurrentPos.y - previousCenter.y;
+        
+        int targetX = newCenter.x + offsetX;
+        int targetY = newCenter.y + offsetY;
+
+        final int delay = 25;
+        final int steps = 30;
+        final int startX = playerLabel.getX();
+        final int startY = playerLabel.getY();
+        final double dx = (double) (targetX - startX) / steps;
+        final double dy = (double) (targetY - startY) / steps;
+
+        final Timer timer = new Timer(delay, null);
+        timer.addActionListener(new ActionListener() {
+            private int currentStep = 0;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (currentStep < steps) {
+                    playerLabel.setLocation((int) (startX + dx * currentStep), (int) (startY + dy * currentStep));
+                    currentStep++;
+                } else {
+                    playerLabel.setLocation(targetX, targetY);
+                    timer.stop();
+                    SwingUtilities.invokeLater(onAnimationEnd);
+                }
+            }
+        });
+        timer.start();
+    }
+    
     
     private Point getSquareCenter(Board board, int position) {
         int rows = board.getRows();

@@ -23,15 +23,20 @@ public class Sysdata {
 		static final String GAME_HISTORY_JSONOBJECT = "gamesHistory"; //the name of the game history in the file
 		static final String ADMINS_FILENAME = "admins.json"; //json file name for admins
 		static final String ADMINS_JSONOBJECT = "admins"; //the name of the game history in the file
+		static final String SCORES_FILENAME = "scores.json"; //json file name for admins
+		static final String SCORES_JSONOBJECT = "scores"; //the name of the game history in the file
 		public static final int MAX_CAPACITY_GAME_HISTORY = 50; //the maximum game history we want
 
 		private static Sysdata instance;
 		public List<Questions> questionsList;
 		public List <Game> gameHistoryList;
 		private List <Admin> adminList; 
+		public List<Scores> scoreList;
 		private static int questionID = 0;
 		private JsonArray questionsListJson;
 		private JsonArray gameHistoryListJson;
+		private JsonArray gameScoresListJson;
+
 		public static int numberss=0;
 		private LinkedList<Game> historyLinkedList=new LinkedList<>();
 
@@ -326,7 +331,59 @@ public class Sysdata {
 		    }
 		}
 
-		
+		/********************************* Scores *****************************************/
+		public void readGameScores() {
+			scoreList = new ArrayList<Scores>();
+			try {
+				this.gameScoresListJson = readJsonFile(SCORES_JSONOBJECT, SCORES_FILENAME);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (gameScoresListJson == null) {
+				this.gameScoresListJson = new JsonArray();
+				return;
+			}
+			Scores g;
+			for (int i = 0; i < gameScoresListJson.size(); i++) {
+				JsonObject exploreObject = (JsonObject) this.gameScoresListJson.get(i);
+				g = new Scores(exploreObject);
+				System.out.println(g.toString());
+				scoreList.add(g);
+			}
+			//numberss=gameHistoryList.size();
+		}
+
+		/*****************************************************************************
+		 * Gets a score and adds it to scoresList, and then writes it to scores json
+		 * file
+		 *****************************************************************************/
+		public void addScore(Scores gameScore) {
+		    // Check if the gameHistoryList already contains a game with the same ID
+		    boolean isDuplicate = false;
+		    for (Scores existingGame : scoreList) {
+		        if (existingGame.getGameID() == gameScore.getGameID()) {
+		            isDuplicate = true;
+		            break;
+		        }
+		    }
+
+		    if (!isDuplicate) {
+		        if (this.scoreList.size() >= MAX_CAPACITY_GAME_HISTORY) {
+		            this.scoreList.remove(0); // Remove the oldest game history to maintain max capacity
+		        }
+		        
+		        // Add the new game history to both the JSON array and the list
+		        this.gameScoresListJson.add(gameScore.toJSON());
+		        this.scoreList.add(gameScore);
+
+		        // Write the updated game history list to the JSON file
+		        writeJsonFile(this.gameScoresListJson, SCORES_JSONOBJECT, SCORES_FILENAME);
+		        System.out.println("Added Successfully");
+		    } else {
+		        System.out.println("Duplicate Game ID: " + gameScore.getGameID() + ". Game not added.");
+		    }
+		}
 		/*********************************Admins*******************************************/
 		
 		

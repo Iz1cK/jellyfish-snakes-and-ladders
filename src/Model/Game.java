@@ -13,6 +13,7 @@ public class Game extends JSONSerializable{
 	private String winningPlayer;
 	private ArrayList<String> Players = new ArrayList<String >();
 	private String duration; //??
+	
 	public Game(DIFFICULTY difficulty, Player winningPlayer, ArrayList<Player> players, String timer) {
 		super();
 		this.gameID = ++idCounter;

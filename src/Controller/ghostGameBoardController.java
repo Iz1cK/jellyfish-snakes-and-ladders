@@ -13,12 +13,14 @@ import Model.PLAYERCOLORS;
 import Model.Player;
 import Model.QuesSquare;
 import Model.Questions;
+import Model.Scores;
 import Model.Snake;
 import Model.Square;
 import Model.SurpriseSquare;
 import Model.Sysdata;
 import Utils.QuestionCallback;
 import View.FinalPage;
+import View.FinalPageScores;
 import View.GameBoardView;
 import View.QuestionPopUp;
 import View.ghostGame;
@@ -66,7 +68,7 @@ public class ghostGameBoardController {
 		ghostGame.rolling = true;
 		ArrayList<Player> players = this.gameBoard.getPlayers();
 		Player currentPlayer = this.gameBoard.getCurrentPlayerTurn();
-		Game game = new Game(this.gameBoard.getDifficultyBoard(), this.gameBoard ,currentPlayer, this.gameBoard.getPlayers(), ghostGame.timerLabel.getText());
+		Scores game = new Scores(this.gameBoard.getDifficultyBoard(), this.gameBoard ,currentPlayer, ghostGame.score, ghostGame.timerLabel.getText());
 		int boardSize = (int) Math.pow(this.gameBoard.getRows(), 2);
 		lastCheckedSquarePosition = new HashMap<>();
 		
@@ -122,8 +124,8 @@ public class ghostGameBoardController {
 			if(playersPositions.get(currentPlayer) >= boardSize) {
 				gameBoardView.setVisible(false);
 				gameBoardView.dispose();
-				sysdata.addGameHistory(game);
-				FinalPage FP = new FinalPage(game);
+				sysdata.addScore(game);
+				FinalPageScores FP = new FinalPageScores(game);
 				FP.setVisible(true);
 				System.out.println("PLAYER " + currentPlayer.getPlayername() + " WON!");
 			} 
@@ -144,6 +146,7 @@ public class ghostGameBoardController {
 		});
 //		gameBoardView.updatePlayerPositionsOnBoard(this.gameBoard.getDifficultyBoard(), players, playersPositions,this.gameBoard.getRows(),this.gameBoard.getColumns());
 	}
+	
 	
 	private boolean checkSquares(Player currentPlayer, boolean noQuestions) {
 		HashMap<Player, Integer> playersPositions = this.gameBoard.getPlayersPositions();

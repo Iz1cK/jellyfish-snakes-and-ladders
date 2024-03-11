@@ -30,10 +30,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-/**
- *
- * @author RAVEN
- */
 public class AddQuestionView extends javax.swing.JFrame {
 	
 

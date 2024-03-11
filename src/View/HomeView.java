@@ -95,7 +95,7 @@ public class HomeView extends JFrame {
 					if(!sysdata.minimumQuestionsRequirment()) {
 			    		JOptionPane.showMessageDialog(contentPane, "please make sure there is at least 1 question for each difficulty");
 			    	} else {
-			    		ChooseGame1 chooseGame = new ChooseGame1();
+			    		PlayersOrGhost chooseGame = new PlayersOrGhost();
 			    		chooseGame.setVisible(true);
 			    		dispose();
 			    	}
@@ -132,7 +132,7 @@ public class HomeView extends JFrame {
 	    		 }
 	    	 @Override
 	    	 public void mouseClicked(MouseEvent arg0) {
-	    		 GameHistoryViews gameDetails = new GameHistoryViews();
+	    		 HistoryOrScoreView gameDetails = new HistoryOrScoreView();
 	    		 gameDetails.setVisible(true);
 	    		 dispose();
 	    		 }

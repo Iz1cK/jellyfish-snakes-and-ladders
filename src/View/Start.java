@@ -12,6 +12,7 @@ public class Start {
 		sysdata.readQuestions();
 		sysdata.readAdmins();
 		sysdata.readGameHistory();
+		sysdata.readGameScores();
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
