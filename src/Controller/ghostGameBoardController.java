@@ -131,6 +131,7 @@ public class ghostGameBoardController {
 			} 
 			
 			if(this.checkSquares(currentPlayer, false)) {
+				
 				gameBoardView.animatePlayerMovement(currentPlayer, ghostGame.playerLabels.get(currentPlayer),gameBoard, previousPosition, ()->{
 					int newCurrentPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size();
 					this.gameBoard.setCurrentPlayerTurn(players.get(newCurrentPlayerIndex));
