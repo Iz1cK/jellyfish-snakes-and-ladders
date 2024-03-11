@@ -388,18 +388,29 @@ public class ghostGame extends JFrame {
                         }
                         
                         
-                    
-                        
-                        Player p= new Player(ghosts.size(),"ghost"+ghosts.size(),PLAYERCOLORS.GHOST);
-                        ghosts.add(p);
+                        int max = 6;
+                        switch(board.getDifficultyBoard()) {
+                        case EASY:
+                        	break;
+                        case MEDIUM:
+                        	max = 8;
+                        	break;
+                        case HARD:
+                        	max = 10;
+                        	break;
+                        }
                         Random r= new Random();
-                        int rand;
-                        
-                        do {
-                            rand = r.nextInt(board.getRows()*board.getColumns()-5) + 1;
-                        } while (!assignedPositions.add(rand)); 
-                        
-                        ghostsPositions.put(p, rand);
+                        if(ghosts.size() <= max) {
+                        	Player p= new Player(ghosts.size(),"ghost"+ghosts.size(),PLAYERCOLORS.GHOST);
+                        	ghosts.add(p);
+                        	int rand;
+                        	
+                        	do {
+                        		rand = r.nextInt(board.getRows()*board.getColumns()-5) + 1;
+                        	} while (!assignedPositions.add(rand)); 
+                        	
+                        	ghostsPositions.put(p, rand);
+                        }
                         updateGhostsPositionsOnBoard(board.getDifficultyBoard(),ghosts,ghostsPositions, board.getRows(), board.getRows());
                         for(Player ghost: ghosts) {
                         	int previousPos= ghostsPositions.get(ghost);
