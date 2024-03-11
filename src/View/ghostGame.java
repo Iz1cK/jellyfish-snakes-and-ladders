@@ -44,6 +44,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.util.HashSet;
+import java.util.Iterator;
 
 
 public class ghostGame extends JFrame {
@@ -196,7 +197,30 @@ public class ghostGame extends JFrame {
 		// Set size to match content pane
 		home.setBounds(1350, 14, 75, 72);
 		contentPane.add(home);
-home.addMouseListener(new MouseAdapter() {
+		 JLabel live1 = new JLabel("");
+			ImageIcon Imagelive = new ImageIcon(QuestionsView.class.getResource("/img/live.png"));
+			ImageIcon testlive= resized(Imagelive.getImage(), 80, 80);
+			live1.setIcon(testlive);
+			// Set size to match content pane
+			live1.setBounds(1250, 14, 75, 72);
+			contentPane.add(live1);
+			 JLabel live2 = new JLabel("");
+				ImageIcon Imagelive2 = new ImageIcon(QuestionsView.class.getResource("/img/live.png"));
+				ImageIcon testlive2= resized(Imagelive2.getImage(), 80, 80);
+				live2.setIcon(testlive2);
+				// Set size to match content pane
+				live2.setBounds(1180, 14, 75, 72);
+				contentPane.add(live2);
+				
+				 JLabel live3 = new JLabel("");
+					ImageIcon Imagelive3= new ImageIcon(QuestionsView.class.getResource("/img/live.png"));
+					ImageIcon testlive3= resized(Imagelive.getImage(), 80, 80);
+					live3.setIcon(testlive3);
+					// Set size to match content pane
+					live3.setBounds(1110, 14, 75, 72);
+					contentPane.add(live3);
+			
+			home.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -381,20 +405,61 @@ home.addMouseListener(new MouseAdapter() {
                         	ghostsPositions.put(ghost, ghostsPositions.get(ghost)+r.nextInt(6));
                         	
                         	animateGhostMovement(ghost,ghostsLabels.get(ghost), board, previousPos, ()->{
-                        		  for(Player ghost1: ghosts) {
+                        		Iterator<Player> iterator = ghosts.iterator();
+                        		while (iterator.hasNext()) {
+                        		    Player ghost1 = iterator.next();
+                        		    // Your existing code here
+                        		    if(playersPositions.get(board.getCurrentPlayerTurn())==ghostsPositions.get(ghost1)) {
+                                  		lives--;
+                                  		System.out.println("keep to you "+ lives);
+                                  		 ghostsPositions.remove(ghost1);
+                                  		 ghosts.remove(ghost1);
+                                  		 if(lives==2) {
+                                  			live1.setVisible(false);
+                                  			
+                                  		 }
+                                  		 if(lives==1) {
+                                   			live2.setVisible(false);
+                                   			
+                                   		 }
+                                  		 
+                                  		 
+                                  		if(lives==0) {
+                                  			live3.setVisible(false);
+                                      	timer.stop();
+                                      	setVisible(false);
+                                      	dispose();
+                                      	}
+                                      
+                        		        // Your existing code here
+                        		    	
+                        		        iterator.remove(); // Safely remove the current element from the list
+                        		    }
+                        		}
+                        	/*	  for(Player ghost1: ghosts) {
                                   	if(playersPositions.get(board.getCurrentPlayerTurn())==ghostsPositions.get(ghost1)) {
                                   		lives--;
                                   		System.out.println("keep to you "+ lives);
                                   		 ghostsPositions.remove(ghost1);
                                   		 ghosts.remove(ghost1);
+                                  		 if(lives==2) {
+                                  			live1.setVisible(false);
+                                  			
+                                  		 }
+                                  		 if(lives==1) {
+                                   			live2.setVisible(false);
+                                   			
+                                   		 }
+                                  		 
                                   		 
                                   		if(lives==0) {
+                                  			live3.setVisible(false);
                                       	timer.stop();
                                       	setVisible(false);
                                       	dispose();
                                       	}
                                       }
-                                  }
+                                  }*/
                         		  if(ghostsPositions.get(ghost)>= board.getRows()*board.getRows()) {
                                 	  ghostsPositions.remove(ghost);
                                 	  ghosts.remove(ghost);
