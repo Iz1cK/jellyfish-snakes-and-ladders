@@ -143,7 +143,7 @@ public class GameBoardView extends JFrame {
 ////        aplayers.add(new Player(5,"hamoodi",PLAYERCOLORS.YELLOW));
 //////////        aplayers.add(new Player(6,"mahmood",PLAYERCOLORS.ORANGE));
 //////////        aplayers.add(new Player(7,"hmada",PLAYERCOLORS.PINK));
-//        Board aboard = new Board(DIFFICULTY.EASY,aplayers);
+//        Board aboard = new Board(DIFFICULTY.MEDIUM,aplayers);
 //        aboard.generateBoard();
 //        aboard.initiateQuestionSquares();
 //        aboard.generateSnakesAndLadder();
@@ -158,8 +158,6 @@ public class GameBoardView extends JFrame {
     	snakes=board.getSnakes();
     	ladders=board.getLadders();
         Square[][] squares = board.getSquares();
-        
-        squares[0][2] = new QuesSquare(0,2);
     	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1280, 720);
